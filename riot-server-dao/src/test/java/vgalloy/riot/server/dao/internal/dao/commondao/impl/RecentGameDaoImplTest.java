@@ -1,9 +1,5 @@
 package vgalloy.riot.server.dao.internal.dao.commondao.impl;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -14,15 +10,20 @@ import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.api.rest.request.game.dto.GameDto;
 import vgalloy.riot.api.rest.request.game.dto.RecentGamesDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
 
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Vincent Galloy
@@ -59,11 +60,12 @@ public class RecentGameDaoImplTest {
 
         // WHEN
         recentGamesDao.save(Region.jp, 19L, recentGamesDto);
-        Entity<RecentGamesDto> result = recentGamesDao.get(Region.jp, 19L);
+        Optional<Entity<RecentGamesDto>> result = recentGamesDao.get(Region.jp, 19L);
 
         // THEN
         assertNotNull(result);
-        assertEquals(recentGamesDto, result.getItem());
+        assertTrue(result.isPresent());
+        assertEquals(recentGamesDto, result.get().getItem());
     }
 
     @AfterClass

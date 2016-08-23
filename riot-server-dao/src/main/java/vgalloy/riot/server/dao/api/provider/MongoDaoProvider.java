@@ -25,7 +25,7 @@ public final class MongoDaoProvider {
      * Constructor.
      * Prevent instantiation
      */
-    public MongoDaoProvider() {
+    private MongoDaoProvider() {
         throw new AssertionError();
     }
 

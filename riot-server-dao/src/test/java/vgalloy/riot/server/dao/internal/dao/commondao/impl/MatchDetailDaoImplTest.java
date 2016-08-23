@@ -53,7 +53,7 @@ public class MatchDetailDaoImplTest {
 
         // WHEN
         matchDetailService.save(Region.euw, 10L, matchDetail);
-        Entity<MatchDetail> result = matchDetailService.get(Region.euw, 10L);
+        Entity<MatchDetail> result = matchDetailService.get(Region.euw, 10L).get();
 
         // THEN
         assertNotNull(result);

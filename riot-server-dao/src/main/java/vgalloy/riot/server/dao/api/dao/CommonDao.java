@@ -3,6 +3,8 @@ package vgalloy.riot.server.dao.api.dao;
 import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.server.dao.api.entity.Entity;
 
+import java.util.Optional;
+
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 07/07/16.
@@ -25,7 +27,7 @@ public interface CommonDao<DTO> {
      * @param itemId the item id
      * @return the datable
      */
-    Entity<DTO> get(Region region, Long itemId);
+    Optional<Entity<DTO>> get(Region region, Long itemId);
 
     /**
      * Get one random element in the collection.
@@ -33,5 +35,5 @@ public interface CommonDao<DTO> {
      * @param region the region
      * @return the random element
      */
-    Entity<DTO> getRandom(Region region);
+    Optional<Entity<DTO>> getRandom(Region region);
 }

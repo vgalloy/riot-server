@@ -8,12 +8,14 @@ import vgalloy.riot.api.rest.request.stats.dto.RankedStatsDto;
  *         Created by Vincent Galloy on 28/05/16.
  */
 public class RankedStatsDo extends DataObject<RankedStatsDto> {
+
     /**
      * Constructor. For Jackson deserialization.
      */
     private RankedStatsDo() {
 
     }
+
     /**
      * Constructor.
      *

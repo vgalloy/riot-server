@@ -1,7 +1,5 @@
 package vgalloy.riot.server.dao.internal.dao.commondao.impl;
 
-import java.io.IOException;
-
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -12,15 +10,18 @@ import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
 
+import java.io.IOException;
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Vincent Galloy
@@ -49,10 +50,11 @@ public class SummonerDaoImplTest {
     @Test
     public void testRandomFalse() {
         // WHEN
-        Entity<SummonerDto> result = summonerDao.getRandom(Region.br);
+        Optional<Entity<SummonerDto>> result = summonerDao.getRandom(Region.br);
 
         // THEN
-        assertNull(result);
+        assertNotNull(result);
+        assertFalse(result.isPresent());
     }
 
     @Test
@@ -63,11 +65,12 @@ public class SummonerDaoImplTest {
         summonerDao.save(Region.euw, 2L, summoner);
 
         // WHEN
-        Entity<SummonerDto> result = summonerDao.getRandom(Region.euw);
+        Optional<Entity<SummonerDto>> result = summonerDao.getRandom(Region.euw);
 
         // THEN
         assertNotNull(result);
-        assertEquals(summoner, result.getItem());
+        assertTrue(result.isPresent());
+        assertEquals(summoner, result.get().getItem());
     }
 
     @AfterClass

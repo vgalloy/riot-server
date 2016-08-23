@@ -8,12 +8,14 @@ import vgalloy.riot.api.rest.request.game.dto.RecentGamesDto;
  *         Created by Vincent Galloy on 28/05/16.
  */
 public class RecentGamesDo extends DataObject<RecentGamesDto> {
+
     /**
      * Constructor. For Jackson deserialization.
      */
     private RecentGamesDo() {
 
     }
+
     /**
      * Constructor.
      *

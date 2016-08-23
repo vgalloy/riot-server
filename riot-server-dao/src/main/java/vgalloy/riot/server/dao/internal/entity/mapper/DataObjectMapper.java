@@ -11,8 +11,10 @@ public final class DataObjectMapper {
 
     /**
      * Constructor.
+     * To prevent instantiation
      */
     private DataObjectMapper() {
+        throw new AssertionError();
     }
 
     /**

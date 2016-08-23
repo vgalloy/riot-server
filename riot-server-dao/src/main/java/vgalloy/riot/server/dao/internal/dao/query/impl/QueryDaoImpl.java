@@ -13,12 +13,12 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
+import vgalloy.riot.server.dao.api.entity.Position;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.RankedStatsDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoClientFactory;
 import vgalloy.riot.server.dao.api.dao.QueryDao;
 import vgalloy.riot.server.dao.internal.dao.query.mapper.PositionMapper;
-import vgalloy.riot.server.dao.api.entity.Position;
 
 import static java.util.Arrays.asList;
 

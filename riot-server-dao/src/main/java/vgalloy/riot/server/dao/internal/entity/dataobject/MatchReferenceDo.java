@@ -8,12 +8,14 @@ import vgalloy.riot.api.rest.request.matchlist.dto.MatchReference;
  *         Created by Vincent Galloy on 28/05/16.
  */
 public class MatchReferenceDo extends DataObject<MatchReference> {
+
     /**
      * Constructor. For Jackson deserialization.
      */
     private MatchReferenceDo() {
 
     }
+
     /**
      * Constructor.
      *

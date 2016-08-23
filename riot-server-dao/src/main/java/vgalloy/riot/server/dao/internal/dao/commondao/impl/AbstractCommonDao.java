@@ -1,17 +1,17 @@
 package vgalloy.riot.server.dao.internal.dao.commondao.impl;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.ParameterizedType;
-import java.util.Optional;
-
 import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
+import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.internal.dao.commondao.GenericDao;
 import vgalloy.riot.server.dao.internal.entity.Key;
 import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
 import vgalloy.riot.server.dao.internal.entity.mapper.DataObjectMapper;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.ParameterizedType;
+import java.util.Optional;
 
 /**
  * @author Vincent Galloy
@@ -43,21 +43,21 @@ public abstract class AbstractCommonDao<DTO, DATA_OBJECT extends DataObject<DTO>
     }
 
     @Override
-    public Entity<DTO> get(Region region, Long summonerId) {
+    public Optional<Entity<DTO>> get(Region region, Long summonerId) {
         Key key = new Key(region, summonerId);
         Optional<DATA_OBJECT> dataObject = genericDao.getById(key.normalizeString());
         if (dataObject.isPresent()) {
-            return DataObjectMapper.map(dataObject.get());
+            return Optional.of(DataObjectMapper.map(dataObject.get()));
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public Entity<DTO> getRandom(Region region) {
+    public Optional<Entity<DTO>> getRandom(Region region) {
         Optional<DATA_OBJECT> dataObject = genericDao.getRandom(region);
         if (dataObject.isPresent()) {
-            return DataObjectMapper.map(dataObject.get());
+            return Optional.of(DataObjectMapper.map(dataObject.get()));
         }
-        return null;
+        return Optional.empty();
     }
 }

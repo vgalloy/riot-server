@@ -1,8 +1,5 @@
 package vgalloy.riot.server.dao.internal.dao.commondao.impl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -13,7 +10,6 @@ import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.api.rest.request.stats.dto.ChampionStatsDto;
 import vgalloy.riot.api.rest.request.stats.dto.RankedStatsDto;
@@ -22,10 +18,15 @@ import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
 import vgalloy.riot.server.dao.internal.entity.Key;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -65,8 +66,8 @@ public class RankedStatsDaoImplTest {
 
     @Test
     public void testEmptyDatabase() {
-        Entity<RankedStatsDto> rankedStatsEntity = rankedStatsDao.get(Region.br, 1L);
-        assertNull(rankedStatsEntity);
+        Optional<Entity<RankedStatsDto>> rankedStatsEntity = rankedStatsDao.get(Region.br, 1L);
+        assertFalse(rankedStatsEntity.isPresent());
     }
 
     @Test
@@ -82,8 +83,8 @@ public class RankedStatsDaoImplTest {
 
     @Test
     public void testEmptyRandom() {
-        Entity<RankedStatsDto> rankedStatsEntity = rankedStatsDao.getRandom(Region.kr);
-        assertNull(rankedStatsEntity);
+        Optional<Entity<RankedStatsDto>> rankedStatsEntity = rankedStatsDao.getRandom(Region.kr);
+        assertFalse(rankedStatsEntity.isPresent());
     }
 
     @Test
@@ -117,11 +118,11 @@ public class RankedStatsDaoImplTest {
 
         // WHEN
         rankedStatsDao.save(Region.euw, 10L, rankedStatsDto);
-        Entity<RankedStatsDto> result = rankedStatsDao.get(Region.euw, 10L);
+        Optional<Entity<RankedStatsDto>> result = rankedStatsDao.get(Region.euw, 10L);
 
         // THEN
-        assertNotNull(result);
-        assertEquals(rankedStatsDto, result.getItem());
+        assertTrue(result.isPresent());
+        assertEquals(rankedStatsDto, result.get().getItem());
     }
 
     @Test
@@ -132,7 +133,7 @@ public class RankedStatsDaoImplTest {
 
         // WHEN
         rankedStatsDao.save(Region.euw, 11L, rankedStatsDto);
-        Entity<RankedStatsDto> result = rankedStatsDao.getRandom(Region.euw);
+        Optional<Entity<RankedStatsDto>> result = rankedStatsDao.getRandom(Region.euw);
 
         // THEN
         assertNotNull(result);
@@ -150,12 +151,13 @@ public class RankedStatsDaoImplTest {
 
         // WHEN
         rankedStatsDao.save(Region.euw, 12L, rankedStatsDto);
-        Entity<RankedStatsDto> result = rankedStatsDao.get(Region.euw, 12L);
+        Optional<Entity<RankedStatsDto>> result = rankedStatsDao.get(Region.euw, 12L);
 
         // THEN
         assertNotNull(result);
+        assertTrue(result.isPresent());
         System.out.printf(result.toString());
-        assertEquals(rankedStatsDto, result.getItem());
+        assertEquals(rankedStatsDto, result.get().getItem());
     }
 
     @AfterClass

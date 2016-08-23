@@ -8,7 +8,7 @@ import vgalloy.riot.api.rest.constant.Region;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 08/06/16.
  */
-public class Key {
+public final class Key {
 
     public static final String REGION_CAN_NOT_BE_NULL = "region can not be null";
     public static final String ID_CAN_NOT_BE_NULL = "id can not be null or zero.";

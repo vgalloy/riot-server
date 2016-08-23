@@ -4,7 +4,7 @@ package vgalloy.riot.server.dao.api.entity;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 07/07/16.
  */
-public class Position {
+public final class Position {
 
     private int x;
     private int y;

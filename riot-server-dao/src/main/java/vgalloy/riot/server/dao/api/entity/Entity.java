@@ -9,7 +9,7 @@ import vgalloy.riot.api.rest.constant.Region;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 12/07/16.
  */
-public class Entity<DTO> implements Serializable {
+public final class Entity<DTO> implements Serializable {
 
     private final Long lastUpdate;
     private final Region region;
