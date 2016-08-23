@@ -11,8 +11,10 @@ public final class SummonerDtoMapper {
 
     /**
      * Constructor.
+     * To prevent instantiation
      */
     private SummonerDtoMapper() {
+        throw new AssertionError();
     }
 
     /**

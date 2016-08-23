@@ -16,12 +16,6 @@
         <dependency>
             <groupId>vgalloy</groupId>
             <artifactId>riot-api-java</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.glassfish.jersey.media</groupId>
-                    <artifactId>jersey-media-json-jackson</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.mongodb</groupId>

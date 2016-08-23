@@ -5,16 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import vgalloy.riot.api.client.ratelimite.model.RateLimit;
-import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.api.service.RiotApi;
 import vgalloy.riot.api.service.RiotApiKey;
-import vgalloy.riot.server.service.internal.loader.Loader;
-import vgalloy.riot.server.service.internal.loader.impl.matchdetail.MatchDetailLoader;
-import vgalloy.riot.server.service.internal.loader.impl.matchreference.MatchReferenceLoader;
-import vgalloy.riot.server.service.internal.loader.impl.rankedstats.RankedStatsLoader;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Vincent Galloy
@@ -24,8 +16,6 @@ import java.util.List;
 @ComponentScan(value = {"vgalloy.riot.server.service.internal.executor", "vgalloy.riot.server.service.internal.loader"})
 public class LoaderConfig {
 
-    @Value("${database.url}")
-    private String databaseDaoUrl;
     @Value("${api_key}")
     private String apiKey;
 
@@ -47,21 +37,5 @@ public class LoaderConfig {
     @Bean
     public RiotApiKey riotApiKey() {
         return new RiotApiKey(apiKey);
-    }
-
-    /**
-     * Create all the loader.
-     *
-     * @return the list of loader
-     */
-    @Bean
-    public List<Loader> configure() {
-        List<Loader> loaderList = new ArrayList<>();
-        for (Region region : Region.values()) {
-            loaderList.add(new MatchDetailLoader(region));
-            loaderList.add(new MatchReferenceLoader(region));
-            loaderList.add(new RankedStatsLoader(region));
-        }
-        return loaderList;
     }
 }

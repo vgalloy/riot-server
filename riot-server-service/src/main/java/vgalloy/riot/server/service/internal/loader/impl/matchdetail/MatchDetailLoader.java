@@ -2,16 +2,17 @@ package vgalloy.riot.server.service.internal.loader.impl.matchdetail;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.api.rest.request.mach.dto.MatchDetail;
 import vgalloy.riot.api.rest.request.mach.dto.ParticipantIdentity;
 import vgalloy.riot.api.rest.request.matchlist.dto.MatchReference;
 import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
+import vgalloy.riot.api.service.RiotApi;
 import vgalloy.riot.api.service.query.Query;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
+import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
 import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
 import vgalloy.riot.server.service.internal.loader.mapper.SummonerDtoMapper;
@@ -30,21 +31,26 @@ public class MatchDetailLoader extends AbstractLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchDetailLoader.class);
 
     private final Region region;
-
-    @Autowired
-    private CommonDao<SummonerDto> summonerDao;
-    @Autowired
-    private CommonDao<MatchDetail> matchDetailDao;
-    @Autowired
-    private CommonDao<MatchReference> matchReferenceDao;
+    private final CommonDao<SummonerDto> summonerDao;
+    private final CommonDao<MatchDetail> matchDetailDao;
+    private final CommonDao<MatchReference> matchReferenceDao;
 
     /**
      * Constructor.
      *
-     * @param region the region
+     * @param riotApi           the riot api
+     * @param executor          the executor
+     * @param region            the region
+     * @param summonerDao       the summoner dao
+     * @param matchDetailDao    the match detail dao
+     * @param matchReferenceDao the match reference dao
      */
-    public MatchDetailLoader(Region region) {
-        this.region = Objects.requireNonNull(region, "region can not be null");
+    public MatchDetailLoader(RiotApi riotApi, Executor executor, Region region, CommonDao<SummonerDto> summonerDao, CommonDao<MatchDetail> matchDetailDao, CommonDao<MatchReference> matchReferenceDao) {
+        super(riotApi, executor);
+        this.region = Objects.requireNonNull(region);
+        this.summonerDao = Objects.requireNonNull(summonerDao);
+        this.matchDetailDao = Objects.requireNonNull(matchDetailDao);
+        this.matchReferenceDao = Objects.requireNonNull(matchReferenceDao);
     }
 
     @Override

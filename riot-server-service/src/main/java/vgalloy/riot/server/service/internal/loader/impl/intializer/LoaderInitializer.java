@@ -2,7 +2,6 @@ package vgalloy.riot.server.service.internal.loader.impl.intializer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
 import vgalloy.riot.api.service.RiotApi;
@@ -14,6 +13,7 @@ import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
 
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 /**
  * @author Vincent Galloy
@@ -23,12 +23,19 @@ public class LoaderInitializer extends AbstractLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoaderInitializer.class);
 
-    @Autowired
-    private RiotApi riotApi;
-    @Autowired
-    private Executor executor;
-    @Autowired
-    private CommonDao<SummonerDto> summonerDao;
+    private final CommonDao<SummonerDto> summonerDao;
+
+    /**
+     * Constructor.
+     *
+     * @param riotApi     the riot api
+     * @param executor    the executor
+     * @param summonerDao the summoner dao
+     */
+    public LoaderInitializer(RiotApi riotApi, Executor executor, CommonDao<SummonerDto> summonerDao) {
+        super(riotApi, executor);
+        this.summonerDao = Objects.requireNonNull(summonerDao);
+    }
 
     @Override
     public void execute() {

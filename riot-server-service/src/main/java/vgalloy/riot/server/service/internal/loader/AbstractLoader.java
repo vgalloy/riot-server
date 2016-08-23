@@ -2,13 +2,11 @@ package vgalloy.riot.server.service.internal.loader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import vgalloy.riot.api.service.RiotApi;
 import vgalloy.riot.server.service.api.model.LoaderInformation;
 import vgalloy.riot.server.service.internal.executor.Executor;
-import vgalloy.riot.server.service.internal.executor.Runner;
 
-import javax.annotation.PostConstruct;
+import java.util.Objects;
 
 /**
  * @author Vincent Galloy
@@ -19,19 +17,18 @@ public abstract class AbstractLoader implements Loader {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractLoader.class);
 
     protected final LoaderInformation loaderInformation = new LoaderInformation();
-    @Autowired
-    protected RiotApi riotApi;
-    @Autowired
-    protected Executor executor;
-    @Autowired
-    private Runner runner;
+    protected final RiotApi riotApi;
+    protected final Executor executor;
 
     /**
-     * Register and start the runner.
+     * Constructor.
+     *
+     * @param riotApi  the riot api
+     * @param executor the executor
      */
-    @PostConstruct
-    public void postConstruct() {
-        runner.register(this);
+    protected AbstractLoader(RiotApi riotApi, Executor executor) {
+        this.riotApi = Objects.requireNonNull(riotApi);
+        this.executor = Objects.requireNonNull(executor);
     }
 
     @Override

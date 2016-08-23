@@ -2,20 +2,22 @@ package vgalloy.riot.server.service.internal.loader.impl.matchdetail;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.api.rest.request.mach.dto.MatchDetail;
 import vgalloy.riot.api.rest.request.matchlist.dto.MatchList;
 import vgalloy.riot.api.rest.request.matchlist.dto.MatchReference;
+import vgalloy.riot.api.service.RiotApi;
 import vgalloy.riot.api.service.query.Query;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
+import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Vincent Galloy
@@ -26,8 +28,19 @@ public class PrivilegedLoader extends AbstractLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PrivilegedLoader.class);
 
-    @Autowired
-    private CommonDao<MatchDetail> matchDetailService;
+    private final CommonDao<MatchDetail> matchDetailDao;
+
+    /**
+     * Constructor.
+     *
+     * @param riotApi        the riot api
+     * @param executor       the executor
+     * @param matchDetailDao the match detail dao
+     */
+    public PrivilegedLoader(RiotApi riotApi, Executor executor, CommonDao<MatchDetail> matchDetailDao) {
+        super(riotApi, executor);
+        this.matchDetailDao = Objects.requireNonNull(matchDetailDao);
+    }
 
     @Override
     public void execute() {
@@ -52,7 +65,7 @@ public class PrivilegedLoader extends AbstractLoader {
                                 .map(MatchReference::getMatchId)
                                 .filter(this::notLoaded)
                                 .map(this::load)
-                                .forEach(e -> matchDetailService.save(Region.euw, e.getMatchId(), e));
+                                .forEach(e -> matchDetailDao.save(Region.euw, e.getMatchId(), e));
                     }
                 }
             }
@@ -71,7 +84,7 @@ public class PrivilegedLoader extends AbstractLoader {
      * @return true if the match is not in the database
      */
     private boolean notLoaded(long matchId) {
-        return matchDetailService.get(Region.euw, matchId) == null;
+        return matchDetailDao.get(Region.euw, matchId) == null;
     }
 
     /**

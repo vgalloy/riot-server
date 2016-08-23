@@ -33,6 +33,9 @@
         <checkstyle.checkstyle.location>conf/checkstyle.xml</checkstyle.checkstyle.location>
         <checkstyle.suppressions.location>conf/suppressions.xml</checkstyle.suppressions.location>
 
+        <!-- Jackson -->
+        <jackson.version>2.7.6</jackson.version>
+
         <!-- Riot project -->
         <riot-api-java.version>2.6.0</riot-api-java.version>
 
@@ -56,6 +59,24 @@
         <de.flapdoodle.embed.mongo.version>1.50.5</de.flapdoodle.embed.mongo.version>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+    </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <!-- Module -->
@@ -76,6 +97,7 @@
                 <artifactId>riot-api-java</artifactId>
                 <version>${riot-api-java.version}</version>
             </dependency>
+
 
             <!-- Log -->
             <dependency>

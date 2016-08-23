@@ -17,7 +17,7 @@ public class ServiceConfigTest {
     @Test
     public void testStartContext() {
         try {
-            ConfigurableApplicationContext configurableApplicationContext = new SpringApplicationBuilder().sources(ServiceTestConfig.class).run();
+            ConfigurableApplicationContext configurableApplicationContext = new SpringApplicationBuilder().sources(ServiceConfig.class).run();
             RiotApiKey riotApiKey = configurableApplicationContext.getBean(RiotApiKey.class);
             assertEquals("myApiKey", riotApiKey.getApiKey());
         } catch (Exception e) {

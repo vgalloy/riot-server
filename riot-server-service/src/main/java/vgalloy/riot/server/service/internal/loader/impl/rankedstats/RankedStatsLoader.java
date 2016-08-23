@@ -2,14 +2,15 @@ package vgalloy.riot.server.service.internal.loader.impl.rankedstats;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.api.rest.request.stats.dto.RankedStatsDto;
 import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
+import vgalloy.riot.api.service.RiotApi;
 import vgalloy.riot.api.service.query.Query;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
+import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
 import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
 
@@ -27,19 +28,23 @@ public class RankedStatsLoader extends AbstractLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(RankedStatsLoader.class);
 
     private final Region region;
-
-    @Autowired
-    private CommonDao<SummonerDto> summonerDao;
-    @Autowired
-    private CommonDao<RankedStatsDto> rankedStatsDao;
+    private final CommonDao<SummonerDto> summonerDao;
+    private final CommonDao<RankedStatsDto> rankedStatsDao;
 
     /**
      * Constructor.
      *
-     * @param region the region
+     * @param riotApi        the riot api
+     * @param executor       the executor
+     * @param region         the region
+     * @param summonerDao    the summoner dao
+     * @param rankedStatsDao the ranked stats dao
      */
-    public RankedStatsLoader(Region region) {
-        this.region = Objects.requireNonNull(region, "region can not be null");
+    public RankedStatsLoader(RiotApi riotApi, Executor executor, Region region, CommonDao<SummonerDto> summonerDao, CommonDao<RankedStatsDto> rankedStatsDao) {
+        super(riotApi, executor);
+        this.region = Objects.requireNonNull(region);
+        this.summonerDao = Objects.requireNonNull(summonerDao);
+        this.rankedStatsDao = Objects.requireNonNull(rankedStatsDao);
     }
 
     @Override
@@ -53,7 +58,7 @@ public class RankedStatsLoader extends AbstractLoader {
                     rankedStatsDao.save(region, summonerId, rankedStatsDto);
                 }
             } else {
-                LOGGER.warn("{} : No summoner find", RegionPrinter.getRegion(region));
+                LOGGER.warn("{} : No summoner found", RegionPrinter.getRegion(region));
                 try {
                     Thread.sleep(1_000);
                 } catch (InterruptedException e) {

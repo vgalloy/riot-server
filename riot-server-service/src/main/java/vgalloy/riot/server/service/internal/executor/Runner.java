@@ -11,13 +11,6 @@ import java.util.List;
 public interface Runner {
 
     /**
-     * Register the loader into the runner and make it start.
-     *
-     * @param loader the loader
-     */
-    void register(Loader loader);
-
-    /**
      * Get the loaderList.
      *
      * @return the loaders as list

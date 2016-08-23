@@ -31,7 +31,7 @@ public class InformationController {
     @RequestMapping()
     public Map<Integer, String> getGlobalInformation() {
         AtomicInteger index = new AtomicInteger();
-        return runner.getLoaderList().stream().collect(Collectors.toMap(e -> index.getAndIncrement(), e -> getClass().getCanonicalName()));
+        return runner.getLoaderList().stream().collect(Collectors.toMap(e -> index.getAndIncrement(), e -> e.getClass().getCanonicalName()));
     }
 
     /**

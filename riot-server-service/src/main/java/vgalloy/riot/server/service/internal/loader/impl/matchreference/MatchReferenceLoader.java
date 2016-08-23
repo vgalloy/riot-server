@@ -2,15 +2,16 @@ package vgalloy.riot.server.service.internal.loader.impl.matchreference;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.api.rest.request.matchlist.dto.MatchList;
 import vgalloy.riot.api.rest.request.matchlist.dto.MatchReference;
 import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
+import vgalloy.riot.api.service.RiotApi;
 import vgalloy.riot.api.service.query.Query;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
+import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
 import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
 
@@ -30,29 +31,33 @@ public class MatchReferenceLoader extends AbstractLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchReferenceLoader.class);
 
     private final Region region;
-
-    @Autowired
-    private CommonDao<SummonerDto> summonerService;
-    @Autowired
-    private CommonDao<MatchReference> matchReferenceService;
+    private final CommonDao<SummonerDto> summonerDao;
+    private final CommonDao<MatchReference> matchReferenceDao;
 
     /**
      * Constructor.
      *
-     * @param region the region
+     * @param riotApi           the riot api
+     * @param executor          the executor
+     * @param region            the region
+     * @param summonerDao       the summoner dao
+     * @param matchReferenceDao the match reference dao
      */
-    public MatchReferenceLoader(Region region) {
-        this.region = Objects.requireNonNull(region, "region can not be null");
+    public MatchReferenceLoader(RiotApi riotApi, Executor executor, Region region, CommonDao<SummonerDto> summonerDao, CommonDao<MatchReference> matchReferenceDao) {
+        super(riotApi, executor);
+        this.region = Objects.requireNonNull(region);
+        this.summonerDao = Objects.requireNonNull(summonerDao);
+        this.matchReferenceDao = Objects.requireNonNull(matchReferenceDao);
     }
 
     @Override
     public void execute() {
         while (true) {
-            Optional<Entity<SummonerDto>> summonerEntity = summonerService.getRandom(region);
+            Optional<Entity<SummonerDto>> summonerEntity = summonerDao.getRandom(region);
             if (summonerEntity.isPresent()) {
                 long summonerId = summonerEntity.get().getItem().getId();
                 List<MatchReference> matchReferences = load(summonerId);
-                matchReferences.forEach(e -> matchReferenceService.save(region, e.getMatchId(), e));
+                matchReferences.forEach(e -> matchReferenceDao.save(region, e.getMatchId(), e));
             } else {
                 LOGGER.warn("{} : No summoner found", RegionPrinter.getRegion(region));
                 try {
