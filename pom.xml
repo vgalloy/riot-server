@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>vgalloy</groupId>
+    <artifactId>riot-server</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>riot-server-dao</module>
+    </modules>
+
+    <properties>
+        <!-- Project -->
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Maven -->
+        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+        <maven-surefire-version>2.19.1</maven-surefire-version>
+        <maven-failsafe-version>2.19.1</maven-failsafe-version>
+
+        <!-- Checkstyle -->
+        <checkstyle.version>2.17</checkstyle.version>
+        <checkstyle.checkstyle.location>conf/checkstyle.xml</checkstyle.checkstyle.location>
+        <checkstyle.suppressions.location>conf/suppressions.xml</checkstyle.suppressions.location>
+
+        <!-- Module -->
+        <riot-server-dao.version>1.0-SNAPSHOT</riot-server-dao.version>
+
+        <!-- Riot project -->
+        <riot-api-java.version>2.6.0</riot-api-java.version>
+
+        <!-- Log -->
+        <slf4j-api.version>1.7.21</slf4j-api.version>
+        <logback-classic.version>1.1.7</logback-classic.version>
+
+        <!-- Mongo -->
+        <mongo-java-driver.version>3.2.2</mongo-java-driver.version>
+        <mongojack.version>2.6.0</mongojack.version>
+
+        <!-- Test -->
+        <junit.version>4.12</junit.version>
+        <de.flapdoodle.embed.mongo.version>1.50.5</de.flapdoodle.embed.mongo.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Module -->
+            <dependency>
+                <groupId>vgalloy</groupId>
+                <artifactId>riot-server-dao</artifactId>
+                <version>{riot-server-dao.version}</version>
+            </dependency>
+
+            <!-- Riot project -->
+            <dependency>
+                <groupId>vgalloy</groupId>
+                <artifactId>riot-api-java</artifactId>
+                <version>${riot-api-java.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.glassfish.jersey.media</groupId>
+                        <artifactId>jersey-media-json-jackson</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- Log -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback-classic.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- Mongo -->
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongo-java-driver</artifactId>
+                <version>${mongo-java-driver.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mongojack</groupId>
+                <artifactId>mongojack</artifactId>
+                <version>${mongojack.version}</version>
+            </dependency>
+
+            <!-- Test -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>de.flapdoodle.embed</groupId>
+                <artifactId>de.flapdoodle.embed.mongo</artifactId>
+                <version>${de.flapdoodle.embed.mongo.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <!-- Maven -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*ITest</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/*ITest</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-tests</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Checkstyle -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${checkstyle.version}</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <configLocation>${checkstyle.checkstyle.location}</configLocation>
+                    <suppressionsLocation>${checkstyle.suppressions.location}</suppressionsLocation>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
