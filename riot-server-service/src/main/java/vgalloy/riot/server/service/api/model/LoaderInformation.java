@@ -7,6 +7,7 @@ package vgalloy.riot.server.service.api.model;
 public class LoaderInformation {
 
     private final long startTime;
+    private Long endTime;
 
     private long totalRequestNumber;
     private long rankedStatsRequestNumber;
@@ -26,6 +27,9 @@ public class LoaderInformation {
      * @return the execution time
      */
     public long getExecutionTime() {
+        if (endTime != null) {
+            return endTime - startTime;
+        }
         return System.currentTimeMillis() - startTime;
     }
 
@@ -81,10 +85,9 @@ public class LoaderInformation {
 
     /**
      * Set the status of the loader.
-     *
-     * @param running true if the loader is running
      */
-    public void setRunning(boolean running) {
-        isRunning = running;
+    public void finish() {
+        isRunning = false;
+        endTime = System.currentTimeMillis();
     }
 }

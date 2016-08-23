@@ -7,7 +7,6 @@ import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
 import vgalloy.riot.api.service.RiotApi;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
-import vgalloy.riot.server.service.api.model.LoaderInformation;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
@@ -24,8 +23,6 @@ public class LoaderInitializer extends AbstractLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoaderInitializer.class);
 
-    private final LoaderInformation loaderInformation = new LoaderInformation();
-
     @Autowired
     private RiotApi riotApi;
     @Autowired
@@ -34,18 +31,12 @@ public class LoaderInitializer extends AbstractLoader {
     private CommonDao<SummonerDto> summonerDao;
 
     @Override
-    public LoaderInformation getLoaderInformation() {
-        return loaderInformation;
-    }
-
-    @Override
-    public void run() {
+    public void execute() {
         load(Region.eune, 18986053);
         load(Region.euw, 24550736);
         load(Region.na, 22577485);
         load(Region.kr, 8130147);
         load(Region.br, 810720);
-        loaderInformation.setRunning(false);
     }
 
     /**

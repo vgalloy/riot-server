@@ -10,7 +10,6 @@ import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
 import vgalloy.riot.api.service.query.Query;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.service.api.model.LoaderInformation;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
 import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
@@ -31,7 +30,6 @@ public class MatchReferenceLoader extends AbstractLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchReferenceLoader.class);
 
     private final Region region;
-    private final LoaderInformation loaderInformation;
 
     @Autowired
     private CommonDao<SummonerDto> summonerService;
@@ -45,11 +43,10 @@ public class MatchReferenceLoader extends AbstractLoader {
      */
     public MatchReferenceLoader(Region region) {
         this.region = Objects.requireNonNull(region, "region can not be null");
-        loaderInformation = new LoaderInformation();
     }
 
     @Override
-    public void run() {
+    public void execute() {
         while (true) {
             Optional<Entity<SummonerDto>> summonerEntity = summonerService.getRandom(region);
             if (summonerEntity.isPresent()) {
@@ -83,10 +80,5 @@ public class MatchReferenceLoader extends AbstractLoader {
         }
         LOGGER.info("{} : {} - {} ", RegionPrinter.getRegion(region), summonerId, loaderInformation.printInformation());
         return matchList.getMatches();
-    }
-
-    @Override
-    public LoaderInformation getLoaderInformation() {
-        return loaderInformation;
     }
 }

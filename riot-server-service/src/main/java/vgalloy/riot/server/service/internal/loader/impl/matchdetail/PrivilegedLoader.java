@@ -10,7 +10,6 @@ import vgalloy.riot.api.rest.request.matchlist.dto.MatchList;
 import vgalloy.riot.api.rest.request.matchlist.dto.MatchReference;
 import vgalloy.riot.api.service.query.Query;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
-import vgalloy.riot.server.service.api.model.LoaderInformation;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
 
@@ -27,13 +26,11 @@ public class PrivilegedLoader extends AbstractLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PrivilegedLoader.class);
 
-    private final LoaderInformation loaderInformation = new LoaderInformation();
-
     @Autowired
     private CommonDao<MatchDetail> matchDetailService;
 
     @Override
-    public void run() {
+    public void execute() {
         Collection<Integer> summonerIdList = new ArrayList<>();
         summonerIdList.add(24550736); // Ivaranne
         summonerIdList.add(24540988); // Glenduil
@@ -97,10 +94,5 @@ public class PrivilegedLoader extends AbstractLoader {
         }
         LOGGER.info("{} - {} ", matchId, loaderInformation.printInformation());
         return matchDetail;
-    }
-
-    @Override
-    public LoaderInformation getLoaderInformation() {
-        return loaderInformation;
     }
 }
