@@ -53,15 +53,29 @@ public class MatchReferenceLoader extends AbstractLoader {
     @Override
     public void execute() {
         while (true) {
+            Entity<SummonerDto> summonerEntity = getRandomSummoner();
+            long summonerId = summonerEntity.getItem().getId();
+            List<MatchReference> matchReferences = load(summonerId);
+            matchReferences.forEach(e -> matchReferenceDao.save(region, e.getMatchId(), e));
+        }
+    }
+
+    /**
+     * Return a random SummonerDto.
+     *
+     * @return a random SummonerDto
+     */
+    private Entity<SummonerDto> getRandomSummoner() {
+        long sleepingTime = 0;
+        while (true) {
             Optional<Entity<SummonerDto>> summonerEntity = summonerDao.getRandom(region);
             if (summonerEntity.isPresent()) {
-                long summonerId = summonerEntity.get().getItem().getId();
-                List<MatchReference> matchReferences = load(summonerId);
-                matchReferences.forEach(e -> matchReferenceDao.save(region, e.getMatchId(), e));
+                return summonerEntity.get();
             } else {
                 LOGGER.warn("{} : No summoner found", RegionPrinter.getRegion(region));
                 try {
-                    Thread.sleep(1_000);
+                    sleepingTime += 1_000;
+                    Thread.sleep(sleepingTime);
                 } catch (InterruptedException e) {
                     throw new ServiceException(e);
                 }

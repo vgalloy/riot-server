@@ -2,7 +2,6 @@ package vgalloy.riot.server.service.internal.loader.impl.matchdetail;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.api.rest.request.mach.dto.MatchDetail;
 import vgalloy.riot.api.rest.request.matchlist.dto.MatchList;
@@ -23,7 +22,6 @@ import java.util.Objects;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 13/06/16.
  */
-@Component
 public class PrivilegedLoader extends AbstractLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PrivilegedLoader.class);

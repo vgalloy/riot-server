@@ -50,17 +50,31 @@ public class RankedStatsLoader extends AbstractLoader {
     @Override
     public void execute() {
         while (true) {
+            Entity<SummonerDto> summonerEntity = getRandomSummoner();
+            long summonerId = summonerEntity.getItem().getId();
+            if (notLoaded(summonerId)) {
+                RankedStatsDto rankedStatsDto = load(summonerId);
+                rankedStatsDao.save(region, summonerId, rankedStatsDto);
+            }
+        }
+    }
+
+    /**
+     * Return a random SummonerDto.
+     *
+     * @return a random SummonerDto
+     */
+    private Entity<SummonerDto> getRandomSummoner() {
+        long sleepingTime = 0;
+        while (true) {
             Optional<Entity<SummonerDto>> summonerEntity = summonerDao.getRandom(region);
             if (summonerEntity.isPresent()) {
-                long summonerId = summonerEntity.get().getItem().getId();
-                if (notLoaded(summonerId)) {
-                    RankedStatsDto rankedStatsDto = load(summonerId);
-                    rankedStatsDao.save(region, summonerId, rankedStatsDto);
-                }
+                return summonerEntity.get();
             } else {
                 LOGGER.warn("{} : No summoner found", RegionPrinter.getRegion(region));
                 try {
-                    Thread.sleep(1_000);
+                    sleepingTime += 1_000;
+                    Thread.sleep(sleepingTime);
                 } catch (InterruptedException e) {
                     throw new ServiceException(e);
                 }
@@ -74,6 +88,7 @@ public class RankedStatsLoader extends AbstractLoader {
      * @param summonerId the summoner id
      * @return true if the summoner is not in the database
      */
+
     private boolean notLoaded(long summonerId) {
         return rankedStatsDao.get(region, summonerId) == null;
     }

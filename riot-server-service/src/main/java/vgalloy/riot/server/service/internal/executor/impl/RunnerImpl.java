@@ -13,6 +13,7 @@ import vgalloy.riot.server.service.internal.executor.Runner;
 import vgalloy.riot.server.service.internal.loader.Loader;
 import vgalloy.riot.server.service.internal.loader.impl.intializer.LoaderInitializer;
 import vgalloy.riot.server.service.internal.loader.impl.matchdetail.MatchDetailLoader;
+import vgalloy.riot.server.service.internal.loader.impl.matchdetail.PrivilegedLoader;
 import vgalloy.riot.server.service.internal.loader.impl.matchreference.MatchReferenceLoader;
 import vgalloy.riot.server.service.internal.loader.impl.rankedstats.RankedStatsLoader;
 
@@ -53,6 +54,8 @@ public class RunnerImpl implements Runner {
             register(new MatchReferenceLoader(riotApi, executor, region, summonerDao, matchReferenceDao));
             register(new RankedStatsLoader(riotApi, executor, region, summonerDao, rankedStatsDao));
         }
+
+        register(new PrivilegedLoader(riotApi, executor, matchDetailDao));
     }
 
     /**

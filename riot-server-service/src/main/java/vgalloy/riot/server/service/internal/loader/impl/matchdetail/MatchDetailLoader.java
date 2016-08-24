@@ -56,22 +56,36 @@ public class MatchDetailLoader extends AbstractLoader {
     @Override
     public void execute() {
         while (true) {
+            Entity<MatchReference> matchReferenceEntity = getRandomMatchReference();
+            long matchId = matchReferenceEntity.getItem().getMatchId();
+            if (notLoaded(matchId)) {
+                MatchDetail matchDetail = load(matchId);
+                matchDetailDao.save(region, matchId, matchDetail);
+                if (matchDetail.getParticipantIdentities() != null) {
+                    matchDetail.getParticipantIdentities().stream().map(ParticipantIdentity::getPlayer)
+                            .map(SummonerDtoMapper::map)
+                            .forEach(e -> summonerDao.save(region, e.getId(), e));
+                }
+            }
+        }
+    }
+
+    /**
+     * Return a random matchReference.
+     *
+     * @return a random matchReference
+     */
+    private Entity<MatchReference> getRandomMatchReference() {
+        long sleepingTime = 0;
+        while (true) {
             Optional<Entity<MatchReference>> matchReferenceEntity = matchReferenceDao.getRandom(region);
             if (matchReferenceEntity.isPresent()) {
-                long matchId = matchReferenceEntity.get().getItem().getMatchId();
-                if (notLoaded(matchId)) {
-                    MatchDetail matchDetail = load(matchId);
-                    matchDetailDao.save(region, matchId, matchDetail);
-                    if (matchDetail.getParticipantIdentities() != null) {
-                        matchDetail.getParticipantIdentities().stream().map(ParticipantIdentity::getPlayer)
-                                .map(SummonerDtoMapper::map)
-                                .forEach(e -> summonerDao.save(region, e.getId(), e));
-                    }
-                }
+                return matchReferenceEntity.get();
             } else {
                 LOGGER.warn("{} : No matchReference found", RegionPrinter.getRegion(region));
                 try {
-                    Thread.sleep(1_000);
+                    sleepingTime += 1_000;
+                    Thread.sleep(sleepingTime);
                 } catch (InterruptedException e) {
                     throw new ServiceException(e);
                 }
