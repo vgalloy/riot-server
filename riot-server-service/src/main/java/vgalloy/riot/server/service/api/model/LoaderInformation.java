@@ -26,7 +26,7 @@ public class LoaderInformation {
      *
      * @return the execution time
      */
-    public long getExecutionTime() {
+    public long getExecutionTimeMillis() {
         if (endTime != null) {
             return endTime - startTime;
         }
@@ -71,7 +71,7 @@ public class LoaderInformation {
      * @return the information as string.
      */
     public String printInformation() {
-        return rankedStatsRequestNumber + "/" + totalRequestNumber + "(" + rankedStatsRequestNumber * 100 / totalRequestNumber + "%)" + " in " + getExecutionTime() / 1000 + " sec (" + getExecutionTime() / totalRequestNumber + "sec/request)";
+        return rankedStatsRequestNumber + "/" + totalRequestNumber + "(" + rankedStatsRequestNumber * 100 / totalRequestNumber + "%)" + " in " + getExecutionTimeMillis() / 1000 + " sec (" + getExecutionTimeMillis() / totalRequestNumber + "sec/request)";
     }
 
     /**

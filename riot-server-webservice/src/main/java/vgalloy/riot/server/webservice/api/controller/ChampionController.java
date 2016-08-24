@@ -1,5 +1,7 @@
 package vgalloy.riot.server.webservice.api.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,8 @@ import java.util.Map;
 @RestController
 public class ChampionController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChampionController.class);
+
     @Autowired
     private QueryService queryService;
 
@@ -27,6 +31,7 @@ public class ChampionController {
      */
     @RequestMapping(value = "/champion/{championId}/winRate", method = RequestMethod.GET)
     public Map<Integer, Double> getWinRate(@PathVariable int championId) {
+        LOGGER.info("[ GET ] : championId : {}", championId);
         return queryService.getWinRate(championId);
     }
 }
