@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
 import vgalloy.riot.api.client.ratelimite.model.RateLimit;
 import vgalloy.riot.api.service.RiotApi;
 import vgalloy.riot.api.service.RiotApiKey;
@@ -13,6 +15,7 @@ import vgalloy.riot.api.service.RiotApiKey;
  *         Created by Vincent Galloy on 23/08/16.
  */
 @Configuration
+@EnableScheduling
 @ComponentScan(value = {"vgalloy.riot.server.service.internal.executor", "vgalloy.riot.server.service.internal.loader"})
 public class LoaderConfig {
 
