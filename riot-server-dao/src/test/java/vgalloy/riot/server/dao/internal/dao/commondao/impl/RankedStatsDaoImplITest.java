@@ -33,7 +33,7 @@ import static org.junit.Assert.fail;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 08/06/16.
  */
-public class RankedStatsDaoImplTest {
+public class RankedStatsDaoImplITest {
 
     private static final int PORT = 29002;
     private static final String URL = "localhost";

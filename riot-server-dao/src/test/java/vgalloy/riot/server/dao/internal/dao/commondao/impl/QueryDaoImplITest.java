@@ -10,7 +10,7 @@ import vgalloy.riot.server.dao.api.provider.MongoDaoProvider;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 07/07/16.
  */
-public class QueryDaoImplTest {
+public class QueryDaoImplITest {
 
     @Test
     @Ignore

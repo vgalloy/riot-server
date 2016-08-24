@@ -1,7 +1,5 @@
 package vgalloy.riot.server.dao.internal.dao.commondao.impl;
 
-import java.io.IOException;
-
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -12,28 +10,34 @@ import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.api.rest.request.mach.dto.MatchDetail;
+import vgalloy.riot.api.rest.request.game.dto.GameDto;
+import vgalloy.riot.api.rest.request.game.dto.RecentGamesDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
 
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 14/06/16.
+ *         Created by Vincent Galloy on 01/07/16.
  */
-public class MatchDetailDaoImplTest {
+public class RecentGameDaoImplITest {
 
-    private static final int PORT = 29001;
+    private static final int PORT = 29003;
     private static final String URL = "localhost";
 
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
 
-    private final MatchDetailDaoImpl matchDetailService = DaoFactory.getDao(MatchDetailDaoImpl.class, URL + ":" + PORT, "riotTest");
+    private final RecentGamesDaoImpl recentGamesDao = DaoFactory.getDao(RecentGamesDaoImpl.class, URL + ":" + PORT, "riotTest");
 
     @BeforeClass
     public static void setUp() throws IOException {
@@ -46,18 +50,22 @@ public class MatchDetailDaoImplTest {
     }
 
     @Test
-    public void testInsertWithCorrectMatchDetailDto() {
+    public void testInsertOk() {
         // GIVEN
-        MatchDetail matchDetail = new MatchDetail();
-        matchDetail.setMatchId(10);
+        RecentGamesDto recentGamesDto = new RecentGamesDto();
+        recentGamesDto.setSummonerId(19);
+        Set<GameDto> gameDtoSet = new HashSet<>();
+        gameDtoSet.add(new GameDto());
+        recentGamesDto.setGames(gameDtoSet);
 
         // WHEN
-        matchDetailService.save(Region.euw, 10L, matchDetail);
-        Entity<MatchDetail> result = matchDetailService.get(Region.euw, 10L).get();
+        recentGamesDao.save(Region.jp, 19L, recentGamesDto);
+        Optional<Entity<RecentGamesDto>> result = recentGamesDao.get(Region.jp, 19L);
 
         // THEN
         assertNotNull(result);
-        assertEquals(matchDetail, result.getItem());
+        assertTrue(result.isPresent());
+        assertEquals(recentGamesDto, result.get().getItem());
     }
 
     @AfterClass

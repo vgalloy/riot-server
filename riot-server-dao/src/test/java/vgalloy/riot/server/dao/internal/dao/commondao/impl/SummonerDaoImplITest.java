@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 30/06/16.
  */
-public class SummonerDaoImplTest {
+public class SummonerDaoImplITest {
 
     private static final int PORT = 29004;
     private static final String URL = "localhost";
