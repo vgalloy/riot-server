@@ -1,7 +1,7 @@
 node {
     stage 'Git fetch'
-    git url: 'https://github.com/vgalloy/riot-api-java.git'
+    git url: 'https://github.com/vgalloy/riot-server.git'
 
     stage 'Compile'
-    sh "mvn clean install -DskipTests"
+    sh "mvn clean install"
 }
