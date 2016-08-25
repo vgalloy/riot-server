@@ -12,6 +12,7 @@ import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
+import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,7 +55,7 @@ public class PrivilegedLoader extends AbstractLoader {
 
                 Query<MatchList> query = riotApi.getMatchListBySummonerId(currentSummonerId)
                         .region(Region.euw);
-                LOGGER.info("get Match list {}", currentSummonerId);
+                LOGGER.info("{} : matchList - {}", RegionPrinter.getRegion(Region.euw), currentSummonerId);
                 MatchList matchList = executor.execute(query, Region.euw, 1);
                 if (matchList != null) {
                     List<MatchReference> matchDetailList = matchList.getMatches();
@@ -82,7 +83,7 @@ public class PrivilegedLoader extends AbstractLoader {
      * @return true if the match is not in the database
      */
     private boolean notLoaded(long matchId) {
-        return matchDetailDao.get(Region.euw, matchId) == null;
+        return !matchDetailDao.get(Region.euw, matchId).isPresent();
     }
 
     /**
@@ -103,7 +104,7 @@ public class PrivilegedLoader extends AbstractLoader {
             matchDetail = new MatchDetail();
             matchDetail.setMatchId(matchId);
         }
-        LOGGER.info("{} - {} ", matchId, loaderInformation.printInformation());
+        LOGGER.info("{} : matchDetail - {}", RegionPrinter.getRegion(Region.euw), matchId);
         return matchDetail;
     }
 }

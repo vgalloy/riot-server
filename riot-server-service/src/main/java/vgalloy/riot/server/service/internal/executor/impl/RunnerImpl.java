@@ -18,6 +18,7 @@ import vgalloy.riot.server.service.internal.loader.impl.matchreference.MatchRefe
 import vgalloy.riot.server.service.internal.loader.impl.rankedstats.RankedStatsLoader;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,7 +50,14 @@ public class RunnerImpl implements Runner {
 
         register(new LoaderInitializer(riotApi, executor, summonerDao));
 
-        for (Region region : Region.values()) {
+        Collection<Region> regionList = new ArrayList<>();
+        regionList.add(Region.euw);
+        regionList.add(Region.eune);
+        regionList.add(Region.kr);
+        regionList.add(Region.na);
+        regionList.add(Region.br);
+
+        for (Region region : regionList) {
             register(new MatchDetailLoader(riotApi, executor, region, summonerDao, matchDetailDao, matchReferenceDao));
             register(new MatchReferenceLoader(riotApi, executor, region, summonerDao, matchReferenceDao));
             register(new RankedStatsLoader(riotApi, executor, region, summonerDao, rankedStatsDao));

@@ -13,7 +13,7 @@ import static org.junit.Assert.fail;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 23/08/16.
  */
-public class ServiceConfigTest {
+public class ServiceConfigITest {
 
     @Test
     public void testStartContext() {

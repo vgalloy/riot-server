@@ -29,7 +29,7 @@ public class LoaderConfig {
      */
     @Bean
     public RiotApi riotApi() {
-        return new RiotApi().addGlobalRateLimit(new RateLimit(5, 10), new RateLimit(400, 10 * 60 * 1000));
+        return new RiotApi().addGlobalRateLimit(new RateLimit(5, 10 * 1000), new RateLimit(400, 10 * 60 * 1000));
     }
 
     /**

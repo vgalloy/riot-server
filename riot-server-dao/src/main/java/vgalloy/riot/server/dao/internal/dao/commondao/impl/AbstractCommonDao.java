@@ -43,8 +43,8 @@ public abstract class AbstractCommonDao<DTO, DATA_OBJECT extends DataObject<DTO>
     }
 
     @Override
-    public Optional<Entity<DTO>> get(Region region, Long summonerId) {
-        Key key = new Key(region, summonerId);
+    public Optional<Entity<DTO>> get(Region region, Long itemId) {
+        Key key = new Key(region, itemId);
         Optional<DATA_OBJECT> dataObject = genericDao.getById(key.normalizeString());
         if (dataObject.isPresent()) {
             return Optional.of(DataObjectMapper.map(dataObject.get()));

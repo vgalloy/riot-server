@@ -2,12 +2,10 @@ package vgalloy.riot.server.dao.internal.entity.dataobject;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mongojack.Id;
 import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.server.dao.internal.entity.Key;
 
-import java.lang.reflect.ParameterizedType;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
@@ -19,10 +17,6 @@ import java.util.Objects;
 @JsonAutoDetect(fieldVisibility = Visibility.NONE, getterVisibility = Visibility.ANY, setterVisibility = Visibility.NONE)
 public abstract class DataObject<DTO> {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
-    private final Class<DTO> clazz;
-
     private Long lastUpdate;
     private Region region;
     private Long itemId;
@@ -33,7 +27,7 @@ public abstract class DataObject<DTO> {
      * Constructor. For Jackson deserialization.
      */
     protected DataObject() {
-        clazz = (Class<DTO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+
     }
 
     /**
@@ -44,7 +38,6 @@ public abstract class DataObject<DTO> {
      * @param item   the item
      */
     public DataObject(Region region, Long itemId, DTO item) {
-        this();
         lastUpdate = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
         this.region = Objects.requireNonNull(region, "region can not be null");
         this.itemId = Objects.requireNonNull(itemId, "itemId can not be null");

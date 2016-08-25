@@ -112,7 +112,7 @@ public class RegionExecutorImpl implements RegionExecutor {
             } catch (InterruptedException e1) {
                 throw new ServiceException(e1);
             }
-            sleepingTime *= 2;
+            sleepingTime *= 10;
         }
         return result;
     }

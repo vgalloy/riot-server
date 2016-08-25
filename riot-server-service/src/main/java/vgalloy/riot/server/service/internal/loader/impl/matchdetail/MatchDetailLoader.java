@@ -62,7 +62,8 @@ public class MatchDetailLoader extends AbstractLoader {
                 MatchDetail matchDetail = load(matchId);
                 matchDetailDao.save(region, matchId, matchDetail);
                 if (matchDetail.getParticipantIdentities() != null) {
-                    matchDetail.getParticipantIdentities().stream().map(ParticipantIdentity::getPlayer)
+                    matchDetail.getParticipantIdentities().stream()
+                            .map(ParticipantIdentity::getPlayer)
                             .map(SummonerDtoMapper::map)
                             .forEach(e -> summonerDao.save(region, e.getId(), e));
                 }
@@ -100,7 +101,7 @@ public class MatchDetailLoader extends AbstractLoader {
      * @return true if the match is not in the database
      */
     private boolean notLoaded(long matchId) {
-        return matchDetailDao.get(region, matchId) == null;
+        return !matchDetailDao.get(region, matchId).isPresent();
     }
 
     /**

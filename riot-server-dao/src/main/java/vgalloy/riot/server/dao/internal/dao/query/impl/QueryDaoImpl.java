@@ -129,7 +129,9 @@ public final class QueryDaoImpl implements QueryDao {
         String reduceFunction = "function(key, values) {" +
                 "return result;" +
                 "};";
-        mongoDatabase.getCollection(MatchDetailDaoImpl.COLLECTION_NAME).mapReduce(mapFunction, reduceFunction)
-                .collectionName("positions").first();
+        mongoDatabase.getCollection(MatchDetailDaoImpl.COLLECTION_NAME)
+                .mapReduce(mapFunction, reduceFunction)
+                .collectionName("positions")
+                .first();
     }
 }

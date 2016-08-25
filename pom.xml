@@ -195,6 +195,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
@@ -214,6 +215,7 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven-failsafe-version}</version>
                 <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                     <includes>
                         <include>**/*ITest</include>
                     </includes>

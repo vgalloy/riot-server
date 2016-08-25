@@ -90,7 +90,7 @@ public class RankedStatsLoader extends AbstractLoader {
      */
 
     private boolean notLoaded(long summonerId) {
-        return rankedStatsDao.get(region, summonerId) == null;
+        return !rankedStatsDao.get(region, summonerId).isPresent();
     }
 
     /**

@@ -54,8 +54,8 @@ public class LoaderInitializer extends AbstractLoader {
      */
     private void load(Region region, int summonerId) {
         Map<String, SummonerDto> result = executor.execute(riotApi.getSummonersByIds(summonerId), region, 1);
-        if (result.size() != 1) {
-            throw new ServiceException(region + " Error while loading summoner");
+        if (result == null || result.size() != 1) {
+            throw new ServiceException(RegionPrinter.getRegion(region) + " Error while loading summoner - " + summonerId);
         }
         for (Entry<String, SummonerDto> entry : result.entrySet()) {
             summonerDao.save(region, (long) summonerId, entry.getValue());
