@@ -1,17 +1,19 @@
 package vgalloy.riot.server.service.internal.service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
 import vgalloy.riot.server.dao.api.dao.QueryDao;
 import vgalloy.riot.server.service.api.model.Position;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.internal.service.mapper.PositionMapper;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author Vincent Galloy
@@ -40,7 +42,7 @@ public class QueryServiceImpl implements QueryService {
     /**
      * Update the win rate table.
      */
-    //    @Scheduled(fixedDelay = 15 * 60 * 1000) // 15 min
+    @Scheduled(fixedDelay = 15 * 60 * 1000) // 15 min
     public void updateWinRate() {
         long startTime = System.currentTimeMillis();
         LOGGER.info("[ START ] : updateWinRate");
@@ -51,7 +53,7 @@ public class QueryServiceImpl implements QueryService {
     /**
      * Update the position table.
      */
-    //    @Scheduled(fixedDelay = 15 * 60 * 1000) // 15 min
+    @Scheduled(fixedDelay = 15 * 60 * 1000) // 15 min
     public void updatePosition() {
         long startTime = System.currentTimeMillis();
         LOGGER.info("[ START ] : updatePosition");

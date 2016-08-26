@@ -1,24 +1,23 @@
 package vgalloy.riot.server.dao.internal.dao.query.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-
+import vgalloy.riot.server.dao.api.dao.QueryDao;
 import vgalloy.riot.server.dao.api.entity.Position;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.RankedStatsDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoClientFactory;
-import vgalloy.riot.server.dao.api.dao.QueryDao;
 import vgalloy.riot.server.dao.internal.dao.query.mapper.PositionMapper;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 
@@ -90,6 +89,27 @@ public final class QueryDaoImpl implements QueryDao {
         return positionResultList;
     }
 
+    /**
+     * Based on map reduce operation, this method only keep create a collection of players with the position during the
+     * game.
+     * {
+     *     _id : {},
+     *     value : {
+     *         players : [
+     *              {
+     *                  summonerId : {},
+     *                  championId : {},
+     *                  positions : [
+     *                      {
+     *                          x : {},
+     *                          y : {}
+     *                      }
+     *                  ]
+     *              }
+     *         ]
+     *     }
+     * }
+     */
     @Override
     public void updatePosition() {
         String mapFunction = "function() {" +
