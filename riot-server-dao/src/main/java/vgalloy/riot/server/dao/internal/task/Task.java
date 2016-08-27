@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.timertask;
+package vgalloy.riot.server.dao.internal.task;
 
 /**
  * @author Vincent Galloy

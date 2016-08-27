@@ -1,9 +1,9 @@
-package vgalloy.riot.server.dao.internal.timertask.factory;
+package vgalloy.riot.server.dao.internal.task.factory;
 
 import java.util.Timer;
 
-import vgalloy.riot.server.dao.internal.timertask.Task;
-import vgalloy.riot.server.dao.internal.timertask.impl.TaskImpl;
+import vgalloy.riot.server.dao.internal.task.Task;
+import vgalloy.riot.server.dao.internal.task.impl.TaskImpl;
 
 /**
  * @author Vincent Galloy
@@ -27,6 +27,7 @@ public final class TaskFactory {
      *                         execution. This time must be in millis sec.
      */
     public static void startTask(Task task, int periodAfterEnded) {
-        new TaskImpl(task, new Timer(), periodAfterEnded);
+        Timer timer = new Timer();
+        timer.schedule(new TaskImpl(task, timer, periodAfterEnded), 0);
     }
 }

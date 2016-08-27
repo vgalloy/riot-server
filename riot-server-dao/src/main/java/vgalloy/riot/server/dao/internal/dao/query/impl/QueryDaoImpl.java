@@ -17,8 +17,9 @@ import vgalloy.riot.server.dao.api.dao.QueryDao;
 import vgalloy.riot.server.dao.api.entity.Position;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoClientFactory;
 import vgalloy.riot.server.dao.internal.dao.query.mapper.PositionMapper;
-import vgalloy.riot.server.dao.internal.timertask.factory.TaskFactory;
-import vgalloy.riot.server.dao.internal.timertask.impl.UpdatePositionTask;
+import vgalloy.riot.server.dao.internal.task.factory.TaskFactory;
+import vgalloy.riot.server.dao.internal.task.impl.UpdatePositionTask;
+import vgalloy.riot.server.dao.internal.task.impl.UpdateWinRateTask;
 
 import static java.util.Arrays.asList;
 
@@ -40,6 +41,7 @@ public final class QueryDaoImpl implements QueryDao {
         MongoClient mongoClient = MongoClientFactory.get(databaseUrl);
         mongoDatabase = mongoClient.getDatabase(databaseName);
         TaskFactory.startTask(new UpdatePositionTask(mongoDatabase), 15 * 60 * 1000);
+        TaskFactory.startTask(new UpdateWinRateTask(mongoDatabase), 15 * 60 * 1000);
     }
 
     @Override

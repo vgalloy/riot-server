@@ -1,12 +1,13 @@
 package vgalloy.riot.server.service.internal.loader;
 
+import java.util.Objects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import vgalloy.riot.api.service.RiotApi;
 import vgalloy.riot.server.service.api.model.LoaderInformation;
 import vgalloy.riot.server.service.internal.executor.Executor;
-
-import java.util.Objects;
 
 /**
  * @author Vincent Galloy
@@ -14,7 +15,7 @@ import java.util.Objects;
  */
 public abstract class AbstractLoader implements Loader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractLoader.class);
+    private final Logger defaultLogger = LoggerFactory.getLogger(getClass());
 
     protected final LoaderInformation loaderInformation = new LoaderInformation();
     protected final RiotApi riotApi;
@@ -36,7 +37,7 @@ public abstract class AbstractLoader implements Loader {
         try {
             execute();
         } catch (Throwable e) {
-            LOGGER.error("{}", e.getMessage(), e);
+            defaultLogger.error("{}", e.getMessage(), e);
         }
         loaderInformation.finish();
     }

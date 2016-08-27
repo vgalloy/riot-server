@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.timertask.impl;
+package vgalloy.riot.server.dao.internal.task.impl;
 
 import java.util.Objects;
 
@@ -7,13 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
-import vgalloy.riot.server.dao.internal.timertask.Task;
+import vgalloy.riot.server.dao.internal.task.Task;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 27/08/16.
  */
-public class UpdatePositionTask implements Task {
+public final class UpdatePositionTask implements Task {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdatePositionTask.class);
 
@@ -33,7 +33,7 @@ public class UpdatePositionTask implements Task {
         long startTime = System.currentTimeMillis();
         LOGGER.info("[ START ] : updatePosition");
         updatePosition();
-        LOGGER.info("[ END ] : updatePosition {} ms", System.currentTimeMillis() - startTime);
+        LOGGER.info("[ END   ] : updatePosition {} ms", System.currentTimeMillis() - startTime);
     }
 
     // @formatter:off
@@ -78,7 +78,7 @@ public class UpdatePositionTask implements Task {
                                 "result.players[participant.participantId].championId = participant.championId;" +
                             "});" +
                             "result.players.forEach(function(player) {" +
-                            "player.positions = [];" +
+                                "player.positions = [];" +
                             "});" +
                             "if(this.item.timeline != undefined && this.item.timeline.frames != undefined) {" +
                                 "this.item.timeline.frames.forEach(function(frame) {" +

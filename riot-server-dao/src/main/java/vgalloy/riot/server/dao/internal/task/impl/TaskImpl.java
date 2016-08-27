@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.timertask.impl;
+package vgalloy.riot.server.dao.internal.task.impl;
 
 import java.util.Objects;
 import java.util.Timer;
@@ -7,7 +7,7 @@ import java.util.TimerTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import vgalloy.riot.server.dao.internal.timertask.Task;
+import vgalloy.riot.server.dao.internal.task.Task;
 
 /**
  * @author Vincent Galloy
@@ -33,7 +33,6 @@ public class TaskImpl extends TimerTask {
         this.task = Objects.requireNonNull(task);
         this.timer = Objects.requireNonNull(timer);
         this.periodAfterEnded = periodAfterEnded;
-        timer.schedule(this, periodAfterEnded);
     }
 
     @Override
@@ -43,6 +42,6 @@ public class TaskImpl extends TimerTask {
         } catch (Exception e) {
             LOGGER.error("{}", e.getMessage(), e);
         }
-        new TaskImpl(task, timer, periodAfterEnded);
+        timer.schedule(new TaskImpl(task, timer, periodAfterEnded), periodAfterEnded);
     }
 }

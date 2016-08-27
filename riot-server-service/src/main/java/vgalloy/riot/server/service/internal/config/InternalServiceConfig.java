@@ -10,4 +10,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(value = "vgalloy.riot.server.service.internal.service")
 public class InternalServiceConfig {
+
 }

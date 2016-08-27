@@ -10,7 +10,7 @@ import vgalloy.riot.server.service.api.config.ServiceConfig;
  *         Created by Vincent Galloy on 24/08/16.
  */
 @Import({ServiceConfig.class, SwaggerConfig.class})
-@ComponentScan("vgalloy.riot.server.webservice.internal.filter")
+@ComponentScan(value = {"vgalloy.riot.server.webservice.internal.filter", "vgalloy.riot.server.webservice.api.controller"})
 @Configuration
 public class InternalConfig {
 

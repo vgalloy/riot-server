@@ -7,8 +7,8 @@ package vgalloy.riot.server.service.api.model;
 public class LoaderInformation {
 
     private final long startTime;
-    private Long endTime;
 
+    private Long endTime;
     private long totalRequestNumber;
     private long rankedStatsRequestNumber;
     private boolean isRunning;

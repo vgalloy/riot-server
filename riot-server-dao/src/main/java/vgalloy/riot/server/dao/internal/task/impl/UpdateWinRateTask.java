@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.timertask.impl;
+package vgalloy.riot.server.dao.internal.task.impl;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -10,13 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.RankedStatsDaoImpl;
-import vgalloy.riot.server.dao.internal.timertask.Task;
+import vgalloy.riot.server.dao.internal.task.Task;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 27/08/16.
  */
-public class UpdateWinRateTask implements Task {
+public final class UpdateWinRateTask implements Task {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateWinRateTask.class);
 
@@ -36,7 +36,7 @@ public class UpdateWinRateTask implements Task {
         long startTime = System.currentTimeMillis();
         LOGGER.info("[ START ] : updateWinRate");
         updateWinRate();
-        LOGGER.info("[ END ] : updateWinRate {} ms", System.currentTimeMillis() - startTime);
+        LOGGER.info("[ END   ] : updateWinRate {} ms", System.currentTimeMillis() - startTime);
     }
 
     /**

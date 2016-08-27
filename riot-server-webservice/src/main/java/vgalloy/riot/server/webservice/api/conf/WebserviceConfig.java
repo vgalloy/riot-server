@@ -10,7 +10,7 @@ import vgalloy.riot.server.webservice.internal.conf.InternalConfig;
 /**
  * @author Created by Vincent Galloy on 23/08/16.
  */
-@SpringBootApplication(scanBasePackages = "vgalloy.riot.server.webservice.api.controller", exclude = {ErrorMvcAutoConfiguration.class, MongoAutoConfiguration.class})
+@SpringBootApplication(exclude = {ErrorMvcAutoConfiguration.class, MongoAutoConfiguration.class})
 @Import(InternalConfig.class)
 public class WebserviceConfig {
 
