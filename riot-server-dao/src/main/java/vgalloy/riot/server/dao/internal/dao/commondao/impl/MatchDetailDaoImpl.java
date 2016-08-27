@@ -18,6 +18,6 @@ public final class MatchDetailDaoImpl extends AbstractCommonDao<MatchDetail, Mat
      * @param databaseName the database name
      */
     public MatchDetailDaoImpl(String databaseUrl, String databaseName) {
-        super(new GenericDaoImpl<>(databaseUrl, databaseName, COLLECTION_NAME, MatchDetailDo.class));
+        super(databaseUrl, databaseName, COLLECTION_NAME);
     }
 }

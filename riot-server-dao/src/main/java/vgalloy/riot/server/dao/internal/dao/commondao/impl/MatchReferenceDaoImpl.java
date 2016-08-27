@@ -18,6 +18,6 @@ public final class MatchReferenceDaoImpl extends AbstractCommonDao<MatchReferenc
      * @param databaseName the database name
      */
     public MatchReferenceDaoImpl(String databaseUrl, String databaseName) {
-        super(new GenericDaoImpl<>(databaseUrl, databaseName, COLLECTION_NAME, MatchReferenceDo.class));
+        super(databaseUrl, databaseName, COLLECTION_NAME);
     }
 }

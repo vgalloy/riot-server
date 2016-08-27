@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.api.provider;
+package vgalloy.riot.server.dao.api.factory;
 
 import vgalloy.riot.api.rest.request.game.dto.RecentGamesDto;
 import vgalloy.riot.api.rest.request.mach.dto.MatchDetail;
@@ -19,13 +19,13 @@ import vgalloy.riot.server.dao.internal.dao.query.impl.QueryDaoImpl;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 09/06/16.
  */
-public final class MongoDaoProvider {
+public final class MongoDaoFactory {
 
     /**
      * Constructor.
      * Prevent instantiation
      */
-    private MongoDaoProvider() {
+    private MongoDaoFactory() {
         throw new AssertionError();
     }
 

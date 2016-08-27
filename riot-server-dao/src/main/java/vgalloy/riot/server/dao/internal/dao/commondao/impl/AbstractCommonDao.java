@@ -1,5 +1,10 @@
 package vgalloy.riot.server.dao.internal.dao.commondao.impl;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.ParameterizedType;
+import java.util.Objects;
+import java.util.Optional;
+
 import vgalloy.riot.api.rest.constant.Region;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
@@ -9,10 +14,6 @@ import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
 import vgalloy.riot.server.dao.internal.entity.mapper.DataObjectMapper;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.ParameterizedType;
-import java.util.Optional;
-
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 07/07/16.
@@ -20,21 +21,27 @@ import java.util.Optional;
 public abstract class AbstractCommonDao<DTO, DATA_OBJECT extends DataObject<DTO>> implements CommonDao<DTO> {
 
     private final GenericDao<DTO, DATA_OBJECT> genericDao;
+    private final Class<DATA_OBJECT> dataObjectClass;
 
     /**
      * Constructor.
-     *
-     * @param genericDao the generic dao
+     * @param databaseUrl the database url
+     * @param databaseName the database name
+     * @param collectionName the collection name
      */
-    /*package protected*/ AbstractCommonDao(GenericDao<DTO, DATA_OBJECT> genericDao) {
-        this.genericDao = genericDao;
+    /*package protected*/ AbstractCommonDao(String databaseUrl, String databaseName, String collectionName) {
+        Objects.requireNonNull(databaseUrl);
+        Objects.requireNonNull(databaseName);
+        Objects.requireNonNull(collectionName);
+        this.dataObjectClass = (Class<DATA_OBJECT>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        Objects.requireNonNull(dataObjectClass);
+        this.genericDao = Objects.requireNonNull(new GenericDaoImpl<>(databaseUrl, databaseName, collectionName, dataObjectClass));
     }
 
     @Override
     public void save(Region region, Long id, DTO dto) {
-        Class<DATA_OBJECT> clazz = (Class<DATA_OBJECT>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         try {
-            Constructor<DATA_OBJECT> constructor = clazz.getConstructor(Region.class, Long.class, dto.getClass());
+            Constructor<DATA_OBJECT> constructor = dataObjectClass.getConstructor(Region.class, Long.class, dto.getClass());
             DATA_OBJECT dataObject = constructor.newInstance(region, id, dto);
             genericDao.update(dataObject);
         } catch (Exception e) {

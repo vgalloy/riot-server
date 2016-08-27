@@ -10,7 +10,7 @@ import vgalloy.riot.api.rest.request.stats.dto.RankedStatsDto;
 import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.dao.QueryDao;
-import vgalloy.riot.server.dao.api.provider.MongoDaoProvider;
+import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
 
 /**
  * @author Vincent Galloy
@@ -29,7 +29,7 @@ public class DatabaseDaoConfig {
      */
     @Bean
     public CommonDao<MatchDetail> matchDetailDao() {
-        return MongoDaoProvider.getMatchDetailDao(databaseDaoUrl);
+        return MongoDaoFactory.getMatchDetailDao(databaseDaoUrl);
     }
 
     /**
@@ -39,7 +39,7 @@ public class DatabaseDaoConfig {
      */
     @Bean
     public CommonDao<MatchReference> matchReferenceDao() {
-        return MongoDaoProvider.getMatchReferenceDao(databaseDaoUrl);
+        return MongoDaoFactory.getMatchReferenceDao(databaseDaoUrl);
     }
 
     /**
@@ -49,7 +49,7 @@ public class DatabaseDaoConfig {
      */
     @Bean
     public CommonDao<RankedStatsDto> rankedStatsDao() {
-        return MongoDaoProvider.getRankedStatsDao(databaseDaoUrl);
+        return MongoDaoFactory.getRankedStatsDao(databaseDaoUrl);
     }
 
     /**
@@ -59,7 +59,7 @@ public class DatabaseDaoConfig {
      */
     @Bean
     public CommonDao<RecentGamesDto> recentGamesDao() {
-        return MongoDaoProvider.getRecentGamesDao(databaseDaoUrl);
+        return MongoDaoFactory.getRecentGamesDao(databaseDaoUrl);
     }
 
     /**
@@ -69,7 +69,7 @@ public class DatabaseDaoConfig {
      */
     @Bean
     public CommonDao<SummonerDto> summonerDao() {
-        return MongoDaoProvider.getSummonerDao(databaseDaoUrl);
+        return MongoDaoFactory.getSummonerDao(databaseDaoUrl);
     }
 
     /**
@@ -79,6 +79,6 @@ public class DatabaseDaoConfig {
      */
     @Bean
     public QueryDao queryDao() {
-        return MongoDaoProvider.getQueryDao(databaseDaoUrl);
+        return MongoDaoFactory.getQueryDao(databaseDaoUrl);
     }
 }

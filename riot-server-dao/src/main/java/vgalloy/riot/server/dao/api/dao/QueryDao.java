@@ -20,11 +20,6 @@ public interface QueryDao {
     Map<Integer, Double> getWinRate(int championId);
 
     /**
-     * Update the winRate table.
-     */
-    void updateWinRate();
-
-    /**
      * Get the position of a summoner during all game played with the given champion.
      *
      * @param summonerId the summoner id
@@ -32,9 +27,4 @@ public interface QueryDao {
      * @return a list with all the game position. Each game is defined as a list of position
      */
     List<List<Position>> getPosition(long summonerId, int championId);
-
-    /**
-     * Update the position table.
-     */
-    void updatePosition();
 }

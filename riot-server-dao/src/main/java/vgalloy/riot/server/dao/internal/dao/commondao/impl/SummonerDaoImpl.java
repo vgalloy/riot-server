@@ -18,6 +18,6 @@ public final class SummonerDaoImpl extends AbstractCommonDao<SummonerDto, Summon
      * @param databaseName the database name
      */
     public SummonerDaoImpl(String databaseUrl, String databaseName) {
-        super(new GenericDaoImpl<>(databaseUrl, databaseName, COLLECTION_NAME, SummonerDo.class));
+        super(databaseUrl, databaseName, COLLECTION_NAME);
     }
 }

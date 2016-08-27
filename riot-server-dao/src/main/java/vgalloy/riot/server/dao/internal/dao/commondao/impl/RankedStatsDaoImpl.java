@@ -18,6 +18,6 @@ public final class RankedStatsDaoImpl extends AbstractCommonDao<RankedStatsDto, 
      * @param databaseName the database name
      */
     public RankedStatsDaoImpl(String databaseUrl, String databaseName) {
-        super(new GenericDaoImpl<>(databaseUrl, databaseName, COLLECTION_NAME, RankedStatsDo.class));
+        super(databaseUrl, databaseName, COLLECTION_NAME);
     }
 }

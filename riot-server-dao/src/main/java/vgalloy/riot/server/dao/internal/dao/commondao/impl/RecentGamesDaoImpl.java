@@ -18,6 +18,6 @@ public final class RecentGamesDaoImpl extends AbstractCommonDao<RecentGamesDto, 
      * @param databaseName the database name
      */
     public RecentGamesDaoImpl(String databaseUrl, String databaseName) {
-        super(new GenericDaoImpl<>(databaseUrl, databaseName, COLLECTION_NAME, RecentGamesDo.class));
+        super(databaseUrl, databaseName, COLLECTION_NAME);
     }
 }

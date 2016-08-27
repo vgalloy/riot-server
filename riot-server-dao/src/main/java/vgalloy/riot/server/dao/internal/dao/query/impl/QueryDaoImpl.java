@@ -1,23 +1,24 @@
 package vgalloy.riot.server.dao.internal.dao.query.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+
 import vgalloy.riot.server.dao.api.dao.QueryDao;
 import vgalloy.riot.server.dao.api.entity.Position;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.RankedStatsDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoClientFactory;
 import vgalloy.riot.server.dao.internal.dao.query.mapper.PositionMapper;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import vgalloy.riot.server.dao.internal.timertask.factory.TaskFactory;
+import vgalloy.riot.server.dao.internal.timertask.impl.UpdatePositionTask;
 
 import static java.util.Arrays.asList;
 
@@ -38,6 +39,7 @@ public final class QueryDaoImpl implements QueryDao {
     public QueryDaoImpl(String databaseUrl, String databaseName) {
         MongoClient mongoClient = MongoClientFactory.get(databaseUrl);
         mongoDatabase = mongoClient.getDatabase(databaseName);
+        TaskFactory.startTask(new UpdatePositionTask(mongoDatabase), 15 * 60 * 1000);
     }
 
     @Override
@@ -49,22 +51,6 @@ public final class QueryDaoImpl implements QueryDao {
             map.put(index, Math.floor(1000 * o.getDouble("result")) / 10);
         }
         return map;
-    }
-
-    @Override
-    public void updateWinRate() {
-        mongoDatabase.getCollection(RankedStatsDaoImpl.COLLECTION_NAME).aggregate(asList(
-                new BasicDBObject("$unwind", "$item.champions"),
-                new BasicDBObject("$group",
-                        new Document("_id", new Document("championId", "$item.champions.id").append("played", "$item.champions.stats.totalSessionsPlayed"))
-                                .append("played", new Document("$sum", "$item.champions.stats.totalSessionsPlayed"))
-                                .append("won", new Document("$sum", "$item.champions.stats.totalSessionsWon"))
-                                .append("total", new Document("$sum", 1))
-                ),
-                new BasicDBObject("$project", new Document("result", new Document("$divide", new String[]{"$won", "$played"})).append("total", 1)),
-                new BasicDBObject("$sort", new Document("_id", 1)),
-                new BasicDBObject("$out", "winRate")
-        )).iterator();
     }
 
     @Override
@@ -87,71 +73,5 @@ public final class QueryDaoImpl implements QueryDao {
         }
 
         return positionResultList;
-    }
-
-    /**
-     * Based on map reduce operation, this method only keep create a collection of players with the position during the
-     * game.
-     * {
-     *     _id : {},
-     *     value : {
-     *         players : [
-     *              {
-     *                  summonerId : {},
-     *                  championId : {},
-     *                  positions : [
-     *                      {
-     *                          x : {},
-     *                          y : {}
-     *                      }
-     *                  ]
-     *              }
-     *         ]
-     *     }
-     * }
-     */
-    @Override
-    public void updatePosition() {
-        String mapFunction = "function() {" +
-                "key = this._id;" +
-                "result = {};" +
-                "result.players = [];" +
-                "if(this.item.participantIdentities != undefined) {" +
-                "this.item.participantIdentities.forEach(function(participantIdentity) {" +
-                "identity = {};" +
-                "identity.summonerId = participantIdentity.player.summonerId;" +
-                "identity.participantId = participantIdentity.participantId;" +
-                "result.players[participantIdentity.participantId] = identity;" +
-                "});" +
-                "" +
-                "if(this.item.participants != undefined) {" +
-                "this.item.participants.forEach(function(participant) {" +
-                "result.players[participant.participantId].championId = participant.championId;" +
-                "});" +
-                "" +
-                "result.players.forEach(function(player) {" +
-                "player.positions = [];" +
-                "});" +
-                "if(this.item.timeline != undefined && this.item.timeline.frames != undefined) {" +
-                "this.item.timeline.frames.forEach(function(frame) {" +
-                "result.players.forEach(function(player) {" +
-                "position = frame.participantFrames[player.participantId].position;" +
-                "if(position != null) {" +
-                "player.positions.push(position);" +
-                "}" +
-                "});" +
-                "});" +
-                "emit(key, result);" +
-                "}" +
-                "}" +
-                "}" +
-                "};";
-        String reduceFunction = "function(key, values) {" +
-                "return result;" +
-                "};";
-        mongoDatabase.getCollection(MatchDetailDaoImpl.COLLECTION_NAME)
-                .mapReduce(mapFunction, reduceFunction)
-                .collectionName("positions")
-                .first();
     }
 }
