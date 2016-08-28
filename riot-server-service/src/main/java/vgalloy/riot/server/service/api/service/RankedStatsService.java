@@ -1,6 +1,6 @@
 package vgalloy.riot.server.service.api.service;
 
-import vgalloy.riot.api.rest.request.stats.dto.RankedStatsDto;
+import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
 
 /**
  * @author Vincent Galloy

@@ -2,7 +2,7 @@ package vgalloy.riot.server.dao.internal.dao.commondao;
 
 import java.util.Optional;
 
-import vgalloy.riot.api.rest.constant.Region;
+import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
 
 /**

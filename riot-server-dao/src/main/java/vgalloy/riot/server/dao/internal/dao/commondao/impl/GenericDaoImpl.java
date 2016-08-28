@@ -5,15 +5,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
 
-import vgalloy.riot.api.rest.constant.Region;
+import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.internal.dao.commondao.GenericDao;
-import vgalloy.riot.server.dao.internal.dao.factory.MongoClientFactory;
 import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
 
 /**
@@ -29,16 +25,10 @@ public final class GenericDaoImpl<DTO, DATA_OBJECT extends DataObject<DTO>> impl
     /**
      * Constructor with the collectionFactory.
      *
-     * @param databaseUrl    the database url
-     * @param databaseName   the database name
-     * @param collectionName the collection name
-     * @param clazz          the data object class
+     * @param collection the mongo jack collection
      */
-    public GenericDaoImpl(String databaseUrl, String databaseName, String collectionName, Class<DATA_OBJECT> clazz) {
-        MongoClient mongoClient = MongoClientFactory.get(databaseUrl);
-        DB mongoDatabase = mongoClient.getDB(databaseName);
-        DBCollection dbCollection = mongoDatabase.getCollection(collectionName);
-        collection = JacksonDBCollection.wrap(dbCollection, clazz, String.class);
+    public GenericDaoImpl(JacksonDBCollection<DATA_OBJECT, String> collection) {
+        this.collection = Objects.requireNonNull(collection);
     }
 
     @Override

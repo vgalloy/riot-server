@@ -1,12 +1,12 @@
 package vgalloy.riot.server.service.internal.executor.impl;
 
 import org.springframework.stereotype.Component;
-import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.api.rest.request.mach.dto.MatchDetail;
-import vgalloy.riot.api.rest.request.matchlist.dto.MatchReference;
-import vgalloy.riot.api.rest.request.stats.dto.RankedStatsDto;
-import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
-import vgalloy.riot.api.service.RiotApi;
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.dto.mach.MatchDetail;
+import vgalloy.riot.api.api.dto.matchlist.MatchReference;
+import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
+import vgalloy.riot.api.api.dto.summoner.SummonerDto;
+import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.executor.Runner;
@@ -51,11 +51,11 @@ public class RunnerImpl implements Runner {
         register(new LoaderInitializer(riotApi, executor, summonerDao));
 
         Collection<Region> regionList = new ArrayList<>();
-        regionList.add(Region.euw);
-        regionList.add(Region.eune);
-        regionList.add(Region.kr);
-        regionList.add(Region.na);
-        regionList.add(Region.br);
+        regionList.add(Region.EUW);
+        regionList.add(Region.EUNE);
+        regionList.add(Region.KR);
+        regionList.add(Region.NA);
+        regionList.add(Region.BR);
 
         for (Region region : regionList) {
             register(new MatchDetailLoader(riotApi, executor, region, summonerDao, matchDetailDao, matchReferenceDao));

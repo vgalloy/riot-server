@@ -3,7 +3,7 @@ package vgalloy.riot.server.dao.internal.entity.dataobject;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import org.mongojack.Id;
-import vgalloy.riot.api.rest.constant.Region;
+import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.internal.entity.Key;
 
 import java.time.LocalDateTime;

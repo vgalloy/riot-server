@@ -5,10 +5,16 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Objects;
 import java.util.Optional;
 
-import vgalloy.riot.api.rest.constant.Region;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
+import org.mongojack.JacksonDBCollection;
+
+import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.internal.dao.commondao.GenericDao;
+import vgalloy.riot.server.dao.internal.dao.factory.MongoClientFactory;
 import vgalloy.riot.server.dao.internal.entity.Key;
 import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
 import vgalloy.riot.server.dao.internal.entity.mapper.DataObjectMapper;
@@ -22,6 +28,7 @@ public abstract class AbstractCommonDao<DTO, DATA_OBJECT extends DataObject<DTO>
 
     private final GenericDao<DTO, DATA_OBJECT> genericDao;
     private final Class<DATA_OBJECT> dataObjectClass;
+    protected final JacksonDBCollection<DATA_OBJECT, String> collection;
 
     /**
      * Constructor.
@@ -35,7 +42,11 @@ public abstract class AbstractCommonDao<DTO, DATA_OBJECT extends DataObject<DTO>
         Objects.requireNonNull(collectionName);
         this.dataObjectClass = (Class<DATA_OBJECT>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         Objects.requireNonNull(dataObjectClass);
-        this.genericDao = Objects.requireNonNull(new GenericDaoImpl<>(databaseUrl, databaseName, collectionName, dataObjectClass));
+        MongoClient mongoClient = MongoClientFactory.get(databaseUrl);
+        DB mongoDatabase = mongoClient.getDB(databaseName);
+        DBCollection dbCollection = mongoDatabase.getCollection(collectionName);
+        collection = JacksonDBCollection.wrap(dbCollection, dataObjectClass, String.class);
+        this.genericDao = Objects.requireNonNull(new GenericDaoImpl<>(collection));
     }
 
     @Override

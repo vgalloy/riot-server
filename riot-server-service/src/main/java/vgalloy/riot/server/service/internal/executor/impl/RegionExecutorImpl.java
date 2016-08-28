@@ -9,9 +9,9 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import vgalloy.riot.api.client.filter.RiotRateLimitExceededException;
-import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.api.service.query.Query;
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.query.Query;
+import vgalloy.riot.api.internal.client.filter.RiotRateLimitExceededException;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.executor.RegionExecutor;
 import vgalloy.riot.server.service.internal.executor.model.Request;

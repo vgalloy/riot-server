@@ -1,7 +1,7 @@
 package vgalloy.riot.server.service.internal.service;
 
 import org.springframework.stereotype.Component;
-import vgalloy.riot.api.rest.request.stats.dto.RankedStatsDto;
+import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 
 /**

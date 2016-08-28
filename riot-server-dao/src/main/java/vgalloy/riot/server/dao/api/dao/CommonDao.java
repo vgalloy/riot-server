@@ -1,9 +1,9 @@
 package vgalloy.riot.server.dao.api.dao;
 
-import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.server.dao.api.entity.Entity;
-
 import java.util.Optional;
+
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.server.dao.api.entity.Entity;
 
 /**
  * @author Vincent Galloy

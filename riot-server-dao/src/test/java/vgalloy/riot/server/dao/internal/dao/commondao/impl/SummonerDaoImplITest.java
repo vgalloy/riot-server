@@ -10,8 +10,8 @@ import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
 
@@ -50,7 +50,7 @@ public class SummonerDaoImplITest {
     @Test
     public void testRandomFalse() {
         // WHEN
-        Optional<Entity<SummonerDto>> result = summonerDao.getRandom(Region.br);
+        Optional<Entity<SummonerDto>> result = summonerDao.getRandom(Region.BR);
 
         // THEN
         assertNotNull(result);
@@ -62,10 +62,10 @@ public class SummonerDaoImplITest {
         // GIVEN
         SummonerDto summoner = new SummonerDto();
         summoner.setId(2);
-        summonerDao.save(Region.euw, 2L, summoner);
+        summonerDao.save(Region.EUW, 2L, summoner);
 
         // WHEN
-        Optional<Entity<SummonerDto>> result = summonerDao.getRandom(Region.euw);
+        Optional<Entity<SummonerDto>> result = summonerDao.getRandom(Region.EUW);
 
         // THEN
         assertNotNull(result);

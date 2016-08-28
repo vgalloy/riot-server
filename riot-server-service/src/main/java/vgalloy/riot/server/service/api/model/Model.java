@@ -1,6 +1,6 @@
 package vgalloy.riot.server.service.api.model;
 
-import vgalloy.riot.api.rest.constant.Region;
+import vgalloy.riot.api.api.constant.Region;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

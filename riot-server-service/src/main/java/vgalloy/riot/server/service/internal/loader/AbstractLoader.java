@@ -5,7 +5,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import vgalloy.riot.api.service.RiotApi;
+import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.server.service.api.model.LoaderInformation;
 import vgalloy.riot.server.service.internal.executor.Executor;
 

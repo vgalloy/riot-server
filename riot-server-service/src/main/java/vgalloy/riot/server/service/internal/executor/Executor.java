@@ -1,7 +1,7 @@
 package vgalloy.riot.server.service.internal.executor;
 
-import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.api.service.query.Query;
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.query.Query;
 
 /**
  * @author Vincent Galloy

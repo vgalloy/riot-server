@@ -1,7 +1,7 @@
 package vgalloy.riot.server.service.internal.loader.mapper;
 
-import vgalloy.riot.api.rest.request.mach.dto.Player;
-import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
+import vgalloy.riot.api.api.dto.mach.Player;
+import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 
 /**
  * @author Vincent Galloy

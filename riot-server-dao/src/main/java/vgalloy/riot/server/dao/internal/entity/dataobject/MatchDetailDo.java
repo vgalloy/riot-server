@@ -1,7 +1,7 @@
 package vgalloy.riot.server.dao.internal.entity.dataobject;
 
-import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.api.rest.request.mach.dto.MatchDetail;
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.dto.mach.MatchDetail;
 
 /**
  * @author Vincent Galloy

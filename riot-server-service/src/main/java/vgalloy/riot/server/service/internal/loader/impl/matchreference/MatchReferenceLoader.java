@@ -2,12 +2,12 @@ package vgalloy.riot.server.service.internal.loader.impl.matchreference;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.api.rest.request.matchlist.dto.MatchList;
-import vgalloy.riot.api.rest.request.matchlist.dto.MatchReference;
-import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
-import vgalloy.riot.api.service.RiotApi;
-import vgalloy.riot.api.service.query.Query;
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.dto.matchlist.MatchList;
+import vgalloy.riot.api.api.dto.matchlist.MatchReference;
+import vgalloy.riot.api.api.dto.summoner.SummonerDto;
+import vgalloy.riot.api.api.model.RiotApi;
+import vgalloy.riot.api.api.query.Query;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;

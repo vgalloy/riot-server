@@ -1,7 +1,7 @@
 package vgalloy.riot.server.dao.internal.entity;
 
 import org.junit.Test;
-import vgalloy.riot.api.rest.constant.Region;
+import vgalloy.riot.api.api.constant.Region;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,7 +14,7 @@ public class KeyTest {
     @Test
     public void testSerializationAndDeserialization() {
         // GIVEN
-        Key key = new Key(Region.br, 10L);
+        Key key = new Key(Region.BR, 10L);
 
         // WHEN
         String keyAsString = key.normalizeString();

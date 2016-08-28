@@ -2,9 +2,9 @@ package vgalloy.riot.server.service.internal.loader.impl.intializer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
-import vgalloy.riot.api.service.RiotApi;
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.dto.summoner.SummonerDto;
+import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.executor.Executor;
@@ -39,11 +39,11 @@ public class LoaderInitializer extends AbstractLoader {
 
     @Override
     public void execute() {
-        load(Region.eune, 18986053);
-        load(Region.euw, 24550736);
-        load(Region.na, 22577485);
-        load(Region.kr, 8130147);
-        load(Region.br, 810720);
+        load(Region.EUNE, 18986053);
+        load(Region.EUW, 24550736);
+        load(Region.NA, 22577485);
+        load(Region.KR, 8130147);
+        load(Region.BR, 810720);
     }
 
     /**

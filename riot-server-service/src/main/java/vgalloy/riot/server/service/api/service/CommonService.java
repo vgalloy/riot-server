@@ -1,6 +1,6 @@
 package vgalloy.riot.server.service.api.service;
 
-import vgalloy.riot.api.rest.constant.Region;
+import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.service.api.model.Model;
 
 import java.util.Optional;

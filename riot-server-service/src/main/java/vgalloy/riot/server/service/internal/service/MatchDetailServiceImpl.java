@@ -1,7 +1,7 @@
 package vgalloy.riot.server.service.internal.service;
 
 import org.springframework.stereotype.Component;
-import vgalloy.riot.api.rest.request.mach.dto.MatchDetail;
+import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 
 /**

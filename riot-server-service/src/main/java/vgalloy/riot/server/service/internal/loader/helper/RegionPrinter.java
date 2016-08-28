@@ -1,6 +1,6 @@
 package vgalloy.riot.server.service.internal.loader.helper;
 
-import vgalloy.riot.api.rest.constant.Region;
+import vgalloy.riot.api.api.constant.Region;
 
 /**
  * @author Vincent Galloy

@@ -2,7 +2,7 @@ package vgalloy.riot.server.dao.internal.entity;
 
 import java.util.Objects;
 
-import vgalloy.riot.api.rest.constant.Region;
+import vgalloy.riot.api.api.constant.Region;
 
 /**
  * @author Vincent Galloy

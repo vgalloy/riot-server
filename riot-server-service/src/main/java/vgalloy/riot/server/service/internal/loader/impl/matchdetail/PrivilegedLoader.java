@@ -2,12 +2,12 @@ package vgalloy.riot.server.service.internal.loader.impl.matchdetail;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.api.rest.request.mach.dto.MatchDetail;
-import vgalloy.riot.api.rest.request.matchlist.dto.MatchList;
-import vgalloy.riot.api.rest.request.matchlist.dto.MatchReference;
-import vgalloy.riot.api.service.RiotApi;
-import vgalloy.riot.api.service.query.Query;
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.dto.mach.MatchDetail;
+import vgalloy.riot.api.api.dto.matchlist.MatchList;
+import vgalloy.riot.api.api.dto.matchlist.MatchReference;
+import vgalloy.riot.api.api.model.RiotApi;
+import vgalloy.riot.api.api.query.Query;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.executor.Executor;
@@ -54,9 +54,9 @@ public class PrivilegedLoader extends AbstractLoader {
                 loaderInformation.addRequest();
 
                 Query<MatchList> query = riotApi.getMatchListBySummonerId(currentSummonerId)
-                        .region(Region.euw);
-                LOGGER.info("{} : matchList - {}", RegionPrinter.getRegion(Region.euw), currentSummonerId);
-                MatchList matchList = executor.execute(query, Region.euw, 1);
+                        .region(Region.EUW);
+                LOGGER.info("{} : matchList - {}", RegionPrinter.getRegion(Region.EUW), currentSummonerId);
+                MatchList matchList = executor.execute(query, Region.EUW, 1);
                 if (matchList != null) {
                     List<MatchReference> matchDetailList = matchList.getMatches();
                     if (matchDetailList != null) {
@@ -64,7 +64,7 @@ public class PrivilegedLoader extends AbstractLoader {
                                 .map(MatchReference::getMatchId)
                                 .filter(this::notLoaded)
                                 .map(this::load)
-                                .forEach(e -> matchDetailDao.save(Region.euw, e.getMatchId(), e));
+                                .forEach(e -> matchDetailDao.save(Region.EUW, e.getMatchId(), e));
                     }
                 }
             }
@@ -83,7 +83,7 @@ public class PrivilegedLoader extends AbstractLoader {
      * @return true if the match is not in the database
      */
     private boolean notLoaded(long matchId) {
-        return !matchDetailDao.get(Region.euw, matchId).isPresent();
+        return !matchDetailDao.get(Region.EUW, matchId).isPresent();
     }
 
     /**
@@ -97,14 +97,14 @@ public class PrivilegedLoader extends AbstractLoader {
         loaderInformation.addRankedStatsRequest();
         Query<MatchDetail> query = riotApi.getMatchDetailById(matchId)
                 .includeTimeline(true)
-                .region(Region.euw);
-        MatchDetail matchDetail = executor.execute(query, Region.euw, 10);
+                .region(Region.EUW);
+        MatchDetail matchDetail = executor.execute(query, Region.EUW, 10);
 
         if (matchDetail == null) {
             matchDetail = new MatchDetail();
             matchDetail.setMatchId(matchId);
         }
-        LOGGER.info("{} : matchDetail - {}", RegionPrinter.getRegion(Region.euw), matchId);
+        LOGGER.info("{} : matchDetail - {}", RegionPrinter.getRegion(Region.EUW), matchId);
         return matchDetail;
     }
 }

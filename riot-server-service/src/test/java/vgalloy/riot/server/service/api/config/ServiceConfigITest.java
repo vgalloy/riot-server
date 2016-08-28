@@ -3,8 +3,7 @@ package vgalloy.riot.server.service.api.config;
 import org.junit.Test;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-
-import vgalloy.riot.api.service.RiotApiKey;
+import vgalloy.riot.api.api.model.RiotApiKey;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

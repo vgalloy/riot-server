@@ -1,10 +1,10 @@
 package vgalloy.riot.server.service.internal.executor.impl;
 
 import org.springframework.stereotype.Component;
-import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.api.service.RiotApiKey;
-import vgalloy.riot.api.service.query.AbstractQuery;
-import vgalloy.riot.api.service.query.Query;
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.model.RiotApiKey;
+import vgalloy.riot.api.api.query.AbstractQuery;
+import vgalloy.riot.api.api.query.Query;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.executor.RegionExecutor;
 import vgalloy.riot.server.service.internal.executor.model.Request;

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.api.rest.request.mach.dto.MatchDetail;
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 

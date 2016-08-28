@@ -1,7 +1,7 @@
 package vgalloy.riot.server.service.internal.service;
 
 import org.springframework.stereotype.Component;
-import vgalloy.riot.api.rest.request.game.dto.RecentGamesDto;
+import vgalloy.riot.api.api.dto.game.RecentGamesDto;
 import vgalloy.riot.server.service.api.service.RecentGamesService;
 
 /**

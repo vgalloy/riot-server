@@ -1,19 +1,22 @@
 package vgalloy.riot.server.webservice.api.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.api.rest.request.stats.dto.RankedStatsDto;
+
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
+import vgalloy.riot.server.service.api.model.LastGame;
 import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.model.Position;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
-
-import java.util.List;
-import java.util.Optional;
+import vgalloy.riot.server.service.api.service.SummonerService;
 
 /**
  * @author Vincent Galloy
@@ -25,6 +28,8 @@ public class SummonerController {
     @Autowired
     private QueryService queryService;
     @Autowired
+    private SummonerService summonerService;
+    @Autowired
     private RankedStatsService rankedStatsService;
 
     /**
@@ -34,7 +39,7 @@ public class SummonerController {
      * @param summonerId the summoner id
      * @return the ranked stats
      */
-    @RequestMapping(value = "{region}/summoner/{summonerId}", method = RequestMethod.GET)
+    @RequestMapping(value = "{region}/summoner/{summonerId}/rankedStats", method = RequestMethod.GET)
     public Model<RankedStatsDto> getRankedStat(@PathVariable Region region, @PathVariable Long summonerId) {
         Optional<Model<RankedStatsDto>> rankedStatsEntity = rankedStatsService.get(region, summonerId);
         if (rankedStatsEntity.isPresent()) {
@@ -51,8 +56,20 @@ public class SummonerController {
      * @param championId the champion id
      * @return the position as a list. Each list represent a game
      */
-    @RequestMapping(value = "{region}/summoner/{summonerId}/{championId}", method = RequestMethod.GET)
+    @RequestMapping(value = "{region}/summoner/{summonerId}/position/{championId}", method = RequestMethod.GET)
     public List<List<Position>> getPosition(@PathVariable Region region, @PathVariable Integer summonerId, @PathVariable Integer championId) {
         return queryService.getPosition(summonerId, championId);
+    }
+
+    /**
+     * Get the last games of a summoner.
+     *
+     * @param region     the region
+     * @param summonerId the summoner id
+     * @return the last games
+     */
+    @RequestMapping(value = "{region}/summoner/{summonerId}/lastGames/", method = RequestMethod.GET)
+    public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId) {
+        return summonerService.getLastGames(region, summonerId);
     }
 }

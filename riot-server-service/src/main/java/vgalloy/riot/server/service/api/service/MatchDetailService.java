@@ -1,6 +1,6 @@
 package vgalloy.riot.server.service.api.service;
 
-import vgalloy.riot.api.rest.request.mach.dto.MatchDetail;
+import vgalloy.riot.api.api.dto.mach.MatchDetail;
 
 /**
  * @author Vincent Galloy

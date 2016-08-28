@@ -1,6 +1,6 @@
 package vgalloy.riot.server.service.api.service;
 
-import vgalloy.riot.api.rest.request.game.dto.RecentGamesDto;
+import vgalloy.riot.api.api.dto.game.RecentGamesDto;
 
 /**
  * @author Vincent Galloy

@@ -10,9 +10,9 @@ import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import vgalloy.riot.api.rest.constant.Region;
-import vgalloy.riot.api.rest.request.game.dto.GameDto;
-import vgalloy.riot.api.rest.request.game.dto.RecentGamesDto;
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.dto.game.GameDto;
+import vgalloy.riot.api.api.dto.game.RecentGamesDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
 
@@ -59,8 +59,8 @@ public class RecentGameDaoImplITest {
         recentGamesDto.setGames(gameDtoSet);
 
         // WHEN
-        recentGamesDao.save(Region.jp, 19L, recentGamesDto);
-        Optional<Entity<RecentGamesDto>> result = recentGamesDao.get(Region.jp, 19L);
+        recentGamesDao.save(Region.JP, 19L, recentGamesDto);
+        Optional<Entity<RecentGamesDto>> result = recentGamesDao.get(Region.JP, 19L);
 
         // THEN
         assertNotNull(result);

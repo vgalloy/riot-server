@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
-
-import vgalloy.riot.api.client.ratelimite.model.RateLimit;
-import vgalloy.riot.api.service.RiotApi;
-import vgalloy.riot.api.service.RiotApiKey;
+import vgalloy.riot.api.api.factory.RiotApiFactory;
+import vgalloy.riot.api.api.model.RateLimit;
+import vgalloy.riot.api.api.model.RiotApi;
+import vgalloy.riot.api.api.model.RiotApiKey;
 
 /**
  * @author Vincent Galloy
@@ -29,7 +29,7 @@ public class LoaderConfig {
      */
     @Bean
     public RiotApi riotApi() {
-        return new RiotApi().addGlobalRateLimit(new RateLimit(5, 10 * 1000), new RateLimit(400, 10 * 60 * 1000));
+        return RiotApiFactory.newRiotApi().addGlobalRateLimit(new RateLimit(5, 10 * 1000), new RateLimit(400, 10 * 60 * 1000));
     }
 
     /**

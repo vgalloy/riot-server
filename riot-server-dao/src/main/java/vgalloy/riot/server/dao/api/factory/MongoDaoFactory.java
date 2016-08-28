@@ -1,12 +1,11 @@
 package vgalloy.riot.server.dao.api.factory;
 
-import vgalloy.riot.api.rest.request.game.dto.RecentGamesDto;
-import vgalloy.riot.api.rest.request.mach.dto.MatchDetail;
-import vgalloy.riot.api.rest.request.matchlist.dto.MatchReference;
-import vgalloy.riot.api.rest.request.stats.dto.RankedStatsDto;
-import vgalloy.riot.api.rest.request.summoner.dto.SummonerDto;
+import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
+import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
 import vgalloy.riot.server.dao.api.dao.QueryDao;
-import vgalloy.riot.server.dao.api.dao.CommonDao;
+import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
+import vgalloy.riot.server.dao.api.dao.RecentGamesDao;
+import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchReferenceDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.RankedStatsDaoImpl;
@@ -35,7 +34,7 @@ public final class MongoDaoFactory {
      * @param databaseUrl the database url
      * @return the matchDetailDao
      */
-    public static CommonDao<MatchDetail> getMatchDetailDao(String databaseUrl) {
+    public static MatchDetailDao getMatchDetailDao(String databaseUrl) {
         return DaoFactory.getDao(MatchDetailDaoImpl.class, databaseUrl, "riot");
     }
 
@@ -45,7 +44,7 @@ public final class MongoDaoFactory {
      * @param databaseUrl the database url
      * @return the matchReferenceDao
      */
-    public static CommonDao<MatchReference> getMatchReferenceDao(String databaseUrl) {
+    public static MatchReferenceDao getMatchReferenceDao(String databaseUrl) {
         return DaoFactory.getDao(MatchReferenceDaoImpl.class, databaseUrl, "riot");
     }
 
@@ -55,7 +54,7 @@ public final class MongoDaoFactory {
      * @param databaseUrl the database url
      * @return the rankedStatsDao
      */
-    public static CommonDao<RankedStatsDto> getRankedStatsDao(String databaseUrl) {
+    public static RankedStatsDao getRankedStatsDao(String databaseUrl) {
         return DaoFactory.getDao(RankedStatsDaoImpl.class, databaseUrl, "riot");
     }
 
@@ -65,7 +64,7 @@ public final class MongoDaoFactory {
      * @param databaseUrl the database url
      * @return the RecentGamesDao
      */
-    public static CommonDao<RecentGamesDto> getRecentGamesDao(String databaseUrl) {
+    public static RecentGamesDao getRecentGamesDao(String databaseUrl) {
         return DaoFactory.getDao(RecentGamesDaoImpl.class, databaseUrl, "riot");
     }
 
@@ -75,7 +74,7 @@ public final class MongoDaoFactory {
      * @param databaseUrl the database url
      * @return the SummonerDao
      */
-    public static CommonDao<SummonerDto> getSummonerDao(String databaseUrl) {
+    public static SummonerDao getSummonerDao(String databaseUrl) {
         return DaoFactory.getDao(SummonerDaoImpl.class, databaseUrl, "riot");
     }
 
