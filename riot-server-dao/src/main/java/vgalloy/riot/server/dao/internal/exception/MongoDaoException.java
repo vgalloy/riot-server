@@ -7,6 +7,7 @@ package vgalloy.riot.server.dao.internal.exception;
 public class MongoDaoException extends RuntimeException {
 
     public static final String UNABLE_TO_SAVE_THE_DTO = "Unable to save the dto";
+
     private static final long serialVersionUID = -6622631875525803695L;
 
     /**
