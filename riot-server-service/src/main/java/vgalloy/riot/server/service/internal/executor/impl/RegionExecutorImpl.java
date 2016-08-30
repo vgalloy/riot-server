@@ -98,6 +98,7 @@ public class RegionExecutorImpl implements RegionExecutor {
      * @param <DTO> the dto type
      * @return the dto
      */
+    // TODO retry ?
     private <DTO> DTO execute(Query<DTO> query) {
         DTO result = null;
         try {

@@ -29,6 +29,7 @@ public class LastGame implements Serializable {
      * @param death the number of death
      * @param assist the number of assist
      */
+    // TODO builder ?
     public LastGame(Region region, long gameId, int championId, long kill, long death, long assist) {
         this.region = Objects.requireNonNull(region);
         this.gameId = gameId;

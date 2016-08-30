@@ -45,9 +45,9 @@ public final class MatchDetailHelper {
      */
     public static Optional<Participant> getParticipant(MatchDetail matchDetail, long summonerId) {
         Optional<Integer> integer = getParticipantId(matchDetail, summonerId);
-        if(integer.isPresent()) {
-            for(Participant participant : matchDetail.getParticipants()) {
-                if(integer.get().equals(participant.getParticipantId())) {
+        if (integer.isPresent()) {
+            for (Participant participant : matchDetail.getParticipants()) {
+                if (integer.get().equals(participant.getParticipantId())) {
                     return Optional.of(participant);
                 }
             }
