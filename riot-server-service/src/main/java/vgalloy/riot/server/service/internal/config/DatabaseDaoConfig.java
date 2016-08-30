@@ -3,13 +3,12 @@ package vgalloy.riot.server.service.internal.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import vgalloy.riot.api.api.dto.game.RecentGamesDto;
-import vgalloy.riot.api.api.dto.mach.MatchDetail;
-import vgalloy.riot.api.api.dto.matchlist.MatchReference;
-import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
-import vgalloy.riot.api.api.dto.summoner.SummonerDto;
-import vgalloy.riot.server.dao.api.dao.CommonDao;
+import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
+import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
 import vgalloy.riot.server.dao.api.dao.QueryDao;
+import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
+import vgalloy.riot.server.dao.api.dao.RecentGamesDao;
+import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
 
 /**
@@ -28,7 +27,7 @@ public class DatabaseDaoConfig {
      * @return the match detail dao
      */
     @Bean
-    public CommonDao<MatchDetail> matchDetailDao() {
+    public MatchDetailDao matchDetailDao() {
         return MongoDaoFactory.getMatchDetailDao(databaseDaoUrl);
     }
 
@@ -38,7 +37,7 @@ public class DatabaseDaoConfig {
      * @return the match reference dao
      */
     @Bean
-    public CommonDao<MatchReference> matchReferenceDao() {
+    public MatchReferenceDao matchReferenceDao() {
         return MongoDaoFactory.getMatchReferenceDao(databaseDaoUrl);
     }
 
@@ -48,7 +47,7 @@ public class DatabaseDaoConfig {
      * @return the ranked stats dao
      */
     @Bean
-    public CommonDao<RankedStatsDto> rankedStatsDao() {
+    public RankedStatsDao rankedStatsDao() {
         return MongoDaoFactory.getRankedStatsDao(databaseDaoUrl);
     }
 
@@ -58,7 +57,7 @@ public class DatabaseDaoConfig {
      * @return the ranked stats dao
      */
     @Bean
-    public CommonDao<RecentGamesDto> recentGamesDao() {
+    public RecentGamesDao recentGamesDao() {
         return MongoDaoFactory.getRecentGamesDao(databaseDaoUrl);
     }
 
@@ -68,7 +67,7 @@ public class DatabaseDaoConfig {
      * @return the summoner dao
      */
     @Bean
-    public CommonDao<SummonerDto> summonerDao() {
+    public SummonerDao summonerDao() {
         return MongoDaoFactory.getSummonerDao(databaseDaoUrl);
     }
 

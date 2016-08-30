@@ -18,6 +18,5 @@ public interface Executor {
      * @param <DTO>    the dto type
      * @return the dto
      */
-    // TODO Can executor implements riotApi interface ?
     <DTO> DTO execute(Query<DTO> request, Region region, int priority);
 }
