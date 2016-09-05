@@ -73,6 +73,28 @@ public class SummonerDaoImplITest {
         assertEquals(summoner, result.get().getItem());
     }
 
+    @Test
+    public void testSummonerByName() {
+        // GIVEN
+        SummonerDto summoner = new SummonerDto();
+        summoner.setName("NAME");
+        summoner.setId(2);
+        summonerDao.save(Region.EUW, 2L, summoner);
+
+        // WHEN
+        Optional<SummonerDto> resultEmpty = summonerDao.getSummonerByName(Region.EUW, "azeR");
+        Optional<SummonerDto> resultEmpty2 = summonerDao.getSummonerByName(Region.BR, summoner.getName());
+        Optional<SummonerDto> result = summonerDao.getSummonerByName(Region.EUW, summoner.getName());
+
+        // THEN
+        assertFalse(resultEmpty.isPresent());
+        assertFalse(resultEmpty2.isPresent());
+        assertNotNull(result);
+        assertTrue(result.isPresent());
+        assertEquals(summoner, result.get());
+    }
+
+
     @AfterClass
     public static void tearDown() {
         PROCESS.stop();

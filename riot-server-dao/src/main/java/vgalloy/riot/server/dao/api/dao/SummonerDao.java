@@ -1,6 +1,9 @@
 package vgalloy.riot.server.dao.api.dao;
 
+import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
+
+import java.util.Optional;
 
 /**
  * @author Vincent Galloy
@@ -8,4 +11,12 @@ import vgalloy.riot.api.api.dto.summoner.SummonerDto;
  */
 public interface SummonerDao extends CommonDao<SummonerDto> {
 
+    /**
+     * Get the summoner by name and region.
+     *
+     * @param region       the region
+     * @param summonerName the summoner name
+     * @return the summoner
+     */
+    Optional<SummonerDto> getSummonerByName(Region region, String summonerName);
 }

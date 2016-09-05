@@ -40,13 +40,13 @@ public abstract class AbstractCommonDao<DTO, DATA_OBJECT extends DataObject<DTO>
         Objects.requireNonNull(databaseUrl);
         Objects.requireNonNull(databaseName);
         Objects.requireNonNull(collectionName);
-        this.dataObjectClass = (Class<DATA_OBJECT>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        dataObjectClass = (Class<DATA_OBJECT>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         Objects.requireNonNull(dataObjectClass);
         MongoClient mongoClient = MongoClientFactory.get(databaseUrl);
         DB mongoDatabase = mongoClient.getDB(databaseName);
         DBCollection dbCollection = mongoDatabase.getCollection(collectionName);
         collection = JacksonDBCollection.wrap(dbCollection, dataObjectClass, String.class);
-        this.genericDao = Objects.requireNonNull(new GenericDaoImpl<>(collection));
+        genericDao = Objects.requireNonNull(new GenericDaoImpl<>(collection));
     }
 
     @Override
