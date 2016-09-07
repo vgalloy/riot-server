@@ -110,11 +110,14 @@ public class MatchDetailDaoImplITest {
         matchDetailDao.save(Region.EUW, 10_003L, matchDetail3);
 
         // THEN
-        List<MatchDetail> result = matchDetailDao.getLastMatchDetail(Region.BR, 105246);
+        List<MatchDetail> result = matchDetailDao.getLastMatchDetail(Region.BR, 105246, 10);
         assertEquals(0, result.size());
 
-        result = matchDetailDao.getLastMatchDetail(Region.EUW, correctPlayerId);
+        result = matchDetailDao.getLastMatchDetail(Region.EUW, correctPlayerId, 10);
         assertEquals(2, result.size());
+
+        result = matchDetailDao.getLastMatchDetail(Region.EUW, correctPlayerId, 1);
+        assertEquals(1, result.size());
     }
 
     private MatchDetail createMatchDetail(long matchId, long summonerId) {

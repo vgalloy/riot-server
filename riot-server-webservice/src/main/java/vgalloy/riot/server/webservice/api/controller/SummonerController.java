@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
@@ -66,11 +67,12 @@ public class SummonerController {
      *
      * @param region     the region
      * @param summonerId the summoner id
+     * @param limit      the limit of result to fetch (default 10)
      * @return the last games
      */
     @RequestMapping(value = "{region}/summoner/{summonerId}/lastGames", method = RequestMethod.GET)
-    public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId) {
-        return summonerService.getLastGames(region, summonerId);
+    public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId, @RequestParam(value = "limit", required = false) Integer limit) {
+        return summonerService.getLastGames(region, summonerId, Optional.ofNullable(limit));
     }
 
     /**

@@ -39,9 +39,9 @@ public final class MatchDetailDaoImpl extends AbstractCommonDao<MatchDetail, Mat
     }
 
     @Override
-    public List<MatchDetail> getLastMatchDetail(Region region, long summonerId) {
+    public List<MatchDetail> getLastMatchDetail(Region region, long summonerId, int limit) {
         List<MatchDetail> result = new ArrayList<>();
-        DBCursor<MatchDetailDo> queryResult = collection.find(DBQuery.is("item.participantIdentities.player.summonerId", summonerId));
+        DBCursor<MatchDetailDo> queryResult = collection.find(DBQuery.is("item.participantIdentities.player.summonerId", summonerId)).limit(limit);
         result.addAll(queryResult.toArray().stream().map(DataObject::getItem).collect(Collectors.toList()));
         return result;
     }

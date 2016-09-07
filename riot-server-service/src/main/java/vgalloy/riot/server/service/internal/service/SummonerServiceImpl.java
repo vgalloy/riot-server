@@ -27,8 +27,9 @@ public class SummonerServiceImpl extends AbstractService<SummonerDto> implements
     private MatchDetailDao matchDetailDao;
 
     @Override
-    public List<LastGame> getLastGames(Region region, long summonerId) {
-        return matchDetailDao.getLastMatchDetail(region, summonerId).stream()
+    public List<LastGame> getLastGames(Region region, long summonerId, Optional<Integer> optionalLimit) {
+        int limit = optionalLimit.orElse(10);
+        return matchDetailDao.getLastMatchDetail(region, summonerId, limit).stream()
                 .map(e -> LastGameMapper.map(e, summonerId))
                 .collect(Collectors.toList());
     }

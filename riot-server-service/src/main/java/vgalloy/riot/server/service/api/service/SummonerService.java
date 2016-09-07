@@ -18,9 +18,10 @@ public interface SummonerService extends CommonService<SummonerDto> {
      *
      * @param region     the region
      * @param summonerId the summoner id
+     * @param limit      the limit of result to fetch
      * @return the last games
      */
-    List<LastGame> getLastGames(Region region, long summonerId);
+    List<LastGame> getLastGames(Region region, long summonerId, Optional<Integer> limit);
 
     /**
      * Get the summoner by name and region.
