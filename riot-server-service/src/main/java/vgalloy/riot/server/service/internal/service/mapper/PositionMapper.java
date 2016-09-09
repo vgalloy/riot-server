@@ -17,12 +17,22 @@ public final class PositionMapper {
     }
 
     /**
-     * Convert an entity into a model.
+     * Convert a data object into a model.
      *
-     * @param daoPosition the position
+     * @param doPosition the position
      * @return the model
      */
-    public static Position map(vgalloy.riot.server.dao.api.entity.Position daoPosition) {
-        return new Position(daoPosition.getX(), daoPosition.getY());
+    public static Position map(vgalloy.riot.server.dao.api.entity.Position doPosition) {
+        return new Position(doPosition.getX(), doPosition.getY());
+    }
+
+    /**
+     * Convert a dto object into a model.
+     *
+     * @param dtoPosition the position
+     * @return the model
+     */
+    public static Position map(vgalloy.riot.api.api.dto.mach.Position dtoPosition) {
+        return new Position(dtoPosition.getPositionX(), dtoPosition.getPositionY());
     }
 }

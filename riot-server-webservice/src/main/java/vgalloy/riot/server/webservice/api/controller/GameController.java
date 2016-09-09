@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.service.api.model.Model;
+import vgalloy.riot.server.service.api.model.PlayerTimeline;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -33,12 +35,28 @@ public class GameController {
      * @param matchId the matchId
      * @return the match detail
      */
-    @RequestMapping(value = "/game/{region}/{matchId}", method = RequestMethod.GET)
-    public Model<MatchDetail> getMatchDetail(@PathVariable Region region, @PathVariable long matchId) {
+    @RequestMapping(value = "/game/{region}/{matchId}/detail", method = RequestMethod.GET)
+    public Model<MatchDetail> getMatchDetail(@PathVariable Region region, @PathVariable Long matchId) {
         LOGGER.info("[ GET ] : region : {}, matchId : {}", region, matchId);
-        Optional<Model<MatchDetail>> matchDetailEntity = matchDetailService.get(region, matchId);
-        if (matchDetailEntity.isPresent()) {
-            return matchDetailEntity.get();
+        Optional<Model<MatchDetail>> optionalResult = matchDetailService.get(region, matchId);
+        if (optionalResult.isPresent()) {
+            return optionalResult.get();
+        }
+        return null;
+    }
+
+    /**
+     * Get the players information during the game.
+     *
+     * @param region  the region of the game
+     * @param matchId the match id
+     * @return the players information as a list
+     */
+    @RequestMapping(value = "/game/{region}/{matchId}/timelines", method = RequestMethod.GET)
+    public List<PlayerTimeline> getTimelines(@PathVariable Region region, @PathVariable Long matchId) {
+        Optional<List<PlayerTimeline>> optionalResult = matchDetailService.getTimeLines(region, matchId);
+        if (optionalResult.isPresent()) {
+            return optionalResult.get();
         }
         return null;
     }

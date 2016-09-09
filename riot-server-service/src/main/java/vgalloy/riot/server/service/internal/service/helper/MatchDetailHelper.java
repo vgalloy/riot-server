@@ -23,12 +23,12 @@ public final class MatchDetailHelper {
     /**
      * Get the participant id. Empty if the player doesn't play this game.
      *
-     * @param matchDetail the match detail
-     * @param summonerId  the summoner id
+     * @param participantIdentities the participant list
+     * @param summonerId            the summoner id
      * @return the participant id
      */
-    private static Optional<Integer> getParticipantId(MatchDetail matchDetail, long summonerId) {
-        for (ParticipantIdentity participantIdentity : matchDetail.getParticipantIdentities()) {
+    private static Optional<Integer> getParticipantId(Iterable<ParticipantIdentity> participantIdentities, long summonerId) {
+        for (ParticipantIdentity participantIdentity : participantIdentities) {
             if (summonerId == participantIdentity.getPlayer().getSummonerId()) {
                 return Optional.of(participantIdentity.getParticipantId());
             }
@@ -44,7 +44,7 @@ public final class MatchDetailHelper {
      * @return the participant
      */
     public static Optional<Participant> getParticipant(MatchDetail matchDetail, long summonerId) {
-        Optional<Integer> integer = getParticipantId(matchDetail, summonerId);
+        Optional<Integer> integer = getParticipantId(matchDetail.getParticipantIdentities(), summonerId);
         if (integer.isPresent()) {
             for (Participant participant : matchDetail.getParticipants()) {
                 if (integer.get().equals(participant.getParticipantId())) {
