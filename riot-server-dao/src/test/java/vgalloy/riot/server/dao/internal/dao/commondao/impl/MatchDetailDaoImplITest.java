@@ -113,6 +113,9 @@ public class MatchDetailDaoImplITest {
         List<MatchDetail> result = matchDetailDao.getLastMatchDetail(Region.BR, 105246, 10);
         assertEquals(0, result.size());
 
+        result = matchDetailDao.getLastMatchDetail(Region.BR, correctPlayerId, 10);
+        assertEquals(0, result.size());
+
         result = matchDetailDao.getLastMatchDetail(Region.EUW, correctPlayerId, 10);
         assertEquals(2, result.size());
 
