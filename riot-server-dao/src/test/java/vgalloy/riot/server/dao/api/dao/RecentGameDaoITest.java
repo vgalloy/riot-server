@@ -8,13 +8,13 @@ import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version.Main;
 import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.game.GameDto;
 import vgalloy.riot.api.api.dto.game.RecentGamesDto;
-import vgalloy.riot.server.dao.api.dao.RecentGamesDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
 

@@ -1,14 +1,7 @@
 package vgalloy.riot.server.service.internal.executor.impl;
 
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Random;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.query.Query;
 import vgalloy.riot.api.internal.client.filter.RiotRateLimitExceededException;
@@ -16,6 +9,12 @@ import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.executor.RegionExecutor;
 import vgalloy.riot.server.service.internal.executor.model.Request;
 import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
+
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.Random;
 
 /**
  * @author Vincent Galloy
@@ -98,24 +97,25 @@ public class RegionExecutorImpl implements RegionExecutor {
      * @param <DTO> the dto type
      * @return the dto
      */
-    // TODO retry ?
     private <DTO> DTO execute(Query<DTO> query) {
-        DTO result = null;
-        try {
-            result = query.execute();
-            sleepingTime = Math.max(sleepingTime / 2, DEFAULT_SLEEPING_TIME);
-        } catch (RiotRateLimitExceededException e) {
-            LOGGER.warn("{} : {}, sleepingTime = {}", RegionPrinter.getRegion(region), e.toString(), sleepingTime);
-            if (e.getRetryAfter().isPresent()) {
-                throw new ServiceException(e);
-            }
+        for (int attempt = 1; attempt < 4; attempt++) {
             try {
-                Thread.sleep(sleepingTime);
-            } catch (InterruptedException e1) {
-                throw new ServiceException(e1);
+                DTO result = query.execute();
+                sleepingTime = Math.max(sleepingTime / 2, DEFAULT_SLEEPING_TIME);
+                return result;
+            } catch (RiotRateLimitExceededException e) {
+                LOGGER.warn("{} : {}, sleepingTime = {}, attempt : {}", RegionPrinter.getRegion(region), e.toString(), sleepingTime, attempt);
+                if (e.getRetryAfter().isPresent()) {
+                    throw new ServiceException(e);
+                }
+                try {
+                    Thread.sleep(sleepingTime);
+                } catch (InterruptedException e1) {
+                    throw new ServiceException(e1);
+                }
+                sleepingTime *= 4;
             }
-            sleepingTime *= 4;
         }
-        return result;
+        return null;
     }
 }
