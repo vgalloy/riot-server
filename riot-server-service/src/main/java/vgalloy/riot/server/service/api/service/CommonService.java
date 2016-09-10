@@ -1,9 +1,9 @@
 package vgalloy.riot.server.service.api.service;
 
+import java.util.Optional;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.service.api.model.Model;
-
-import java.util.Optional;
 
 /**
  * @author Vincent Galloy

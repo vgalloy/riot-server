@@ -1,10 +1,10 @@
 package vgalloy.riot.server.service.internal.service.helper;
 
+import java.util.Optional;
+
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.Participant;
 import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
-
-import java.util.Optional;
 
 /**
  * @author Vincent Galloy

@@ -50,6 +50,12 @@ public class RecentGameDaoImplITest {
         PROCESS = EXECUTABLE.start();
     }
 
+    @AfterClass
+    public static void tearDown() {
+        PROCESS.stop();
+        EXECUTABLE.stop();
+    }
+
     @Test
     public void testInsertOk() {
         // GIVEN
@@ -67,11 +73,5 @@ public class RecentGameDaoImplITest {
         assertNotNull(result);
         assertTrue(result.isPresent());
         assertEquals(recentGamesDto, result.get().getItem());
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        PROCESS.stop();
-        EXECUTABLE.stop();
     }
 }

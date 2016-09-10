@@ -37,9 +37,9 @@ public final class WinRateQuery {
      * // TODO On fait une requête par jour. Il faudrait en avoir une en tout.
      *
      * @param mongoDatabase the mongo database
-     * @param championId the champion id
-     * @param startDate  the start date (included)
-     * @param endDate    the end date (excluded)
+     * @param championId    the champion id
+     * @param startDate     the start date (included)
+     * @param endDate       the end date (excluded)
      * @return the win rate of the champion. Each entry is given with a timestamp.
      */
     public static Map<LocalDate, WinRate> getWinRate(MongoDatabase mongoDatabase, int championId, LocalDate startDate, LocalDate endDate) {

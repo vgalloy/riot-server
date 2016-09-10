@@ -54,6 +54,12 @@ public class RankedStatsDaoImplITest {
         PROCESS = EXECUTABLE.start();
     }
 
+    @AfterClass
+    public static void tearDown() {
+        PROCESS.stop();
+        EXECUTABLE.stop();
+    }
+
     @Test
     public void testNullRegion() {
         try {
@@ -159,11 +165,5 @@ public class RankedStatsDaoImplITest {
         assertTrue(result.isPresent());
         System.out.printf(result.toString());
         assertEquals(rankedStatsDto, result.get().getItem());
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        PROCESS.stop();
-        EXECUTABLE.stop();
     }
 }

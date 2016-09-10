@@ -1,5 +1,10 @@
 package vgalloy.riot.server.service.internal.service.mapper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.Frame;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
@@ -8,11 +13,6 @@ import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
 import vgalloy.riot.api.api.dto.mach.Timeline;
 import vgalloy.riot.server.service.api.model.PlayerTimeline;
 import vgalloy.riot.server.service.api.model.TimedEvent;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Vincent Galloy

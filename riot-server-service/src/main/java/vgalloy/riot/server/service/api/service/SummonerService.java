@@ -1,11 +1,11 @@
 package vgalloy.riot.server.service.api.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.service.api.model.LastGame;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Vincent Galloy

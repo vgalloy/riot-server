@@ -1,10 +1,10 @@
 package vgalloy.riot.server.service.api.model;
 
-import vgalloy.riot.api.api.constant.Region;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import vgalloy.riot.api.api.constant.Region;
 
 /**
  * @author Vincent Galloy

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
+
 import vgalloy.riot.api.api.factory.RiotApiFactory;
 import vgalloy.riot.api.api.model.RateLimit;
 import vgalloy.riot.api.api.model.RiotApi;

@@ -1,6 +1,7 @@
 package vgalloy.riot.server.dao.internal.entity;
 
 import org.junit.Test;
+
 import vgalloy.riot.api.api.constant.Region;
 
 import static org.junit.Assert.assertEquals;

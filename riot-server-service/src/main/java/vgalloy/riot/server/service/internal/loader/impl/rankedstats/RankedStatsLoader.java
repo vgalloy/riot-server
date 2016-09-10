@@ -1,7 +1,11 @@
 package vgalloy.riot.server.service.internal.loader.impl.rankedstats;
 
+import java.util.Objects;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
@@ -13,9 +17,6 @@ import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
 import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
-
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Vincent Galloy

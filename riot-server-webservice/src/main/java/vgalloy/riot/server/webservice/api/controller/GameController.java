@@ -1,5 +1,8 @@
 package vgalloy.riot.server.webservice.api.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,14 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.model.PlayerTimeline;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Vincent Galloy

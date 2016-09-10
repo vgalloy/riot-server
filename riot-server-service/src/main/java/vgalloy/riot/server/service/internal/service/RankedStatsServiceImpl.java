@@ -1,6 +1,7 @@
 package vgalloy.riot.server.service.internal.service;
 
 import org.springframework.stereotype.Component;
+
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 
@@ -10,4 +11,5 @@ import vgalloy.riot.server.service.api.service.RankedStatsService;
  */
 @Component
 public class RankedStatsServiceImpl extends AbstractService<RankedStatsDto> implements RankedStatsService {
+
 }

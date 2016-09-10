@@ -1,11 +1,11 @@
 package vgalloy.riot.server.dao.internal.dao.factory;
 
-import com.mongodb.MongoClient;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+
+import com.mongodb.MongoClient;
 
 /**
  * @author Vincent Galloy

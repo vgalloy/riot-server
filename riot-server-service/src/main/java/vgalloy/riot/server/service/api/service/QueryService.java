@@ -1,9 +1,9 @@
 package vgalloy.riot.server.service.api.service;
 
-import vgalloy.riot.server.service.api.model.Position;
-
 import java.util.List;
 import java.util.Map;
+
+import vgalloy.riot.server.service.api.model.Position;
 
 /**
  * @author Vincent Galloy

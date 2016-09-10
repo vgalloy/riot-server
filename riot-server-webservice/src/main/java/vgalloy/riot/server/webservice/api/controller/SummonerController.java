@@ -1,11 +1,15 @@
 package vgalloy.riot.server.webservice.api.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
@@ -15,9 +19,6 @@ import vgalloy.riot.server.service.api.model.Position;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Vincent Galloy

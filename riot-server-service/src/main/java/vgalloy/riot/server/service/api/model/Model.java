@@ -1,9 +1,9 @@
 package vgalloy.riot.server.service.api.model;
 
-import vgalloy.riot.api.api.constant.Region;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import vgalloy.riot.api.api.constant.Region;
 
 /**
  * @author Vincent Galloy

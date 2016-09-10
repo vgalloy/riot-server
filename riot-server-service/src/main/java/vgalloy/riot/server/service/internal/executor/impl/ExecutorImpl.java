@@ -1,6 +1,11 @@
 package vgalloy.riot.server.service.internal.executor.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 import org.springframework.stereotype.Component;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.model.RiotApiKey;
 import vgalloy.riot.api.api.query.AbstractQuery;
@@ -8,10 +13,6 @@ import vgalloy.riot.api.api.query.Query;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.executor.RegionExecutor;
 import vgalloy.riot.server.service.internal.executor.model.Request;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Vincent Galloy

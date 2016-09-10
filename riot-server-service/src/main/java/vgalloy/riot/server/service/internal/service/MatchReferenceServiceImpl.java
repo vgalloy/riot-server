@@ -1,6 +1,7 @@
 package vgalloy.riot.server.service.internal.service;
 
 import org.springframework.stereotype.Component;
+
 import vgalloy.riot.api.api.dto.matchlist.MatchReference;
 import vgalloy.riot.server.service.api.service.MatchReferenceService;
 
@@ -10,4 +11,5 @@ import vgalloy.riot.server.service.api.service.MatchReferenceService;
  */
 @Component
 public class MatchReferenceServiceImpl extends AbstractService<MatchReference> implements MatchReferenceService {
+
 }

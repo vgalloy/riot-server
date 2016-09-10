@@ -48,6 +48,12 @@ public class SummonerDaoImplITest {
         PROCESS = EXECUTABLE.start();
     }
 
+    @AfterClass
+    public static void tearDown() {
+        PROCESS.stop();
+        EXECUTABLE.stop();
+    }
+
     @Test
     public void testRandomFalse() {
         // WHEN
@@ -93,12 +99,5 @@ public class SummonerDaoImplITest {
         assertNotNull(result);
         assertTrue(result.isPresent());
         assertEquals(summoner, result.get());
-    }
-
-
-    @AfterClass
-    public static void tearDown() {
-        PROCESS.stop();
-        EXECUTABLE.stop();
     }
 }

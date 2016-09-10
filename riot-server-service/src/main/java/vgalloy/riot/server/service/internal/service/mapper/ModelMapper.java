@@ -1,10 +1,10 @@
 package vgalloy.riot.server.service.internal.service.mapper;
 
-import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.service.api.model.Model;
-
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+
+import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.service.api.model.Model;
 
 /**
  * @author Vincent Galloy

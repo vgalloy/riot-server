@@ -1,7 +1,11 @@
 package vgalloy.riot.server.service.internal.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
@@ -9,9 +13,6 @@ import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.service.api.model.PlayerTimeline;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.internal.service.mapper.HistoryMapper;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Vincent Galloy

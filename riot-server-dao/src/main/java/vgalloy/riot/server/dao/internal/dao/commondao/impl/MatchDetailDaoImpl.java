@@ -1,16 +1,17 @@
 package vgalloy.riot.server.dao.internal.dao.commondao.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.mongojack.DBCursor;
 import org.mongojack.DBQuery;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
 import vgalloy.riot.server.dao.internal.entity.dataobject.MatchDetailDo;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Vincent Galloy

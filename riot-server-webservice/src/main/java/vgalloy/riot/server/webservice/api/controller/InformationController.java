@@ -1,16 +1,17 @@
 package vgalloy.riot.server.webservice.api.controller;
 
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import vgalloy.riot.server.service.api.model.LoaderInformation;
 import vgalloy.riot.server.service.internal.executor.Runner;
-
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 /**
  * @author Vincent Galloy

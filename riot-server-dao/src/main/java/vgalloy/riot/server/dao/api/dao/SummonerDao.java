@@ -1,9 +1,9 @@
 package vgalloy.riot.server.dao.api.dao;
 
+import java.util.Optional;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
-
-import java.util.Optional;
 
 /**
  * @author Vincent Galloy

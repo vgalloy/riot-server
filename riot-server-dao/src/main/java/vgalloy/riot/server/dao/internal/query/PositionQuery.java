@@ -32,8 +32,8 @@ public final class PositionQuery {
      * Get the position of a summoner during all game played with the given champion.
      *
      * @param mongoDatabase the mongo database
-     * @param summonerId the summoner id
-     * @param championId the champion id
+     * @param summonerId    the summoner id
+     * @param championId    the champion id
      * @return a list with all the game position. Each game is defined as a list of position
      */
     public static List<List<Position>> getPosition(MongoDatabase mongoDatabase, long summonerId, int championId) {

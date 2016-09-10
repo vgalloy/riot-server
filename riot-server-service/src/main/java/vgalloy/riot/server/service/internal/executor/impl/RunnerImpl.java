@@ -1,6 +1,12 @@
 package vgalloy.riot.server.service.internal.executor.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.matchlist.MatchReference;
@@ -16,11 +22,6 @@ import vgalloy.riot.server.service.internal.loader.impl.matchdetail.MatchDetailL
 import vgalloy.riot.server.service.internal.loader.impl.matchdetail.PrivilegedLoader;
 import vgalloy.riot.server.service.internal.loader.impl.matchreference.MatchReferenceLoader;
 import vgalloy.riot.server.service.internal.loader.impl.rankedstats.RankedStatsLoader;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Vincent Galloy

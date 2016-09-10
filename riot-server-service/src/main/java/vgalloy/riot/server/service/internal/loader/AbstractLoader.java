@@ -15,11 +15,10 @@ import vgalloy.riot.server.service.internal.executor.Executor;
  */
 public abstract class AbstractLoader implements Loader {
 
-    private final Logger defaultLogger = LoggerFactory.getLogger(getClass());
-
     protected final LoaderInformation loaderInformation = new LoaderInformation();
     protected final RiotApi riotApi;
     protected final Executor executor;
+    private final Logger defaultLogger = LoggerFactory.getLogger(getClass());
 
     /**
      * Constructor.

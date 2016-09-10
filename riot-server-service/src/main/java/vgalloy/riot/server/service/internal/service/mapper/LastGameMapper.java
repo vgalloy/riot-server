@@ -1,13 +1,13 @@
 package vgalloy.riot.server.service.internal.service.mapper;
 
+import java.util.Optional;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.Participant;
 import vgalloy.riot.server.service.api.model.LastGame;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.service.helper.MatchDetailHelper;
-
-import java.util.Optional;
 
 /**
  * @author Vincent Galloy

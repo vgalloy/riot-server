@@ -22,12 +22,13 @@ public class LastGame implements Serializable {
 
     /**
      * Constructor.
-     * @param region the region
-     * @param gameId the game id
+     *
+     * @param region     the region
+     * @param gameId     the game id
      * @param championId the champion id
-     * @param kill the number of kill
-     * @param death the number of death
-     * @param assist the number of assist
+     * @param kill       the number of kill
+     * @param death      the number of death
+     * @param assist     the number of assist
      */
     // TODO builder ?
     public LastGame(Region region, long gameId, int championId, long kill, long death, long assist) {

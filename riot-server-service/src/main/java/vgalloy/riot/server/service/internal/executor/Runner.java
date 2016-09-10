@@ -1,8 +1,8 @@
 package vgalloy.riot.server.service.internal.executor;
 
-import vgalloy.riot.server.service.internal.loader.Loader;
-
 import java.util.List;
+
+import vgalloy.riot.server.service.internal.loader.Loader;
 
 /**
  * @author Vincent Galloy

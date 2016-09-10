@@ -1,14 +1,18 @@
 package vgalloy.riot.server.service.internal.loader.impl.matchdetail;
 
+import java.util.Objects;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
-import vgalloy.riot.api.api.model.RiotApi;
-import vgalloy.riot.api.api.query.Query;
 import vgalloy.riot.api.api.dto.matchlist.MatchReference;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
+import vgalloy.riot.api.api.model.RiotApi;
+import vgalloy.riot.api.api.query.Query;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
@@ -16,9 +20,6 @@ import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
 import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
 import vgalloy.riot.server.service.internal.loader.mapper.SummonerDtoMapper;
-
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Vincent Galloy

@@ -2,6 +2,7 @@ package vgalloy.riot.server.service.api.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
 import vgalloy.riot.server.service.internal.config.DatabaseDaoConfig;
 import vgalloy.riot.server.service.internal.config.InternalServiceConfig;
 import vgalloy.riot.server.service.internal.config.LoaderConfig;

@@ -26,14 +26,15 @@ import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
  */
 public abstract class AbstractCommonDao<DTO, DATA_OBJECT extends DataObject<DTO>> implements CommonDao<DTO> {
 
+    protected final JacksonDBCollection<DATA_OBJECT, String> collection;
     private final GenericDao<DTO, DATA_OBJECT> genericDao;
     private final Class<DATA_OBJECT> dataObjectClass;
-    protected final JacksonDBCollection<DATA_OBJECT, String> collection;
 
     /**
      * Constructor.
-     * @param databaseUrl the database url
-     * @param databaseName the database name
+     *
+     * @param databaseUrl    the database url
+     * @param databaseName   the database name
      * @param collectionName the collection name
      */
     /*package protected*/ AbstractCommonDao(String databaseUrl, String databaseName, String collectionName) {

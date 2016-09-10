@@ -3,6 +3,7 @@ package vgalloy.riot.server.service.internal.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
 import vgalloy.riot.server.dao.api.dao.QueryDao;

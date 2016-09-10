@@ -51,6 +51,12 @@ public class MatchDetailDaoImplITest {
         PROCESS = EXECUTABLE.start();
     }
 
+    @AfterClass
+    public static void tearDown() {
+        PROCESS.stop();
+        EXECUTABLE.stop();
+    }
+
     @Test
     public void testInsertWithCorrectSimpleMatchDetailDto() {
         // GIVEN
@@ -140,11 +146,5 @@ public class MatchDetailDaoImplITest {
         matchDetail.setMatchId(matchId);
 
         return matchDetail;
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        PROCESS.stop();
-        EXECUTABLE.stop();
     }
 }

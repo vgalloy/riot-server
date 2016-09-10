@@ -1,8 +1,8 @@
 package vgalloy.riot.server.service.internal.executor.model;
 
-import vgalloy.riot.api.api.query.Query;
-
 import java.util.Objects;
+
+import vgalloy.riot.api.api.query.Query;
 
 /**
  * @author Vincent Galloy

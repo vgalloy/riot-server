@@ -1,10 +1,9 @@
 package vgalloy.riot.server.dao.api.entity;
 
-import vgalloy.riot.api.api.constant.Region;
-
 import java.io.Serializable;
 import java.util.Objects;
 
+import vgalloy.riot.api.api.constant.Region;
 
 /**
  * @author Vincent Galloy

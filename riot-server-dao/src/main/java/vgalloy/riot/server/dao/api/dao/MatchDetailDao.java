@@ -1,9 +1,9 @@
 package vgalloy.riot.server.dao.api.dao;
 
+import java.util.List;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
-
-import java.util.List;
 
 /**
  * @author Vincent Galloy

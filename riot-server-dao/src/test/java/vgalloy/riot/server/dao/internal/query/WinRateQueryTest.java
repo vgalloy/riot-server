@@ -56,6 +56,12 @@ public class WinRateQueryTest {
         PROCESS = EXECUTABLE.start();
     }
 
+    @AfterClass
+    public static void tearDown() {
+        PROCESS.stop();
+        EXECUTABLE.stop();
+    }
+
     @Test
     public void testWinRateDuringOneDay() {
         // GIVEN
@@ -72,7 +78,7 @@ public class WinRateQueryTest {
         input.add(createMatchDetail(startDay * 24 * 3600 - 300, createParticipant(7, true), createParticipant(8, true)));
 
         // WHEN
-        for(int i = 0; i < input.size(); i++) {
+        for (int i = 0; i < input.size(); i++) {
             matchDetailDao.save(Region.EUNE, (long) i + 1, input.get(i));
         }
 
@@ -98,7 +104,7 @@ public class WinRateQueryTest {
         input.add(createMatchDetail(startDay * 24 * 3600 - 300, createParticipant(7, true), createParticipant(8, true)));
 
         // WHEN
-        for(int i = 0; i < input.size(); i++) {
+        for (int i = 0; i < input.size(); i++) {
             matchDetailDao.save(Region.EUNE, (long) i + 1, input.get(i));
         }
 
@@ -117,7 +123,7 @@ public class WinRateQueryTest {
         input.add(createMatchDetail(startDay * 24 * 3600 + 465, createParticipant(7, false), createParticipant(8, false)));
 
         // WHEN
-        for(int i = 0; i < input.size(); i++) {
+        for (int i = 0; i < input.size(); i++) {
             matchDetailDao.save(Region.EUNE, (long) i + 1, input.get(i));
         }
 
@@ -152,11 +158,5 @@ public class WinRateQueryTest {
         participant.setStats(new ParticipantStats());
         participant.getStats().setWinner(winner);
         return participant;
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        PROCESS.stop();
-        EXECUTABLE.stop();
     }
 }
