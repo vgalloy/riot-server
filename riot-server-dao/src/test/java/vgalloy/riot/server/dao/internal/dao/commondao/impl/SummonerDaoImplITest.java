@@ -11,6 +11,7 @@ import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version.Main;
 import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -18,11 +19,6 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Vincent Galloy
@@ -43,7 +39,7 @@ public class SummonerDaoImplITest {
         MongodStarter starter = MongodStarter.getDefaultInstance();
         EXECUTABLE = starter.prepare(new MongodConfigBuilder()
                 .version(Main.V3_2)
-                .net(new Net(PORT, Network.localhostIsIPv6()))
+                .net(new Net(URL, PORT, Network.localhostIsIPv6()))
                 .build());
         PROCESS = EXECUTABLE.start();
     }
@@ -60,8 +56,8 @@ public class SummonerDaoImplITest {
         Optional<Entity<SummonerDto>> result = summonerDao.getRandom(Region.BR);
 
         // THEN
-        assertNotNull(result);
-        assertFalse(result.isPresent());
+        Assert.assertNotNull(result);
+        Assert.assertFalse(result.isPresent());
     }
 
     @Test
@@ -75,9 +71,9 @@ public class SummonerDaoImplITest {
         Optional<Entity<SummonerDto>> result = summonerDao.getRandom(Region.EUW);
 
         // THEN
-        assertNotNull(result);
-        assertTrue(result.isPresent());
-        assertEquals(summoner, result.get().getItem());
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.isPresent());
+        Assert.assertEquals(summoner, result.get().getItem());
     }
 
     @Test
@@ -94,10 +90,10 @@ public class SummonerDaoImplITest {
         Optional<SummonerDto> result = summonerDao.getSummonerByName(Region.EUW, summoner.getName());
 
         // THEN
-        assertFalse(resultEmpty.isPresent());
-        assertFalse(resultEmpty2.isPresent());
-        assertNotNull(result);
-        assertTrue(result.isPresent());
-        assertEquals(summoner, result.get());
+        Assert.assertFalse(resultEmpty.isPresent());
+        Assert.assertFalse(resultEmpty2.isPresent());
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.isPresent());
+        Assert.assertEquals(summoner, result.get());
     }
 }

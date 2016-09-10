@@ -29,13 +29,11 @@ import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoClientFactory;
 
-import static vgalloy.riot.server.dao.internal.query.WinRateQuery.getWinRate;
-
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 10/09/16.
  */
-public class WinRateQueryTest {
+public class WinRateQueryITest {
 
     private static final int PORT = 29006;
     private static final String URL = "localhost";
@@ -83,8 +81,8 @@ public class WinRateQueryTest {
         }
 
         // THEN
-        Assert.assertEquals(2, getWinRate(mongoDatabase, 7, LocalDate.ofEpochDay(startDay)).getLose());
-        Assert.assertEquals(1, getWinRate(mongoDatabase, 7, LocalDate.ofEpochDay(startDay)).getWin());
+        Assert.assertEquals(2, WinRateQuery.getWinRate(mongoDatabase, 7, LocalDate.ofEpochDay(startDay)).getLose());
+        Assert.assertEquals(1, WinRateQuery.getWinRate(mongoDatabase, 7, LocalDate.ofEpochDay(startDay)).getWin());
     }
 
     @Test

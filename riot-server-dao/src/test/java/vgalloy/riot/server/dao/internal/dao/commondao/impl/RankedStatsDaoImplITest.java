@@ -12,6 +12,7 @@ import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version.Main;
 import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -22,13 +23,6 @@ import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
 import vgalloy.riot.server.dao.internal.entity.Key;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * @author Vincent Galloy
@@ -49,7 +43,7 @@ public class RankedStatsDaoImplITest {
         MongodStarter starter = MongodStarter.getDefaultInstance();
         EXECUTABLE = starter.prepare(new MongodConfigBuilder()
                 .version(Main.V3_2)
-                .net(new Net(PORT, Network.localhostIsIPv6()))
+                .net(new Net(URL, PORT, Network.localhostIsIPv6()))
                 .build());
         PROCESS = EXECUTABLE.start();
     }
@@ -64,44 +58,44 @@ public class RankedStatsDaoImplITest {
     public void testNullRegion() {
         try {
             rankedStatsDao.get(null, 1L);
-            fail("No exception");
+            Assert.fail("No exception");
         } catch (Exception e) {
-            assertSame(NullPointerException.class, e.getClass());
-            assertEquals(Key.REGION_CAN_NOT_BE_NULL, e.getMessage());
+            Assert.assertSame(NullPointerException.class, e.getClass());
+            Assert.assertEquals(Key.REGION_CAN_NOT_BE_NULL, e.getMessage());
         }
     }
 
     @Test
     public void testEmptyDatabase() {
         Optional<Entity<RankedStatsDto>> rankedStatsEntity = rankedStatsDao.get(Region.BR, 1L);
-        assertFalse(rankedStatsEntity.isPresent());
+        Assert.assertFalse(rankedStatsEntity.isPresent());
     }
 
     @Test
     public void testRandomWithNullRegion() {
         try {
             rankedStatsDao.getRandom(null);
-            fail("No exception");
+            Assert.fail("No exception");
         } catch (Exception e) {
-            assertSame(NullPointerException.class, e.getClass());
-            assertEquals(GenericDaoImpl.REGION_CAN_NOT_BE_NULL, e.getMessage());
+            Assert.assertSame(NullPointerException.class, e.getClass());
+            Assert.assertEquals(GenericDaoImpl.REGION_CAN_NOT_BE_NULL, e.getMessage());
         }
     }
 
     @Test
     public void testEmptyRandom() {
         Optional<Entity<RankedStatsDto>> rankedStatsEntity = rankedStatsDao.getRandom(Region.KR);
-        assertFalse(rankedStatsEntity.isPresent());
+        Assert.assertFalse(rankedStatsEntity.isPresent());
     }
 
     @Test
     public void testInsertWithNullRankedStatsDto() {
         try {
             rankedStatsDao.save(Region.JP, 10L, null);
-            fail("No exception");
+            Assert.fail("No exception");
         } catch (Exception e) {
-            assertSame(MongoDaoException.class, e.getClass());
-            assertEquals(MongoDaoException.UNABLE_TO_SAVE_THE_DTO, e.getMessage());
+            Assert.assertSame(MongoDaoException.class, e.getClass());
+            Assert.assertEquals(MongoDaoException.UNABLE_TO_SAVE_THE_DTO, e.getMessage());
         }
     }
 
@@ -110,10 +104,10 @@ public class RankedStatsDaoImplITest {
         RankedStatsDto rankedStatsDto = new RankedStatsDto();
         try {
             rankedStatsDao.save(Region.EUW, null, rankedStatsDto);
-            fail("No exception");
+            Assert.fail("No exception");
         } catch (Exception e) {
-            assertSame(MongoDaoException.class, e.getClass());
-            assertEquals(MongoDaoException.UNABLE_TO_SAVE_THE_DTO, e.getMessage());
+            Assert.assertSame(MongoDaoException.class, e.getClass());
+            Assert.assertEquals(MongoDaoException.UNABLE_TO_SAVE_THE_DTO, e.getMessage());
         }
     }
 
@@ -128,8 +122,8 @@ public class RankedStatsDaoImplITest {
         Optional<Entity<RankedStatsDto>> result = rankedStatsDao.get(Region.EUW, 10L);
 
         // THEN
-        assertTrue(result.isPresent());
-        assertEquals(rankedStatsDto, result.get().getItem());
+        Assert.assertTrue(result.isPresent());
+        Assert.assertEquals(rankedStatsDto, result.get().getItem());
     }
 
     @Test
@@ -143,7 +137,7 @@ public class RankedStatsDaoImplITest {
         Optional<Entity<RankedStatsDto>> result = rankedStatsDao.getRandom(Region.EUW);
 
         // THEN
-        assertNotNull(result);
+        Assert.assertNotNull(result);
     }
 
     @Test
@@ -161,9 +155,8 @@ public class RankedStatsDaoImplITest {
         Optional<Entity<RankedStatsDto>> result = rankedStatsDao.get(Region.EUW, 12L);
 
         // THEN
-        assertNotNull(result);
-        assertTrue(result.isPresent());
-        System.out.printf(result.toString());
-        assertEquals(rankedStatsDto, result.get().getItem());
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.isPresent());
+        Assert.assertEquals(rankedStatsDto, result.get().getItem());
     }
 }

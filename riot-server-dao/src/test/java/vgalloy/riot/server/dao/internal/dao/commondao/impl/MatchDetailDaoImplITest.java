@@ -11,8 +11,8 @@ import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version.Main;
-import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -22,10 +22,6 @@ import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
 import vgalloy.riot.api.api.dto.mach.Player;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Vincent Galloy
@@ -46,7 +42,7 @@ public class MatchDetailDaoImplITest {
         MongodStarter starter = MongodStarter.getDefaultInstance();
         EXECUTABLE = starter.prepare(new MongodConfigBuilder()
                 .version(Main.V3_2)
-                .net(new Net(PORT, Network.localhostIsIPv6()))
+                .net(new Net(URL, PORT, false))
                 .build());
         PROCESS = EXECUTABLE.start();
     }
@@ -68,9 +64,9 @@ public class MatchDetailDaoImplITest {
         Optional<Entity<MatchDetail>> result = matchDetailDao.get(Region.EUW, 10L);
 
         // THEN
-        assertNotNull(result);
-        assertTrue(result.isPresent());
-        assertEquals(matchDetail, result.get().getItem());
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.isPresent());
+        Assert.assertEquals(matchDetail, result.get().getItem());
     }
 
     @Test
@@ -96,9 +92,9 @@ public class MatchDetailDaoImplITest {
         Optional<Entity<MatchDetail>> result = matchDetailDao.get(Region.EUW, 234L);
 
         // THEN
-        assertNotNull(result);
-        assertTrue(result.isPresent());
-        assertEquals(matchDetail, result.get().getItem());
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.isPresent());
+        Assert.assertEquals(matchDetail, result.get().getItem());
     }
 
     @Test
@@ -118,16 +114,16 @@ public class MatchDetailDaoImplITest {
 
         // THEN
         List<MatchDetail> result = matchDetailDao.getLastMatchDetail(Region.BR, 105246, 10);
-        assertEquals(0, result.size());
+        Assert.assertEquals(0, result.size());
 
         result = matchDetailDao.getLastMatchDetail(Region.BR, correctPlayerId, 10);
-        assertEquals(0, result.size());
+        Assert.assertEquals(0, result.size());
 
         result = matchDetailDao.getLastMatchDetail(Region.EUW, correctPlayerId, 10);
-        assertEquals(2, result.size());
+        Assert.assertEquals(2, result.size());
 
         result = matchDetailDao.getLastMatchDetail(Region.EUW, correctPlayerId, 1);
-        assertEquals(1, result.size());
+        Assert.assertEquals(1, result.size());
     }
 
     private MatchDetail createMatchDetail(long matchId, long summonerId) {

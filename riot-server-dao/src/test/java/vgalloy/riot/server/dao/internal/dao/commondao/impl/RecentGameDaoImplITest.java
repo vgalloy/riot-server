@@ -13,6 +13,7 @@ import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version.Main;
 import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -21,10 +22,6 @@ import vgalloy.riot.api.api.dto.game.GameDto;
 import vgalloy.riot.api.api.dto.game.RecentGamesDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Vincent Galloy
@@ -45,7 +42,7 @@ public class RecentGameDaoImplITest {
         MongodStarter starter = MongodStarter.getDefaultInstance();
         EXECUTABLE = starter.prepare(new MongodConfigBuilder()
                 .version(Main.V3_2)
-                .net(new Net(PORT, Network.localhostIsIPv6()))
+                .net(new Net(URL, PORT, Network.localhostIsIPv6()))
                 .build());
         PROCESS = EXECUTABLE.start();
     }
@@ -70,8 +67,8 @@ public class RecentGameDaoImplITest {
         Optional<Entity<RecentGamesDto>> result = recentGamesDao.get(Region.JP, 19L);
 
         // THEN
-        assertNotNull(result);
-        assertTrue(result.isPresent());
-        assertEquals(recentGamesDto, result.get().getItem());
+        Assert.assertNotNull(result);
+        Assert.assertTrue(result.isPresent());
+        Assert.assertEquals(recentGamesDto, result.get().getItem());
     }
 }
