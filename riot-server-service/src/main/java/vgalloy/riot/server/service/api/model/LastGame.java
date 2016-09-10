@@ -19,6 +19,7 @@ public class LastGame implements Serializable {
     private final long kill;
     private final long death;
     private final long assist;
+    private final boolean winner;
 
     /**
      * Constructor.
@@ -29,15 +30,16 @@ public class LastGame implements Serializable {
      * @param kill       the number of kill
      * @param death      the number of death
      * @param assist     the number of assist
+     * @param winner     is the game a win
      */
-    // TODO builder ?
-    public LastGame(Region region, long gameId, int championId, long kill, long death, long assist) {
+    public LastGame(Region region, long gameId, int championId, long kill, long death, long assist, boolean winner) {
         this.region = Objects.requireNonNull(region);
         this.gameId = gameId;
         this.championId = championId;
         this.kill = kill;
         this.death = death;
         this.assist = assist;
+        this.winner = winner;
     }
 
     public Region getRegion() {
@@ -62,5 +64,9 @@ public class LastGame implements Serializable {
 
     public long getAssist() {
         return assist;
+    }
+
+    public boolean isWinner() {
+        return winner;
     }
 }
