@@ -91,4 +91,20 @@ public class SummonerController {
         }
         return null;
     }
+
+    /**
+     * Get the summoner by id.
+     *
+     * @param region     the region
+     * @param summonerId the summoner id
+     * @return the last games
+     */
+    @RequestMapping(value = "/summoner/{region}/{summonerId}/byId", method = RequestMethod.GET)
+    public SummonerDto getSummonerById(@PathVariable Region region, @PathVariable Long summonerId) {
+        Optional<Model<SummonerDto>> optionalSummonerDto = summonerService.get(region, summonerId);
+        if (optionalSummonerDto.isPresent()) {
+            return optionalSummonerDto.get().getItem();
+        }
+        return null;
+    }
 }
