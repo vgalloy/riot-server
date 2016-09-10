@@ -1,8 +1,10 @@
 package vgalloy.riot.server.service.api.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.service.api.model.Position;
 
 /**
@@ -27,4 +29,14 @@ public interface QueryService {
      * @return a list with all the game position. Each game is defined as a list of position
      */
     List<List<Position>> getPosition(long summonerId, int championId);
+
+    /**
+     * Get the champion win rate during the given period.
+     *
+     * @param championId the champion id
+     * @param startDate  the start date (included)
+     * @param endDate    the end date (excluded)
+     * @return the win rate of the champion. Each entry is given with a timestamp.
+     */
+    Map<LocalDate, WinRate> getWinRate(int championId, LocalDate startDate, LocalDate endDate);
 }

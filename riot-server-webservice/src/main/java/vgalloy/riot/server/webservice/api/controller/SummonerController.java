@@ -41,7 +41,7 @@ public class SummonerController {
      * @param summonerId the summoner id
      * @return the ranked stats
      */
-    @RequestMapping(value = "{region}/summoner/{summonerId}/rankedStats", method = RequestMethod.GET)
+    @RequestMapping(value = "/summoner/{region}/{summonerId}/rankedStats", method = RequestMethod.GET)
     public Model<RankedStatsDto> getRankedStat(@PathVariable Region region, @PathVariable Long summonerId) {
         Optional<Model<RankedStatsDto>> rankedStatsEntity = rankedStatsService.get(region, summonerId);
         if (rankedStatsEntity.isPresent()) {
@@ -58,7 +58,7 @@ public class SummonerController {
      * @param championId the champion id
      * @return the position as a list. Each list represent a game
      */
-    @RequestMapping(value = "{region}/summoner/{summonerId}/position/{championId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/summoner/{region}/{summonerId}/position/{championId}", method = RequestMethod.GET)
     public List<List<Position>> getPosition(@PathVariable Region region, @PathVariable Integer summonerId, @PathVariable Integer championId) {
         return queryService.getPosition(summonerId, championId);
     }
@@ -71,7 +71,7 @@ public class SummonerController {
      * @param limit      the limit of result to fetch (default 10)
      * @return the last games
      */
-    @RequestMapping(value = "{region}/summoner/{summonerId}/lastGames", method = RequestMethod.GET)
+    @RequestMapping(value = "/summoner/{region}/{summonerId}/lastGames", method = RequestMethod.GET)
     public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId, @RequestParam(value = "limit", required = false) Integer limit) {
         return summonerService.getLastGames(region, summonerId, Optional.ofNullable(limit));
     }
@@ -83,7 +83,7 @@ public class SummonerController {
      * @param summonerName the summoner name
      * @return the last games
      */
-    @RequestMapping(value = "{region}/summoner/{summonerName}/byName", method = RequestMethod.GET)
+    @RequestMapping(value = "/summoner/{region}/{summonerName}/byName", method = RequestMethod.GET)
     public SummonerDto getSummonerByName(@PathVariable Region region, @PathVariable String summonerName) {
         Optional<SummonerDto> optionalSummonerDto = summonerService.getSummonerByName(region, summonerName);
         if (optionalSummonerDto.isPresent()) {

@@ -1,5 +1,7 @@
 package vgalloy.riot.server.webservice.api.controller;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.service.api.service.QueryService;
 
 /**
@@ -31,8 +34,26 @@ public class ChampionController {
      * @return the win rates as a map
      */
     @RequestMapping(value = "/champion/{championId}/winRate", method = RequestMethod.GET)
-    public Map<Integer, Double> getWinRate(@PathVariable int championId) {
+    public Map<Integer, Double> getWinRateByGamePlayed(@PathVariable Integer championId) {
         LOGGER.info("[ GET ] : championId : {}", championId);
         return queryService.getWinRate(championId);
+    }
+
+    /**
+     * Get the win rate of a champion as a map. The key is the number of game played.
+     *
+     * @param championId the champion id
+     * @param startDay   the start date (included)
+     * @param endDay     the end date (excluded)
+     * @return the win rates as a map
+     */
+    @RequestMapping(value = "/champion/{championId}/winRate/{startDay}/{endDay}", method = RequestMethod.GET)
+    public Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId, Long startDay, Long endDay) {
+        LOGGER.info("[ GET ] : championId : {}", championId);
+        Map<Long, WinRate> output = new HashMap<>();
+        for (Map.Entry<LocalDate, WinRate> entry : queryService.getWinRate(championId, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay)).entrySet()) {
+            output.put(entry.getKey().toEpochDay(), entry.getValue());
+        }
+        return output;
     }
 }
