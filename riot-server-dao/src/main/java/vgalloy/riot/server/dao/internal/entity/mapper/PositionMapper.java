@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.dao.query.mapper;
+package vgalloy.riot.server.dao.internal.entity.mapper;
 
 import org.bson.Document;
 

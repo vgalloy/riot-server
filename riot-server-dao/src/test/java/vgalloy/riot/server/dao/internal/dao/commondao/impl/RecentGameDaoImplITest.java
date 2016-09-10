@@ -1,5 +1,10 @@
 package vgalloy.riot.server.dao.internal.dao.commondao.impl;
 
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -10,16 +15,12 @@ import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.game.GameDto;
 import vgalloy.riot.api.api.dto.game.RecentGamesDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
-
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -43,7 +44,7 @@ public class RecentGameDaoImplITest {
     public static void setUp() throws IOException {
         MongodStarter starter = MongodStarter.getDefaultInstance();
         EXECUTABLE = starter.prepare(new MongodConfigBuilder()
-                .version(Main.PRODUCTION)
+                .version(Main.V3_2)
                 .net(new Net(PORT, Network.localhostIsIPv6()))
                 .build());
         PROCESS = EXECUTABLE.start();

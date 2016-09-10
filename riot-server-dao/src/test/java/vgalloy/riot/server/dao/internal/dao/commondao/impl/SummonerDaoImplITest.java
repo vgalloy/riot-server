@@ -1,5 +1,8 @@
 package vgalloy.riot.server.dao.internal.dao.commondao.impl;
 
+import java.io.IOException;
+import java.util.Optional;
+
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -10,13 +13,11 @@ import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
-
-import java.io.IOException;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -41,7 +42,7 @@ public class SummonerDaoImplITest {
     public static void setUp() throws IOException {
         MongodStarter starter = MongodStarter.getDefaultInstance();
         EXECUTABLE = starter.prepare(new MongodConfigBuilder()
-                .version(Main.PRODUCTION)
+                .version(Main.V3_2)
                 .net(new Net(PORT, Network.localhostIsIPv6()))
                 .build());
         PROCESS = EXECUTABLE.start();
