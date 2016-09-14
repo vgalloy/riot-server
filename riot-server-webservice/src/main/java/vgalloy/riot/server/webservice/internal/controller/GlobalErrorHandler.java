@@ -1,4 +1,4 @@
-package vgalloy.riot.server.webservice.api.controller;
+package vgalloy.riot.server.webservice.internal.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import vgalloy.riot.server.webservice.internal.model.Error;
 
 /**
  * @author Vincent Galloy
@@ -26,8 +28,22 @@ public final class GlobalErrorHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Throwable.class)
-    public String handleException(Throwable e) {
+    public Error handleException(Throwable e) {
         LOGGER.error("{}", e.toString(), e);
-        return "Ups ... unexpected error occurred ! !";
+        return new Error(500, "Ups ... unexpected error occurred ! !");
+    }
+
+    /**
+     * Handle error and set the correct response status.
+     *
+     * @param e The handle exception
+     * @return The error message for web user
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public Error handleArgumentMismatchException(MethodArgumentTypeMismatchException e) {
+        LOGGER.error("{}", e.toString(), e);
+        return new Error(400, "Value of '" + e.getName() + "' can not be convert into [" + e.getRequiredType().getSimpleName() + "]");
     }
 }
