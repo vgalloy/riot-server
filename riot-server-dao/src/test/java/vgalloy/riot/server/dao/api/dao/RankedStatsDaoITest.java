@@ -1,8 +1,4 @@
-package vgalloy.riot.server.dao.internal.dao.commondao.impl;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Optional;
+package vgalloy.riot.server.dao.api.dao;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
@@ -20,15 +16,20 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.stats.ChampionStatsDto;
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
+import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
+import vgalloy.riot.server.dao.internal.dao.commondao.impl.GenericDaoImpl;
 import vgalloy.riot.server.dao.internal.entity.Key;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 08/06/16.
  */
-public class RankedStatsDaoImplITest {
+public class RankedStatsDaoITest {
 
     private static final int PORT = 29002;
     private static final String URL = "localhost";
@@ -36,7 +37,7 @@ public class RankedStatsDaoImplITest {
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
 
-    private final RankedStatsDaoImpl rankedStatsDao = DaoFactory.getDao(RankedStatsDaoImpl.class, URL + ":" + PORT, "riotTest");
+    private final RankedStatsDao rankedStatsDao = MongoDaoFactory.getRankedStatsDao(URL + ":" + PORT);
 
     @BeforeClass
     public static void setUp() throws IOException {

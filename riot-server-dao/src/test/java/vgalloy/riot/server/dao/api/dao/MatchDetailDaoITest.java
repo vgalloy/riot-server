@@ -1,9 +1,4 @@
-package vgalloy.riot.server.dao.internal.dao.commondao.impl;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+package vgalloy.riot.server.dao.api.dao;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
@@ -11,23 +6,28 @@ import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version.Main;
+import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
 import vgalloy.riot.api.api.dto.mach.Player;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
+import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 14/06/16.
  */
-public class MatchDetailDaoImplITest {
+public class MatchDetailDaoITest {
 
     private static final int PORT = 29001;
     private static final String URL = "localhost";
@@ -35,7 +35,7 @@ public class MatchDetailDaoImplITest {
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
 
-    private final MatchDetailDaoImpl matchDetailDao = DaoFactory.getDao(MatchDetailDaoImpl.class, URL + ":" + PORT, "riotTest");
+    private final MatchDetailDao matchDetailDao = MongoDaoFactory.getMatchDetailDao(URL + ":" + PORT);
 
     @BeforeClass
     public static void setUp() throws IOException {

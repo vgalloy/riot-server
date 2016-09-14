@@ -60,7 +60,7 @@ public class SummonerController {
      */
     @RequestMapping(value = "/summoner/{region}/{summonerId}/position/{championId}", method = RequestMethod.GET)
     public List<List<Position>> getPosition(@PathVariable Region region, @PathVariable Integer summonerId, @PathVariable Integer championId) {
-        return queryService.getPosition(summonerId, championId);
+        return queryService.getPosition(summonerId, championId); // TODO region parameter
     }
 
     /**

@@ -1,7 +1,4 @@
-package vgalloy.riot.server.dao.internal.dao.commondao.impl;
-
-import java.io.IOException;
-import java.util.Optional;
+package vgalloy.riot.server.dao.api.dao;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
@@ -18,13 +15,16 @@ import org.junit.Test;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
+import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
+
+import java.io.IOException;
+import java.util.Optional;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 30/06/16.
  */
-public class SummonerDaoImplITest {
+public class SummonerDaoITest {
 
     private static final int PORT = 29004;
     private static final String URL = "localhost";
@@ -32,7 +32,7 @@ public class SummonerDaoImplITest {
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
 
-    private final SummonerDaoImpl summonerDao = DaoFactory.getDao(SummonerDaoImpl.class, URL + ":" + PORT, "riotTest");
+    private final SummonerDao summonerDao = MongoDaoFactory.getSummonerDao(URL + ":" + PORT);
 
     @BeforeClass
     public static void setUp() throws IOException {

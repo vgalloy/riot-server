@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.dao.commondao.impl;
+package vgalloy.riot.server.dao.internal.dao.commondao;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
@@ -13,7 +13,7 @@ import org.mongojack.JacksonDBCollection;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.internal.dao.commondao.GenericDao;
+import vgalloy.riot.server.dao.internal.dao.commondao.impl.GenericDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoClientFactory;
 import vgalloy.riot.server.dao.internal.entity.Key;
 import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
@@ -37,7 +37,7 @@ public abstract class AbstractCommonDao<DTO, DATA_OBJECT extends DataObject<DTO>
      * @param databaseName   the database name
      * @param collectionName the collection name
      */
-    /*package protected*/ AbstractCommonDao(String databaseUrl, String databaseName, String collectionName) {
+    protected AbstractCommonDao(String databaseUrl, String databaseName, String collectionName) {
         Objects.requireNonNull(databaseUrl);
         Objects.requireNonNull(databaseName);
         Objects.requireNonNull(collectionName);

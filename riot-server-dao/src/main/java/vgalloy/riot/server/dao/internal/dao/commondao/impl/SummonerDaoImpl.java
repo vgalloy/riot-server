@@ -11,6 +11,7 @@ import org.mongojack.DBQuery;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
+import vgalloy.riot.server.dao.internal.dao.commondao.AbstractCommonDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
 import vgalloy.riot.server.dao.internal.entity.dataobject.SummonerDo;

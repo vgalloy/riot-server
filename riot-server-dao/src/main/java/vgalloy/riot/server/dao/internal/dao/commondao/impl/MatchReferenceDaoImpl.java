@@ -1,6 +1,7 @@
 package vgalloy.riot.server.dao.internal.dao.commondao.impl;
 
 import vgalloy.riot.api.api.dto.matchlist.MatchReference;
+import vgalloy.riot.server.dao.internal.dao.commondao.AbstractCommonDao;
 import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
 import vgalloy.riot.server.dao.internal.entity.dataobject.MatchReferenceDo;
 
