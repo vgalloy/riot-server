@@ -38,7 +38,7 @@ public class GameController {
      */
     @RequestMapping(value = "/game/{region}/{matchId}/detail", method = RequestMethod.GET)
     public Model<MatchDetail> getMatchDetail(@PathVariable Region region, @PathVariable Long matchId) {
-        LOGGER.info("[ GET ] : region : {}, matchId : {}", region, matchId);
+        LOGGER.info("[ GET ] : matchDetail, region : {}, matchId : {}", region, matchId);
         Optional<Model<MatchDetail>> optionalResult = matchDetailService.get(region, matchId);
         if (optionalResult.isPresent()) {
             return optionalResult.get();
@@ -55,6 +55,7 @@ public class GameController {
      */
     @RequestMapping(value = "/game/{region}/{matchId}/timelines", method = RequestMethod.GET)
     public List<PlayerTimeline> getTimelines(@PathVariable Region region, @PathVariable Long matchId) {
+        LOGGER.info("[ GET ] : timelines, region : {}, matchId : {}", region, matchId);
         Optional<List<PlayerTimeline>> optionalResult = matchDetailService.getTimeLines(region, matchId);
         if (optionalResult.isPresent()) {
             return optionalResult.get();

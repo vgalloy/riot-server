@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,8 @@ import vgalloy.riot.server.service.internal.executor.Runner;
 @RequestMapping(value = "/loader", method = RequestMethod.GET)
 public class InformationController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(InformationController.class);
+
     @Autowired
     private Runner runner;
 
@@ -31,8 +35,10 @@ public class InformationController {
      */
     @RequestMapping()
     public Map<Integer, String> getGlobalInformation() {
+        LOGGER.info("[ GET ] : getGlobalInformation");
         AtomicInteger index = new AtomicInteger();
-        return runner.getLoaderList().stream().collect(Collectors.toMap(e -> index.getAndIncrement(), e -> e.getClass().getCanonicalName()));
+        return runner.getLoaderList().stream()
+                .collect(Collectors.toMap(e -> index.getAndIncrement(), e -> e.getClass().getSimpleName()));
     }
 
     /**
@@ -43,6 +49,7 @@ public class InformationController {
      */
     @RequestMapping(value = "/{loaderId}")
     public LoaderInformation getInformation(@PathVariable int loaderId) {
+        LOGGER.info("[ GET ] : getInformation, loaderId : {}", loaderId);
         if (0 <= loaderId && loaderId < runner.getLoaderList().size()) {
             return runner.getLoaderList().get(loaderId).getLoaderInformation();
         }

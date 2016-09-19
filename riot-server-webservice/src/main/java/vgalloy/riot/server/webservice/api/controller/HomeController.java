@@ -1,5 +1,7 @@
 package vgalloy.riot.server.webservice.api.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @PropertySource(value = "classpath:META-INF/maven/vgalloy/riot-server-webservice/pom.properties", ignoreResourceNotFound = true)
 public class HomeController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+
     @Value("${version:none}")
     private String version;
 
@@ -24,6 +28,7 @@ public class HomeController {
      */
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String getHome() {
+        LOGGER.info("[ GET ] : home");
         return "{\"status\": \"running\", \"version\":\"" + version + "\"}";
     }
 }

@@ -109,7 +109,7 @@ public class RankedStatsLoader extends AbstractLoader {
             rankedStatsDto = new RankedStatsDto();
             rankedStatsDto.setSummonerId(summonerId);
         }
-        LOGGER.info("{} : {} - {} ", RegionPrinter.getRegion(region), summonerId, loaderInformation.printInformation());
+        LOGGER.info("{} : {}", RegionPrinter.getRegion(region), summonerId);
         return rankedStatsDto;
     }
 }

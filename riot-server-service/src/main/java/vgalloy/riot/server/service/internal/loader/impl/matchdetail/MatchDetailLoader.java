@@ -123,7 +123,7 @@ public class MatchDetailLoader extends AbstractLoader {
             matchDetail = new MatchDetail();
             matchDetail.setMatchId(matchId);
         }
-        LOGGER.info("{} : {} - {} ", RegionPrinter.getRegion(region), matchId, loaderInformation.printInformation());
+        LOGGER.info("{} : {}", RegionPrinter.getRegion(region), matchId);
         return matchDetail;
     }
 }

@@ -98,7 +98,7 @@ public class MatchReferenceLoader extends AbstractLoader {
         if (matchList == null || matchList.getMatches() == null) {
             return new ArrayList<>();
         }
-        LOGGER.info("{} : {} - {} ", RegionPrinter.getRegion(region), summonerId, loaderInformation.printInformation());
+        LOGGER.info("{} : {}", RegionPrinter.getRegion(region), summonerId);
         return matchList.getMatches();
     }
 }

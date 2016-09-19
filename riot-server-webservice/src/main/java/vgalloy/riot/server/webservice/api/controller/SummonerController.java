@@ -1,15 +1,13 @@
 package vgalloy.riot.server.webservice.api.controller;
 
-import java.util.List;
-import java.util.Optional;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
@@ -20,12 +18,17 @@ import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 20/06/16.
  */
 @RestController
 public class SummonerController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SummonerController.class);
 
     @Autowired
     private QueryService queryService;
@@ -43,6 +46,7 @@ public class SummonerController {
      */
     @RequestMapping(value = "/summoner/{region}/{summonerId}/rankedStats", method = RequestMethod.GET)
     public Model<RankedStatsDto> getRankedStat(@PathVariable Region region, @PathVariable Long summonerId) {
+        LOGGER.info("[ GET ] : getRankedStat, region : {}, matchId : {}", region, summonerId);
         Optional<Model<RankedStatsDto>> rankedStatsEntity = rankedStatsService.get(region, summonerId);
         if (rankedStatsEntity.isPresent()) {
             return rankedStatsEntity.get();
@@ -60,6 +64,7 @@ public class SummonerController {
      */
     @RequestMapping(value = "/summoner/{region}/{summonerId}/position/{championId}", method = RequestMethod.GET)
     public List<List<Position>> getPosition(@PathVariable Region region, @PathVariable Integer summonerId, @PathVariable Integer championId) {
+        LOGGER.info("[ GET ] : getPosition, region : {}, summonerId : {}, championId : {}", region, summonerId, championId);
         return queryService.getPosition(summonerId, championId); // TODO region parameter
     }
 
@@ -73,6 +78,7 @@ public class SummonerController {
      */
     @RequestMapping(value = "/summoner/{region}/{summonerId}/lastGames", method = RequestMethod.GET)
     public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId, @RequestParam(value = "limit", required = false) Integer limit) {
+        LOGGER.info("[ GET ] : getLastGames, region : {}, summonerId : {}, limit : {}", region, summonerId, limit);
         return summonerService.getLastGames(region, summonerId, Optional.ofNullable(limit));
     }
 
@@ -85,6 +91,7 @@ public class SummonerController {
      */
     @RequestMapping(value = "/summoner/{region}/{summonerName}/byName", method = RequestMethod.GET)
     public SummonerDto getSummonerByName(@PathVariable Region region, @PathVariable String summonerName) {
+        LOGGER.info("[ GET ] : getSummonerByName, region : {}, summonerName : {}", region, summonerName);
         Optional<SummonerDto> optionalSummonerDto = summonerService.getSummonerByName(region, summonerName);
         if (optionalSummonerDto.isPresent()) {
             return optionalSummonerDto.get();
@@ -101,6 +108,7 @@ public class SummonerController {
      */
     @RequestMapping(value = "/summoner/{region}/{summonerId}/byId", method = RequestMethod.GET)
     public SummonerDto getSummonerById(@PathVariable Region region, @PathVariable Long summonerId) {
+        LOGGER.info("[ GET ] : getSummonerByName, region : {}, summonerId : {}", region, summonerId);
         Optional<Model<SummonerDto>> optionalSummonerDto = summonerService.get(region, summonerId);
         if (optionalSummonerDto.isPresent()) {
             return optionalSummonerDto.get().getItem();

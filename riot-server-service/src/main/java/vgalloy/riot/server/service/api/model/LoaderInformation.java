@@ -1,14 +1,17 @@
 package vgalloy.riot.server.service.api.model;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 09/06/16.
  */
 public class LoaderInformation {
 
-    private final long startTime;
+    private final LocalDateTime startTime;
 
-    private Long endTime;
+    private LocalDateTime endTime;
     private long totalRequestNumber;
     private long rankedStatsRequestNumber;
     private boolean isRunning;
@@ -17,7 +20,7 @@ public class LoaderInformation {
      * Constructor.
      */
     public LoaderInformation() {
-        startTime = System.currentTimeMillis();
+        startTime = LocalDateTime.now();
         isRunning = true;
     }
 
@@ -26,11 +29,27 @@ public class LoaderInformation {
      *
      * @return the execution time
      */
-    public long getExecutionTimeMillis() {
+    private long getExecutionTimeMillis() {
         if (endTime != null) {
-            return endTime - startTime;
+            return ChronoUnit.MONTHS.between(startTime, endTime);
         }
-        return System.currentTimeMillis() - startTime;
+        return ChronoUnit.MONTHS.between(LocalDateTime.now(), startTime);
+    }
+
+    /**
+     * Get the execution time in millis correctly formatted.
+     *
+     * @return the execution time as a string
+     */
+    public String getExecutionTime() {
+        long executionTimeMillis = getExecutionTimeMillis();
+        long day = executionTimeMillis / 1000 / 60 / 60 / 24 % 365;
+        long hour = executionTimeMillis / 1000 / 60 / 60 % 24;
+        long minute = executionTimeMillis / 1000 / 60 % 60;
+        long second = executionTimeMillis / 1000 % 60;
+        long milli = executionTimeMillis % 1000;
+
+        return day + " day " + hour + "h" + minute + ":" + second + "." + milli;
     }
 
     /**
@@ -66,15 +85,6 @@ public class LoaderInformation {
     }
 
     /**
-     * Get the information as a string.
-     *
-     * @return the information as string.
-     */
-    public String printInformation() {
-        return rankedStatsRequestNumber + "/" + totalRequestNumber + "(" + rankedStatsRequestNumber * 100 / totalRequestNumber + "%)" + " in " + getExecutionTimeMillis() / 1000 + " sec (" + getExecutionTimeMillis() / totalRequestNumber + "sec/request)";
-    }
-
-    /**
      * Get the status of the loader.
      *
      * @return true if the loader is running
@@ -88,6 +98,6 @@ public class LoaderInformation {
      */
     public void finish() {
         isRunning = false;
-        endTime = System.currentTimeMillis();
+        endTime = LocalDateTime.now();
     }
 }

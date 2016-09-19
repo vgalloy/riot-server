@@ -3,6 +3,7 @@ package vgalloy.riot.server.service.internal.executor.impl;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Component;
 
@@ -31,9 +32,7 @@ public class ExecutorImpl implements Executor {
      */
     public ExecutorImpl(RiotApiKey riotApiKey) {
         this.riotApiKey = Objects.requireNonNull(riotApiKey, "riotApiKey can not be null");
-        for (Region region : Region.values()) {
-            regionExecutorMap.put(region, new RegionExecutorImpl(region));
-        }
+        Stream.of(Region.values()).forEach(e -> regionExecutorMap.put(e, new RegionExecutorImpl(e)));
     }
 
     @Override
