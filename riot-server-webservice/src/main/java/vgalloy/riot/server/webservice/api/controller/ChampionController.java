@@ -49,7 +49,7 @@ public class ChampionController {
      */
     @RequestMapping(value = "/champion/{championId}/winRate/{startDay}/{endDay}", method = RequestMethod.GET)
     public Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId, @PathVariable Long startDay, @PathVariable Long endDay) {
-        LOGGER.info("[ GET ] : getWinRateDuringPeriodOfTime : {} {} {}", championId, startDay, endDay);
+        LOGGER.info("[ GET ] : getWinRateDuringPeriodOfTime, championId : {},  startDay : {}, endDay : {}", championId, startDay, endDay);
         Map<Long, WinRate> result = new HashMap<>();
         for (Map.Entry<LocalDate, WinRate> entry : queryService.getWinRate(championId, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay)).entrySet()) {
             result.put(entry.getKey().toEpochDay(), entry.getValue());

@@ -16,7 +16,6 @@ import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.RankedStatsDaoImpl;
 
-import static java.util.Arrays.asList;
 
 /**
  * @author Vincent Galloy
@@ -68,7 +67,7 @@ public final class WinRateQuery {
         BasicDBObject groupObject = new BasicDBObject("_id", "$item.participants.stats.winner");
         groupObject.put("value", new BasicDBObject("$sum", 1));
 
-        AggregateIterable<Document> result = mongoDatabase.getCollection(MatchDetailDaoImpl.COLLECTION_NAME).aggregate(asList(
+        AggregateIterable<Document> result = mongoDatabase.getCollection(MatchDetailDaoImpl.COLLECTION_NAME).aggregate(Arrays.asList(
                 new BasicDBObject("$match", new BasicDBObject("item.participants.championId", championId)),
                 new BasicDBObject("$match", new BasicDBObject("item.matchCreation", new BasicDBObject("$gt", startDate.toEpochDay() * 3600 * 24))),
                 new BasicDBObject("$match", new BasicDBObject("item.matchCreation", new BasicDBObject("$lt", (startDate.toEpochDay() + 1) * 3600 * 24))),

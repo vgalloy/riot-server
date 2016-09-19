@@ -33,6 +33,9 @@
             <property name="allowMultipleEmptyLines" value="false"/>
         </module>
 
+        <!-- Checks the is no static import                                                            -->
+        <module name="AvoidStaticImport"/>
+
         <!-- Checks for one variable declaration per line                                              -->
         <module name="MultipleVariableDeclarations"/>
 

@@ -33,7 +33,7 @@ public class IpLogFilter implements Filter {
         String requestUuid = UUID.randomUUID().toString();
         MDC.put("requestUuid", requestUuid);
 
-        LOGGER.info("ip : ", servletRequest.getLocalAddr());
+        LOGGER.info("ip : {}", servletRequest.getLocalAddr());
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

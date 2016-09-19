@@ -1,6 +1,7 @@
 package vgalloy.riot.server.webservice.internal.conf;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +14,6 @@ import springfox.documentation.schema.ModelRef;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * @author Vincent Galloy
@@ -39,7 +38,7 @@ public class SwaggerConfig {
                 .directModelSubstitute(LocalDate.class, String.class)
                 .genericModelSubstitutes(ResponseEntity.class)
                 .useDefaultResponseMessages(false)
-                .globalResponseMessage(RequestMethod.GET, newArrayList(
+                .globalResponseMessage(RequestMethod.GET, Arrays.asList(
                         new ResponseMessageBuilder().code(200).message("OK").responseModel(new ModelRef("Success")).build(),
                         new ResponseMessageBuilder().code(404).message("Not Found").responseModel(new ModelRef("Error")).build(),
                         new ResponseMessageBuilder().code(401).message("Unauthorized").responseModel(new ModelRef("Error")).build(),
