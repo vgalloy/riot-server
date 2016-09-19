@@ -3,6 +3,7 @@ package vgalloy.riot.server.dao.internal.dao.factory;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -31,6 +32,10 @@ public final class DaoFactory {
      * @return the dao
      */
     public static <T> T getDao(Class<T> daoClass, String databaseUrl, String databaseName) {
+        Objects.requireNonNull(daoClass);
+        Objects.requireNonNull(databaseUrl);
+        Objects.requireNonNull(databaseName);
+
         Map<String, Map<String, Object>> databaseUrlMap = DAO_MAP.get(daoClass);
         databaseUrlMap = Optional.ofNullable(databaseUrlMap).orElse(new HashMap<>());
         DAO_MAP.put(daoClass, databaseUrlMap);
