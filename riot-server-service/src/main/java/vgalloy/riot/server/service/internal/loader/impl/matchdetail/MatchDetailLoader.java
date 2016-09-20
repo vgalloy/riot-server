@@ -113,7 +113,6 @@ public class MatchDetailLoader extends AbstractLoader {
      */
     private MatchDetail load(long matchId) {
         loaderInformation.addRequest();
-        loaderInformation.addRankedStatsRequest();
         Query<MatchDetail> query = riotApi.getMatchDetailById(matchId)
                 .includeTimeline(true)
                 .region(region);

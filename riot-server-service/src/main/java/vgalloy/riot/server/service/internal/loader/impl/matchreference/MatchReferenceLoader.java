@@ -92,7 +92,6 @@ public class MatchReferenceLoader extends AbstractLoader {
      */
     private List<MatchReference> load(long summonerId) {
         loaderInformation.addRequest();
-        loaderInformation.addRankedStatsRequest();
         Query<MatchList> query = riotApi.getMatchListBySummonerId(summonerId).region(region);
         MatchList matchList = executor.execute(query, region, 1);
         if (matchList == null || matchList.getMatches() == null) {

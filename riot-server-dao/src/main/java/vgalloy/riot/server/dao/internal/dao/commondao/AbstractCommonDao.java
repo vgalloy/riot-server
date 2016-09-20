@@ -1,13 +1,13 @@
 package vgalloy.riot.server.dao.internal.dao.commondao;
 
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import org.mongojack.JacksonDBCollection;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
 import java.util.Objects;
 import java.util.Optional;
-
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import org.mongojack.JacksonDBCollection;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.api.dao.CommonDao;

@@ -1,6 +1,6 @@
 package vgalloy.riot.server.service.api.model;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 /**
@@ -9,18 +9,17 @@ import java.time.temporal.ChronoUnit;
  */
 public class LoaderInformation {
 
-    private final LocalDateTime startTime;
+    private final Instant startTime;
 
-    private LocalDateTime endTime;
+    private Instant endTime;
     private long totalRequestNumber;
-    private long rankedStatsRequestNumber;
     private boolean isRunning;
 
     /**
      * Constructor.
      */
     public LoaderInformation() {
-        startTime = LocalDateTime.now();
+        startTime = Instant.now();
         isRunning = true;
     }
 
@@ -29,27 +28,11 @@ public class LoaderInformation {
      *
      * @return the execution time
      */
-    private long getExecutionTimeMillis() {
+    public long getExecutionTimeMillis() {
         if (endTime != null) {
-            return ChronoUnit.MONTHS.between(startTime, endTime);
+            return ChronoUnit.MILLIS.between(startTime, endTime);
         }
-        return ChronoUnit.MONTHS.between(LocalDateTime.now(), startTime);
-    }
-
-    /**
-     * Get the execution time in millis correctly formatted.
-     *
-     * @return the execution time as a string
-     */
-    public String getExecutionTime() {
-        long executionTimeMillis = getExecutionTimeMillis();
-        long day = executionTimeMillis / 1000 / 60 / 60 / 24 % 365;
-        long hour = executionTimeMillis / 1000 / 60 / 60 % 24;
-        long minute = executionTimeMillis / 1000 / 60 % 60;
-        long second = executionTimeMillis / 1000 % 60;
-        long milli = executionTimeMillis % 1000;
-
-        return day + " day " + hour + "h" + minute + ":" + second + "." + milli;
+        return ChronoUnit.MILLIS.between(startTime, Instant.now());
     }
 
     /**
@@ -68,21 +51,6 @@ public class LoaderInformation {
         totalRequestNumber++;
     }
 
-    /**
-     * Get the total request send for fetching ranked stats.
-     *
-     * @return the request number
-     */
-    public long getRankedStatsRequestNumber() {
-        return rankedStatsRequestNumber;
-    }
-
-    /**
-     * Add a new request.
-     */
-    public void addRankedStatsRequest() {
-        rankedStatsRequestNumber++;
-    }
 
     /**
      * Get the status of the loader.
@@ -98,6 +66,6 @@ public class LoaderInformation {
      */
     public void finish() {
         isRunning = false;
-        endTime = LocalDateTime.now();
+        endTime = Instant.now();
     }
 }

@@ -56,7 +56,7 @@ public class PrivilegedLoader extends AbstractLoader {
 
                 Query<MatchList> query = riotApi.getMatchListBySummonerId(currentSummonerId)
                         .region(Region.EUW);
-                LOGGER.info("{} : matchList - {}", RegionPrinter.getRegion(Region.EUW), currentSummonerId);
+                LOGGER.info("{} : matchList {}", RegionPrinter.getRegion(Region.EUW), currentSummonerId);
                 MatchList matchList = executor.execute(query, Region.EUW, 1);
                 if (matchList != null) {
                     List<MatchReference> matchDetailList = matchList.getMatches();
@@ -95,7 +95,6 @@ public class PrivilegedLoader extends AbstractLoader {
      */
     private MatchDetail load(long matchId) {
         loaderInformation.addRequest();
-        loaderInformation.addRankedStatsRequest();
         Query<MatchDetail> query = riotApi.getMatchDetailById(matchId)
                 .includeTimeline(true)
                 .region(Region.EUW);
@@ -105,7 +104,7 @@ public class PrivilegedLoader extends AbstractLoader {
             matchDetail = new MatchDetail();
             matchDetail.setMatchId(matchId);
         }
-        LOGGER.info("{} : matchDetail - {}", RegionPrinter.getRegion(Region.EUW), matchId);
+        LOGGER.info("{} : matchDetail {}", RegionPrinter.getRegion(Region.EUW), matchId);
         return matchDetail;
     }
 }

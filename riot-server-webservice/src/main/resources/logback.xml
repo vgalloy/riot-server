@@ -2,14 +2,28 @@
 <!DOCTYPE configuration>
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
         <encoder>
             <pattern>[ %highlight(%-6level)] %d{HH:mm:ss.SSS} [%green(%-40.50logger{36})] - %X{requestUuid} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <logger name="vgalloy" level="info"/>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/logs/server.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <encoder>
+            <pattern>[ %-6level] %d{HH:mm:ss.SSS} [%-40.50logger{36}] - %X{requestUuid} - %msg%n</pattern>
+        </encoder>
+    </appender>
 
-    <root level="info">
+    <root level="debug">
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
     </root>
 </configuration>

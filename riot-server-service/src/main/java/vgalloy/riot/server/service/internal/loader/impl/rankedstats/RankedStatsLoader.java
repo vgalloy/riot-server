@@ -102,7 +102,6 @@ public class RankedStatsLoader extends AbstractLoader {
      */
     private RankedStatsDto load(long summonerId) {
         loaderInformation.addRequest();
-        loaderInformation.addRankedStatsRequest();
         Query<RankedStatsDto> query = riotApi.getRankedStats(summonerId).region(region);
         RankedStatsDto rankedStatsDto = executor.execute(query, region, 1);
         if (rankedStatsDto == null) {
