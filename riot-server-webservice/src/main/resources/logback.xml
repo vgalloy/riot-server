@@ -6,19 +6,19 @@
             <level>WARN</level>
         </filter>
         <encoder>
-            <pattern>[ %highlight(%-6level)] %d{HH:mm:ss.SSS} [%green(%-40.50logger{36})] - %X{requestUuid} - %msg%n</pattern>
+            <pattern>[ %highlight(%-6level)] %d{yyyy-MM-dd HH:mm:ss.SSS, UTC} [%green(%-40logger{36})] - %X{requestUuid} - %msg%n</pattern>
         </encoder>
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/logs/server.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>/logs/server/server.%d{yyyy-MM-dd}.log</fileNamePattern>
         </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
         <encoder>
-            <pattern>[ %-6level] %d{HH:mm:ss.SSS} [%-40.50logger{36}] - %X{requestUuid} - %msg%n</pattern>
+            <pattern>[ %-6level] %d{yyyy-MM-dd HH:mm:ss.SSS, UTC} [%-40logger{36}] - %X{requestUuid} - %msg%n</pattern>
         </encoder>
     </appender>
 
