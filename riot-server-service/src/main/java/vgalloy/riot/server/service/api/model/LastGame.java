@@ -20,19 +20,21 @@ public class LastGame implements Serializable {
     private final long death;
     private final long assist;
     private final boolean winner;
+    private final long matchCreation;
 
     /**
      * Constructor.
      *
-     * @param region     the region
-     * @param gameId     the game id
-     * @param championId the champion id
-     * @param kill       the number of kill
-     * @param death      the number of death
-     * @param assist     the number of assist
-     * @param winner     is the game a win
+     * @param region        the region
+     * @param gameId        the game id
+     * @param championId    the champion id
+     * @param kill          the number of kill
+     * @param death         the number of death
+     * @param assist        the number of assist
+     * @param winner        is the game a win
+     * @param matchCreation the match creation
      */
-    public LastGame(Region region, long gameId, int championId, long kill, long death, long assist, boolean winner) {
+    public LastGame(Region region, long gameId, int championId, long kill, long death, long assist, boolean winner, long matchCreation) {
         this.region = Objects.requireNonNull(region);
         this.gameId = gameId;
         this.championId = championId;
@@ -40,6 +42,7 @@ public class LastGame implements Serializable {
         this.death = death;
         this.assist = assist;
         this.winner = winner;
+        this.matchCreation = matchCreation;
     }
 
     public Region getRegion() {
@@ -68,5 +71,9 @@ public class LastGame implements Serializable {
 
     public boolean isWinner() {
         return winner;
+    }
+
+    public long getMatchCreation() {
+        return matchCreation;
     }
 }

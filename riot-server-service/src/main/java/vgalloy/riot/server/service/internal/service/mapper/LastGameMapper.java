@@ -44,7 +44,8 @@ public final class LastGameMapper {
         long death = participant.getStats().getDeaths();
         long assist = participant.getStats().getAssists();
         boolean winner = participant.getStats().isWinner();
+        long matchCreation = matchDetail.getMatchCreation();
 
-        return new LastGame(region, gameId, championId, kill, death, assist, winner);
+        return new LastGame(region, gameId, championId, kill, death, assist, winner, matchCreation);
     }
 }
