@@ -19,7 +19,6 @@ import vgalloy.riot.server.service.internal.executor.model.Request;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 04/07/16.
  */
-@Component
 public class ExecutorImpl implements Executor {
 
     private final Map<Region, RegionExecutor> regionExecutorMap = new HashMap<>();
@@ -37,6 +36,7 @@ public class ExecutorImpl implements Executor {
 
     @Override
     public <DTO> DTO execute(Query<DTO> query, Region region, int priority) {
+        Objects.requireNonNull(region);
         if (query instanceof AbstractQuery) {
             ((AbstractQuery<?, DTO>) query).riotApiKey(riotApiKey).region(region);
         }

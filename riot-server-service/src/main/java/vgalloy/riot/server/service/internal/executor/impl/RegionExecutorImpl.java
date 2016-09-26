@@ -23,13 +23,13 @@ import java.util.Random;
 public class RegionExecutorImpl implements RegionExecutor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegionExecutorImpl.class);
-    private static final long DEFAULT_SLEEPING_TIME = 2_000;
+    private static final long DEFAULT_SLEEPING_TIME_MILLIS = 2_000;
 
     private final Random random = new SecureRandom();
     private final Collection<Request<?>> requestList = new ArrayList<>();
     private final Region region;
 
-    private long sleepingTime = DEFAULT_SLEEPING_TIME;
+    private long sleepingTimeMillis = DEFAULT_SLEEPING_TIME_MILLIS;
     private Request<?> electedRequest = null;
 
     /**
@@ -98,22 +98,22 @@ public class RegionExecutorImpl implements RegionExecutor {
      * @return the dto
      */
     private <DTO> DTO execute(Query<DTO> query) {
-        for (int attempt = 1; attempt < 4; attempt++) {
+        for (int attempt = 1; attempt < 10; attempt++) {
             try {
                 DTO result = query.execute();
-                sleepingTime = Math.max(sleepingTime / 2, DEFAULT_SLEEPING_TIME);
+                sleepingTimeMillis = Math.max(sleepingTimeMillis / 2, DEFAULT_SLEEPING_TIME_MILLIS);
                 return result;
             } catch (RiotRateLimitExceededException e) {
-                LOGGER.warn("{} : {}, sleepingTime = {}, attempt : {}", RegionPrinter.getRegion(region), e.toString(), sleepingTime, attempt);
+                LOGGER.warn("{} : {}, sleepingTimeMillis = {} ms, attempt : {}", RegionPrinter.getRegion(region), e.toString(), sleepingTimeMillis, attempt);
                 if (e.getRetryAfter().isPresent()) {
                     throw new ServiceException(e);
                 }
                 try {
-                    Thread.sleep(sleepingTime);
+                    Thread.sleep(sleepingTimeMillis);
                 } catch (InterruptedException e1) {
                     throw new ServiceException(e1);
                 }
-                sleepingTime *= 4;
+                sleepingTimeMillis *= 4;
             }
         }
         return null;

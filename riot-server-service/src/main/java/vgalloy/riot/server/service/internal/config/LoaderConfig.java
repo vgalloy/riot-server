@@ -1,15 +1,21 @@
 package vgalloy.riot.server.service.internal.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import vgalloy.riot.api.api.factory.RiotApiFactory;
 import vgalloy.riot.api.api.model.RateLimit;
 import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.api.api.model.RiotApiKey;
+import vgalloy.riot.server.service.internal.executor.Executor;
+import vgalloy.riot.server.service.internal.executor.Runner;
+import vgalloy.riot.server.service.internal.executor.impl.ExecutorImpl;
+import vgalloy.riot.server.service.internal.executor.impl.RunnerImpl;
 
 /**
  * @author Vincent Galloy
@@ -17,11 +23,15 @@ import vgalloy.riot.api.api.model.RiotApiKey;
  */
 @Configuration
 @EnableScheduling
-@ComponentScan(value = {"vgalloy.riot.server.service.internal.executor", "vgalloy.riot.server.service.internal.loader"})
+@ComponentScan(value = {"vgalloy.riot.server.service.internal.loader"})
+@Import(DatabaseDaoConfig.class)
 public class LoaderConfig {
 
     @Value("${api_key}")
     private String apiKey;
+
+    @Autowired
+    private DatabaseDaoConfig databaseDaoConfig;
 
     /**
      * Create the riot api without RiotApiKey.
@@ -41,5 +51,25 @@ public class LoaderConfig {
     @Bean
     public RiotApiKey riotApiKey() {
         return new RiotApiKey(apiKey);
+    }
+
+    /**
+     * Create the request executor.
+     *
+     * @return the executor
+     */
+    @Bean
+    public Executor executor() {
+        return new ExecutorImpl(riotApiKey());
+    }
+
+    /**
+     * Create the runner.
+     *
+     * @return the runner
+     */
+    @Bean
+    public Runner runner() {
+        return new RunnerImpl(riotApi(), executor(), databaseDaoConfig.summonerDao(), databaseDaoConfig.matchDetailDao(), databaseDaoConfig.matchReferenceDao(), databaseDaoConfig.rankedStatsDao());
     }
 }

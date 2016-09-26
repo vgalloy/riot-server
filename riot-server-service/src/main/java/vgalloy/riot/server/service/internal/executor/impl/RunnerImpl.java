@@ -27,7 +27,6 @@ import vgalloy.riot.server.service.internal.loader.impl.rankedstats.RankedStatsL
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 09/07/16.
  */
-@Component
 public class RunnerImpl implements Runner {
 
     private final List<Loader> loaderList = new ArrayList<>();
