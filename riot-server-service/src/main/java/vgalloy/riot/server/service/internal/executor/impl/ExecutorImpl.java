@@ -5,8 +5,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import org.springframework.stereotype.Component;
-
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.model.RiotApiKey;
 import vgalloy.riot.api.api.query.AbstractQuery;
