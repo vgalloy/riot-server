@@ -54,7 +54,7 @@ public final class HistoryMapper {
                 if (entry.getValue().getPosition() != null) { // TODO chercher pourquoi certaine position ne marche pas
                     result.get(participantId).getPosition().add(new TimedEvent<>(frame.getTimestamp(), PositionMapper.map(entry.getValue().getPosition())));
                 }
-                result.get(participantId).getGold().add(new TimedEvent<>(frame.getTimestamp(), entry.getValue().getCurrentGold()));
+                result.get(participantId).getGold().add(new TimedEvent<>(frame.getTimestamp(), entry.getValue().getTotalGold()));
             }
         }
         return new ArrayList<>(result.values());
