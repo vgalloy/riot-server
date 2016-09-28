@@ -20,7 +20,7 @@ import vgalloy.riot.server.service.internal.service.mapper.LastGameMapper;
  *         Created by Vincent Galloy on 23/08/16.
  */
 @Component
-public class SummonerServiceImpl extends AbstractService<SummonerDto> implements SummonerService {
+public final class SummonerServiceImpl extends AbstractService<SummonerDto> implements SummonerService {
 
     @Autowired
     private SummonerDao summonerDao;

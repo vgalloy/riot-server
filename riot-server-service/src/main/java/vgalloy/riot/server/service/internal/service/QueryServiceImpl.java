@@ -19,7 +19,7 @@ import vgalloy.riot.server.service.internal.service.mapper.PositionMapper;
  *         Created by Vincent Galloy on 23/08/16.
  */
 @Component
-public class QueryServiceImpl implements QueryService {
+public final class QueryServiceImpl implements QueryService {
 
     @Autowired
     private QueryDao queryDao;

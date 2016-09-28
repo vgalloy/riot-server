@@ -19,7 +19,7 @@ import vgalloy.riot.server.service.internal.service.mapper.HistoryMapper;
  *         Created by Vincent Galloy on 23/08/16.
  */
 @Component
-public class MatchDetailServiceImpl extends AbstractService<MatchDetail> implements MatchDetailService {
+public final class MatchDetailServiceImpl extends AbstractService<MatchDetail> implements MatchDetailService {
 
     @Autowired
     private MatchDetailDao matchDetailDao;

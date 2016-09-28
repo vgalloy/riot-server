@@ -20,7 +20,7 @@ import java.util.Random;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 30/06/16.
  */
-public class RegionExecutorImpl implements RegionExecutor {
+public final class RegionExecutorImpl implements RegionExecutor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegionExecutorImpl.class);
     private static final long DEFAULT_SLEEPING_TIME_MILLIS = 2_000;

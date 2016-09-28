@@ -10,6 +10,6 @@ import vgalloy.riot.server.service.api.service.MatchReferenceService;
  *         Created by Vincent Galloy on 23/08/16.
  */
 @Component
-public class MatchReferenceServiceImpl extends AbstractService<MatchReference> implements MatchReferenceService {
+public final class MatchReferenceServiceImpl extends AbstractService<MatchReference> implements MatchReferenceService {
 
 }

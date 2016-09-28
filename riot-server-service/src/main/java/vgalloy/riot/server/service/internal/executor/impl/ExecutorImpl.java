@@ -17,7 +17,7 @@ import vgalloy.riot.server.service.internal.executor.model.Request;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 04/07/16.
  */
-public class ExecutorImpl implements Executor {
+public final class ExecutorImpl implements Executor {
 
     private final Map<Region, RegionExecutor> regionExecutorMap = new HashMap<>();
     private final RiotApiKey riotApiKey;

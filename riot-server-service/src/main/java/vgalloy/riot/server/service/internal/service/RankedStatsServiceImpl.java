@@ -10,6 +10,6 @@ import vgalloy.riot.server.service.api.service.RankedStatsService;
  *         Created by Vincent Galloy on 23/08/16.
  */
 @Component
-public class RankedStatsServiceImpl extends AbstractService<RankedStatsDto> implements RankedStatsService {
+public final class RankedStatsServiceImpl extends AbstractService<RankedStatsDto> implements RankedStatsService {
 
 }

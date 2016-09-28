@@ -10,6 +10,6 @@ import vgalloy.riot.server.service.api.service.RecentGamesService;
  *         Created by Vincent Galloy on 23/08/16.
  */
 @Component
-public class RecentGameServiceImpl extends AbstractService<RecentGamesDto> implements RecentGamesService {
+public final class RecentGameServiceImpl extends AbstractService<RecentGamesDto> implements RecentGamesService {
 
 }
