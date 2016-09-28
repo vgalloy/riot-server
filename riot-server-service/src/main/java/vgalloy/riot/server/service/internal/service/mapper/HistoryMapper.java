@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.Frame;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.ParticipantFrame;
@@ -44,17 +43,19 @@ public final class HistoryMapper {
 
         Map<Integer, PlayerTimeline> result = new HashMap<>();
         for (ParticipantIdentity participantIdentity : participantIdentities) {
-            result.put(participantIdentity.getParticipantId(), new PlayerTimeline(Region.EUW, participantIdentity.getPlayer().getSummonerId()));
+            result.put(participantIdentity.getParticipantId(), new PlayerTimeline(matchDetail.getRegion(), participantIdentity.getPlayer().getSummonerId()));
         }
 
         for (Frame frame : timeline.getFrames()) {
             for (Map.Entry<String, ParticipantFrame> entry : frame.getParticipantFrames().entrySet()) {
                 int participantId = Integer.valueOf(entry.getKey());
+
                 result.get(participantId).getFarming().add(new TimedEvent<>(frame.getTimestamp(), entry.getValue().getMinionsKilled()));
-                if (entry.getValue().getPosition() != null) { // TODO chercher pourquoi certaine position ne marche pas
+                if (entry.getValue().getPosition() != null) { // TODO chercher pourquoi certaines positions ne marche pas
                     result.get(participantId).getPosition().add(new TimedEvent<>(frame.getTimestamp(), PositionMapper.map(entry.getValue().getPosition())));
                 }
                 result.get(participantId).getGold().add(new TimedEvent<>(frame.getTimestamp(), entry.getValue().getTotalGold()));
+                result.get(participantId).getLevel().add(new TimedEvent<>(frame.getTimestamp(), entry.getValue().getLevel()));
             }
         }
         return new ArrayList<>(result.values());

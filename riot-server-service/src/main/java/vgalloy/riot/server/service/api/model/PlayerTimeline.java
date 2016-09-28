@@ -1,5 +1,6 @@
 package vgalloy.riot.server.service.api.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,13 +11,16 @@ import vgalloy.riot.api.api.constant.Region;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 08/09/16.
  */
-public class PlayerTimeline {
+public class PlayerTimeline implements Serializable {
+
+    private static final long serialVersionUID = -7718763464685566742L;
 
     private final Region region;
     private final Long playerId;
     private final List<TimedEvent<Integer>> farming = new ArrayList<>();
     private final List<TimedEvent<Position>> position = new ArrayList<>();
     private final List<TimedEvent<Integer>> gold = new ArrayList<>();
+    private final List<TimedEvent<Integer>> level = new ArrayList<>();
 
     /**
      * Constructor.
@@ -47,5 +51,9 @@ public class PlayerTimeline {
 
     public List<TimedEvent<Integer>> getGold() {
         return gold;
+    }
+
+    public List<TimedEvent<Integer>> getLevel() {
+        return level;
     }
 }
