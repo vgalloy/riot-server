@@ -49,6 +49,8 @@ public class PrivilegedLoader extends AbstractLoader {
         summonerIdList.add(24540988); // Glenduil
         summonerIdList.add(24523231); // 3CS Ardemo
         summonerIdList.add(24541689); // Miir
+        summonerIdList.add(24680794); // LeFielon
+        summonerIdList.add(23056233); // Forlio
 
         while (true) {
             for (Integer currentSummonerId : summonerIdList) {
