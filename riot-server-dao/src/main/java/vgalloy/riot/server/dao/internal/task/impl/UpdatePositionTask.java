@@ -31,8 +31,8 @@ public final class UpdatePositionTask implements Task {
     @Override
     public void execute() {
         long startTime = System.currentTimeMillis();
-        LOGGER.info("[ START ] : updatePosition");
+        LOGGER.info("[ START ] : updatePosition");
         PositionQuery.updatePosition(mongoDatabase);
-        LOGGER.info("[ END   ] : updatePosition {} ms", System.currentTimeMillis() - startTime);
+        LOGGER.info("[ END   ] : updatePosition {} ms", System.currentTimeMillis() - startTime);
     }
 }

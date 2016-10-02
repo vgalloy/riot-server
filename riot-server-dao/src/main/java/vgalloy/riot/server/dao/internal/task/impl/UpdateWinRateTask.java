@@ -31,8 +31,8 @@ public final class UpdateWinRateTask implements Task {
     @Override
     public void execute() {
         long startTime = System.currentTimeMillis();
-        LOGGER.info("[ START ] : updateWinRate");
+        LOGGER.info("[ START ] : updateWinRate");
         WinRateQuery.updateWinRate(mongoDatabase);
-        LOGGER.info("[ END   ] : updateWinRate {} ms", System.currentTimeMillis() - startTime);
+        LOGGER.info("[ END   ] : updateWinRate {} ms", System.currentTimeMillis() - startTime);
     }
 }
