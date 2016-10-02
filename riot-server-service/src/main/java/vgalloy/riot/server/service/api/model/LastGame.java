@@ -3,6 +3,7 @@ package vgalloy.riot.server.service.api.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import vgalloy.riot.api.api.constant.QueueType;
 import vgalloy.riot.api.api.constant.Region;
 
 /**
@@ -21,6 +22,7 @@ public class LastGame implements Serializable {
     private final long assist;
     private final boolean winner;
     private final long matchCreation;
+    private final QueueType queueType;
 
     /**
      * Constructor.
@@ -33,8 +35,9 @@ public class LastGame implements Serializable {
      * @param assist        the number of assist
      * @param winner        is the game a win
      * @param matchCreation the match creation
+     * @param queueType     the queue type
      */
-    public LastGame(Region region, long gameId, int championId, long kill, long death, long assist, boolean winner, long matchCreation) {
+    public LastGame(Region region, long gameId, int championId, long kill, long death, long assist, boolean winner, long matchCreation, QueueType queueType) {
         this.region = Objects.requireNonNull(region);
         this.gameId = gameId;
         this.championId = championId;
@@ -43,6 +46,7 @@ public class LastGame implements Serializable {
         this.assist = assist;
         this.winner = winner;
         this.matchCreation = matchCreation;
+        this.queueType = Objects.requireNonNull(queueType);
     }
 
     public Region getRegion() {
@@ -75,5 +79,9 @@ public class LastGame implements Serializable {
 
     public long getMatchCreation() {
         return matchCreation;
+    }
+
+    public QueueType getQueueType() {
+        return queueType;
     }
 }

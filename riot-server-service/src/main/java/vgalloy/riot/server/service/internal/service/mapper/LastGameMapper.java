@@ -2,6 +2,7 @@ package vgalloy.riot.server.service.internal.service.mapper;
 
 import java.util.Optional;
 
+import vgalloy.riot.api.api.constant.QueueType;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.Participant;
@@ -45,7 +46,8 @@ public final class LastGameMapper {
         long assist = participant.getStats().getAssists();
         boolean winner = participant.getStats().isWinner();
         long matchCreation = matchDetail.getMatchCreation();
+        QueueType queueType = matchDetail.getQueueType();
 
-        return new LastGame(region, gameId, championId, kill, death, assist, winner, matchCreation);
+        return new LastGame(region, gameId, championId, kill, death, assist, winner, matchCreation, queueType);
     }
 }
