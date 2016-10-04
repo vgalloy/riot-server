@@ -1,10 +1,15 @@
 package vgalloy.riot.server.dao.api.entity;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 07/07/16.
  */
-public final class Position {
+public final class Position implements Serializable {
+
+    private static final long serialVersionUID = 5956726925713228155L;
 
     private int x;
     private int y;
@@ -34,6 +39,24 @@ public final class Position {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Position)) {
+            return false;
+        }
+        Position position = (Position) o;
+        return x == position.x &&
+                y == position.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 
     @Override

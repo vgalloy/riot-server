@@ -8,18 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.service.api.model.LastGame;
 import vgalloy.riot.server.service.api.model.Model;
-import vgalloy.riot.server.service.api.model.Position;
-import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Vincent Galloy
@@ -30,8 +29,6 @@ public class SummonerController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SummonerController.class);
 
-    @Autowired
-    private QueryService queryService;
     @Autowired
     private SummonerService summonerService;
     @Autowired
@@ -55,31 +52,17 @@ public class SummonerController {
     }
 
     /**
-     * Get the position of a summoner with a given champ.
-     *
-     * @param region     the region
-     * @param summonerId the summoner id
-     * @param championId the champion id
-     * @return the position as a list. Each list represent a game
-     */
-    @RequestMapping(value = "/summoner/{region}/{summonerId}/position/{championId}", method = RequestMethod.GET)
-    public List<List<Position>> getPosition(@PathVariable Region region, @PathVariable Integer summonerId, @PathVariable Integer championId) {
-        LOGGER.info("[ GET ] : getPosition, region : {}, summonerId : {}, championId : {}", region, summonerId, championId);
-        return queryService.getPosition(summonerId, championId); // TODO region parameter
-    }
-
-    /**
      * Get the last games of a summoner.
      *
      * @param region     the region
      * @param summonerId the summoner id
-     * @param limit      the limit of result to fetch (default 10)
+     * @param limit      the limit of days to fetch (default 14)
      * @return the last games
      */
     @RequestMapping(value = "/summoner/{region}/{summonerId}/lastGames", method = RequestMethod.GET)
-    public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId, @RequestParam(value = "limit", required = false) Integer limit) {
+    public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId, @RequestParam(required = false, defaultValue = "14") Integer limit) {
         LOGGER.info("[ GET ] : getLastGames, region : {}, summonerId : {}, limit : {}", region, summonerId, limit);
-        return summonerService.getLastGames(region, summonerId, Optional.ofNullable(limit));
+        return summonerService.getLastGames(region, summonerId);
     }
 
     /**

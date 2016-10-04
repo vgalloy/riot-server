@@ -15,6 +15,7 @@ import org.junit.Test;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.ItemWrapper;
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
 
 import java.io.IOException;
@@ -65,7 +66,7 @@ public class SummonerDaoITest {
         // GIVEN
         SummonerDto summoner = new SummonerDto();
         summoner.setId(2);
-        summonerDao.save(Region.EUW, 2L, summoner);
+        summonerDao.save(new ItemWrapper<>(Region.EUW, 2L, summoner));
 
         // WHEN
         Optional<Entity<SummonerDto>> result = summonerDao.getRandom(Region.EUW);
@@ -73,7 +74,8 @@ public class SummonerDaoITest {
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertEquals(summoner, result.get().getItem());
+        Assert.assertTrue(result.get().getItem().isPresent());
+        Assert.assertEquals(summoner, result.get().getItem().get());
     }
 
     @Test
@@ -82,7 +84,7 @@ public class SummonerDaoITest {
         SummonerDto summoner = new SummonerDto();
         summoner.setName("NAME");
         summoner.setId(2);
-        summonerDao.save(Region.EUW, 2L, summoner);
+        summonerDao.save(new ItemWrapper<>(Region.EUW, 2L, summoner));
 
         // WHEN
         Optional<SummonerDto> resultEmpty = summonerDao.getSummonerByName(Region.EUW, "azeR");

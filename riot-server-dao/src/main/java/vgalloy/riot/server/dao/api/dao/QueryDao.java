@@ -1,11 +1,6 @@
 package vgalloy.riot.server.dao.api.dao;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
-
-import vgalloy.riot.server.dao.api.entity.Position;
-import vgalloy.riot.server.dao.api.entity.WinRate;
 
 /**
  * @author Vincent Galloy
@@ -20,23 +15,4 @@ public interface QueryDao {
      * @return the winRate
      */
     Map<Integer, Double> getWinRate(int championId);
-
-    /**
-     * Get the position of a summoner during all game played with the given champion.
-     *
-     * @param summonerId the summoner id
-     * @param championId the champion id
-     * @return a list with all the game position. Each game is defined as a list of position
-     */
-    List<List<Position>> getPosition(long summonerId, int championId);
-
-    /**
-     * Get the champion win rate during the given period.
-     *
-     * @param championId the champion id
-     * @param startDate  the start date (included)
-     * @param endDate    the end date (excluded)
-     * @return the win rate of the champion. Each entry is given with a timestamp.
-     */
-    Map<LocalDate, WinRate> getWinRate(int championId, LocalDate startDate, LocalDate endDate);
 }

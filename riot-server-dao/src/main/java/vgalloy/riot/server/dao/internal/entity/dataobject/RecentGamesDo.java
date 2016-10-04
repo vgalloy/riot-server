@@ -21,9 +21,8 @@ public class RecentGamesDo extends DataObject<RecentGamesDto> {
      *
      * @param region the region
      * @param itemId the item id
-     * @param item   the item
      */
-    public RecentGamesDo(Region region, Long itemId, RecentGamesDto item) {
-        super(region, itemId, item);
+    public RecentGamesDo(Region region, Long itemId) {
+        super(region, itemId);
     }
 }

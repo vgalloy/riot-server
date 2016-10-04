@@ -11,6 +11,7 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
+import vgalloy.riot.server.dao.api.entity.ItemWrapper;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
@@ -59,7 +60,7 @@ public class LoaderInitializer extends AbstractLoader {
             throw new ServiceException(RegionPrinter.getRegion(region) + " Error while loading summoner - " + summonerId);
         }
         for (Entry<String, SummonerDto> entry : result.entrySet()) {
-            summonerDao.save(region, (long) summonerId, entry.getValue());
+            summonerDao.save(new ItemWrapper<>(region, (long) summonerId, entry.getValue()));
             LOGGER.info("{} : Load summoner {}", RegionPrinter.getRegion(region), summonerId);
         }
     }

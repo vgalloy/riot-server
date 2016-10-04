@@ -1,27 +1,29 @@
 package vgalloy.riot.server.dao.api.dao;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
 import de.flapdoodle.embed.mongo.config.Net;
 import de.flapdoodle.embed.mongo.distribution.Version.Main;
-import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
 import vgalloy.riot.api.api.dto.mach.Player;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Vincent Galloy
@@ -58,15 +60,18 @@ public class MatchDetailDaoITest {
         // GIVEN
         MatchDetail matchDetail = new MatchDetail();
         matchDetail.setMatchId(10);
+        matchDetail.setRegion(Region.EUW);
+        matchDetail.setMatchCreation(LocalDate.now().toEpochDay() * 24 * 3600 * 1000);
 
         // WHEN
-        matchDetailDao.save(Region.EUW, 10L, matchDetail);
-        Optional<Entity<MatchDetail>> result = matchDetailDao.get(Region.EUW, 10L);
+        matchDetailDao.save(matchDetail);
+        Optional<Entity<MatchDetail>> result = matchDetailDao.get(Region.EUW, 10L, LocalDate.now());
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertEquals(matchDetail, result.get().getItem());
+        Assert.assertTrue(result.get().getItem().isPresent());
+        Assert.assertEquals(matchDetail, result.get().getItem().get());
     }
 
     @Test
@@ -85,16 +90,19 @@ public class MatchDetailDaoITest {
 
         MatchDetail matchDetail = new MatchDetail();
         matchDetail.setMatchId(234);
+        matchDetail.setRegion(Region.EUW);
         matchDetail.setParticipantIdentities(participantIdentities);
+        matchDetail.setMatchCreation(LocalDate.now().toEpochDay() * 24 * 3600 * 1000);
 
         // WHEN
-        matchDetailDao.save(Region.EUW, 234L, matchDetail);
-        Optional<Entity<MatchDetail>> result = matchDetailDao.get(Region.EUW, 234L);
+        matchDetailDao.save(matchDetail);
+        Optional<Entity<MatchDetail>> result = matchDetailDao.get(Region.EUW, 234L, LocalDate.now());
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertEquals(matchDetail, result.get().getItem());
+        Assert.assertTrue(result.get().getItem().isPresent());
+        Assert.assertEquals(matchDetail, result.get().getItem().get());
     }
 
     @Test
@@ -103,30 +111,34 @@ public class MatchDetailDaoITest {
         long correctPlayerId = 12345;
         long wrongPlayerId = 12346;
 
-        MatchDetail matchDetail1 = createMatchDetail(10_001L, correctPlayerId);
-        MatchDetail matchDetail2 = createMatchDetail(10_002L, correctPlayerId);
-        MatchDetail matchDetail3 = createMatchDetail(10_003L, wrongPlayerId);
+        MatchDetail matchDetail1 = createMatchDetail(Region.EUW, 10_001L, correctPlayerId);
+        MatchDetail matchDetail2 = createMatchDetail(Region.EUW, 10_002L, correctPlayerId);
+        MatchDetail matchDetail3 = createMatchDetail(Region.EUW, 10_003L, wrongPlayerId);
 
         // WHEN
-        matchDetailDao.save(Region.EUW, 10_001L, matchDetail1);
-        matchDetailDao.save(Region.EUW, 10_002L, matchDetail2);
-        matchDetailDao.save(Region.EUW, 10_003L, matchDetail3);
+        matchDetailDao.save(matchDetail1);
+        matchDetailDao.save(matchDetail2);
+        matchDetailDao.save(matchDetail3);
 
         // THEN
-        List<MatchDetail> result = matchDetailDao.getLastMatchDetail(Region.BR, 105246, 10);
+        // Wrong id
+        List<MatchDetail> result = matchDetailDao.findMatchDetailBySummonerId(Region.BR, 105246, LocalDate.now(), LocalDate.now().plus(1, ChronoUnit.DAYS));
         Assert.assertEquals(0, result.size());
 
-        result = matchDetailDao.getLastMatchDetail(Region.BR, correctPlayerId, 10);
+        // Wrong region
+        result = matchDetailDao.findMatchDetailBySummonerId(Region.BR, correctPlayerId, LocalDate.now(), LocalDate.now().plus(1, ChronoUnit.DAYS));
         Assert.assertEquals(0, result.size());
 
-        result = matchDetailDao.getLastMatchDetail(Region.EUW, correctPlayerId, 10);
+        // Everything ok
+        result = matchDetailDao.findMatchDetailBySummonerId(Region.EUW, correctPlayerId, LocalDate.now(), LocalDate.now().plus(1, ChronoUnit.DAYS));
         Assert.assertEquals(2, result.size());
 
-        result = matchDetailDao.getLastMatchDetail(Region.EUW, correctPlayerId, 1);
-        Assert.assertEquals(1, result.size());
+        // Wrong data time
+        result = matchDetailDao.findMatchDetailBySummonerId(Region.EUW, correctPlayerId, LocalDate.now().plus(1, ChronoUnit.DAYS), LocalDate.now().plus(2, ChronoUnit.DAYS));
+        Assert.assertEquals(0, result.size());
     }
 
-    private MatchDetail createMatchDetail(long matchId, long summonerId) {
+    private MatchDetail createMatchDetail(Region region, long matchId, long summonerId) {
         Player player = new Player();
         player.setSummonerId(summonerId);
 
@@ -140,6 +152,8 @@ public class MatchDetailDaoITest {
         MatchDetail matchDetail = new MatchDetail();
         matchDetail.setParticipantIdentities(participantIdentityList);
         matchDetail.setMatchId(matchId);
+        matchDetail.setRegion(region);
+        matchDetail.setMatchCreation(LocalDate.now().toEpochDay() * 24 * 3600 * 1000);
 
         return matchDetail;
     }

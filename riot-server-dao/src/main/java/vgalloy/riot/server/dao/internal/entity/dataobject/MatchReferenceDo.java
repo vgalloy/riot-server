@@ -21,9 +21,8 @@ public class MatchReferenceDo extends DataObject<MatchReference> {
      *
      * @param region the region
      * @param itemId the item id
-     * @param item   the item
      */
-    public MatchReferenceDo(Region region, Long itemId, MatchReference item) {
-        super(region, itemId, item);
+    public MatchReferenceDo(Region region, Long itemId) {
+        super(region, itemId);
     }
 }

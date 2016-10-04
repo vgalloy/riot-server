@@ -21,9 +21,8 @@ public class RankedStatsDo extends DataObject<RankedStatsDto> {
      *
      * @param region the region
      * @param itemId the item id
-     * @param item   the item
      */
-    public RankedStatsDo(Region region, Long itemId, RankedStatsDto item) {
-        super(region, itemId, item);
+    public RankedStatsDo(Region region, Long itemId) {
+        super(region, itemId);
     }
 }

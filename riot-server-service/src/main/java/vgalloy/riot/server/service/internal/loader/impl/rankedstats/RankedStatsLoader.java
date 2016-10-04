@@ -1,21 +1,21 @@
 package vgalloy.riot.server.service.internal.loader.impl.rankedstats;
 
-import java.util.Objects;
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Objects;
+import java.util.Optional;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
-import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.api.api.query.Query;
-import vgalloy.riot.server.dao.api.dao.CommonDao;
-import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.service.api.service.exception.ServiceException;
+import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
+import vgalloy.riot.server.dao.api.dao.SummonerDao;
+import vgalloy.riot.server.dao.api.entity.ItemWrapper;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
+import vgalloy.riot.server.service.internal.loader.helper.LoaderHelper;
 import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
 
 /**
@@ -29,8 +29,8 @@ public class RankedStatsLoader extends AbstractLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(RankedStatsLoader.class);
 
     private final Region region;
-    private final CommonDao<SummonerDto> summonerDao;
-    private final CommonDao<RankedStatsDto> rankedStatsDao;
+    private final SummonerDao summonerDao;
+    private final RankedStatsDao rankedStatsDao;
 
     /**
      * Constructor.
@@ -41,7 +41,7 @@ public class RankedStatsLoader extends AbstractLoader {
      * @param summonerDao    the summoner dao
      * @param rankedStatsDao the ranked stats dao
      */
-    public RankedStatsLoader(RiotApi riotApi, Executor executor, Region region, CommonDao<SummonerDto> summonerDao, CommonDao<RankedStatsDto> rankedStatsDao) {
+    public RankedStatsLoader(RiotApi riotApi, Executor executor, Region region, SummonerDao summonerDao, RankedStatsDao rankedStatsDao) {
         super(riotApi, executor);
         this.region = Objects.requireNonNull(region);
         this.summonerDao = Objects.requireNonNull(summonerDao);
@@ -51,33 +51,11 @@ public class RankedStatsLoader extends AbstractLoader {
     @Override
     public void execute() {
         while (true) {
-            Entity<SummonerDto> summonerEntity = getRandomSummoner();
-            long summonerId = summonerEntity.getItem().getId();
+            long summonerId = LoaderHelper.getRandomSummonerId(summonerDao, region, LOGGER);
             if (notLoaded(summonerId)) {
-                RankedStatsDto rankedStatsDto = load(summonerId);
-                rankedStatsDao.save(region, summonerId, rankedStatsDto);
-            }
-        }
-    }
-
-    /**
-     * Return a random SummonerDto.
-     *
-     * @return a random SummonerDto
-     */
-    private Entity<SummonerDto> getRandomSummoner() {
-        long sleepingTime = 0;
-        while (true) {
-            Optional<Entity<SummonerDto>> summonerEntity = summonerDao.getRandom(region);
-            if (summonerEntity.isPresent()) {
-                return summonerEntity.get();
-            } else {
-                LOGGER.warn("{} : No summoner found", RegionPrinter.getRegion(region));
-                try {
-                    sleepingTime += 1_000;
-                    Thread.sleep(sleepingTime);
-                } catch (InterruptedException e) {
-                    throw new ServiceException(e);
+                Optional<RankedStatsDto> rankedStatsDto = load(summonerId);
+                if (rankedStatsDto.isPresent()) {
+                    rankedStatsDao.save(new ItemWrapper<>(region, summonerId, rankedStatsDto.get()));
                 }
             }
         }
@@ -89,7 +67,6 @@ public class RankedStatsLoader extends AbstractLoader {
      * @param summonerId the summoner id
      * @return true if the summoner is not in the database
      */
-
     private boolean notLoaded(long summonerId) {
         return !rankedStatsDao.get(region, summonerId).isPresent();
     }
@@ -100,15 +77,10 @@ public class RankedStatsLoader extends AbstractLoader {
      * @param summonerId the summoner id
      * @return the RankedStatsDto
      */
-    private RankedStatsDto load(long summonerId) {
+    private Optional<RankedStatsDto> load(long summonerId) {
         loaderInformation.addRequest();
-        Query<RankedStatsDto> query = riotApi.getRankedStats(summonerId).region(region);
-        RankedStatsDto rankedStatsDto = executor.execute(query, region, 1);
-        if (rankedStatsDto == null) {
-            rankedStatsDto = new RankedStatsDto();
-            rankedStatsDto.setSummonerId(summonerId);
-        }
         LOGGER.info("{} : rankedStats {}", RegionPrinter.getRegion(region), summonerId);
-        return rankedStatsDto;
+        Query<RankedStatsDto> query = riotApi.getRankedStats(summonerId).region(region);
+        return Optional.ofNullable(executor.execute(query, region, 1));
     }
 }

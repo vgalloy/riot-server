@@ -28,6 +28,10 @@ public final class ModelMapper {
      * @return the model
      */
     public static <DTO> Model<DTO> map(Entity<DTO> entity) {
-        return new Model<>(entity.getRegion(), entity.getItemId(), entity.getItem(), LocalDateTime.ofEpochSecond(entity.getLastUpdate(), 0, ZoneOffset.UTC));
+        Model<DTO> result = new Model<>(entity.getRegion(), entity.getItemId(), LocalDateTime.ofEpochSecond(entity.getLastUpdate(), 0, ZoneOffset.UTC));
+        if (entity.getItem().isPresent()) {
+            result.setItem(entity.getItem().get());
+        }
+        return result;
     }
 }

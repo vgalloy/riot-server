@@ -1,12 +1,15 @@
 package vgalloy.riot.server.service.internal.loader.impl.matchdetail;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Optional;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
@@ -14,7 +17,7 @@ import vgalloy.riot.api.api.dto.matchlist.MatchList;
 import vgalloy.riot.api.api.dto.matchlist.MatchReference;
 import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.api.api.query.Query;
-import vgalloy.riot.server.dao.api.dao.CommonDao;
+import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
@@ -28,7 +31,7 @@ public class PrivilegedLoader extends AbstractLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PrivilegedLoader.class);
 
-    private final CommonDao<MatchDetail> matchDetailDao;
+    private final MatchDetailDao matchDetailDao;
 
     /**
      * Constructor.
@@ -37,7 +40,7 @@ public class PrivilegedLoader extends AbstractLoader {
      * @param executor       the executor
      * @param matchDetailDao the match detail dao
      */
-    public PrivilegedLoader(RiotApi riotApi, Executor executor, CommonDao<MatchDetail> matchDetailDao) {
+    public PrivilegedLoader(RiotApi riotApi, Executor executor, MatchDetailDao matchDetailDao) {
         super(riotApi, executor);
         this.matchDetailDao = Objects.requireNonNull(matchDetailDao);
     }
@@ -67,7 +70,9 @@ public class PrivilegedLoader extends AbstractLoader {
                                 .map(MatchReference::getMatchId)
                                 .filter(this::notLoaded)
                                 .map(this::load)
-                                .forEach(e -> matchDetailDao.save(Region.EUW, e.getMatchId(), e));
+                                .filter(Optional::isPresent)
+                                .map(Optional::get)
+                                .forEach(matchDetailDao::save);
                     }
                 }
             }
@@ -86,7 +91,7 @@ public class PrivilegedLoader extends AbstractLoader {
      * @return true if the match is not in the database
      */
     private boolean notLoaded(long matchId) {
-        return !matchDetailDao.get(Region.EUW, matchId).isPresent();
+        return !matchDetailDao.get(Region.EUW, matchId, LocalDate.now().minus(7, ChronoUnit.DAYS)).isPresent();
     }
 
     /**
@@ -95,18 +100,13 @@ public class PrivilegedLoader extends AbstractLoader {
      * @param matchId the match id
      * @return the RankedStatsDto
      */
-    private MatchDetail load(long matchId) {
+    private Optional<MatchDetail> load(long matchId) {
         loaderInformation.addRequest();
         Query<MatchDetail> query = riotApi.getMatchDetailById(matchId)
                 .includeTimeline(true)
                 .region(Region.EUW);
         MatchDetail matchDetail = executor.execute(query, Region.EUW, 10);
-
-        if (matchDetail == null) {
-            matchDetail = new MatchDetail();
-            matchDetail.setMatchId(matchId);
-        }
         LOGGER.info("{} : matchDetail {}", RegionPrinter.getRegion(Region.EUW), matchId);
-        return matchDetail;
+        return Optional.ofNullable(matchDetail);
     }
 }

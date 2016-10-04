@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.ItemWrapper;
 
 /**
  * @author Vincent Galloy
@@ -14,11 +15,9 @@ public interface CommonDao<DTO> {
     /**
      * Save the dto.
      *
-     * @param region the region
-     * @param id     the id of the dto
-     * @param dto    the dto
+     * @param itemWrapper the item wrapper
      */
-    void save(Region region, Long id, DTO dto);
+    void save(ItemWrapper<DTO> itemWrapper);
 
     /**
      * Get the entity.

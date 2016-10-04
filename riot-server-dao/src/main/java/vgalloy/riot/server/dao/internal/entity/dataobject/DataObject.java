@@ -36,13 +36,11 @@ public abstract class DataObject<DTO> {
      *
      * @param region the region
      * @param itemId the item id
-     * @param item   the item
      */
-    public DataObject(Region region, Long itemId, DTO item) {
+    public DataObject(Region region, Long itemId) {
         lastUpdate = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
         this.region = Objects.requireNonNull(region, "region can not be null");
         this.itemId = Objects.requireNonNull(itemId, "itemId can not be null");
-        this.item = Objects.requireNonNull(item, "item can not be null");
         key = new Key(region, itemId);
     }
 
@@ -62,11 +60,7 @@ public abstract class DataObject<DTO> {
         return item;
     }
 
-    /**
-     * @param item the item
-     * @throws Exception the exception
-     */
-    public void setItem(DTO item) throws Exception {
+    public void setItem(DTO item) {
         this.item = item;
     }
 

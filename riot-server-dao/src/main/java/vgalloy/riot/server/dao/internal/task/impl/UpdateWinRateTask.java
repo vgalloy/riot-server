@@ -2,10 +2,10 @@ package vgalloy.riot.server.dao.internal.task.impl;
 
 import java.util.Objects;
 
-import com.mongodb.client.MongoDatabase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import vgalloy.riot.server.dao.internal.dao.factory.MongoDatabaseFactory;
 import vgalloy.riot.server.dao.internal.query.WinRateQuery;
 import vgalloy.riot.server.dao.internal.task.Task;
 
@@ -17,22 +17,22 @@ public final class UpdateWinRateTask implements Task {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateWinRateTask.class);
 
-    private final MongoDatabase mongoDatabase;
+    private final MongoDatabaseFactory mongoDatabaseFactory;
 
     /**
      * Constructor.
      *
-     * @param mongoDatabase the mongo database
+     * @param mongoDatabaseFactory the mongo database factory
      */
-    public UpdateWinRateTask(MongoDatabase mongoDatabase) {
-        this.mongoDatabase = Objects.requireNonNull(mongoDatabase);
+    public UpdateWinRateTask(MongoDatabaseFactory mongoDatabaseFactory) {
+        this.mongoDatabaseFactory = Objects.requireNonNull(mongoDatabaseFactory);
     }
 
     @Override
     public void execute() {
         long startTime = System.currentTimeMillis();
         LOGGER.info("[ START ] : updateWinRate");
-        WinRateQuery.updateWinRate(mongoDatabase);
+        WinRateQuery.updateWinRate(mongoDatabaseFactory);
         LOGGER.info("[ END   ] : updateWinRate {} ms", System.currentTimeMillis() - startTime);
     }
 }

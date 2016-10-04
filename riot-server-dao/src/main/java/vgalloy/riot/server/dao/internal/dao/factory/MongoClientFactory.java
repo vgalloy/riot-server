@@ -1,11 +1,11 @@
 package vgalloy.riot.server.dao.internal.dao.factory;
 
+import com.mongodb.MongoClient;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-
-import com.mongodb.MongoClient;
 
 /**
  * @author Vincent Galloy
@@ -13,27 +13,58 @@ import com.mongodb.MongoClient;
  */
 public final class MongoClientFactory {
 
-    private static final Map<String, MongoClient> MONGO_CLIENT_MAP = new HashMap<>();
+    private final Map<String, MongoDatabaseFactory> mongoDatabaseFactoryMap = new HashMap<>();
+    private final Map<String, DBFactory> mongoDBFactoryMap = new HashMap<>();
+    private final MongoClient mongoClient;
+
 
     /**
      * Constructor.
-     * To prevent instantiation
+     * @param databaseUrl the database url
      */
-    private MongoClientFactory() {
-        throw new AssertionError();
+    protected MongoClientFactory(String databaseUrl) {
+        Objects.requireNonNull(databaseUrl);
+        mongoClient = new MongoClient(databaseUrl);
     }
 
     /**
      * Get the mongo client.
      *
-     * @param databaseUrl the database url
      * @return the mongo client
      */
-    public static MongoClient get(String databaseUrl) {
-        Objects.requireNonNull(databaseUrl, "database url can not be null");
-        MongoClient mongoClient = MONGO_CLIENT_MAP.get(databaseUrl);
-        mongoClient = Optional.ofNullable(mongoClient).orElse(new MongoClient(databaseUrl));
-        MONGO_CLIENT_MAP.put(databaseUrl, mongoClient);
+    public MongoClient get() {
         return mongoClient;
+    }
+
+    /**
+     * Get a MongoDatabaseFactory object.
+     *
+     * @param databaseName the database name
+     * @return the MongoDatabaseFactory
+     */
+    public MongoDatabaseFactory getMongoDatabase(String databaseName) {
+        Objects.requireNonNull(databaseName);
+
+        MongoDatabaseFactory mongoDatabaseFactory = mongoDatabaseFactoryMap.get(databaseName);
+        mongoDatabaseFactory = Optional.ofNullable(mongoDatabaseFactory).orElse(new MongoDatabaseFactory(mongoClient, databaseName));
+        mongoDatabaseFactoryMap.put(databaseName, mongoDatabaseFactory);
+
+        return mongoDatabaseFactory;
+    }
+
+    /**
+     * Get a DBFactory object.
+     *
+     * @param dbName the DB name
+     * @return the DBFactory
+     */
+    public DBFactory getDB(String dbName) {
+        Objects.requireNonNull(dbName);
+
+        DBFactory db = mongoDBFactoryMap.get(dbName);
+        db = Optional.ofNullable(db).orElse(new DBFactory(mongoClient, dbName));
+        mongoDBFactoryMap.put(dbName, db);
+
+        return db;
     }
 }

@@ -1,12 +1,15 @@
 package vgalloy.riot.server.dao.api.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 09/09/16.
  */
-public class WinRate {
+public class WinRate implements Serializable {
+
+    private static final long serialVersionUID = 2798464362605793360L;
 
     private final int win;
     private final int lose;

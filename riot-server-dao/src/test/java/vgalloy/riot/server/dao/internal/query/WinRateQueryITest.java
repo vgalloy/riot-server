@@ -2,6 +2,7 @@ package vgalloy.riot.server.dao.internal.query;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,13 +36,12 @@ import vgalloy.riot.server.dao.internal.dao.factory.MongoClientFactory;
  */
 public class WinRateQueryITest {
 
-    private static final int PORT = 29006;
+    private static final int PORT = 29007;
     private static final String URL = "localhost";
 
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
 
-    private final MongoDatabase mongoDatabase = MongoClientFactory.get(URL + ":" + PORT).getDatabase("riotTest");
     private final MatchDetailDaoImpl matchDetailDao = DaoFactory.getDao(MatchDetailDaoImpl.class, URL + ":" + PORT, "riotTest");
 
     @BeforeClass
@@ -63,81 +63,85 @@ public class WinRateQueryITest {
     @Test
     public void testWinRateDuringOneDay() {
         // GIVEN
-        int startDay = 17053;
+        long startDay = LocalDate.now().toEpochDay();
 
         List<MatchDetail> input = new ArrayList<>();
-        input.add(createMatchDetail(startDay * 24 * 3600 + 465, createParticipant(7, false), createParticipant(8, false)));
-        input.add(createMatchDetail(startDay * 24 * 3600 + 123, createParticipant(7, false), createParticipant(9, false)));
-        input.add(createMatchDetail(startDay * 24 * 3600 + 300, createParticipant(7, true), createParticipant(8, true)));
+        input.add(createMatchDetail(1, Region.EUNE, startDay * 24 * 3600 * 1000 + 465, createParticipant(7, false), createParticipant(8, false)));
+        input.add(createMatchDetail(2, Region.EUNE, startDay * 24 * 3600 * 1000 + 123, createParticipant(7, false), createParticipant(9, false)));
+        input.add(createMatchDetail(3, Region.EUNE, startDay * 24 * 3600 * 1000 + 300, createParticipant(7, true), createParticipant(8, true)));
 
         /* to late */
-        input.add(createMatchDetail((startDay + 1) * 24 * 3600 + 300, createParticipant(7, true), createParticipant(8, true)));
+        input.add(createMatchDetail(4, Region.EUNE, (startDay + 1) * 24 * 3600 * 1000 + 300, createParticipant(7, true), createParticipant(8, true)));
         /* to early */
-        input.add(createMatchDetail(startDay * 24 * 3600 - 300, createParticipant(7, true), createParticipant(8, true)));
+        input.add(createMatchDetail(5, Region.EUNE, startDay * 24 * 3600 * 1000 - 300, createParticipant(7, true), createParticipant(8, true)));
 
         // WHEN
         for (int i = 0; i < input.size(); i++) {
-            matchDetailDao.save(Region.EUNE, (long) i + 1, input.get(i));
+            matchDetailDao.save(input.get(i));
         }
 
         // THEN
-        Assert.assertEquals(2, WinRateQuery.getWinRate(mongoDatabase, 7, LocalDate.ofEpochDay(startDay)).getLose());
-        Assert.assertEquals(1, WinRateQuery.getWinRate(mongoDatabase, 7, LocalDate.ofEpochDay(startDay)).getWin());
+        Assert.assertEquals(2, matchDetailDao.getWinRate(7, LocalDate.ofEpochDay(startDay)).getLose());
+        Assert.assertEquals(1, matchDetailDao.getWinRate(7, LocalDate.ofEpochDay(startDay)).getWin());
     }
 
     @Test
     public void testWinRateDuringOneWeek() {
         // GIVEN
-        int startDay = 17053;
-        int endDay = 17053 + 7;
+        long startDay = LocalDate.now().minus(7, ChronoUnit.DAYS).toEpochDay();
+        long endDay = startDay + 7;
 
         List<MatchDetail> input = new ArrayList<>();
-        input.add(createMatchDetail(startDay * 24 * 3600 + 465, createParticipant(7, false), createParticipant(8, false)));
-        input.add(createMatchDetail(startDay * 24 * 3600 + 123, createParticipant(7, false), createParticipant(9, false)));
-        input.add(createMatchDetail(startDay * 24 * 3600 + 300, createParticipant(7, true), createParticipant(8, true)));
+        input.add(createMatchDetail(1, Region.EUNE, startDay * 24 * 3600 * 1000 + 465, createParticipant(17, false), createParticipant(8, false)));
+        input.add(createMatchDetail(2, Region.EUNE, startDay * 24 * 3600 * 1000 + 123, createParticipant(17, false), createParticipant(9, false)));
+        input.add(createMatchDetail(3, Region.EUNE, startDay * 24 * 3600 * 1000 + 300, createParticipant(17, true), createParticipant(8, true)));
 
         /* to late */
-        input.add(createMatchDetail(endDay * 24 * 3600 + 300, createParticipant(7, true), createParticipant(8, true)));
+        input.add(createMatchDetail(4, Region.EUNE, endDay * 24 * 3600 * 1000 + 300, createParticipant(17, true), createParticipant(8, true)));
         /* to early */
-        input.add(createMatchDetail(startDay * 24 * 3600 - 300, createParticipant(7, true), createParticipant(8, true)));
+        input.add(createMatchDetail(5, Region.EUNE, startDay * 24 * 3600 * 1000 - 300, createParticipant(17, true), createParticipant(8, true)));
 
         // WHEN
         for (int i = 0; i < input.size(); i++) {
-            matchDetailDao.save(Region.EUNE, (long) i + 1, input.get(i));
+            matchDetailDao.save(input.get(i));
         }
 
         // THEN
-        Map<LocalDate, WinRate> result = WinRateQuery.getWinRate(mongoDatabase, 7, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay));
+        Map<LocalDate, WinRate> result = matchDetailDao.getWinRate(17, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay));
         Assert.assertEquals(7, result.size());
     }
 
     @Test
     public void testNoTime() {
         // GIVEN
-        int startDay = 17053;
-        int endDay = startDay;
+        long startDay = LocalDate.now().toEpochDay();
+        long endDay = startDay;
 
         List<MatchDetail> input = new ArrayList<>();
-        input.add(createMatchDetail(startDay * 24 * 3600 + 465, createParticipant(7, false), createParticipant(8, false)));
+        input.add(createMatchDetail(1, Region.EUNE, startDay * 24 * 3600 * 1000 + 465, createParticipant(27, false), createParticipant(8, false)));
 
         // WHEN
         for (int i = 0; i < input.size(); i++) {
-            matchDetailDao.save(Region.EUNE, (long) i + 1, input.get(i));
+            matchDetailDao.save(input.get(i));
         }
 
         // THEN
-        Assert.assertEquals(0, WinRateQuery.getWinRate(mongoDatabase, 7, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay)).size());
+        Assert.assertEquals(0, matchDetailDao.getWinRate(27, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay)).size());
     }
 
     /**
      * Convenient way to create simple MachDetail.
      *
+     * @param id           the match id
+     * @param region       the match region
      * @param creationDate the creation date
      * @param participants the participants
      * @return a fake MachDetail
      */
-    private MatchDetail createMatchDetail(long creationDate, Participant... participants) {
+    private MatchDetail createMatchDetail(long id, Region region, long creationDate, Participant... participants) {
         MatchDetail matchDetail = new MatchDetail();
+        matchDetail.setMatchId(id);
+        matchDetail.setRegion(region);
         matchDetail.setMatchCreation(creationDate);
         matchDetail.setParticipants(Arrays.asList(participants));
         return matchDetail;

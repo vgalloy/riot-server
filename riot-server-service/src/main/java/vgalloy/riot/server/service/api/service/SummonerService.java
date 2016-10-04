@@ -14,14 +14,13 @@ import vgalloy.riot.server.service.api.model.LastGame;
 public interface SummonerService extends CommonService<SummonerDto> {
 
     /**
-     * Get the last games of a summoner.
+     * Get the last games of a summoner during the period : [now - 30 days, now]. The games are sorted by date.
      *
      * @param region     the region
      * @param summonerId the summoner id
-     * @param limit      the limit of result to fetch
      * @return the last games
      */
-    List<LastGame> getLastGames(Region region, long summonerId, Optional<Integer> limit);
+    List<LastGame> getLastGames(Region region, long summonerId);
 
     /**
      * Get the summoner by name and region.

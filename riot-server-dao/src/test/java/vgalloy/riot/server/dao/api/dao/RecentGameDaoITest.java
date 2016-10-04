@@ -16,6 +16,7 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.game.GameDto;
 import vgalloy.riot.api.api.dto.game.RecentGamesDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.ItemWrapper;
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
 
 import java.io.IOException;
@@ -63,12 +64,13 @@ public class RecentGameDaoITest {
         recentGamesDto.setGames(gameDtoSet);
 
         // WHEN
-        recentGamesDao.save(Region.JP, 19L, recentGamesDto);
+        recentGamesDao.save(new ItemWrapper<>(Region.JP, 19L, recentGamesDto));
         Optional<Entity<RecentGamesDto>> result = recentGamesDao.get(Region.JP, 19L);
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertEquals(recentGamesDto, result.get().getItem());
+        Assert.assertTrue(result.get().getItem().isPresent());
+        Assert.assertEquals(recentGamesDto, result.get().getItem().get());
     }
 }

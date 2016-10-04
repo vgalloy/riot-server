@@ -1,24 +1,23 @@
 package vgalloy.riot.server.service.internal.loader.impl.matchreference;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.matchlist.MatchList;
 import vgalloy.riot.api.api.dto.matchlist.MatchReference;
-import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.api.api.query.Query;
-import vgalloy.riot.server.dao.api.dao.CommonDao;
-import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.service.api.service.exception.ServiceException;
+import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
+import vgalloy.riot.server.dao.api.dao.SummonerDao;
+import vgalloy.riot.server.dao.api.entity.ItemWrapper;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
+import vgalloy.riot.server.service.internal.loader.helper.LoaderHelper;
 import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
 
 /**
@@ -32,8 +31,8 @@ public class MatchReferenceLoader extends AbstractLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchReferenceLoader.class);
 
     private final Region region;
-    private final CommonDao<SummonerDto> summonerDao;
-    private final CommonDao<MatchReference> matchReferenceDao;
+    private final SummonerDao summonerDao;
+    private final MatchReferenceDao matchReferenceDao;
 
     /**
      * Constructor.
@@ -44,7 +43,7 @@ public class MatchReferenceLoader extends AbstractLoader {
      * @param summonerDao       the summoner dao
      * @param matchReferenceDao the match reference dao
      */
-    public MatchReferenceLoader(RiotApi riotApi, Executor executor, Region region, CommonDao<SummonerDto> summonerDao, CommonDao<MatchReference> matchReferenceDao) {
+    public MatchReferenceLoader(RiotApi riotApi, Executor executor, Region region, SummonerDao summonerDao, MatchReferenceDao matchReferenceDao) {
         super(riotApi, executor);
         this.region = Objects.requireNonNull(region);
         this.summonerDao = Objects.requireNonNull(summonerDao);
@@ -54,33 +53,9 @@ public class MatchReferenceLoader extends AbstractLoader {
     @Override
     public void execute() {
         while (true) {
-            Entity<SummonerDto> summonerEntity = getRandomSummoner();
-            long summonerId = summonerEntity.getItem().getId();
+            long summonerId = LoaderHelper.getRandomSummonerId(summonerDao, region, LOGGER);
             List<MatchReference> matchReferences = load(summonerId);
-            matchReferences.forEach(e -> matchReferenceDao.save(region, e.getMatchId(), e));
-        }
-    }
-
-    /**
-     * Return a random SummonerDto.
-     *
-     * @return a random SummonerDto
-     */
-    private Entity<SummonerDto> getRandomSummoner() {
-        long sleepingTime = 0;
-        while (true) {
-            Optional<Entity<SummonerDto>> summonerEntity = summonerDao.getRandom(region);
-            if (summonerEntity.isPresent()) {
-                return summonerEntity.get();
-            } else {
-                LOGGER.warn("{} : No summoner found", RegionPrinter.getRegion(region));
-                try {
-                    sleepingTime += 1_000;
-                    Thread.sleep(sleepingTime);
-                } catch (InterruptedException e) {
-                    throw new ServiceException(e);
-                }
-            }
+            matchReferences.forEach(e -> matchReferenceDao.save(new ItemWrapper<>(region, e.getMatchId(), e)));
         }
     }
 

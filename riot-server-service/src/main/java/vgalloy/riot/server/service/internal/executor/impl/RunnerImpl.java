@@ -6,12 +6,11 @@ import java.util.Collections;
 import java.util.List;
 
 import vgalloy.riot.api.api.constant.Region;
-import vgalloy.riot.api.api.dto.mach.MatchDetail;
-import vgalloy.riot.api.api.dto.matchlist.MatchReference;
-import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
-import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.api.api.model.RiotApi;
-import vgalloy.riot.server.dao.api.dao.CommonDao;
+import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
+import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
+import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
+import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.executor.Runner;
 import vgalloy.riot.server.service.internal.loader.Loader;
@@ -41,10 +40,10 @@ public final class RunnerImpl implements Runner {
      */
     public RunnerImpl(RiotApi riotApi,
                       Executor executor,
-                      CommonDao<SummonerDto> summonerDao,
-                      CommonDao<MatchDetail> matchDetailDao,
-                      CommonDao<MatchReference> matchReferenceDao,
-                      CommonDao<RankedStatsDto> rankedStatsDao) {
+                      SummonerDao summonerDao,
+                      MatchDetailDao matchDetailDao,
+                      MatchReferenceDao matchReferenceDao,
+                      RankedStatsDao rankedStatsDao) {
 
         register(new LoaderInitializer(riotApi, executor, summonerDao));
 

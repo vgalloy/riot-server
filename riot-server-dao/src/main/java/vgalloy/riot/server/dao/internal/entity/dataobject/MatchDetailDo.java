@@ -21,9 +21,8 @@ public class MatchDetailDo extends DataObject<MatchDetail> {
      *
      * @param region the region
      * @param itemId the item id
-     * @param item   the item
      */
-    public MatchDetailDo(Region region, Long itemId, MatchDetail item) {
-        super(region, itemId, item);
+    public MatchDetailDo(Region region, Long itemId) {
+        super(region, itemId);
     }
 }

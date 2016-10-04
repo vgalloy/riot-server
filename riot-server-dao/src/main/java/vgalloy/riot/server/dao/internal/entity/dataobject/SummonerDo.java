@@ -21,9 +21,8 @@ public class SummonerDo extends DataObject<SummonerDto> {
      *
      * @param region the region
      * @param itemId the item id
-     * @param item   the item
      */
-    public SummonerDo(Region region, Long itemId, SummonerDto item) {
-        super(region, itemId, item);
+    public SummonerDo(Region region, Long itemId) {
+        super(region, itemId);
     }
 }

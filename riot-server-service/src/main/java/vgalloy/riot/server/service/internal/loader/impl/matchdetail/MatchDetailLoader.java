@@ -1,23 +1,25 @@
 package vgalloy.riot.server.service.internal.loader.impl.matchdetail;
 
-import java.util.Objects;
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Objects;
+import java.util.Optional;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
-import vgalloy.riot.api.api.dto.matchlist.MatchReference;
-import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.api.api.query.Query;
-import vgalloy.riot.server.dao.api.dao.CommonDao;
-import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.service.api.service.exception.ServiceException;
+import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
+import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
+import vgalloy.riot.server.dao.api.dao.SummonerDao;
+import vgalloy.riot.server.dao.api.entity.ItemWrapper;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
+import vgalloy.riot.server.service.internal.loader.helper.LoaderHelper;
 import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
 import vgalloy.riot.server.service.internal.loader.mapper.SummonerDtoMapper;
 
@@ -32,9 +34,9 @@ public class MatchDetailLoader extends AbstractLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchDetailLoader.class);
 
     private final Region region;
-    private final CommonDao<SummonerDto> summonerDao;
-    private final CommonDao<MatchDetail> matchDetailDao;
-    private final CommonDao<MatchReference> matchReferenceDao;
+    private final SummonerDao summonerDao;
+    private final MatchDetailDao matchDetailDao;
+    private final MatchReferenceDao matchReferenceDao;
 
     /**
      * Constructor.
@@ -46,7 +48,7 @@ public class MatchDetailLoader extends AbstractLoader {
      * @param matchDetailDao    the match detail dao
      * @param matchReferenceDao the match reference dao
      */
-    public MatchDetailLoader(RiotApi riotApi, Executor executor, Region region, CommonDao<SummonerDto> summonerDao, CommonDao<MatchDetail> matchDetailDao, CommonDao<MatchReference> matchReferenceDao) {
+    public MatchDetailLoader(RiotApi riotApi, Executor executor, Region region, SummonerDao summonerDao, MatchDetailDao matchDetailDao, MatchReferenceDao matchReferenceDao) {
         super(riotApi, executor);
         this.region = Objects.requireNonNull(region);
         this.summonerDao = Objects.requireNonNull(summonerDao);
@@ -57,39 +59,17 @@ public class MatchDetailLoader extends AbstractLoader {
     @Override
     public void execute() {
         while (true) {
-            Entity<MatchReference> matchReferenceEntity = getRandomMatchReference();
-            long matchId = matchReferenceEntity.getItem().getMatchId();
+            long matchId = LoaderHelper.getRandomMatchId(matchReferenceDao, region, LOGGER);
             if (notLoaded(matchId)) {
-                MatchDetail matchDetail = load(matchId);
-                matchDetailDao.save(region, matchId, matchDetail);
-                if (matchDetail.getParticipantIdentities() != null) {
-                    matchDetail.getParticipantIdentities().stream()
-                            .map(ParticipantIdentity::getPlayer)
-                            .map(SummonerDtoMapper::map)
-                            .forEach(e -> summonerDao.save(region, e.getId(), e));
-                }
-            }
-        }
-    }
-
-    /**
-     * Return a random matchReference.
-     *
-     * @return a random matchReference
-     */
-    private Entity<MatchReference> getRandomMatchReference() {
-        long sleepingTime = 0;
-        while (true) {
-            Optional<Entity<MatchReference>> matchReferenceEntity = matchReferenceDao.getRandom(region);
-            if (matchReferenceEntity.isPresent()) {
-                return matchReferenceEntity.get();
-            } else {
-                LOGGER.warn("{} : No matchReference found", RegionPrinter.getRegion(region));
-                try {
-                    sleepingTime += 1_000;
-                    Thread.sleep(sleepingTime);
-                } catch (InterruptedException e) {
-                    throw new ServiceException(e);
+                Optional<MatchDetail> matchDetail = load(matchId);
+                if (matchDetail.isPresent()) {
+                    matchDetailDao.save(matchDetail.get());
+                    if (matchDetail.get().getParticipantIdentities() != null) {
+                        matchDetail.get().getParticipantIdentities().stream()
+                                .map(ParticipantIdentity::getPlayer)
+                                .map(SummonerDtoMapper::map)
+                                .forEach(e -> summonerDao.save(new ItemWrapper<>(region, e.getId(), e)));
+                    }
                 }
             }
         }
@@ -102,27 +82,22 @@ public class MatchDetailLoader extends AbstractLoader {
      * @return true if the match is not in the database
      */
     private boolean notLoaded(long matchId) {
-        return !matchDetailDao.get(region, matchId).isPresent();
+        return !matchDetailDao.get(region, matchId, LocalDate.now().minus(10, ChronoUnit.DAYS)).isPresent();
     }
 
     /**
-     * Load the ranked stats for a given summoner.
+     * Load the match detail for a given match id.
      *
      * @param matchId the match id
      * @return the RankedStatsDto
      */
-    private MatchDetail load(long matchId) {
+    private Optional<MatchDetail> load(long matchId) {
         loaderInformation.addRequest();
         Query<MatchDetail> query = riotApi.getMatchDetailById(matchId)
                 .includeTimeline(true)
                 .region(region);
-        MatchDetail matchDetail = executor.execute(query, region, 5);
-
-        if (matchDetail == null) {
-            matchDetail = new MatchDetail();
-            matchDetail.setMatchId(matchId);
-        }
         LOGGER.info("{} : matchDetail {}", RegionPrinter.getRegion(region), matchId);
-        return matchDetail;
+
+        return Optional.ofNullable(executor.execute(query, region, 5));
     }
 }

@@ -10,8 +10,11 @@ public abstract class DaoException extends RuntimeException {
 
     /**
      * Constructor.
+     *
+     * @param message the detail message
      */
-    public DaoException() {
+    public DaoException(String message) {
+        super(message);
     }
 
     /**

@@ -28,6 +28,6 @@ public class MongoDaoException extends DaoException {
      * @param message the detail message
      */
     public MongoDaoException(String message) {
-        super();
+        super(message);
     }
 }

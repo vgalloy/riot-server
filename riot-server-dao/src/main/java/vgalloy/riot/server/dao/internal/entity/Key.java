@@ -10,7 +10,6 @@ import vgalloy.riot.api.api.constant.Region;
  */
 public final class Key {
 
-    public static final String REGION_CAN_NOT_BE_NULL = "region can not be null";
     public static final String ID_CAN_NOT_BE_NULL = "id can not be null or zero.";
 
     private final Region region;
@@ -23,8 +22,8 @@ public final class Key {
      * @param id     the id
      */
     public Key(Region region, Long id) {
-        this.region = Objects.requireNonNull(region, REGION_CAN_NOT_BE_NULL);
-        this.id = Objects.requireNonNull(id, ID_CAN_NOT_BE_NULL);
+        this.region = Objects.requireNonNull(region);
+        this.id = Objects.requireNonNull(id);
         if (id.equals(0L)) {
             throw new NullPointerException(ID_CAN_NOT_BE_NULL);
         }

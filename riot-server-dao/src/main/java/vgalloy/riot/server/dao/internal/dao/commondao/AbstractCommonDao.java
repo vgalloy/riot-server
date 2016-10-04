@@ -1,6 +1,5 @@
 package vgalloy.riot.server.dao.internal.dao.commondao;
 
-import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import org.mongojack.JacksonDBCollection;
 
@@ -12,8 +11,9 @@ import java.util.Optional;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.ItemWrapper;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.GenericDaoImpl;
-import vgalloy.riot.server.dao.internal.dao.factory.MongoDBFactory;
+import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
 import vgalloy.riot.server.dao.internal.entity.Key;
 import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
 import vgalloy.riot.server.dao.internal.entity.mapper.DataObjectMapper;
@@ -42,17 +42,24 @@ public abstract class AbstractCommonDao<DTO, DATA_OBJECT extends DataObject<DTO>
         Objects.requireNonNull(collectionName);
         dataObjectClass = (Class<DATA_OBJECT>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         Objects.requireNonNull(dataObjectClass);
-        DB mongoDatabase = MongoDBFactory.getDB(databaseUrl, databaseName);
-        DBCollection dbCollection = mongoDatabase.getCollection(collectionName);
+        DBCollection dbCollection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
+                .getDB(databaseName)
+                .getDBCollection(collectionName)
+                .get();
         collection = JacksonDBCollection.wrap(dbCollection, dataObjectClass, String.class);
-        genericDao = Objects.requireNonNull(new GenericDaoImpl<>(collection));
+        genericDao = new GenericDaoImpl<>(collection);
     }
 
     @Override
-    public void save(Region region, Long id, DTO dto) {
+    public void save(ItemWrapper<DTO> itemWrapper) {
+        Objects.requireNonNull(itemWrapper);
+
         try {
-            Constructor<DATA_OBJECT> constructor = dataObjectClass.getConstructor(Region.class, Long.class, dto.getClass());
-            DATA_OBJECT dataObject = constructor.newInstance(region, id, dto);
+            Constructor<DATA_OBJECT> constructor = dataObjectClass.getConstructor(Region.class, Long.class);
+            DATA_OBJECT dataObject = constructor.newInstance(itemWrapper.getRegion(), itemWrapper.getItemId());
+            if (itemWrapper.getItem().isPresent()) {
+                dataObject.setItem(itemWrapper.getItem().get());
+            }
             genericDao.update(dataObject);
         } catch (Exception e) {
             throw new MongoDaoException(MongoDaoException.UNABLE_TO_SAVE_THE_DTO, e);
@@ -61,6 +68,9 @@ public abstract class AbstractCommonDao<DTO, DATA_OBJECT extends DataObject<DTO>
 
     @Override
     public Optional<Entity<DTO>> get(Region region, Long itemId) {
+        Objects.requireNonNull(region);
+        Objects.requireNonNull(itemId);
+
         Key key = new Key(region, itemId);
         Optional<DATA_OBJECT> dataObject = genericDao.getById(key.normalizeString());
         if (dataObject.isPresent()) {
@@ -71,6 +81,8 @@ public abstract class AbstractCommonDao<DTO, DATA_OBJECT extends DataObject<DTO>
 
     @Override
     public Optional<Entity<DTO>> getRandom(Region region) {
+        Objects.requireNonNull(region);
+
         Optional<DATA_OBJECT> dataObject = genericDao.getRandom(region);
         if (dataObject.isPresent()) {
             return Optional.of(DataObjectMapper.map(dataObject.get()));
