@@ -31,4 +31,12 @@ public class Request<DTO> {
     public int getPriority() {
         return priority;
     }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "query=" + query +
+                ", priority=" + priority +
+                '}';
+    }
 }

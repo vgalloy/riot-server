@@ -40,10 +40,10 @@ public final class QueryServiceImpl implements QueryService {
             throw new UserException("startDate must be after endDate");
         }
         if (startDate.isBefore(LocalDate.now().minus(4, ChronoUnit.YEARS))) {
-            throw new UserException("startDate " + startDate + "is to old");
+            throw new UserException("startDate " + startDate + " is to old");
         }
-        if (startDate.isBefore(LocalDate.now().plus(2, ChronoUnit.DAYS))) {
-            throw new UserException("endDate " + endDate + "is in the future");
+        if (endDate.isAfter(LocalDate.now().plus(2, ChronoUnit.DAYS))) {
+            throw new UserException("endDate " + endDate + " is in the future");
         }
 
         return matchDetailDao.getWinRate(championId, startDate, endDate);

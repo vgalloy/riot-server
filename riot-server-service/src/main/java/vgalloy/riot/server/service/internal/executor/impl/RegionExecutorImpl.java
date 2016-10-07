@@ -39,7 +39,7 @@ public final class RegionExecutorImpl implements RegionExecutor {
      * @param region the region
      */
     public RegionExecutorImpl(Region region) {
-        this.region = Objects.requireNonNull(region, "region can not be null");
+        this.region = Objects.requireNonNull(region);
     }
 
     @Override
@@ -79,7 +79,7 @@ public final class RegionExecutorImpl implements RegionExecutor {
      * Chose which request have to be executed.
      */
     private void election() {
-        long max = requestList.stream().map(Request::getPriority).count();
+        long max = requestList.stream().map(Request::getPriority).mapToInt(Integer::intValue).sum();
         long rand = Math.abs(random.nextLong()) % max;
         for (Request<?> request : requestList) {
             if (rand < request.getPriority()) {
