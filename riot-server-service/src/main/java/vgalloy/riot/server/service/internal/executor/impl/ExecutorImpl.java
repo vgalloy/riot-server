@@ -34,6 +34,7 @@ public final class ExecutorImpl implements Executor {
 
     @Override
     public <DTO> DTO execute(Query<DTO> query, Region region, int priority) {
+        Objects.requireNonNull(query);
         Objects.requireNonNull(region);
         if (query instanceof AbstractQuery) {
             ((AbstractQuery<?, DTO>) query).riotApiKey(riotApiKey).region(region);

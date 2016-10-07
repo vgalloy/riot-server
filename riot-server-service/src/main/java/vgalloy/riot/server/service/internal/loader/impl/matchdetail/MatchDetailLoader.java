@@ -97,8 +97,9 @@ public class MatchDetailLoader extends AbstractLoader {
         Query<MatchDetail> query = riotApi.getMatchDetailById(matchId.getId())
                 .includeTimeline(true)
                 .region(region);
-        LOGGER.info("{} : matchDetail {}", RegionPrinter.getRegion(region), matchId);
 
-        return Optional.ofNullable(executor.execute(query, region, 5));
+        Optional<MatchDetail> result = Optional.ofNullable(executor.execute(query, region, 15));
+        LOGGER.info("{} : matchDetail {}", RegionPrinter.getRegion(region), matchId);
+        return result;
     }
 }

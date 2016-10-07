@@ -99,7 +99,8 @@ public final class RegionExecutorImpl implements RegionExecutor {
      * @return the dto
      */
     private <DTO> DTO execute(Query<DTO> query) {
-        for (int attempt = 1; attempt < 10; attempt++) {
+        sleepingTimeMillis = DEFAULT_SLEEPING_TIME_MILLIS;
+        for (int attempt = 1; attempt < 20; attempt++) {
             try {
                 DTO result = query.execute();
                 sleepingTimeMillis = Math.max(sleepingTimeMillis / 2, DEFAULT_SLEEPING_TIME_MILLIS);
@@ -114,7 +115,7 @@ public final class RegionExecutorImpl implements RegionExecutor {
                 } catch (InterruptedException e1) {
                     throw new ServiceException(e1);
                 }
-                sleepingTimeMillis *= 4;
+                sleepingTimeMillis *= 2;
             }
         }
         return null;

@@ -82,8 +82,9 @@ public class RankedStatsLoader extends AbstractLoader {
      */
     private Optional<RankedStatsDto> load(long summonerId) {
         loaderInformation.addRequest();
-        LOGGER.info("{} : rankedStats {}", RegionPrinter.getRegion(region), summonerId);
         Query<RankedStatsDto> query = riotApi.getRankedStats(summonerId).region(region);
-        return Optional.ofNullable(executor.execute(query, region, 1));
+        Optional<RankedStatsDto> result = Optional.ofNullable(executor.execute(query, region, 1));
+        LOGGER.info("{} : rankedStats {}", RegionPrinter.getRegion(region), summonerId);
+        return result;
     }
 }

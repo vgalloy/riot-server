@@ -70,10 +70,10 @@ public class MatchReferenceLoader extends AbstractLoader {
         loaderInformation.addRequest();
         Query<MatchList> query = riotApi.getMatchListBySummonerId(summonerId).region(region);
         MatchList matchList = executor.execute(query, region, 1);
+        LOGGER.info("{} : matchReference {}", RegionPrinter.getRegion(region), summonerId);
         if (matchList == null || matchList.getMatches() == null) {
             return new ArrayList<>();
         }
-        LOGGER.info("{} : matchReference {}", RegionPrinter.getRegion(region), summonerId);
         return matchList.getMatches();
     }
 }
