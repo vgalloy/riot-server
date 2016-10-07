@@ -1,30 +1,34 @@
 package vgalloy.riot.server.dao.api.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.server.dao.api.entity.wrapper.ItemWrapper;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 12/07/16.
  */
-public final class Entity<DTO> extends ItemWrapper<DTO> {
+public final class Entity<WRAPPER extends ItemWrapper<?, ?>> implements Serializable {
 
     private static final long serialVersionUID = 1837484051562906817L;
 
+    private final WRAPPER itemWrapper;
     private final Long lastUpdate;
 
     /**
      * Constructor.
      *
-     * @param region     the region
-     * @param itemId     the item id
-     * @param item       the item
-     * @param lastUpdate the last update
+     * @param itemWrapper the item wrapper
+     * @param lastUpdate  the last update
      */
-    public Entity(Region region, Long itemId, DTO item, Long lastUpdate) {
-        super(region, itemId, item);
-        this.lastUpdate = Objects.requireNonNull(lastUpdate, "lastUpdate can not be null for object : " + toString());
+    public Entity(WRAPPER itemWrapper, Long lastUpdate) {
+        this.itemWrapper = Objects.requireNonNull(itemWrapper);
+        this.lastUpdate = Objects.requireNonNull(lastUpdate);
+    }
+
+    public WRAPPER getItemWrapper() {
+        return itemWrapper;
     }
 
     public Long getLastUpdate() {

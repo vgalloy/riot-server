@@ -1,5 +1,9 @@
 package vgalloy.riot.server.dao.api.dao;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
+
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -12,15 +16,12 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Optional;
-
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.stats.ChampionStatsDto;
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.ItemWrapper;
+import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
 
 /**
@@ -55,34 +56,34 @@ public class RankedStatsDaoITest {
 
     @Test(expected = NullPointerException.class)
     public void testNullRegion() {
-            rankedStatsDao.get(null, 1L);
+        rankedStatsDao.get(new ItemId(null, 1L));
     }
 
     @Test
     public void testEmptyDatabase() {
-        Optional<Entity<RankedStatsDto>> rankedStatsEntity = rankedStatsDao.get(Region.BR, 1L);
+        Optional<Entity<CommonWrapper<RankedStatsDto>>> rankedStatsEntity = rankedStatsDao.get(new ItemId(Region.BR, 1L));
         Assert.assertFalse(rankedStatsEntity.isPresent());
     }
 
     @Test(expected = NullPointerException.class)
     public void testRandomWithNullRegion() {
-            rankedStatsDao.getRandom(null);
+        rankedStatsDao.getRandom(null);
     }
 
     @Test
     public void testEmptyRandom() {
-        Optional<Entity<RankedStatsDto>> rankedStatsEntity = rankedStatsDao.getRandom(Region.KR);
+        Optional<Entity<CommonWrapper<RankedStatsDto>>> rankedStatsEntity = rankedStatsDao.getRandom(Region.KR);
         Assert.assertFalse(rankedStatsEntity.isPresent());
     }
 
     @Test(expected = NullPointerException.class)
     public void testInsertWithNullRankedStatsDto() {
-        rankedStatsDao.save(new ItemWrapper<>(Region.EUW, 1L, null));
+        rankedStatsDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 1L), null));
     }
 
     @Test(expected = NullPointerException.class)
     public void testInsertWithNullId() {
-        rankedStatsDao.save(new ItemWrapper<>(Region.EUW, null, new RankedStatsDto()));
+        rankedStatsDao.save(new CommonWrapper<>(new ItemId(Region.EUW, null), new RankedStatsDto()));
     }
 
     @Test
@@ -92,13 +93,13 @@ public class RankedStatsDaoITest {
         rankedStatsDto.setSummonerId(10);
 
         // WHEN
-        rankedStatsDao.save(new ItemWrapper<>(Region.EUW, 10L, rankedStatsDto));
-        Optional<Entity<RankedStatsDto>> result = rankedStatsDao.get(Region.EUW, 10L);
+        rankedStatsDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 10L), rankedStatsDto));
+        Optional<Entity<CommonWrapper<RankedStatsDto>>> result = rankedStatsDao.get(new ItemId(Region.EUW, 10L));
 
         // THEN
         Assert.assertTrue(result.isPresent());
-        Assert.assertTrue(result.get().getItem().isPresent());
-        Assert.assertEquals(rankedStatsDto, result.get().getItem().get());
+        Assert.assertTrue(result.get().getItemWrapper().getItem().isPresent());
+        Assert.assertEquals(rankedStatsDto, result.get().getItemWrapper().getItem().get());
     }
 
     @Test
@@ -108,8 +109,8 @@ public class RankedStatsDaoITest {
         rankedStatsDto.setSummonerId(11);
 
         // WHEN
-        rankedStatsDao.save(new ItemWrapper<>(Region.EUW, 11L, rankedStatsDto));
-        Optional<Entity<RankedStatsDto>> result = rankedStatsDao.getRandom(Region.EUW);
+        rankedStatsDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 11L), rankedStatsDto));
+        Optional<Entity<CommonWrapper<RankedStatsDto>>> result = rankedStatsDao.getRandom(Region.EUW);
 
         // THEN
         Assert.assertNotNull(result);
@@ -126,13 +127,13 @@ public class RankedStatsDaoITest {
         rankedStatsDto.setSummonerId(12);
 
         // WHEN
-        rankedStatsDao.save(new ItemWrapper<>(Region.EUW, 12L, rankedStatsDto));
-        Optional<Entity<RankedStatsDto>> result = rankedStatsDao.get(Region.EUW, 12L);
+        rankedStatsDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 12L), rankedStatsDto));
+        Optional<Entity<CommonWrapper<RankedStatsDto>>> result = rankedStatsDao.get(new ItemId(Region.EUW, 12L));
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertTrue(result.get().getItem().isPresent());
-        Assert.assertEquals(rankedStatsDto, result.get().getItem().get());
+        Assert.assertTrue(result.get().getItemWrapper().getItem().isPresent());
+        Assert.assertEquals(rankedStatsDto, result.get().getItemWrapper().getItem().get());
     }
 }

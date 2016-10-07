@@ -1,9 +1,9 @@
 package vgalloy.riot.server.dao.internal.dao.commondao.impl;
 
-import org.mongojack.DBQuery;
-
 import java.util.Objects;
 import java.util.Optional;
+
+import org.mongojack.DBQuery;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;

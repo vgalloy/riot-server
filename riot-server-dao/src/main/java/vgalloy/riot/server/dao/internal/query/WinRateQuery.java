@@ -1,12 +1,12 @@
 package vgalloy.riot.server.dao.internal.query;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.FindIterable;
-import org.bson.Document;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
+import org.bson.Document;
 
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.RankedStatsDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDatabaseFactory;
@@ -26,7 +26,7 @@ public final class WinRateQuery {
     }
 
     /**
-     * Get the winRate of a champion as a map where the key is the number of game played.
+     * Get the winRate of a champion as a mapToEntity where the key is the number of game played.
      *
      * @param mongoDatabaseFactory the mongo database factory
      * @param championId           the champion id

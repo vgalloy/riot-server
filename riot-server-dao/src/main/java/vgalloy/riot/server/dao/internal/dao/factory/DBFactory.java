@@ -1,12 +1,12 @@
 package vgalloy.riot.server.dao.internal.dao.factory;
 
-import com.mongodb.DB;
-import com.mongodb.MongoClient;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
 
 /**
  * @author Vincent Galloy - 19/09/16
@@ -38,7 +38,6 @@ public final class DBFactory {
     public DB get() {
         return db;
     }
-
 
     /**
      * Get a DBCollectionFactory object.

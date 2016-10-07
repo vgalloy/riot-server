@@ -1,5 +1,8 @@
 package vgalloy.riot.server.dao.api.dao;
 
+import java.io.IOException;
+import java.util.Optional;
+
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -15,11 +18,9 @@ import org.junit.Test;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.ItemWrapper;
+import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
-
-import java.io.IOException;
-import java.util.Optional;
 
 /**
  * @author Vincent Galloy
@@ -54,7 +55,7 @@ public class SummonerDaoITest {
     @Test
     public void testRandomFalse() {
         // WHEN
-        Optional<Entity<SummonerDto>> result = summonerDao.getRandom(Region.BR);
+        Optional<Entity<CommonWrapper<SummonerDto>>> result = summonerDao.getRandom(Region.BR);
 
         // THEN
         Assert.assertNotNull(result);
@@ -66,16 +67,16 @@ public class SummonerDaoITest {
         // GIVEN
         SummonerDto summoner = new SummonerDto();
         summoner.setId(2);
-        summonerDao.save(new ItemWrapper<>(Region.EUW, 2L, summoner));
+        summonerDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 2L), summoner));
 
         // WHEN
-        Optional<Entity<SummonerDto>> result = summonerDao.getRandom(Region.EUW);
+        Optional<Entity<CommonWrapper<SummonerDto>>> result = summonerDao.getRandom(Region.EUW);
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertTrue(result.get().getItem().isPresent());
-        Assert.assertEquals(summoner, result.get().getItem().get());
+        Assert.assertTrue(result.get().getItemWrapper().getItem().isPresent());
+        Assert.assertEquals(summoner, result.get().getItemWrapper().getItem().get());
     }
 
     @Test
@@ -84,7 +85,7 @@ public class SummonerDaoITest {
         SummonerDto summoner = new SummonerDto();
         summoner.setName("NAME");
         summoner.setId(2);
-        summonerDao.save(new ItemWrapper<>(Region.EUW, 2L, summoner));
+        summonerDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 2L), summoner));
 
         // WHEN
         Optional<SummonerDto> resultEmpty = summonerDao.getSummonerByName(Region.EUW, "azeR");

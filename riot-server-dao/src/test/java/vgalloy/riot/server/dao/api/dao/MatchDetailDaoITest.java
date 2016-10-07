@@ -23,6 +23,8 @@ import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
 import vgalloy.riot.api.api.dto.mach.Player;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
+import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
 
 /**
@@ -64,14 +66,14 @@ public class MatchDetailDaoITest {
         matchDetail.setMatchCreation(LocalDate.now().toEpochDay() * 24 * 3600 * 1000);
 
         // WHEN
-        matchDetailDao.save(matchDetail);
-        Optional<Entity<MatchDetail>> result = matchDetailDao.get(Region.EUW, 10L, LocalDate.now());
+        matchDetailDao.save(new MatchDetailWrapper(new MatchDetailId(Region.EUW, 10L, LocalDate.now()), matchDetail));
+        Optional<Entity<MatchDetailWrapper>> result = matchDetailDao.get(new MatchDetailId(Region.EUW, 10L, LocalDate.now()));
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertTrue(result.get().getItem().isPresent());
-        Assert.assertEquals(matchDetail, result.get().getItem().get());
+        Assert.assertTrue(result.get().getItemWrapper().getItem().isPresent());
+        Assert.assertEquals(matchDetail, result.get().getItemWrapper().getItem().get());
     }
 
     @Test
@@ -95,14 +97,14 @@ public class MatchDetailDaoITest {
         matchDetail.setMatchCreation(LocalDate.now().toEpochDay() * 24 * 3600 * 1000);
 
         // WHEN
-        matchDetailDao.save(matchDetail);
-        Optional<Entity<MatchDetail>> result = matchDetailDao.get(Region.EUW, 234L, LocalDate.now());
+        matchDetailDao.save(new MatchDetailWrapper(new MatchDetailId(Region.EUW, 234L, LocalDate.now()), matchDetail));
+        Optional<Entity<MatchDetailWrapper>> result = matchDetailDao.get(new MatchDetailId(Region.EUW, 234L, LocalDate.now()));
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertTrue(result.get().getItem().isPresent());
-        Assert.assertEquals(matchDetail, result.get().getItem().get());
+        Assert.assertTrue(result.get().getItemWrapper().getItem().isPresent());
+        Assert.assertEquals(matchDetail, result.get().getItemWrapper().getItem().get());
     }
 
     @Test
@@ -111,14 +113,10 @@ public class MatchDetailDaoITest {
         long correctPlayerId = 12345;
         long wrongPlayerId = 12346;
 
-        MatchDetail matchDetail1 = createMatchDetail(Region.EUW, 10_001L, correctPlayerId);
-        MatchDetail matchDetail2 = createMatchDetail(Region.EUW, 10_002L, correctPlayerId);
-        MatchDetail matchDetail3 = createMatchDetail(Region.EUW, 10_003L, wrongPlayerId);
-
         // WHEN
-        matchDetailDao.save(matchDetail1);
-        matchDetailDao.save(matchDetail2);
-        matchDetailDao.save(matchDetail3);
+        matchDetailDao.save(createMatchDetail(new MatchDetailId(Region.EUW, 10_001L, LocalDate.now()), correctPlayerId));
+        matchDetailDao.save(createMatchDetail(new MatchDetailId(Region.EUW, 10_002L, LocalDate.now()), correctPlayerId));
+        matchDetailDao.save(createMatchDetail(new MatchDetailId(Region.EUW, 10_003L, LocalDate.now()), wrongPlayerId));
 
         // THEN
         // Wrong id
@@ -138,7 +136,7 @@ public class MatchDetailDaoITest {
         Assert.assertEquals(0, result.size());
     }
 
-    private MatchDetail createMatchDetail(Region region, long matchId, long summonerId) {
+    private MatchDetailWrapper createMatchDetail(MatchDetailId matchDetailId, long summonerId) {
         Player player = new Player();
         player.setSummonerId(summonerId);
 
@@ -151,10 +149,10 @@ public class MatchDetailDaoITest {
 
         MatchDetail matchDetail = new MatchDetail();
         matchDetail.setParticipantIdentities(participantIdentityList);
-        matchDetail.setMatchId(matchId);
-        matchDetail.setRegion(region);
-        matchDetail.setMatchCreation(LocalDate.now().toEpochDay() * 24 * 3600 * 1000);
+        matchDetail.setMatchId(matchDetailId.getId());
+        matchDetail.setRegion(matchDetailId.getRegion());
+        matchDetail.setMatchCreation(matchDetailId.getMatchDate().toEpochDay() * 24 * 3600 * 1000);
 
-        return matchDetail;
+        return new MatchDetailWrapper(matchDetailId, matchDetail);
     }
 }

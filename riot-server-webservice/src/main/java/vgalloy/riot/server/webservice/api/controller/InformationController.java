@@ -31,7 +31,7 @@ public class InformationController {
     /**
      * Get the globalInformation about loader.
      *
-     * @return a map with the id of each loader
+     * @return a mapToEntity with the id of each loader
      */
     @RequestMapping()
     public Map<Integer, String> getGlobalInformation() {

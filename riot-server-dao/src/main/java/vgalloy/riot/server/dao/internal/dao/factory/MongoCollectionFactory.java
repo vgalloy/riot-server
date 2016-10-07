@@ -1,10 +1,10 @@
 package vgalloy.riot.server.dao.internal.dao.factory;
 
+import java.util.Objects;
+
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-
-import java.util.Objects;
 
 /**
  * @author Vincent Galloy - 19/09/16

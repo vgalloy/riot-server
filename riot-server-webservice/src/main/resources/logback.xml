@@ -5,6 +5,7 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>WARN</level>
         </filter>
+
         <encoder>
             <pattern>[ %highlight(%-6level)] %d{yyyy-MM-dd HH:mm:ss.SSS, UTC} [%green(%-40logger{36})] - %X{requestUuid} - %msg%n</pattern>
         </encoder>

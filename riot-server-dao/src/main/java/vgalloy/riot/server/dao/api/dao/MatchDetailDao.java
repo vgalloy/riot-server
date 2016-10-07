@@ -9,6 +9,8 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.WinRate;
+import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
+import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 
 /**
  * @author Vincent Galloy
@@ -19,19 +21,17 @@ public interface MatchDetailDao {
     /**
      * Save the match detail.
      *
-     * @param matchDetail the match detail
+     * @param matchDetailWrapper the match detail wrapper
      */
-    void save(MatchDetail matchDetail);
+    void save(MatchDetailWrapper matchDetailWrapper);
 
     /**
      * Get the match detail.
      *
-     * @param region    the region
-     * @param matchId   the match id
-     * @param matchDate the match date
+     * @param matchDetailId the match detail id
      * @return the matchDetail
      */
-    Optional<Entity<MatchDetail>> get(Region region, Long matchId, LocalDate matchDate);
+    Optional<Entity<MatchDetailWrapper>> get(MatchDetailId matchDetailId);
 
     /**
      * Get all the games of a summoner during the period : [startSearchDate, endSearchDate[. The game ARE NOT sorted

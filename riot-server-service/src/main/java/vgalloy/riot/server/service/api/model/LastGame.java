@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import vgalloy.riot.api.api.constant.QueueType;
-import vgalloy.riot.api.api.constant.Region;
 
 /**
  * @author Vincent Galloy
@@ -14,8 +13,7 @@ public class LastGame implements Serializable {
 
     private static final long serialVersionUID = 742436102510397197L;
 
-    private final Region region;
-    private final long gameId;
+    private final String gameId;
     private final int championId;
     private final long kill;
     private final long death;
@@ -27,18 +25,16 @@ public class LastGame implements Serializable {
     /**
      * Constructor.
      *
-     * @param region        the region
      * @param gameId        the game id
      * @param championId    the champion id
      * @param kill          the number of kill
      * @param death         the number of death
      * @param assist        the number of assist
      * @param winner        is the game a win
-     * @param matchCreation the match creation
+     * @param matchCreation the match creation in millis
      * @param queueType     the queue type
      */
-    public LastGame(Region region, long gameId, int championId, long kill, long death, long assist, boolean winner, long matchCreation, QueueType queueType) {
-        this.region = Objects.requireNonNull(region);
+    public LastGame(String gameId, int championId, long kill, long death, long assist, boolean winner, long matchCreation, QueueType queueType) {
         this.gameId = gameId;
         this.championId = championId;
         this.kill = kill;
@@ -49,11 +45,7 @@ public class LastGame implements Serializable {
         this.queueType = Objects.requireNonNull(queueType);
     }
 
-    public Region getRegion() {
-        return region;
-    }
-
-    public long getGameId() {
+    public String getGameId() {
         return gameId;
     }
 

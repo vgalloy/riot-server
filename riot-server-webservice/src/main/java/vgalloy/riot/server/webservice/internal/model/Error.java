@@ -11,7 +11,8 @@ public class Error {
 
     /**
      * Constructor.
-     * @param code the error code
+     *
+     * @param code    the error code
      * @param message the message
      */
     public Error(int code, String message) {

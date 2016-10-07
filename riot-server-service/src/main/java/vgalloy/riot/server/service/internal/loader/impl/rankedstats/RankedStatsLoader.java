@@ -1,10 +1,10 @@
 package vgalloy.riot.server.service.internal.loader.impl.rankedstats;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Objects;
 import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
@@ -12,7 +12,8 @@ import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.api.api.query.Query;
 import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
-import vgalloy.riot.server.dao.api.entity.ItemWrapper;
+import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
 import vgalloy.riot.server.service.internal.loader.helper.LoaderHelper;
@@ -55,7 +56,9 @@ public class RankedStatsLoader extends AbstractLoader {
             if (notLoaded(summonerId)) {
                 Optional<RankedStatsDto> rankedStatsDto = load(summonerId);
                 if (rankedStatsDto.isPresent()) {
-                    rankedStatsDao.save(new ItemWrapper<>(region, summonerId, rankedStatsDto.get()));
+                    rankedStatsDao.save(new CommonWrapper<>(new ItemId(region, summonerId), rankedStatsDto.get()));
+                } else {
+                    rankedStatsDao.save(new CommonWrapper<>(new ItemId(region, summonerId)));
                 }
             }
         }
@@ -68,7 +71,7 @@ public class RankedStatsLoader extends AbstractLoader {
      * @return true if the summoner is not in the database
      */
     private boolean notLoaded(long summonerId) {
-        return !rankedStatsDao.get(region, summonerId).isPresent();
+        return !rankedStatsDao.get(new ItemId(region, summonerId)).isPresent();
     }
 
     /**

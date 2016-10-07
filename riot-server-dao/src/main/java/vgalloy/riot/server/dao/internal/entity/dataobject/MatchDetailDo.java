@@ -9,6 +9,8 @@ import vgalloy.riot.api.api.dto.mach.MatchDetail;
  */
 public class MatchDetailDo extends DataObject<MatchDetail> {
 
+    private long matchCreationDateFromEpochDay;
+
     /**
      * Constructor. For Jackson deserialization.
      */
@@ -19,10 +21,16 @@ public class MatchDetailDo extends DataObject<MatchDetail> {
     /**
      * Constructor.
      *
-     * @param region the region
-     * @param itemId the item id
+     * @param region                        the region
+     * @param itemId                        the item id
+     * @param matchCreationDateFromEpochDay the match creation date from epoch (in days)
      */
-    public MatchDetailDo(Region region, Long itemId) {
+    public MatchDetailDo(Region region, Long itemId, long matchCreationDateFromEpochDay) {
         super(region, itemId);
+        this.matchCreationDateFromEpochDay = matchCreationDateFromEpochDay;
+    }
+
+    public long getMatchCreationDateFromEpochDay() {
+        return matchCreationDateFromEpochDay;
     }
 }

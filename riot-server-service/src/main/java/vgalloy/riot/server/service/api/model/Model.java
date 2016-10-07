@@ -26,7 +26,7 @@ public class Model<DTO> {
     public Model(Region region, Long itemId, LocalDateTime lastUpdate) {
         this.lastUpdate = Objects.requireNonNull(lastUpdate, "lastUpdate can not be null");
         this.region = Objects.requireNonNull(region, "region can not be null");
-        this.itemId = Objects.requireNonNull(itemId, "itemId can not be null");
+        this.itemId = Objects.requireNonNull(itemId, "ItemId can not be null");
     }
 
     public LocalDateTime getLastUpdate() {

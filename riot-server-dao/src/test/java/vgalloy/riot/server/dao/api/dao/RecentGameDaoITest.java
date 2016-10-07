@@ -1,5 +1,10 @@
 package vgalloy.riot.server.dao.api.dao;
 
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
 import de.flapdoodle.embed.mongo.MongodStarter;
@@ -16,13 +21,9 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.game.GameDto;
 import vgalloy.riot.api.api.dto.game.RecentGamesDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.ItemWrapper;
+import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
-
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * @author Vincent Galloy
@@ -64,13 +65,13 @@ public class RecentGameDaoITest {
         recentGamesDto.setGames(gameDtoSet);
 
         // WHEN
-        recentGamesDao.save(new ItemWrapper<>(Region.JP, 19L, recentGamesDto));
-        Optional<Entity<RecentGamesDto>> result = recentGamesDao.get(Region.JP, 19L);
+        recentGamesDao.save(new CommonWrapper<>(new ItemId(Region.JP, 19L), recentGamesDto));
+        Optional<Entity<CommonWrapper<RecentGamesDto>>> result = recentGamesDao.get(new ItemId(Region.JP, 19L));
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertTrue(result.get().getItem().isPresent());
-        Assert.assertEquals(recentGamesDto, result.get().getItem().get());
+        Assert.assertTrue(result.get().getItemWrapper().getItem().isPresent());
+        Assert.assertEquals(recentGamesDto, result.get().getItemWrapper().getItem().get());
     }
 }

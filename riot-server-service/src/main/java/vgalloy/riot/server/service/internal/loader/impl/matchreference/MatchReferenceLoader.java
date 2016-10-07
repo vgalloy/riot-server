@@ -1,11 +1,11 @@
 package vgalloy.riot.server.service.internal.loader.impl.matchreference;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.matchlist.MatchList;
@@ -14,7 +14,8 @@ import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.api.api.query.Query;
 import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
-import vgalloy.riot.server.dao.api.entity.ItemWrapper;
+import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.AbstractLoader;
 import vgalloy.riot.server.service.internal.loader.helper.LoaderHelper;
@@ -55,7 +56,7 @@ public class MatchReferenceLoader extends AbstractLoader {
         while (true) {
             long summonerId = LoaderHelper.getRandomSummonerId(summonerDao, region, LOGGER);
             List<MatchReference> matchReferences = load(summonerId);
-            matchReferences.forEach(e -> matchReferenceDao.save(new ItemWrapper<>(region, e.getMatchId(), e)));
+            matchReferences.forEach(e -> matchReferenceDao.save(new CommonWrapper<>(new ItemId(region, e.getMatchId()), e)));
         }
     }
 

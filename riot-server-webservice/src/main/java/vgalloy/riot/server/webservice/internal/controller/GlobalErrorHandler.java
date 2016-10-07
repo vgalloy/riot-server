@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import vgalloy.riot.server.service.api.service.exception.UserException;
 import vgalloy.riot.server.webservice.internal.model.Error;
 
 /**
@@ -45,5 +47,19 @@ public final class GlobalErrorHandler {
     public Error handleArgumentMismatchException(MethodArgumentTypeMismatchException e) {
         LOGGER.error("{}", e.toString(), e);
         return new Error(400, "Value of '" + e.getName() + "' can not be convert into [" + e.getRequiredType().getSimpleName() + "]");
+    }
+
+    /**
+     * Handle error and set the correct response status.
+     *
+     * @param e The handle exception
+     * @return The error message for web user
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UserException.class)
+    public Error handleServiceException(UserException e) {
+        LOGGER.error("{}", e.toString(), e);
+        return new Error(400, e.getMessage());
     }
 }

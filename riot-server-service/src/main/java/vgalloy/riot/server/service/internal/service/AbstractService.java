@@ -4,9 +4,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.service.CommonService;
 import vgalloy.riot.server.service.internal.service.mapper.ModelMapper;
@@ -20,8 +21,8 @@ public abstract class AbstractService<DTO> implements CommonService<DTO> {
     protected CommonDao<DTO> commonDao;
 
     @Override
-    public Optional<Model<DTO>> get(Region region, Long itemId) {
-        Optional<Entity<DTO>> result = commonDao.get(region, itemId);
+    public Optional<Model<DTO>> get(ItemId itemId) {
+        Optional<Entity<CommonWrapper<DTO>>> result = commonDao.get(itemId);
         if (result.isPresent()) {
             return Optional.of(ModelMapper.map(result.get()));
         }

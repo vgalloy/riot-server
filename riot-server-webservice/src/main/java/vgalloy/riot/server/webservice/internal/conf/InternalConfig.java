@@ -3,6 +3,7 @@ package vgalloy.riot.server.webservice.internal.conf;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
 import vgalloy.riot.server.service.api.config.ServiceConfig;
 
 /**

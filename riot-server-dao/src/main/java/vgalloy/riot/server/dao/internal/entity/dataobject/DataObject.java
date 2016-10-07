@@ -39,8 +39,8 @@ public abstract class DataObject<DTO> {
      */
     public DataObject(Region region, Long itemId) {
         lastUpdate = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
-        this.region = Objects.requireNonNull(region, "region can not be null");
-        this.itemId = Objects.requireNonNull(itemId, "itemId can not be null");
+        this.region = Objects.requireNonNull(region);
+        this.itemId = Objects.requireNonNull(itemId);
         key = new Key(region, itemId);
     }
 
@@ -99,7 +99,7 @@ public abstract class DataObject<DTO> {
         return "DataObject{" +
                 "lastUpdate=" + lastUpdate +
                 ", region=" + region +
-                ", itemId=" + itemId +
+                ", ItemId=" + itemId +
                 ", item=" + item +
                 ", key=" + key +
                 '}';

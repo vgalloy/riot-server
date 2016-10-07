@@ -1,7 +1,14 @@
 package vgalloy.riot.server.service.internal.executor.impl;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.Random;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.query.Query;
 import vgalloy.riot.api.internal.client.filter.RiotRateLimitExceededException;
@@ -9,12 +16,6 @@ import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.executor.RegionExecutor;
 import vgalloy.riot.server.service.internal.executor.model.Request;
 import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
-
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Random;
 
 /**
  * @author Vincent Galloy

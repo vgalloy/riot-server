@@ -28,10 +28,10 @@ public class ChampionController {
     private QueryService queryService;
 
     /**
-     * Get the win rate of a champion as a map. The key is the number of game played.
+     * Get the win rate of a champion as a mapToEntity. The key is the number of game played.
      *
      * @param championId the champion id
-     * @return the win rates as a map
+     * @return the win rates as a mapToEntity
      */
     @RequestMapping(value = "/champion/{championId}/winRate", method = RequestMethod.GET)
     public Map<Integer, Double> getWinRateByGamePlayed(@PathVariable Integer championId) {
@@ -40,18 +40,20 @@ public class ChampionController {
     }
 
     /**
-     * Get the win rate of a champion as a map. The key is the number of game played.
+     * Get the win rate of a champion as a mapToEntity. The key is the number of game played.
      *
      * @param championId the champion id
-     * @param startDay   the start date (included)
-     * @param endDay     the end date (excluded)
-     * @return the win rates as a map
+     * @param startDay   the start date as a time stamp (included)
+     * @param endDay     the end date as a time stamp (excluded)
+     * @return the win rates as a mapToEntity
      */
     @RequestMapping(value = "/champion/{championId}/winRate/{startDay}/{endDay}", method = RequestMethod.GET)
     public Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId, @PathVariable Long startDay, @PathVariable Long endDay) {
         LOGGER.info("[ GET ] : getWinRateDuringPeriodOfTime, championId : {},  startDay : {}, endDay : {}", championId, startDay, endDay);
         Map<Long, WinRate> result = new HashMap<>();
-        for (Map.Entry<LocalDate, WinRate> entry : queryService.getWinRate(championId, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay)).entrySet()) {
+        LocalDate startDate = LocalDate.ofEpochDay(startDay / 3600 / 24);
+        LocalDate endDate = LocalDate.ofEpochDay(endDay / 3600 / 24);
+        for (Map.Entry<LocalDate, WinRate> entry : queryService.getWinRate(championId, startDate, endDate).entrySet()) {
             result.put(entry.getKey().toEpochDay(), entry.getValue());
         }
         return result;

@@ -1,9 +1,9 @@
 package vgalloy.riot.server.dao.internal.dao.factory;
 
+import java.util.Objects;
+
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-
-import java.util.Objects;
 
 /**
  * @author Vincent Galloy - 19/09/16

@@ -1,13 +1,5 @@
 package vgalloy.riot.server.dao.internal.dao.commondao.impl;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
-import com.mongodb.client.AggregateIterable;
-import com.mongodb.client.MongoCollection;
-import org.bson.Document;
-import org.mongojack.DBQuery;
-import org.mongojack.JacksonDBCollection;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -20,16 +12,26 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+import org.mongojack.DBQuery;
+import org.mongojack.JacksonDBCollection;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.WinRate;
+import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
+import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
-import vgalloy.riot.server.dao.internal.entity.Key;
 import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
 import vgalloy.riot.server.dao.internal.entity.dataobject.MatchDetailDo;
-import vgalloy.riot.server.dao.internal.entity.mapper.DataObjectMapper;
+import vgalloy.riot.server.dao.internal.entity.mapper.ItemIdMapper;
+import vgalloy.riot.server.dao.internal.entity.mapper.MatchDetailMapper;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 
 /**
@@ -54,27 +56,41 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
         this.databaseName = Objects.requireNonNull(databaseName);
     }
 
-    @Override
-    public void save(MatchDetail matchDetail) {
-        if (matchDetail.getMatchCreation() == 0) {
-            throw new NullPointerException("Match creation date can not equals to zero");
+    /**
+     * Create the collection name base on the date.
+     *
+     * @param localDate the local
+     * @return the collection name
+     */
+    private static String getCollectionName(LocalDate localDate) {
+        Objects.requireNonNull(localDate);
+        if (localDate.isBefore(LocalDate.now().minus(4, ChronoUnit.YEARS))) {
+            throw new MongoDaoException("the date " + localDate + " is to old");
         }
+        if (localDate.isAfter(LocalDate.now().plus(1, ChronoUnit.DAYS))) {
+            throw new MongoDaoException("the date " + localDate + " is in the future");
+        }
+        return COLLECTION_NAME + "_" + localDate.format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
+    }
 
-        LocalDate localDate = LocalDate.ofEpochDay(matchDetail.getMatchCreation() / 1000 / 3600 / 24);
-        JacksonDBCollection<MatchDetailDo, String> collection = getCollection(localDate);
-        MatchDetailDo dataObject = new MatchDetailDo(matchDetail.getRegion(), matchDetail.getMatchId());
-        dataObject.setItem(matchDetail);
+    @Override
+    public void save(MatchDetailWrapper matchDetailWrapper) {
+        Objects.requireNonNull(matchDetailWrapper);
+
+        JacksonDBCollection<MatchDetailDo, String> collection = getCollection(matchDetailWrapper.getItemId().getMatchDate());
+        MatchDetailDo dataObject = new MatchDetailDo(matchDetailWrapper.getItemId().getRegion(), matchDetailWrapper.getItemId().getId(), matchDetailWrapper.getItemId().getMatchDate().toEpochDay());
+        matchDetailWrapper.getItem().ifPresent(dataObject::setItem);
         new GenericDaoImpl<>(collection).update(dataObject);
     }
 
     @Override
-    public Optional<Entity<MatchDetail>> get(Region region, Long matchId, LocalDate matchDate) {
-        Key key = new Key(region, matchId);
+    public Optional<Entity<MatchDetailWrapper>> get(MatchDetailId matchDetailId) {
+        Objects.requireNonNull(matchDetailId);
 
-        JacksonDBCollection<MatchDetailDo, String> collection = getCollection(matchDate);
-        Optional<MatchDetailDo> dataObject = new GenericDaoImpl<>(collection).getById(key.normalizeString());
+        JacksonDBCollection<MatchDetailDo, String> collection = getCollection(matchDetailId.getMatchDate());
+        Optional<MatchDetailDo> dataObject = new GenericDaoImpl<>(collection).getById(ItemIdMapper.toNormalizeString(matchDetailId));
         if (dataObject.isPresent()) {
-            return Optional.of(DataObjectMapper.map(dataObject.get()));
+            return Optional.of(MatchDetailMapper.mapToEntity(dataObject.get()));
         }
 
         return Optional.empty();
@@ -177,22 +193,5 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
                 .get();
 
         return JacksonDBCollection.wrap(dbCollection, MatchDetailDo.class, String.class);
-    }
-
-    /**
-     * Create the collection name base on the date.
-     *
-     * @param localDate the local
-     * @return the collection name
-     */
-    private static String getCollectionName(LocalDate localDate) {
-        Objects.requireNonNull(localDate);
-        if (localDate.isBefore(LocalDate.now().minus(4, ChronoUnit.YEARS))) {
-            throw new MongoDaoException("the date " + localDate + " is to old");
-        }
-        if (localDate.isAfter(LocalDate.now().plus(1, ChronoUnit.DAYS))) {
-            throw new MongoDaoException("the date " + localDate + " is in the future");
-        }
-        return COLLECTION_NAME + "_" + localDate.format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
     }
 }

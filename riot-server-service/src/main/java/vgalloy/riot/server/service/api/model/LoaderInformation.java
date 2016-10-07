@@ -51,7 +51,6 @@ public class LoaderInformation {
         totalRequestNumber++;
     }
 
-
     /**
      * Get the status of the loader.
      *

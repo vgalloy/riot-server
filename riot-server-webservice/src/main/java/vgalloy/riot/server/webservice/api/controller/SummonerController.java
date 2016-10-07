@@ -1,20 +1,20 @@
 package vgalloy.riot.server.webservice.api.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.Optional;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
+import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
 import vgalloy.riot.server.service.api.model.LastGame;
 import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
@@ -44,7 +44,7 @@ public class SummonerController {
     @RequestMapping(value = "/summoner/{region}/{summonerId}/rankedStats", method = RequestMethod.GET)
     public Model<RankedStatsDto> getRankedStat(@PathVariable Region region, @PathVariable Long summonerId) {
         LOGGER.info("[ GET ] : getRankedStat, region : {}, matchId : {}", region, summonerId);
-        Optional<Model<RankedStatsDto>> rankedStatsEntity = rankedStatsService.get(region, summonerId);
+        Optional<Model<RankedStatsDto>> rankedStatsEntity = rankedStatsService.get(new ItemId(region, summonerId));
         if (rankedStatsEntity.isPresent()) {
             return rankedStatsEntity.get();
         }
@@ -56,12 +56,11 @@ public class SummonerController {
      *
      * @param region     the region
      * @param summonerId the summoner id
-     * @param limit      the limit of days to fetch (default 14)
      * @return the last games
      */
-    @RequestMapping(value = "/summoner/{region}/{summonerId}/lastGames", method = RequestMethod.GET)
-    public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId, @RequestParam(required = false, defaultValue = "14") Integer limit) {
-        LOGGER.info("[ GET ] : getLastGames, region : {}, summonerId : {}, limit : {}", region, summonerId, limit);
+    @RequestMapping(value = "/summoner/{region}/{summonerId}/lastGames/", method = RequestMethod.GET)
+    public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId) {
+        LOGGER.info("[ GET ] : getLastGames, region : {}, summonerId : {}", region, summonerId);
         return summonerService.getLastGames(region, summonerId);
     }
 
@@ -92,7 +91,7 @@ public class SummonerController {
     @RequestMapping(value = "/summoner/{region}/{summonerId}/byId", method = RequestMethod.GET)
     public SummonerDto getSummonerById(@PathVariable Region region, @PathVariable Long summonerId) {
         LOGGER.info("[ GET ] : getSummonerByName, region : {}, summonerId : {}", region, summonerId);
-        Optional<Model<SummonerDto>> optionalSummonerDto = summonerService.get(region, summonerId);
+        Optional<Model<SummonerDto>> optionalSummonerDto = summonerService.get(new ItemId(region, summonerId));
         if (optionalSummonerDto.isPresent()) {
             return optionalSummonerDto.get().getItem();
         }

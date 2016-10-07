@@ -1,8 +1,8 @@
 package vgalloy.riot.server.service.internal.loader.helper;
 
-import org.slf4j.Logger;
-
 import java.util.Optional;
+
+import org.slf4j.Logger;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.matchlist.MatchReference;
@@ -10,7 +10,10 @@ import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
+import vgalloy.riot.server.service.internal.service.mapper.MatchDetailIdMapper;
 
 /**
  * @author Vincent Galloy - 05/10/16
@@ -38,9 +41,9 @@ public final class LoaderHelper {
     public static long getRandomSummonerId(SummonerDao summonerDao, Region region, Logger logger) {
         long sleepingTime = 0;
         while (true) {
-            Optional<Entity<SummonerDto>> summonerEntity = summonerDao.getRandom(region);
-            if (summonerEntity.isPresent() && summonerEntity.get().getItem().isPresent()) {
-                return summonerEntity.get().getItem().get().getId();
+            Optional<Entity<CommonWrapper<SummonerDto>>> summonerEntity = summonerDao.getRandom(region);
+            if (summonerEntity.isPresent() && summonerEntity.get().getItemWrapper().getItem().isPresent()) {
+                return summonerEntity.get().getItemWrapper().getItem().get().getId();
             } else {
                 logger.warn("{} : No summonerId found", RegionPrinter.getRegion(region));
                 try {
@@ -61,12 +64,12 @@ public final class LoaderHelper {
      * @param logger            the logger
      * @return a random match id
      */
-    public static long getRandomMatchId(MatchReferenceDao matchReferenceDao, Region region, Logger logger) {
+    public static MatchDetailId getRandomMatchId(MatchReferenceDao matchReferenceDao, Region region, Logger logger) {
         long sleepingTime = 0;
         while (true) {
-            Optional<Entity<MatchReference>> matchReferenceEntity = matchReferenceDao.getRandom(region);
-            if (matchReferenceEntity.isPresent() && matchReferenceEntity.get().getItem().isPresent()) {
-                return matchReferenceEntity.get().getItem().get().getMatchId();
+            Optional<Entity<CommonWrapper<MatchReference>>> matchReferenceEntity = matchReferenceDao.getRandom(region);
+            if (matchReferenceEntity.isPresent() && matchReferenceEntity.get().getItemWrapper().getItem().isPresent()) {
+                return MatchDetailIdMapper.map(matchReferenceEntity.get().getItemWrapper().getItem().get());
             } else {
                 logger.warn("{} : No matchReference found", RegionPrinter.getRegion(region));
                 try {
