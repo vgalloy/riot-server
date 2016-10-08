@@ -1,8 +1,7 @@
 package vgalloy.riot.server.service.internal.service;
 
+import java.util.Objects;
 import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
@@ -17,8 +16,16 @@ import vgalloy.riot.server.service.internal.service.mapper.ModelMapper;
  */
 public abstract class AbstractService<DTO> implements CommonService<DTO> {
 
-    @Autowired
-    protected CommonDao<DTO> commonDao;
+    private final CommonDao<DTO> commonDao;
+
+    /**
+     * Constructor.
+     *
+     * @param commonDao the common dao
+     */
+    protected AbstractService(CommonDao<DTO> commonDao) {
+        this.commonDao = Objects.requireNonNull(commonDao);
+    }
 
     @Override
     public Optional<Model<DTO>> get(ItemId itemId) {

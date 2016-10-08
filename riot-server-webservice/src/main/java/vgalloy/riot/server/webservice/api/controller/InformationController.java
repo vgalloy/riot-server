@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import vgalloy.riot.server.service.api.model.LoaderInformation;
-import vgalloy.riot.server.service.internal.executor.Runner;
+import vgalloy.riot.server.service.internal.loader.context.ContextManager;
 
 /**
  * @author Vincent Galloy
@@ -26,7 +26,7 @@ public class InformationController {
     private static final Logger LOGGER = LoggerFactory.getLogger(InformationController.class);
 
     @Autowired
-    private Runner runner;
+    private ContextManager contextManager;
 
     /**
      * Get the globalInformation about loader.
@@ -37,7 +37,7 @@ public class InformationController {
     public Map<Integer, String> getGlobalInformation() {
         LOGGER.info("[ GET ] : getGlobalInformation");
         AtomicInteger index = new AtomicInteger();
-        return runner.getLoaderList().stream()
+        return contextManager.getLoaderList().stream()
                 .collect(Collectors.toMap(e -> index.getAndIncrement(), e -> e.getClass().getSimpleName()));
     }
 
@@ -50,8 +50,8 @@ public class InformationController {
     @RequestMapping(value = "/{loaderId}")
     public LoaderInformation getInformation(@PathVariable int loaderId) {
         LOGGER.info("[ GET ] : getInformation, loaderId : {}", loaderId);
-        if (0 <= loaderId && loaderId < runner.getLoaderList().size()) {
-            return runner.getLoaderList().get(loaderId).getLoaderInformation();
+        if (0 <= loaderId && loaderId < contextManager.getLoaderList().size()) {
+            return contextManager.getLoaderList().get(loaderId).getLoaderInformation();
         }
         return null;
     }

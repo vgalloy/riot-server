@@ -5,9 +5,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.QueryDao;
 import vgalloy.riot.server.dao.api.entity.WinRate;
@@ -18,13 +15,21 @@ import vgalloy.riot.server.service.api.service.exception.UserException;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 23/08/16.
  */
-@Component
 public final class QueryServiceImpl implements QueryService {
 
-    @Autowired
-    private QueryDao queryDao;
-    @Autowired
-    private MatchDetailDao matchDetailDao;
+    private final QueryDao queryDao;
+    private final MatchDetailDao matchDetailDao;
+
+    /**
+     * Constructor.
+     *
+     * @param queryDao       the query dao
+     * @param matchDetailDao the match detail dao
+     */
+    public QueryServiceImpl(QueryDao queryDao, MatchDetailDao matchDetailDao) {
+        this.queryDao = Objects.requireNonNull(queryDao);
+        this.matchDetailDao = Objects.requireNonNull(matchDetailDao);
+    }
 
     @Override
     public Map<Integer, Double> getWinRate(int championId) {

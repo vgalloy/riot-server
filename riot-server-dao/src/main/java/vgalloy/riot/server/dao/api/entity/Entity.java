@@ -20,7 +20,7 @@ public final class Entity<WRAPPER extends ItemWrapper<?, ?>> implements Serializ
      * Constructor.
      *
      * @param itemWrapper the item wrapper
-     * @param lastUpdate  the last update
+     * @param lastUpdate  the last update time in second (UTC)
      */
     public Entity(WRAPPER itemWrapper, Long lastUpdate) {
         this.itemWrapper = Objects.requireNonNull(itemWrapper);

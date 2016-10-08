@@ -97,15 +97,15 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
     }
 
     @Override
-    public List<MatchDetail> findMatchDetailBySummonerId(Region region, long summonerId, LocalDate startSearchDate, LocalDate endSearchDate) {
+    public List<MatchDetail> findMatchDetailBySummonerId(Region region, long summonerId, LocalDate from, LocalDate to) {
         Objects.requireNonNull(region);
-        Objects.requireNonNull(startSearchDate);
-        Objects.requireNonNull(endSearchDate);
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
 
-        LocalDate currentDate = startSearchDate;
+        LocalDate currentDate = from;
         List<MatchDetail> result = new ArrayList<>();
 
-        while (currentDate.isBefore(endSearchDate)) {
+        while (currentDate.isBefore(to)) {
             JacksonDBCollection<MatchDetailDo, String> collection = getCollection(currentDate);
             result.addAll(collection.find(DBQuery.is("item.participantIdentities.player.summonerId", summonerId))
                     .and(DBQuery.is("region", region))
@@ -121,14 +121,14 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
     }
 
     @Override
-    public Map<LocalDate, WinRate> getWinRate(int championId, LocalDate startSearchDate, LocalDate endSearchDate) {
-        Objects.requireNonNull(startSearchDate);
-        Objects.requireNonNull(endSearchDate);
+    public Map<LocalDate, WinRate> getWinRate(int championId, LocalDate from, LocalDate to) {
+        Objects.requireNonNull(from);
+        Objects.requireNonNull(to);
 
-        LocalDate currentDate = startSearchDate;
+        LocalDate currentDate = from;
         Map<LocalDate, WinRate> result = new HashMap<>();
 
-        while (currentDate.isBefore(endSearchDate)) {
+        while (currentDate.isBefore(to)) {
             result.put(currentDate, getWinRate(championId, currentDate));
             currentDate = currentDate.plus(1, ChronoUnit.DAYS);
         }

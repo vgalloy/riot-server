@@ -43,16 +43,16 @@ public class ChampionController {
      * Get the win rate of a champion as a mapToEntity. The key is the number of game played.
      *
      * @param championId the champion id
-     * @param startDay   the start date as a time stamp (included)
-     * @param endDay     the end date as a time stamp (excluded)
+     * @param startDay   the start date as a timestamp in Millis (included)
+     * @param endDay     the end date as a timestamp in Millis (excluded)
      * @return the win rates as a mapToEntity
      */
     @RequestMapping(value = "/champion/{championId}/winRate/{startDay}/{endDay}", method = RequestMethod.GET)
     public Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId, @PathVariable Long startDay, @PathVariable Long endDay) {
         LOGGER.info("[ GET ] : getWinRateDuringPeriodOfTime, championId : {},  startDay : {}, endDay : {}", championId, startDay, endDay);
         Map<Long, WinRate> result = new HashMap<>();
-        LocalDate startDate = LocalDate.ofEpochDay(startDay / 3600 / 24);
-        LocalDate endDate = LocalDate.ofEpochDay(endDay / 3600 / 24);
+        LocalDate startDate = LocalDate.ofEpochDay(startDay / 3600 / 24 / 1000);
+        LocalDate endDate = LocalDate.ofEpochDay(endDay / 3600 / 24 / 1000);
         for (Map.Entry<LocalDate, WinRate> entry : queryService.getWinRate(championId, startDate, endDate).entrySet()) {
             result.put(entry.getKey().toEpochDay(), entry.getValue());
         }

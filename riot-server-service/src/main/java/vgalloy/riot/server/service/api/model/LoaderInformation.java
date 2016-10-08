@@ -1,5 +1,6 @@
 package vgalloy.riot.server.service.api.model;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
@@ -7,7 +8,9 @@ import java.time.temporal.ChronoUnit;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 09/06/16.
  */
-public class LoaderInformation {
+public class LoaderInformation implements Serializable {
+
+    private static final long serialVersionUID = -2592022717669469437L;
 
     private final Instant startTime;
 

@@ -1,5 +1,12 @@
 package vgalloy.riot.server.dao.api.factory;
 
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.FileBasedConfiguration;
+import org.apache.commons.configuration2.PropertiesConfiguration;
+import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
 import vgalloy.riot.server.dao.api.dao.QueryDao;
@@ -11,8 +18,8 @@ import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchReferenceDaoImpl
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.RankedStatsDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.RecentGamesDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.SummonerDaoImpl;
-import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
 import vgalloy.riot.server.dao.internal.dao.query.impl.QueryDaoImpl;
+import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 
 /**
  * @author Vincent Galloy
@@ -28,63 +35,84 @@ public final class MongoDaoFactory {
         throw new AssertionError();
     }
 
+    private static final MatchDetailDao MATCH_DETAIL_DAO;
+    private static final MatchReferenceDao MATCH_REFERENCE_DAO;
+    private static final RankedStatsDao RANKED_STATS_DAO;
+    private static final RecentGamesDao RECENT_GAMES_DAO;
+    private static final SummonerDao SUMMONER_DAO;
+    private static final QueryDao QUERY_DAO;
+
+    static {
+        try {
+            Configuration configuration = new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
+                    .configure(new Parameters().properties().setFileName("application.properties"))
+                    .getConfiguration();
+            String databaseUrl = (String) configuration.getProperty("database.url");
+            String databaseName = (String) configuration.getProperty("database.name");
+
+            MATCH_DETAIL_DAO = new MatchDetailDaoImpl(databaseUrl, databaseName);
+            MATCH_REFERENCE_DAO = new MatchReferenceDaoImpl(databaseUrl, databaseName);
+            RANKED_STATS_DAO = new RankedStatsDaoImpl(databaseUrl, databaseName);
+            RECENT_GAMES_DAO = new RecentGamesDaoImpl(databaseUrl, databaseName);
+            SUMMONER_DAO = new SummonerDaoImpl(databaseUrl, databaseName);
+            QUERY_DAO = new QueryDaoImpl(databaseUrl, databaseName);
+
+        } catch (ConfigurationException e) {
+            throw new MongoDaoException("Unable to load configuration", e);
+        }
+    }
+
     /**
      * Get the matchDetailDao.
      *
-     * @param databaseUrl the database url
      * @return the matchDetailDao
      */
-    public static MatchDetailDao getMatchDetailDao(String databaseUrl) {
-        return DaoFactory.getDao(MatchDetailDaoImpl.class, databaseUrl, "riot");
+    public static MatchDetailDao getMatchDetailDao() {
+        return MATCH_DETAIL_DAO;
     }
 
     /**
      * Get the MatchReferenceDao.
      *
-     * @param databaseUrl the database url
      * @return the matchReferenceDao
      */
-    public static MatchReferenceDao getMatchReferenceDao(String databaseUrl) {
-        return DaoFactory.getDao(MatchReferenceDaoImpl.class, databaseUrl, "riot");
+    public static MatchReferenceDao getMatchReferenceDao() {
+        return MATCH_REFERENCE_DAO;
     }
 
     /**
      * Get the rankedStatsDao.
      *
-     * @param databaseUrl the database url
      * @return the rankedStatsDao
      */
-    public static RankedStatsDao getRankedStatsDao(String databaseUrl) {
-        return DaoFactory.getDao(RankedStatsDaoImpl.class, databaseUrl, "riot");
+    public static RankedStatsDao getRankedStatsDao() {
+        return RANKED_STATS_DAO;
     }
 
     /**
      * Get the RecentGamesDao.
      *
-     * @param databaseUrl the database url
      * @return the RecentGamesDao
      */
-    public static RecentGamesDao getRecentGamesDao(String databaseUrl) {
-        return DaoFactory.getDao(RecentGamesDaoImpl.class, databaseUrl, "riot");
+    public static RecentGamesDao getRecentGamesDao() {
+        return RECENT_GAMES_DAO;
     }
 
     /**
      * Get the SummonerDao.
      *
-     * @param databaseUrl the database url
      * @return the SummonerDao
      */
-    public static SummonerDao getSummonerDao(String databaseUrl) {
-        return DaoFactory.getDao(SummonerDaoImpl.class, databaseUrl, "riot");
+    public static SummonerDao getSummonerDao() {
+        return SUMMONER_DAO;
     }
 
     /**
      * Get the queryDao.
      *
-     * @param databaseUrl the database url
      * @return the queryDao
      */
-    public static QueryDao getQueryDao(String databaseUrl) {
-        return DaoFactory.getDao(QueryDaoImpl.class, databaseUrl, "riot");
+    public static QueryDao getQueryDao() {
+        return QUERY_DAO;
     }
 }

@@ -34,25 +34,25 @@ public interface MatchDetailDao {
     Optional<Entity<MatchDetailWrapper>> get(MatchDetailId matchDetailId);
 
     /**
-     * Get all the games of a summoner during the period : [startSearchDate, endSearchDate[. The game ARE NOT sorted
+     * Get all the games of a summoner during the period : [from, to[. The game ARE NOT sorted
      *
-     * @param region          the region
-     * @param summonerId      the summoner id
-     * @param startSearchDate the first day to analyse
-     * @param endSearchDate   the first to not analyse
+     * @param region     the region
+     * @param summonerId the summoner id
+     * @param from       the first day to analyse
+     * @param to         the first to not analyse
      * @return the last games
      */
-    List<MatchDetail> findMatchDetailBySummonerId(Region region, long summonerId, LocalDate startSearchDate, LocalDate endSearchDate);
+    List<MatchDetail> findMatchDetailBySummonerId(Region region, long summonerId, LocalDate from, LocalDate to);
 
     /**
-     * Get the champion win rate during the given period : [startSearchDate, endSearchDate[.
+     * Get the champion win rate during the given period : [from, to[.
      *
      * @param championId      the champion id
-     * @param startSearchDate the first day to analyse
-     * @param endSearchDate   the first to not analyse
+     * @param from the first day to analyse
+     * @param to   the first to not analyse
      * @return the win rate of the champion during the given period
      */
-    Map<LocalDate, WinRate> getWinRate(int championId, LocalDate startSearchDate, LocalDate endSearchDate);
+    Map<LocalDate, WinRate> getWinRate(int championId, LocalDate from, LocalDate to);
 
     /**
      * Get the champion win rate during the given day.

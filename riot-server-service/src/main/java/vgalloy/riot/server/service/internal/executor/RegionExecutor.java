@@ -3,7 +3,8 @@ package vgalloy.riot.server.service.internal.executor;
 import vgalloy.riot.server.service.internal.executor.model.Request;
 
 /**
- * @ Created by Vincent Galloy on 30/06/16.
+ * @author Vincent Galloy
+ *         Created by Vincent Galloy on  30/06/16.
  */
 public interface RegionExecutor {
 

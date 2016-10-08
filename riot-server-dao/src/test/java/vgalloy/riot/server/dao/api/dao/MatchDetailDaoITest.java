@@ -25,7 +25,7 @@ import vgalloy.riot.api.api.dto.mach.Player;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
-import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
+import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
 
 /**
  * @author Vincent Galloy
@@ -33,13 +33,13 @@ import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
  */
 public class MatchDetailDaoITest {
 
-    private static final int PORT = 29001;
+    private static final int PORT = 29501;
     private static final String URL = "localhost";
 
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
 
-    private final MatchDetailDao matchDetailDao = MongoDaoFactory.getMatchDetailDao(URL + ":" + PORT);
+    private final MatchDetailDao matchDetailDao = new MatchDetailDaoImpl(URL + ":" + PORT, "riotTest");
 
     @BeforeClass
     public static void setUp() throws IOException {

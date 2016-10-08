@@ -20,7 +20,7 @@ import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
-import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
+import vgalloy.riot.server.dao.internal.dao.commondao.impl.SummonerDaoImpl;
 
 /**
  * @author Vincent Galloy
@@ -28,13 +28,13 @@ import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
  */
 public class SummonerDaoITest {
 
-    private static final int PORT = 29004;
+    private static final int PORT = 29504;
     private static final String URL = "localhost";
 
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
 
-    private final SummonerDao summonerDao = MongoDaoFactory.getSummonerDao(URL + ":" + PORT);
+    private final SummonerDao summonerDao = new SummonerDaoImpl(URL + ":" + PORT, "riotTest");
 
     @BeforeClass
     public static void setUp() throws IOException {

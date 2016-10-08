@@ -28,7 +28,6 @@ import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
-import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
 
 /**
  * @author Vincent Galloy
@@ -36,13 +35,13 @@ import vgalloy.riot.server.dao.internal.dao.factory.DaoFactory;
  */
 public class WinRateQueryITest {
 
-    private static final int PORT = 29007;
+    private static final int PORT = 29507;
     private static final String URL = "localhost";
 
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
 
-    private final MatchDetailDaoImpl matchDetailDao = DaoFactory.getDao(MatchDetailDaoImpl.class, URL + ":" + PORT, "riotTest");
+    private final MatchDetailDaoImpl matchDetailDao = new MatchDetailDaoImpl(URL + ":" + PORT, "riotTest");
 
     @BeforeClass
     public static void setUp() throws IOException {

@@ -54,6 +54,13 @@
         <mongo-java-driver.version>3.3.0</mongo-java-driver.version>
         <mongojack.version>2.6.1</mongojack.version>
 
+        <!-- Rabbitmq -->
+        <java-over-rabbitmq.version>1.0.0</java-over-rabbitmq.version>
+
+        <!-- Properties -->
+        <commons-configuration2.version>2.1</commons-configuration2.version>
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+
         <!-- Test -->
         <junit.version>4.12</junit.version>
         <de.flapdoodle.embed.mongo.version>1.50.5</de.flapdoodle.embed.mongo.version>
@@ -98,6 +105,13 @@
                 <version>${riot-api-java.version}</version>
             </dependency>
 
+            <!-- Rabbitmq -->
+            <dependency>
+                <groupId>vgalloy</groupId>
+                <artifactId>java-over-rabbitmq</artifactId>
+                <version>${java-over-rabbitmq.version}</version>
+            </dependency>
+
             <!-- Log -->
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -109,6 +123,18 @@
                 <artifactId>logback-classic</artifactId>
                 <version>${logback-classic.version}</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <!-- Properties -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-configuration2</artifactId>
+                <version>${commons-configuration2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
             </dependency>
 
             <!-- Spring -->

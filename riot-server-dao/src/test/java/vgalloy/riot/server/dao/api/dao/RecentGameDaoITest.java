@@ -23,7 +23,7 @@ import vgalloy.riot.api.api.dto.game.RecentGamesDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
-import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
+import vgalloy.riot.server.dao.internal.dao.commondao.impl.RecentGamesDaoImpl;
 
 /**
  * @author Vincent Galloy
@@ -31,13 +31,13 @@ import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
  */
 public class RecentGameDaoITest {
 
-    private static final int PORT = 29003;
+    private static final int PORT = 29503;
     private static final String URL = "localhost";
 
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
 
-    private final RecentGamesDao recentGamesDao = MongoDaoFactory.getRecentGamesDao(URL + ":" + PORT);
+    private final RecentGamesDao recentGamesDao = new RecentGamesDaoImpl(URL + ":" + PORT, "riotTest");
 
     @BeforeClass
     public static void setUp() throws IOException {

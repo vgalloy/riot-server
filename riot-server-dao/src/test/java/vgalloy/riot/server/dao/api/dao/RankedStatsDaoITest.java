@@ -22,7 +22,7 @@ import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
-import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
+import vgalloy.riot.server.dao.internal.dao.commondao.impl.RankedStatsDaoImpl;
 
 /**
  * @author Vincent Galloy
@@ -30,13 +30,13 @@ import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
  */
 public class RankedStatsDaoITest {
 
-    private static final int PORT = 29002;
+    private static final int PORT = 29502;
     private static final String URL = "localhost";
 
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
 
-    private final RankedStatsDao rankedStatsDao = MongoDaoFactory.getRankedStatsDao(URL + ":" + PORT);
+    private final RankedStatsDao rankedStatsDao = new RankedStatsDaoImpl(URL + ":" + PORT, "riotTest");
 
     @BeforeClass
     public static void setUp() throws IOException {

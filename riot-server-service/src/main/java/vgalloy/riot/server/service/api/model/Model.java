@@ -1,5 +1,6 @@
 package vgalloy.riot.server.service.api.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -9,7 +10,9 @@ import vgalloy.riot.api.api.constant.Region;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 23/08/16.
  */
-public class Model<DTO> {
+public class Model<DTO> implements Serializable {
+
+    private static final long serialVersionUID = -6093649270391641193L;
 
     private final LocalDateTime lastUpdate;
     private final Region region;

@@ -2,6 +2,20 @@ package vgalloy.riot.server.webservice.api.conf;
 
 import org.junit.Test;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
+
+import vgalloy.riot.server.service.api.factory.ServiceFactory;
+import vgalloy.riot.server.service.api.service.MatchDetailService;
+import vgalloy.riot.server.service.api.service.QueryService;
+import vgalloy.riot.server.service.api.service.RankedStatsService;
+import vgalloy.riot.server.service.api.service.SummonerService;
+import vgalloy.riot.server.service.internal.loader.context.ContextManager;
+import vgalloy.riot.server.webservice.internal.conf.SwaggerConfig;
 
 /**
  * @author Vincent Galloy
@@ -9,8 +23,46 @@ import org.springframework.boot.SpringApplication;
  */
 public class WebserviceConfigTest {
 
+    @Import({SwaggerConfig.class})
+    @ComponentScan(value = {
+            "vgalloy.riot.server.webservice.internal.filter",
+            "vgalloy.riot.server.webservice.internal.controller",
+            "vgalloy.riot.server.webservice.api.controller"})
+    @SpringBootApplication(exclude = {ErrorMvcAutoConfiguration.class, MongoAutoConfiguration.class})
+    public static class Config {
+
+        @Bean
+        public QueryService queryService() {
+            return ServiceFactory.getQueryService();
+        }
+
+        @Bean
+        public MatchDetailService matchDetailService() {
+            return ServiceFactory.getMatchDetailService();
+        }
+
+        @Bean
+        public RankedStatsService rankedStatsService() {
+            return ServiceFactory.getRankedStatsService();
+        }
+
+        @Bean
+        public SummonerService summonerService() {
+            return ServiceFactory.getSummonerService();
+        }
+
+        @Bean
+        public ContextManager contextManager() {
+            return null;
+        }
+
+        public static void main(String... args) {
+            SpringApplication.run(WebserviceConfig.class, args);
+        }
+    }
+
     @Test
     public void testStartApplication() {
-        SpringApplication.run(WebserviceConfig.class);
+        SpringApplication.run(Config.class);
     }
 }

@@ -1,16 +1,16 @@
 package vgalloy.riot.server.service.internal.loader.impl.intializer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.api.api.model.RiotApi;
-import vgalloy.riot.server.dao.api.dao.CommonDao;
+import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
@@ -26,7 +26,7 @@ public class LoaderInitializer extends AbstractLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoaderInitializer.class);
 
-    private final CommonDao<SummonerDto> summonerDao;
+    private final SummonerDao summonerDao;
 
     /**
      * Constructor.
@@ -35,7 +35,7 @@ public class LoaderInitializer extends AbstractLoader {
      * @param executor    the executor
      * @param summonerDao the summoner dao
      */
-    public LoaderInitializer(RiotApi riotApi, Executor executor, CommonDao<SummonerDto> summonerDao) {
+    public LoaderInitializer(RiotApi riotApi, Executor executor, SummonerDao summonerDao) {
         super(riotApi, executor);
         this.summonerDao = Objects.requireNonNull(summonerDao);
     }
