@@ -14,6 +14,7 @@ import vgalloy.riot.api.api.query.Query;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
+import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
 import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
@@ -83,7 +84,15 @@ public class MatchDetailLoader extends AbstractLoader {
      * @return true if the match is not in the database
      */
     private boolean notLoaded(MatchDetailId matchId) {
-        return !matchDetailDao.get(matchId).isPresent();
+        Optional<Entity<MatchDetailWrapper>> result =  matchDetailDao.get(matchId);
+
+        if (result.isPresent()) {
+            LOGGER.debug("already load the game {} ", result);
+            return false;
+        }
+        LOGGER.debug("the game {} not loaded yet", matchId);
+        return true;
+
     }
 
     /**
@@ -97,8 +106,8 @@ public class MatchDetailLoader extends AbstractLoader {
         Query<MatchDetail> query = riotApi.getMatchDetailById(matchId.getId())
                 .includeTimeline(true)
                 .region(region);
-
-        Optional<MatchDetail> result = Optional.ofNullable(executor.execute(query, region, 15));
+        LOGGER.info("start matchDetail {}", matchId);
+        Optional<MatchDetail> result = Optional.ofNullable(executor.execute(query, region, 5));
         LOGGER.info("{} : matchDetail {}", RegionPrinter.getRegion(region), matchId);
         return result;
     }

@@ -23,6 +23,10 @@
         </encoder>
     </appender>
 
+
+    <logger name="org.mongodb.driver.connection" level="warn"/>
+    <logger name="org.mongodb.driver.cluster" level="warn"/>
+
     <root level="debug">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>

@@ -69,7 +69,9 @@ public final class LoaderHelper {
         while (true) {
             Optional<Entity<CommonWrapper<MatchReference>>> matchReferenceEntity = matchReferenceDao.getRandom(region);
             if (matchReferenceEntity.isPresent() && matchReferenceEntity.get().getItemWrapper().getItem().isPresent()) {
-                return MatchDetailIdMapper.map(matchReferenceEntity.get().getItemWrapper().getItem().get());
+                MatchDetailId matchDetailId = MatchDetailIdMapper.map(matchReferenceEntity.get().getItemWrapper().getItem().get());
+                logger.info("Je propose " + matchDetailId);
+                return matchDetailId;
             } else {
                 logger.warn("{} : No matchReference found", RegionPrinter.getRegion(region));
                 try {

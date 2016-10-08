@@ -28,7 +28,7 @@ public final class ExecutorImpl implements Executor {
      * @param riotApiKey the riot api key
      */
     public ExecutorImpl(RiotApiKey riotApiKey) {
-        this.riotApiKey = Objects.requireNonNull(riotApiKey, "riotApiKey can not be null");
+        this.riotApiKey = Objects.requireNonNull(riotApiKey);
         Stream.of(Region.values()).forEach(e -> regionExecutorMap.put(e, new RegionExecutorImpl(e)));
     }
 

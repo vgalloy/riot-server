@@ -62,7 +62,7 @@ public class PrivilegedLoader extends AbstractLoader {
 
                 Query<MatchList> query = riotApi.getMatchListBySummonerId(currentSummonerId)
                         .region(Region.EUW);
-                MatchList matchList = executor.execute(query, Region.EUW, 1);
+                MatchList matchList = executor.execute(query, Region.EUW, 10);
                 LOGGER.info("{} : matchList {}", RegionPrinter.getRegion(Region.EUW), currentSummonerId);
                 if (matchList != null) {
                     List<MatchReference> matchDetailList = matchList.getMatches();
