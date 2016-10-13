@@ -28,4 +28,12 @@ public class CommonWrapper<DTO> extends ItemWrapper<DTO, ItemId> {
     public CommonWrapper(ItemId itemId) {
         super(itemId);
     }
+
+    @Override
+    public String toString() {
+        return "ItemWrapper{" +
+                "itemId=" + getItemId() +
+                ", item=" + getItem() +
+                '}';
+    }
 }

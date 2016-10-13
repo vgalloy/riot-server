@@ -29,4 +29,12 @@ public class MatchDetailWrapper extends ItemWrapper<MatchDetail, MatchDetailId> 
     public MatchDetailWrapper(MatchDetailId itemId) {
         super(itemId);
     }
+
+    @Override
+    public String toString() {
+        return "MatchDetailWrapper{" +
+                "itemId=" + getItemId() +
+                ", item=" + getItem() +
+                '}';
+    }
 }

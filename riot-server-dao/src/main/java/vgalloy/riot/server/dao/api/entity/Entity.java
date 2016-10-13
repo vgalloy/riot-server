@@ -34,4 +34,12 @@ public final class Entity<WRAPPER extends ItemWrapper<?, ?>> implements Serializ
     public Long getLastUpdate() {
         return lastUpdate;
     }
+
+    @Override
+    public String toString() {
+        return "Entity{" +
+                "itemWrapper=" + itemWrapper +
+                ", lastUpdate=" + lastUpdate +
+                '}';
+    }
 }

@@ -3,6 +3,7 @@ package vgalloy.riot.server.service.internal.loader.consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
@@ -14,6 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.constant.SimpleQueueType;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.matchlist.MatchList;
 import vgalloy.riot.api.api.dto.matchlist.MatchReference;
@@ -26,6 +28,7 @@ import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.service.internal.executor.Executor;
@@ -73,16 +76,15 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
         LOGGER.info("{} load full summoner : {}", RegionPrinter.getRegion(region), summonerId);
 
         ItemId itemId = new ItemId(region, summonerId);
-        if (isSummonerOkForLoading(itemId)) {
-            /* Load and save the summoner */
-            loadAndSaveSummoner(itemId);
 
-            /* Load and save ranked stat */
-            loadAndSaveRankedStat(itemId);
+        /* Load and save the summoner */
+        loadAndSaveSummoner(itemId);
 
-            /* Load and save recent game */
-            loadAndSaveMatch(itemId);
-        }
+        /* Load and save ranked stat */
+        loadAndSaveRankedStat(itemId);
+
+        /* Load and save recent game */
+        loadAndSaveMatch(itemId);
     }
 
     @Override
@@ -91,18 +93,68 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
     }
 
     /**
-     * Check the summoner is ok for loading.
+     * Load and save the summoner details.
+     *
+     * @param summonerId the summoner essential information
+     */
+    private void loadAndSaveSummoner(ItemId summonerId) {
+        if (shouldIdLoadThisSummoner(summonerId)) {
+            LOGGER.info("{} load summoner : {}", RegionPrinter.getRegion(region), summonerId.getId());
+            Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonersByIds(summonerId.getId()), summonerId.getRegion(), 1);
+            SummonerDto summonerDto = summonerDtoMap.entrySet().iterator().next().getValue();
+            summonerDao.save(new CommonWrapper<>(summonerId, summonerDto));
+        }
+    }
+
+    /**
+     * Check if the summoner is ok for loading.
      *
      * @param summonerId the summoner id
      * @return true if the summoner can be loaded
      */
-    private boolean isSummonerOkForLoading(ItemId summonerId) {
+    private boolean shouldIdLoadThisSummoner(ItemId summonerId) {
         Optional<Entity<CommonWrapper<SummonerDto>>> optionalEntity = summonerDao.get(summonerId);
         if (!optionalEntity.isPresent()) {
             return true;
         }
         LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(optionalEntity.get().getLastUpdate(), 0, ZoneOffset.UTC);
-        if (localDateTime.isBefore(LocalDateTime.now().minus(2, ChronoUnit.MINUTES))) {
+        if (localDateTime.isBefore(LocalDateTime.now().minus(2, ChronoUnit.DAYS))) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Load and save the ranked stats.
+     *
+     * @param summonerId the summoner essential information
+     */
+    private void loadAndSaveRankedStat(ItemId summonerId) {
+        if (shouldILoadThisRankedStat(summonerId)) {
+            Query<RankedStatsDto> query = riotApi.getRankedStats(summonerId.getId());
+            LOGGER.info("{} load rankedStat : {}", RegionPrinter.getRegion(region), summonerId.getId());
+            Optional<RankedStatsDto> rankedStatsDto = Optional.ofNullable(executor.execute(query, summonerId.getRegion(), 1));
+            if (rankedStatsDto.isPresent()) {
+                rankedStatsDao.save(new CommonWrapper<>(summonerId, rankedStatsDto.get()));
+            } else {
+                rankedStatsDao.save(new CommonWrapper<>(summonerId));
+            }
+        }
+    }
+
+    /**
+     * Check if the ranked stat is ok for loading.
+     *
+     * @param summonerId the summoner id
+     * @return true if the ranked stat can be loaded
+     */
+    private boolean shouldILoadThisRankedStat(ItemId summonerId) {
+        Optional<Entity<CommonWrapper<RankedStatsDto>>> optionalEntity = rankedStatsDao.get(summonerId);
+        if (!optionalEntity.isPresent()) {
+            return true;
+        }
+        LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(optionalEntity.get().getLastUpdate(), 0, ZoneOffset.UTC);
+        if (localDateTime.isBefore(LocalDateTime.now().minus(2, ChronoUnit.HOURS))) {
             return true;
         }
         return false;
@@ -119,7 +171,7 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
         List<Long> matchIdList = new ArrayList<>();
         if (matchList != null && matchList.getMatches() != null) {
             matchIdList = matchList.getMatches().stream()
-                    .filter(e -> !matchDetailDao.get(MatchDetailIdMapper.map(e)).isPresent())
+                    .filter(this::shouldILoadThisMatch)
                     .map(MatchReference::getMatchId)
                     .collect(Collectors.toList());
         }
@@ -134,30 +186,22 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
     }
 
     /**
-     * Load and save the ranked stats.
+     * Check if the mach should be loaded.
      *
-     * @param summonerId the summoner essential information
+     * @param matchReference the match reference
+     * @return true if the match should be loaded
      */
-    private void loadAndSaveRankedStat(ItemId summonerId) {
-        Query<RankedStatsDto> query = riotApi.getRankedStats(summonerId.getId());
-        LOGGER.info("{} load rankedStat : {}", RegionPrinter.getRegion(region), summonerId.getId());
-        Optional<RankedStatsDto> rankedStatsDto = Optional.ofNullable(executor.execute(query, summonerId.getRegion(), 1));
-        if (rankedStatsDto.isPresent()) {
-            rankedStatsDao.save(new CommonWrapper<>(summonerId, rankedStatsDto.get()));
-        } else {
-            rankedStatsDao.save(new CommonWrapper<>(summonerId));
+    private boolean shouldILoadThisMatch(MatchReference matchReference) {
+        MatchDetailId matchDetailId = MatchDetailIdMapper.map(matchReference);
+        if (matchDetailDao.get(matchDetailId).isPresent()) {
+            return false;
         }
-    }
-
-    /**
-     * Load and save the summoner details.
-     *
-     * @param summonerId the summoner essential information
-     */
-    private void loadAndSaveSummoner(ItemId summonerId) {
-        LOGGER.info("{} load summoner : {}", RegionPrinter.getRegion(region), summonerId.getId());
-        Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonersByIds(summonerId.getId()), summonerId.getRegion(), 1);
-        SummonerDto summonerDto = summonerDtoMap.entrySet().iterator().next().getValue();
-        summonerDao.save(new CommonWrapper<>(summonerId, summonerDto));
+        if (matchDetailId.getMatchDate().isBefore(LocalDate.now().minus(1, ChronoUnit.MONTHS))) {
+            return false;
+        }
+        if (SimpleQueueType.ARAM_5x5.equals(matchReference.getQueue())) {
+            return false;
+        }
+        return true;
     }
 }
