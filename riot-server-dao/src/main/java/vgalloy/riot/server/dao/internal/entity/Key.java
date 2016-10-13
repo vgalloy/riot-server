@@ -36,6 +36,7 @@ public final class Key {
      * @return the key
      */
     public static Key fromNormalizedString(String string) {
+        Objects.requireNonNull(string);
         String[] divided = string.split(" ");
         Region region = Region.valueOf(divided[0]);
         Long id = Long.valueOf(divided[1]);

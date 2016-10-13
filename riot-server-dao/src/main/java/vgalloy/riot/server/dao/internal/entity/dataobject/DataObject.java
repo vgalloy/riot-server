@@ -18,17 +18,26 @@ import vgalloy.riot.server.dao.internal.entity.Key;
 @JsonAutoDetect(fieldVisibility = Visibility.NONE, getterVisibility = Visibility.ANY, setterVisibility = Visibility.NONE)
 public abstract class DataObject<DTO> {
 
-    private Long lastUpdate;
-    private Region region;
-    private Long itemId;
+    private final Long lastUpdate;
+    private final Region region;
+    private final Long itemId;
     private DTO item;
-    private Key key;
+    private final Key key;
 
     /**
-     * Constructor. For Jackson deserialization.
+     * Constructor.
+     * @param lastUpdate the last update
+     * @param region the region of the item
+     * @param itemId the item id
+     * @param item the item
+     * @param id the id
      */
-    protected DataObject() {
-
+    public DataObject(Long lastUpdate, Region region, Long itemId, DTO item, String id) {
+        this.lastUpdate = Objects.requireNonNull(lastUpdate);
+        this.region = Objects.requireNonNull(region);
+        this.itemId = Objects.requireNonNull(itemId);
+        this.item = item;
+        key = Key.fromNormalizedString(id);
     }
 
     /**
@@ -67,10 +76,6 @@ public abstract class DataObject<DTO> {
     @Id
     public String getId() {
         return key.normalizeString();
-    }
-
-    public void setId(String id) {
-        key = Key.fromNormalizedString(id);
     }
 
     @Override

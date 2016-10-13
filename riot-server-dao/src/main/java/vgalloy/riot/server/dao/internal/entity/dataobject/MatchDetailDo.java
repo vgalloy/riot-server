@@ -1,5 +1,8 @@
 package vgalloy.riot.server.dao.internal.entity.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 
@@ -12,10 +15,20 @@ public class MatchDetailDo extends DataObject<MatchDetail> {
     private long matchCreationDateFromEpochDay;
 
     /**
-     * Constructor. For Jackson deserialization.
+     * Constructor.
+     * @param lastUpdate the last update
+     * @param region the region of the item
+     * @param itemId the item id
+     * @param item the item
+     * @param id the id
      */
-    private MatchDetailDo() {
-
+    @JsonCreator
+    public MatchDetailDo(@JsonProperty("lastUpdate") Long lastUpdate,
+                            @JsonProperty("region") Region region,
+                            @JsonProperty("itemId") Long itemId,
+                            @JsonProperty("item") MatchDetail item,
+                            @JsonProperty("_id") String id) {
+        super(lastUpdate, region, itemId, item, id);
     }
 
     /**
