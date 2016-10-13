@@ -33,6 +33,7 @@ import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.consumer.RegionalSummonerLoaderConsumer;
+import vgalloy.riot.server.service.internal.loader.consumer.message.SummonerLoadingMessage;
 import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
 import vgalloy.riot.server.service.internal.service.mapper.MatchDetailIdMapper;
 
@@ -71,10 +72,23 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
     }
 
     @Override
-    public void loaderSummoner(Long summonerId) {
-        Objects.requireNonNull(summonerId);
-        LOGGER.info("{} load full summoner : {}", RegionPrinter.getRegion(region), summonerId);
+    public void accept(SummonerLoadingMessage summonerLoadingMessage) {
+        Objects.requireNonNull(summonerLoadingMessage);
+        LOGGER.info("{} load full summoner : {}", RegionPrinter.getRegion(region), summonerLoadingMessage);
+        if (SummonerLoadingMessage.LoaderType.BY_ID == summonerLoadingMessage.getLoaderType()) {
+            loaderSummoner(summonerLoadingMessage.getSummonerId());
+        } else {
+            loaderSummoner(summonerLoadingMessage.getSummonerName());
+        }
+    }
 
+    /**
+     * Load the summoner, his ranked stats and all his recent games and save it.
+     *
+     * @param summonerId the summoner id
+     */
+    private void loaderSummoner(Long summonerId) {
+        Objects.requireNonNull(summonerId);
         ItemId itemId = new ItemId(region, summonerId);
 
         /* Load and save the summoner */
@@ -87,9 +101,24 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
         loadAndSaveMatch(itemId);
     }
 
-    @Override
-    public void accept(Long summonerId) {
-        loaderSummoner(summonerId);
+    /**
+     * Load and save summoner by name.
+     *
+     * @param summonerName the summoner name
+     */
+    private void loaderSummoner(String summonerName) {
+        Objects.requireNonNull(summonerName);
+        Optional<SummonerDto> result = summonerDao.getSummonerByName(region, summonerName);
+        if (result.isPresent()) {
+            loaderSummoner(result.get().getId());
+        } else {
+            Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonerByNames(summonerName), region, 1);
+            if (summonerDtoMap.size() == 0) {
+                return;
+            }
+            long summonerId = summonerDtoMap.entrySet().iterator().next().getValue().getId();
+            loaderSummoner(summonerId);
+        }
     }
 
     /**

@@ -13,6 +13,7 @@ import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.service.api.model.LastGame;
 import vgalloy.riot.server.service.api.service.SummonerService;
+import vgalloy.riot.server.service.internal.loader.client.SummonerLoaderClient;
 import vgalloy.riot.server.service.internal.service.mapper.LastGameMapper;
 
 /**
@@ -23,17 +24,20 @@ public final class SummonerServiceImpl extends AbstractService<SummonerDto> impl
 
     private final SummonerDao summonerDao;
     private final MatchDetailDao matchDetailDao;
+    private final SummonerLoaderClient summonerLoaderClient;
 
     /**
      * Constructor.
      *
-     * @param summonerDao    the summoner dao
-     * @param matchDetailDao the match detail dao
+     * @param summonerDao          the summoner dao
+     * @param matchDetailDao       the match detail dao
+     * @param summonerLoaderClient the summoner loader client
      */
-    public SummonerServiceImpl(SummonerDao summonerDao, MatchDetailDao matchDetailDao) {
+    public SummonerServiceImpl(SummonerDao summonerDao, MatchDetailDao matchDetailDao, SummonerLoaderClient summonerLoaderClient) {
         super(summonerDao);
         this.summonerDao = Objects.requireNonNull(summonerDao);
         this.matchDetailDao = Objects.requireNonNull(matchDetailDao);
+        this.summonerLoaderClient = Objects.requireNonNull(summonerLoaderClient);
     }
 
     @Override
@@ -46,6 +50,7 @@ public final class SummonerServiceImpl extends AbstractService<SummonerDto> impl
 
     @Override
     public Optional<SummonerDto> getSummonerByName(Region region, String summonerName) {
+        summonerLoaderClient.loaderSummoner(region, summonerName);
         return summonerDao.getSummonerByName(region, summonerName);
     }
 }

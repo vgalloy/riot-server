@@ -17,7 +17,7 @@ import vgalloy.riot.server.service.internal.service.SummonerServiceImpl;
 public final class InternalServiceFactory {
 
     private static final MatchDetailService MATCH_DETAIL_SERVICE = new MatchDetailServiceImpl(MongoDaoFactory.getMatchDetailDao());
-    private static final SummonerService SUMMONER_SERVICE = new SummonerServiceImpl(MongoDaoFactory.getSummonerDao(), MongoDaoFactory.getMatchDetailDao());
+    private static final SummonerService SUMMONER_SERVICE = new SummonerServiceImpl(MongoDaoFactory.getSummonerDao(), MongoDaoFactory.getMatchDetailDao(), BrokerFactory.getSummonerLoaderClient());
     private static final RankedStatsService RANKED_STATS_SERVICE = new RankedStatsServiceImpl(MongoDaoFactory.getRankedStatsDao());
     private static final QueryService QUERY_SERVICE = new QueryServiceImpl(MongoDaoFactory.getQueryDao(), MongoDaoFactory.getMatchDetailDao());
 

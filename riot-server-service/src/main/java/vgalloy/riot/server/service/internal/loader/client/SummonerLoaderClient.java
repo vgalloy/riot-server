@@ -15,4 +15,12 @@ public interface SummonerLoaderClient {
      * @param summonerId the summoner id
      */
     void loaderSummoner(Region region, Long summonerId);
+
+    /**
+     * Load the summoner, his ranked stats and all his recent games and save it.
+     *
+     * @param region       the region of the summoner
+     * @param summonerName the summoner name
+     */
+    void loaderSummoner(Region region, String summonerName);
 }

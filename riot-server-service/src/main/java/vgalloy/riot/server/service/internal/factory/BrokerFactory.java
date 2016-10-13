@@ -19,6 +19,7 @@ import vgalloy.riot.server.service.internal.loader.client.SummonerLoaderClient;
 import vgalloy.riot.server.service.internal.loader.client.impl.SummonerLoaderClientImpl;
 import vgalloy.riot.server.service.internal.loader.consumer.RegionalSummonerLoaderConsumer;
 import vgalloy.riot.server.service.internal.loader.consumer.impl.RegionalSummonerLoaderConsumerImpl;
+import vgalloy.riot.server.service.internal.loader.consumer.message.SummonerLoadingMessage;
 
 /**
  * @author Vincent Galloy - 11/10/16
@@ -70,15 +71,6 @@ public final class BrokerFactory {
      *
      * @return the connection factory
      */
-    public static ConnectionFactory getConnectionFactory() {
-        return CONNECTION_FACTORY;
-    }
-
-    /**
-     * Create the connection factory.
-     *
-     * @return the connection factory
-     */
     public static SummonerLoaderClient getSummonerLoaderClient() {
         return SUMMONER_LOADER_CLIENT;
     }
@@ -88,8 +80,8 @@ public final class BrokerFactory {
      */
     private static void startConsumer() {
         for (Region region : Region.values()) {
-            ConsumerQueueDefinition<Long> queueDefinition = RegionalSummonerLoaderConsumer.getQueueDefinition(region);
-            Consumer<Long> consumer = new RegionalSummonerLoaderConsumerImpl(region, ExecutorFactory.getRiotApi(), ExecutorFactory.getExecutor(), MongoDaoFactory.getSummonerDao(), MongoDaoFactory.getMatchDetailDao(), MongoDaoFactory.getRankedStatsDao());
+            ConsumerQueueDefinition<SummonerLoadingMessage> queueDefinition = RegionalSummonerLoaderConsumer.getQueueDefinition(region);
+            Consumer<SummonerLoadingMessage> consumer = new RegionalSummonerLoaderConsumerImpl(region, ExecutorFactory.getRiotApi(), ExecutorFactory.getExecutor(), MongoDaoFactory.getSummonerDao(), MongoDaoFactory.getMatchDetailDao(), MongoDaoFactory.getRankedStatsDao());
             Factory.createConsumer(CONNECTION_FACTORY, queueDefinition, consumer);
         }
     }

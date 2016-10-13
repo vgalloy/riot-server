@@ -12,6 +12,7 @@ import vgalloy.javaoverrabbitmq.api.queue.ConsumerQueueDefinition;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.service.internal.loader.client.SummonerLoaderClient;
 import vgalloy.riot.server.service.internal.loader.consumer.RegionalSummonerLoaderConsumer;
+import vgalloy.riot.server.service.internal.loader.consumer.message.SummonerLoadingMessage;
 
 /**
  * @author Vincent Galloy - 10/10/16
@@ -19,7 +20,7 @@ import vgalloy.riot.server.service.internal.loader.consumer.RegionalSummonerLoad
  */
 public class SummonerLoaderClientImpl implements SummonerLoaderClient {
 
-    private final Map<Region, Consumer<Long>> map;
+    private final Map<Region, Consumer<SummonerLoadingMessage>> map;
 
     /**
      * Constructor.
@@ -29,7 +30,7 @@ public class SummonerLoaderClientImpl implements SummonerLoaderClient {
     public SummonerLoaderClientImpl(ConnectionFactory connectionFactory) {
         map = new HashMap<>();
         for (Region region : Region.values()) {
-            ConsumerQueueDefinition<Long> queueDefinition = RegionalSummonerLoaderConsumer.getQueueDefinition(region);
+            ConsumerQueueDefinition<SummonerLoadingMessage> queueDefinition = RegionalSummonerLoaderConsumer.getQueueDefinition(region);
             map.put(region, Factory.createClient(connectionFactory, queueDefinition));
         }
     }
@@ -38,6 +39,13 @@ public class SummonerLoaderClientImpl implements SummonerLoaderClient {
     public void loaderSummoner(Region region, Long summonerId) {
         Objects.requireNonNull(region);
         Objects.requireNonNull(summonerId);
-        map.get(region).accept(summonerId);
+        map.get(region).accept(SummonerLoadingMessage.byId(summonerId));
+    }
+
+    @Override
+    public void loaderSummoner(Region region, String summonerName) {
+        Objects.requireNonNull(region);
+        Objects.requireNonNull(summonerName);
+        map.get(region).accept(SummonerLoadingMessage.byName(summonerName));
     }
 }

@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import vgalloy.javaoverrabbitmq.api.marshaller.RabbitMessageMarshaller;
+import vgalloy.riot.server.service.internal.loader.consumer.message.SummonerLoadingMessage;
 
 /**
  * @author Vincent Galloy - 13/10/16
@@ -25,5 +26,15 @@ public class JacksonMarshallerTest {
         RabbitMessageMarshaller rabbitMessageMarshaller = new JacksonMarshaller();
 
         Assert.assertNull(null, rabbitMessageMarshaller.deserialize(Long.class, rabbitMessageMarshaller.serialize(null)));
+    }
+
+    @Test
+    public void testSummonerLoadingMessage() {
+        RabbitMessageMarshaller rabbitMessageMarshaller = new JacksonMarshaller();
+        SummonerLoadingMessage summonerLoadingMessage = SummonerLoadingMessage.byId(2L);
+
+        System.out.println(new String(rabbitMessageMarshaller.serialize(summonerLoadingMessage)));
+
+        Assert.assertEquals(summonerLoadingMessage, rabbitMessageMarshaller.deserialize(SummonerLoadingMessage.class, rabbitMessageMarshaller.serialize(summonerLoadingMessage)));
     }
 }
