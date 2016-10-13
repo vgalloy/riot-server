@@ -1,4 +1,4 @@
-package vgalloy.riot.server.service.internal.loader.client;
+package vgalloy.riot.server.service.internal.loader.client.impl;
 
 import com.rabbitmq.client.ConnectionFactory;
 
@@ -10,7 +10,8 @@ import java.util.function.Consumer;
 import vgalloy.javaoverrabbitmq.api.Factory;
 import vgalloy.javaoverrabbitmq.api.queue.ConsumerQueueDefinition;
 import vgalloy.riot.api.api.constant.Region;
-import vgalloy.riot.server.service.internal.loader.consumer.impl.RegionalSummonerLoaderConsumer;
+import vgalloy.riot.server.service.internal.loader.client.SummonerLoaderClient;
+import vgalloy.riot.server.service.internal.loader.consumer.RegionalSummonerLoaderConsumer;
 
 /**
  * @author Vincent Galloy - 10/10/16
@@ -28,7 +29,7 @@ public class SummonerLoaderClientImpl implements SummonerLoaderClient {
     public SummonerLoaderClientImpl(ConnectionFactory connectionFactory) {
         map = new HashMap<>();
         for (Region region : Region.values()) {
-            ConsumerQueueDefinition<Long> queueDefinition = Factory.createQueue(RegionalSummonerLoaderConsumer.getQueueName(region), Long.class);
+            ConsumerQueueDefinition<Long> queueDefinition = RegionalSummonerLoaderConsumer.getQueueDefinition(region);
             map.put(region, Factory.createClient(connectionFactory, queueDefinition));
         }
     }

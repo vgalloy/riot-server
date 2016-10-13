@@ -16,9 +16,9 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 import vgalloy.riot.server.service.internal.loader.client.SummonerLoaderClient;
-import vgalloy.riot.server.service.internal.loader.client.SummonerLoaderClientImpl;
-import vgalloy.riot.server.service.internal.loader.consumer.impl.RegionalSummonerLoaderConsumer;
-import vgalloy.riot.server.service.internal.loader.consumer.RegionalSummonerLoaderConsumerImpl;
+import vgalloy.riot.server.service.internal.loader.client.impl.SummonerLoaderClientImpl;
+import vgalloy.riot.server.service.internal.loader.consumer.RegionalSummonerLoaderConsumer;
+import vgalloy.riot.server.service.internal.loader.consumer.impl.RegionalSummonerLoaderConsumerImpl;
 
 /**
  * @author Vincent Galloy - 11/10/16
@@ -88,7 +88,7 @@ public final class BrokerFactory {
      */
     private static void startConsumer() {
         for (Region region : Region.values()) {
-            ConsumerQueueDefinition<Long> queueDefinition = Factory.createQueue(RegionalSummonerLoaderConsumer.getQueueName(region), Long.class);
+            ConsumerQueueDefinition<Long> queueDefinition = RegionalSummonerLoaderConsumer.getQueueDefinition(region);
             Consumer<Long> consumer = new RegionalSummonerLoaderConsumerImpl(region, ExecutorFactory.getRiotApi(), ExecutorFactory.getExecutor(), MongoDaoFactory.getSummonerDao(), MongoDaoFactory.getMatchDetailDao(), MongoDaoFactory.getRankedStatsDao());
             Factory.createConsumer(CONNECTION_FACTORY, queueDefinition, consumer);
         }

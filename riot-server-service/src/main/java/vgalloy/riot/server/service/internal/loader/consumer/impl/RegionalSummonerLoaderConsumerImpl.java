@@ -1,4 +1,4 @@
-package vgalloy.riot.server.service.internal.loader.consumer;
+package vgalloy.riot.server.service.internal.loader.consumer.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.service.internal.executor.Executor;
-import vgalloy.riot.server.service.internal.loader.consumer.impl.RegionalSummonerLoaderConsumer;
+import vgalloy.riot.server.service.internal.loader.consumer.RegionalSummonerLoaderConsumer;
 import vgalloy.riot.server.service.internal.loader.helper.RegionPrinter;
 import vgalloy.riot.server.service.internal.service.mapper.MatchDetailIdMapper;
 
