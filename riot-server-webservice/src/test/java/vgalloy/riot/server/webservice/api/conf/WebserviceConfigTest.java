@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
-import vgalloy.riot.server.service.api.factory.ServiceFactory;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
@@ -33,22 +32,22 @@ public class WebserviceConfigTest {
 
         @Bean
         public QueryService queryService() {
-            return ServiceFactory.getQueryService();
+            return null;
         }
 
         @Bean
         public MatchDetailService matchDetailService() {
-            return ServiceFactory.getMatchDetailService();
+            return null;
         }
 
         @Bean
         public RankedStatsService rankedStatsService() {
-            return ServiceFactory.getRankedStatsService();
+            return null;
         }
 
         @Bean
         public SummonerService summonerService() {
-            return ServiceFactory.getSummonerService();
+            return null;
         }
 
         @Bean
