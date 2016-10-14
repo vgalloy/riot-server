@@ -33,9 +33,9 @@ public class GameController {
      * @param gameId the game id
      * @return the players information as a list
      */
-    @RequestMapping(value = "/game/{gameId}/", method = RequestMethod.GET)
-    public Game getTimelines(@PathVariable String gameId) {
-        LOGGER.info("[ GET ] : getTimelines, gameId : {}, ", gameId);
+    @RequestMapping(value = "/game/{gameId}", method = RequestMethod.GET)
+    public Game getGame(@PathVariable String gameId) {
+        LOGGER.info("[ GET ] : getGame, gameId : {}, ", gameId);
         MatchDetailId matchDetailId = MatchDetailIdMapper.map(gameId);
 
         Optional<Game> optionalResult = matchDetailService.get(matchDetailId);
