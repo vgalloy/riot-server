@@ -7,6 +7,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
@@ -21,6 +24,8 @@ import vgalloy.riot.server.service.internal.service.mapper.LastGameMapper;
  *         Created by Vincent Galloy on 23/08/16.
  */
 public final class SummonerServiceImpl extends AbstractService<SummonerDto> implements SummonerService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SummonerServiceImpl.class);
 
     private final SummonerDao summonerDao;
     private final MatchDetailDao matchDetailDao;
@@ -42,6 +47,7 @@ public final class SummonerServiceImpl extends AbstractService<SummonerDto> impl
 
     @Override
     public List<LastGame> getLastGames(Region region, long summonerId, LocalDate from, LocalDate to) {
+        LOGGER.info("getLastGames : {} {} {} {}", region, summonerId, from, to);
         return matchDetailDao.findMatchDetailBySummonerId(region, summonerId, from, to.plus(1, ChronoUnit.DAYS)).stream()
                 .map(e -> LastGameMapper.map(e, summonerId))
                 .sorted((o1, o2) -> (int) (o1.getMatchCreation() - o2.getMatchCreation()))

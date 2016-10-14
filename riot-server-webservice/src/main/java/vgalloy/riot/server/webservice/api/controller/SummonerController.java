@@ -1,5 +1,9 @@
 package vgalloy.riot.server.webservice.api.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
@@ -62,7 +62,7 @@ public class SummonerController {
      * @param to         the en search date in millis
      * @return the last games
      */
-    @RequestMapping(value = "/summoner/{region}/{summonerId}/lastGames/", method = RequestMethod.GET)
+    @RequestMapping(value = "/summoner/{region}/{summonerId}/lastGames", method = RequestMethod.GET)
     public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId, @RequestParam Long from, @RequestParam Long to) {
         LOGGER.info("[ GET ] : getLastGames, region : {}, summonerId : {}, from : {}, to : {}", region, summonerId, from, to);
         LocalDate fromLocalDate = LocalDate.ofEpochDay(from / 1000 / 3600 / 24);
