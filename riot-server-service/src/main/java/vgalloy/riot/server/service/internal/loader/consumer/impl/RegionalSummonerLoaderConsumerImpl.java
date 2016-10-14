@@ -113,7 +113,7 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
             loaderSummoner(result.get().getId());
         } else {
             Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonerByNames(summonerName), region, 1);
-            if (summonerDtoMap.size() == 0) {
+            if (summonerDtoMap == null || summonerDtoMap.size() == 0) {
                 return;
             }
             long summonerId = summonerDtoMap.entrySet().iterator().next().getValue().getId();
