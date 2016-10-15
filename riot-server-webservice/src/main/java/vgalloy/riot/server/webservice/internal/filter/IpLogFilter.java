@@ -2,6 +2,7 @@ package vgalloy.riot.server.webservice.internal.filter;
 
 import java.io.IOException;
 import java.util.UUID;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;

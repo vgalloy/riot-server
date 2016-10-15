@@ -1,5 +1,7 @@
 package vgalloy.riot.server.service.internal.factory;
 
+import java.util.function.Consumer;
+
 import com.rabbitmq.client.ConnectionFactory;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.FileBasedConfiguration;
@@ -7,8 +9,6 @@ import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
-
-import java.util.function.Consumer;
 
 import vgalloy.javaoverrabbitmq.api.Factory;
 import vgalloy.javaoverrabbitmq.api.queue.ConsumerQueueDefinition;

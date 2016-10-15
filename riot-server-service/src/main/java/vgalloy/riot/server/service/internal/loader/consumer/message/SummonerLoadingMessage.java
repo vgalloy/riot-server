@@ -1,10 +1,10 @@
 package vgalloy.riot.server.service.internal.loader.consumer.message;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.io.Serializable;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author Vincent Galloy - 13/10/16
@@ -32,18 +32,6 @@ public class SummonerLoadingMessage implements Serializable {
         this.summonerId = summonerId;
     }
 
-    public LoaderType getLoaderType() {
-        return loaderType;
-    }
-
-    public String getSummonerName() {
-        return summonerName;
-    }
-
-    public Long getSummonerId() {
-        return summonerId;
-    }
-
     /**
      * Build a SummonerLoadingMessage with summonerId.
      *
@@ -64,8 +52,16 @@ public class SummonerLoadingMessage implements Serializable {
         return new SummonerLoadingMessage(LoaderType.BY_NAME, Objects.requireNonNull(summonerName), null);
     }
 
-    public enum LoaderType {
-        BY_ID, BY_NAME
+    public LoaderType getLoaderType() {
+        return loaderType;
+    }
+
+    public String getSummonerName() {
+        return summonerName;
+    }
+
+    public Long getSummonerId() {
+        return summonerId;
     }
 
     @Override
@@ -94,5 +90,9 @@ public class SummonerLoadingMessage implements Serializable {
                 ", summonerName='" + summonerName + '\'' +
                 ", summonerId=" + summonerId +
                 '}';
+    }
+
+    public enum LoaderType {
+        BY_ID, BY_NAME
     }
 }

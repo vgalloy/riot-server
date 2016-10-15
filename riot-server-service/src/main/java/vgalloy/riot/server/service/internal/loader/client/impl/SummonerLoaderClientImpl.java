@@ -1,11 +1,11 @@
 package vgalloy.riot.server.service.internal.loader.client.impl;
 
-import com.rabbitmq.client.ConnectionFactory;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
+
+import com.rabbitmq.client.ConnectionFactory;
 
 import vgalloy.javaoverrabbitmq.api.Factory;
 import vgalloy.javaoverrabbitmq.api.queue.ConsumerQueueDefinition;

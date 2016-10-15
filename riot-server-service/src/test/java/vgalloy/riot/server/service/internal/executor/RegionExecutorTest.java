@@ -24,8 +24,8 @@ public class RegionExecutorTest {
         int a = 9;
 
         int result = 0;
-        for(int i = 0; i < 400; i ++) {
-            if(test(1, a)) {
+        for (int i = 0; i < 400; i++) {
+            if (test(1, a)) {
                 result++;
             }
         }
