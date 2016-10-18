@@ -21,6 +21,8 @@ public class LastGame implements Serializable {
     private final boolean winner;
     private final long matchCreation;
     private final QueueType queueType;
+    private final int spell1Id;
+    private final int spell2Id;
 
     /**
      * Constructor.
@@ -33,8 +35,10 @@ public class LastGame implements Serializable {
      * @param winner        is the game a win
      * @param matchCreation the match creation in millis
      * @param queueType     the queue type
+     * @param spell1Id      the first summoner id
+     * @param spell2Id      the second summoner id
      */
-    public LastGame(String gameId, int championId, long kill, long death, long assist, boolean winner, long matchCreation, QueueType queueType) {
+    public LastGame(String gameId, int championId, long kill, long death, long assist, boolean winner, long matchCreation, QueueType queueType, int spell1Id, int spell2Id) {
         this.gameId = gameId;
         this.championId = championId;
         this.kill = kill;
@@ -43,6 +47,8 @@ public class LastGame implements Serializable {
         this.winner = winner;
         this.matchCreation = matchCreation;
         this.queueType = Objects.requireNonNull(queueType);
+        this.spell1Id = spell1Id;
+        this.spell2Id = spell2Id;
     }
 
     public String getGameId() {
@@ -75,5 +81,13 @@ public class LastGame implements Serializable {
 
     public QueueType getQueueType() {
         return queueType;
+    }
+
+    public int getSpell1Id() {
+        return spell1Id;
+    }
+
+    public int getSpell2Id() {
+        return spell2Id;
     }
 }

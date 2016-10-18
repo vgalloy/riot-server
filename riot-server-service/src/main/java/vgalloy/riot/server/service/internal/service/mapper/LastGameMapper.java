@@ -44,7 +44,8 @@ public final class LastGameMapper {
         boolean winner = participant.getStats().isWinner();
         long matchCreation = matchDetail.getMatchCreation();
         QueueType queueType = matchDetail.getQueueType();
-
-        return new LastGame(MatchDetailIdMapper.map(MatchDetailIdMapper.map(matchDetail)), championId, kill, death, assist, winner, matchCreation, queueType);
+        int spell1Id = participant.getSpell1Id();
+        int spell2Id = participant.getSpell2Id();
+        return new LastGame(MatchDetailIdMapper.map(MatchDetailIdMapper.map(matchDetail)), championId, kill, death, assist, winner, matchCreation, queueType, spell1Id, spell2Id);
     }
 }
