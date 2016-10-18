@@ -5,12 +5,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+import vgalloy.riot.server.service.api.context.ContextManager;
 import vgalloy.riot.server.service.api.factory.ServiceFactory;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
-import vgalloy.riot.server.service.internal.loader.context.ContextManager;
 
 /**
  * @author Vincent Galloy

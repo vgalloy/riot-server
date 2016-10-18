@@ -26,7 +26,7 @@ public abstract class DataObject<DTO> {
 
     /**
      * Constructor.
-     * @param lastUpdate the last update
+     * @param lastUpdate the last update time in second (UTC)
      * @param region the region of the item
      * @param itemId the item id
      * @param item the item

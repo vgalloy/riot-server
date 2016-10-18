@@ -13,7 +13,7 @@ import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
-import vgalloy.riot.server.service.internal.loader.context.ContextManager;
+import vgalloy.riot.server.service.api.context.ContextManager;
 import vgalloy.riot.server.webservice.internal.conf.SwaggerConfig;
 
 /**

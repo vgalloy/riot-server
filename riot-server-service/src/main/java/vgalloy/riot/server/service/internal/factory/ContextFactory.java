@@ -1,7 +1,7 @@
 package vgalloy.riot.server.service.internal.factory;
 
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
-import vgalloy.riot.server.service.internal.loader.context.ContextManager;
+import vgalloy.riot.server.service.api.context.ContextManager;
 import vgalloy.riot.server.service.internal.loader.context.impl.ContextManagerImpl;
 
 /**

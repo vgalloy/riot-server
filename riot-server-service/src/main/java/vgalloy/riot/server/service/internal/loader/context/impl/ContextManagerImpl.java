@@ -6,10 +6,10 @@ import java.util.List;
 
 import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
+import vgalloy.riot.server.service.api.context.ContextManager;
 import vgalloy.riot.server.service.internal.executor.Executor;
 import vgalloy.riot.server.service.internal.loader.Loader;
 import vgalloy.riot.server.service.internal.loader.client.SummonerLoaderClient;
-import vgalloy.riot.server.service.internal.loader.context.ContextManager;
 import vgalloy.riot.server.service.internal.loader.impl.intializer.LoaderInitializer;
 import vgalloy.riot.server.service.internal.loader.impl.matchdetail.PrivilegedLoader;
 

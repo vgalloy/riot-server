@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import vgalloy.riot.server.service.api.context.ContextManager;
 import vgalloy.riot.server.service.api.model.LoaderInformation;
-import vgalloy.riot.server.service.internal.loader.context.ContextManager;
 
 /**
  * @author Vincent Galloy

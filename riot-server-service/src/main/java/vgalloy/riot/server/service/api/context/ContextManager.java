@@ -1,4 +1,4 @@
-package vgalloy.riot.server.service.internal.loader.context;
+package vgalloy.riot.server.service.api.context;
 
 import java.util.List;
 

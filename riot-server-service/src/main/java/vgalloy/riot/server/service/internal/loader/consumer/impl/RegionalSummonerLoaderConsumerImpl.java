@@ -91,14 +91,16 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
         Objects.requireNonNull(summonerId);
         ItemId itemId = new ItemId(region, summonerId);
 
-        /* Load and save the summoner */
-        loadAndSaveSummoner(itemId);
+        if (shouldIdLoadThisSummoner(itemId)) {
+            /* Load and save the summoner */
+            loadAndSaveSummoner(itemId);
 
-        /* Load and save ranked stat */
-        loadAndSaveRankedStat(itemId);
+            /* Load and save ranked stat */
+            loadAndSaveRankedStat(itemId);
 
-        /* Load and save recent game */
-        loadAndSaveMatch(itemId);
+            /* Load and save recent game */
+            loadAndSaveMatch(itemId);
+        }
     }
 
     /**
@@ -127,12 +129,10 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
      * @param summonerId the summoner essential information
      */
     private void loadAndSaveSummoner(ItemId summonerId) {
-        if (shouldIdLoadThisSummoner(summonerId)) {
-            LOGGER.info("{} load summoner : {}", RegionPrinter.getRegion(region), summonerId.getId());
-            Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonersByIds(summonerId.getId()), summonerId.getRegion(), 1);
-            SummonerDto summonerDto = summonerDtoMap.entrySet().iterator().next().getValue();
-            summonerDao.save(new CommonWrapper<>(summonerId, summonerDto));
-        }
+        LOGGER.info("{} load summoner : {}", RegionPrinter.getRegion(region), summonerId.getId());
+        Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonersByIds(summonerId.getId()), summonerId.getRegion(), 1);
+        SummonerDto summonerDto = summonerDtoMap.entrySet().iterator().next().getValue();
+        summonerDao.save(new CommonWrapper<>(summonerId, summonerDto));
     }
 
     /**
@@ -147,7 +147,7 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
             return true;
         }
         LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(optionalEntity.get().getLastUpdate(), 0, ZoneOffset.UTC);
-        if (localDateTime.isBefore(LocalDateTime.now().minus(2, ChronoUnit.DAYS))) {
+        if (localDateTime.isBefore(LocalDateTime.now().minus(20, ChronoUnit.MINUTES))) {
             return true;
         }
         return false;
