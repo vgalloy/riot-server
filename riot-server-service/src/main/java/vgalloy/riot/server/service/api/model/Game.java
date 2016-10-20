@@ -27,7 +27,7 @@ public class Game implements Serializable {
     public Game(String gameId, Long lastUpdate) {
         this.gameId = gameId;
         this.lastUpdate = lastUpdate;
-        this.gameInformation = null;
+        gameInformation = null;
     }
 
     /**
@@ -51,7 +51,7 @@ public class Game implements Serializable {
         return lastUpdate;
     }
 
-    public GameInformation getPlayerTimelines() {
+    public GameInformation getGameInformation() {
         return gameInformation;
     }
 }
