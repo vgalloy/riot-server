@@ -5,6 +5,7 @@ import java.util.Optional;
 import vgalloy.riot.api.api.constant.QueueType;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.Participant;
+import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
 import vgalloy.riot.server.service.api.model.LastGame;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
 import vgalloy.riot.server.service.internal.service.helper.MatchDetailHelper;

@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
+import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
 import vgalloy.riot.server.service.api.model.Game;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
-import vgalloy.riot.server.service.internal.service.mapper.MatchDetailIdMapper;
+import vgalloy.riot.server.service.api.service.exception.UserException;
 
 /**
  * @author Vincent Galloy
@@ -36,7 +37,12 @@ public class GameController {
     @RequestMapping(value = "/game/{gameId}", method = RequestMethod.GET)
     public Game getGame(@PathVariable String gameId) {
         LOGGER.info("[ GET ] : getGame, gameId : {}, ", gameId);
-        MatchDetailId matchDetailId = MatchDetailIdMapper.map(gameId);
+        MatchDetailId matchDetailId;
+        try {
+            matchDetailId = MatchDetailIdMapper.map(gameId);
+        } catch (IllegalArgumentException e) {
+            throw new UserException(e.getMessage());
+        }
 
         Optional<Game> optionalResult = matchDetailService.get(matchDetailId);
         if (optionalResult.isPresent()) {

@@ -1,10 +1,12 @@
 package vgalloy.riot.server.service.internal.factory;
 
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
+import vgalloy.riot.server.loader.api.factory.LoaderFactory;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
+import vgalloy.riot.server.service.internal.loader.impl.PrivilegedLoader;
 import vgalloy.riot.server.service.internal.service.MatchDetailServiceImpl;
 import vgalloy.riot.server.service.internal.service.QueryServiceImpl;
 import vgalloy.riot.server.service.internal.service.RankedStatsServiceImpl;
@@ -17,7 +19,7 @@ import vgalloy.riot.server.service.internal.service.SummonerServiceImpl;
 public final class InternalServiceFactory {
 
     private static final MatchDetailService MATCH_DETAIL_SERVICE = new MatchDetailServiceImpl(MongoDaoFactory.getMatchDetailDao());
-    private static final SummonerService SUMMONER_SERVICE = new SummonerServiceImpl(MongoDaoFactory.getSummonerDao(), MongoDaoFactory.getMatchDetailDao(), BrokerFactory.getSummonerLoaderClient());
+    private static final SummonerService SUMMONER_SERVICE = new SummonerServiceImpl(MongoDaoFactory.getSummonerDao(), MongoDaoFactory.getMatchDetailDao(), LoaderFactory.getSummonerLoaderClient());
     private static final RankedStatsService RANKED_STATS_SERVICE = new RankedStatsServiceImpl(MongoDaoFactory.getRankedStatsDao());
     private static final QueryService QUERY_SERVICE = new QueryServiceImpl(MongoDaoFactory.getQueryDao(), MongoDaoFactory.getMatchDetailDao());
 
@@ -27,6 +29,10 @@ public final class InternalServiceFactory {
      */
     private InternalServiceFactory() {
         throw new AssertionError();
+    }
+
+    static {
+        new Thread(new PrivilegedLoader(LoaderFactory.getSummonerLoaderClient())).start();
     }
 
     public static MatchDetailService getMatchDetailService() {

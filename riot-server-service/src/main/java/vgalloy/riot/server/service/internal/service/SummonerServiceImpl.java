@@ -14,9 +14,9 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
+import vgalloy.riot.server.loader.api.service.SummonerLoaderClient;
 import vgalloy.riot.server.service.api.model.LastGame;
 import vgalloy.riot.server.service.api.service.SummonerService;
-import vgalloy.riot.server.service.internal.loader.client.SummonerLoaderClient;
 import vgalloy.riot.server.service.internal.service.mapper.LastGameMapper;
 
 /**

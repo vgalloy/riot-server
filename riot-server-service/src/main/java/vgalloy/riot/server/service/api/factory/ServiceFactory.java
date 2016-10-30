@@ -1,11 +1,9 @@
 package vgalloy.riot.server.service.api.factory;
 
-import vgalloy.riot.server.service.api.context.ContextManager;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
-import vgalloy.riot.server.service.internal.factory.ContextFactory;
 import vgalloy.riot.server.service.internal.factory.InternalServiceFactory;
 
 /**
@@ -57,14 +55,5 @@ public final class ServiceFactory {
      */
     public static QueryService getQueryService() {
         return InternalServiceFactory.getQueryService();
-    }
-
-    /**
-     * Get the ContextManager.
-     *
-     * @return the ContextManager
-     */
-    public static ContextManager getContextManager() {
-        return ContextFactory.getContextManager();
     }
 }

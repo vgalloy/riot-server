@@ -6,6 +6,7 @@ import java.util.Optional;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
+import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
 import vgalloy.riot.server.service.api.model.Game;
 import vgalloy.riot.server.service.api.model.GameInformation;
 

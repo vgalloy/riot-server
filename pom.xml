@@ -13,6 +13,7 @@
         <module>riot-server-dao</module>
         <module>riot-server-service</module>
         <module>riot-server-webservice</module>
+        <module>riot-server-loader</module>
     </modules>
 
     <properties>
@@ -90,6 +91,11 @@
             <dependency>
                 <groupId>vgalloy</groupId>
                 <artifactId>riot-server-dao</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>vgalloy</groupId>
+                <artifactId>riot-server-loader</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

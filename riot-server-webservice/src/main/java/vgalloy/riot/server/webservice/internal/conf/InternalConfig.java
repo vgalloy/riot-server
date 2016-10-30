@@ -5,7 +5,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import vgalloy.riot.server.service.api.context.ContextManager;
 import vgalloy.riot.server.service.api.factory.ServiceFactory;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.api.service.QueryService;
@@ -62,15 +61,5 @@ public class InternalConfig {
     @Bean
     public SummonerService summonerService() {
         return ServiceFactory.getSummonerService();
-    }
-
-    /**
-     * Create ContextManager bean.
-     *
-     * @return the bean
-     */
-    @Bean
-    public ContextManager contextManager() {
-        return ServiceFactory.getContextManager();
     }
 }

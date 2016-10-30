@@ -1,4 +1,4 @@
-package vgalloy.riot.server.service.internal.loader.helper;
+package vgalloy.riot.server.loader.internal.loader.helper;
 
 import vgalloy.riot.api.api.constant.Region;
 
@@ -21,7 +21,6 @@ public final class RegionPrinter {
      *
      * @param region the region
      * @return the region as a string
-     * // TODO
      */
     public static String getRegion(Region region) {
         StringBuilder stringBuilder = new StringBuilder("[ ")
