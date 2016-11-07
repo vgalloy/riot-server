@@ -110,14 +110,27 @@ public final class RegionExecutorImpl implements RegionExecutor {
                 if (e.getRetryAfter().isPresent()) {
                     throw new LoaderException(e);
                 }
-                try {
-                    Thread.sleep(sleepingTimeMillis);
-                } catch (InterruptedException e1) {
-                    throw new LoaderException(e1);
-                }
+                sleep(sleepingTimeMillis);
+                sleepingTimeMillis *= 2;
+            } catch (Exception e) {
+                LOGGER.error("{}", e.getMessage(), e);
+                sleep(sleepingTimeMillis);
                 sleepingTimeMillis *= 2;
             }
         }
-        return null;
+        throw new LoaderException("Unable to load data");
+    }
+
+    /**
+     * Slow down the request execution.
+     *
+     * @param sleepingTimeMillis the sleeping time (in millis)
+     */
+    private void sleep(long sleepingTimeMillis) {
+        try {
+            Thread.sleep(sleepingTimeMillis);
+        } catch (InterruptedException e1) {
+            throw new RuntimeException(e1);
+        }
     }
 }
