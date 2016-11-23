@@ -30,7 +30,6 @@ public final class RegionExecutorImpl implements RegionExecutor {
     private final Collection<Request<?>> requestList = new ArrayList<>();
     private final Region region;
 
-    private long sleepingTimeMillis = DEFAULT_SLEEPING_TIME_MILLIS;
     private Request<?> electedRequest = null;
 
     /**
@@ -99,8 +98,9 @@ public final class RegionExecutorImpl implements RegionExecutor {
      * @return the dto
      */
     private <DTO> DTO execute(Query<DTO> query) {
-        sleepingTimeMillis = DEFAULT_SLEEPING_TIME_MILLIS;
-        for (int attempt = 1; attempt < 20; attempt++) {
+        long sleepingTimeMillis = DEFAULT_SLEEPING_TIME_MILLIS;
+        int maxAttempt = 20;
+        for (int attempt = 1; attempt < maxAttempt; attempt++) {
             try {
                 DTO result = query.execute();
                 sleepingTimeMillis = Math.max(sleepingTimeMillis / 2, DEFAULT_SLEEPING_TIME_MILLIS);
@@ -113,12 +113,12 @@ public final class RegionExecutorImpl implements RegionExecutor {
                 sleep(sleepingTimeMillis);
                 sleepingTimeMillis *= 2;
             } catch (Exception e) {
-                LOGGER.error("{}", e.getMessage(), e);
+                LOGGER.error("{}", e);
                 sleep(sleepingTimeMillis);
                 sleepingTimeMillis *= 2;
             }
         }
-        throw new LoaderException("Unable to load data");
+        throw new LoaderException("After " + maxAttempt + " attempts, I give up. I can load the query : " + query.toString());
     }
 
     /**
@@ -126,7 +126,7 @@ public final class RegionExecutorImpl implements RegionExecutor {
      *
      * @param sleepingTimeMillis the sleeping time (in millis)
      */
-    private void sleep(long sleepingTimeMillis) {
+    private static void sleep(long sleepingTimeMillis) {
         try {
             Thread.sleep(sleepingTimeMillis);
         } catch (InterruptedException e1) {
