@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.Random;
 
+import javax.ws.rs.client.ResponseProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,12 +54,14 @@ public final class RegionExecutorImpl implements RegionExecutor {
                 }
             }
         }
-        DTO result = execute(request.getQuery());
-        synchronized (this) {
-            electedRequest = null;
-            notifyAll();
+        try {
+            return execute(request.getQuery());
+        } finally {
+            synchronized (this) {
+                electedRequest = null;
+                notifyAll();
+            }
         }
-        return result;
     }
 
     /**
@@ -112,8 +115,10 @@ public final class RegionExecutorImpl implements RegionExecutor {
                 }
                 sleep(sleepingTimeMillis);
                 sleepingTimeMillis *= 2;
+            } catch(ResponseProcessingException e) {
+                throw new LoaderException("Unable to load the query : " + query.toString(), e);
             } catch (Exception e) {
-                LOGGER.error("{}", e);
+                LOGGER.error("", e);
                 sleep(sleepingTimeMillis);
                 sleepingTimeMillis *= 2;
             }

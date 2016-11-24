@@ -25,4 +25,14 @@ public class LoaderException extends RuntimeException {
     public LoaderException(Throwable cause) {
         super(cause);
     }
+
+    /**
+     * Constructor.
+     *
+     * @param message the detail message.
+     * @param cause   the cause
+     */
+    public LoaderException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
