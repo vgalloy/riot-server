@@ -115,7 +115,7 @@ public final class RegionExecutorImpl implements RegionExecutor {
                 }
                 sleep(sleepingTimeMillis);
                 sleepingTimeMillis *= 2;
-            } catch(ResponseProcessingException e) {
+            } catch (ResponseProcessingException e) {
                 throw new LoaderException("Unable to load the query : " + query.toString(), e);
             } catch (Exception e) {
                 LOGGER.error("", e);
