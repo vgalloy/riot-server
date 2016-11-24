@@ -54,19 +54,19 @@ public class SummonerController {
     }
 
     /**
-     * Get the last games of a summoner.
+     * Get the last games of a summoner during the period [from, to]. Game sorted by date.
      *
      * @param region     the region
      * @param summonerId the summoner id
-     * @param from       the start search date in millis
-     * @param to         the en search date in millis
+     * @param fromMillis the start search date in millis
+     * @param toMillis   the end search date in millis
      * @return the last games
      */
     @RequestMapping(value = "/summoner/{region}/{summonerId}/lastGames", method = RequestMethod.GET)
-    public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId, @RequestParam Long from, @RequestParam Long to) {
-        LOGGER.info("[ GET ] : getLastGames, region : {}, summonerId : {}, from : {}, to : {}", region, summonerId, from, to);
-        LocalDate fromLocalDate = LocalDate.ofEpochDay(from / 1000 / 3600 / 24);
-        LocalDate toLocalDate = LocalDate.ofEpochDay(to / 1000 / 3600 / 24);
+    public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId, @RequestParam Long fromMillis, @RequestParam Long toMillis) {
+        LOGGER.info("[ GET ] : getLastGames, region : {}, summonerId : {}, from : {}, to : {}", region, summonerId, fromMillis, toMillis);
+        LocalDate fromLocalDate = LocalDate.ofEpochDay(fromMillis / 1000 / 3600 / 24);
+        LocalDate toLocalDate = LocalDate.ofEpochDay(toMillis / 1000 / 3600 / 24);
 
         return summonerService.getLastGames(region, summonerId, fromLocalDate, toLocalDate);
     }
