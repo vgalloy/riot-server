@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import vgalloy.riot.api.api.constant.Region;
-import vgalloy.riot.api.api.constant.SimpleQueueType;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.matchlist.MatchList;
 import vgalloy.riot.api.api.dto.matchlist.MatchReference;
@@ -94,10 +93,8 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
         if (shouldIdLoadThisSummoner(itemId)) {
             /* Load and save the summoner */
             loadAndSaveSummoner(itemId);
-
             /* Load and save ranked stat */
             loadAndSaveRankedStat(itemId);
-
             /* Load and save recent game */
             loadAndSaveMatch(itemId);
         }
@@ -201,7 +198,6 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
                     .map(MatchReference::getMatchId)
                     .collect(Collectors.toList());
         }
-
         for (Long matchId : matchIdList) {
             LOGGER.info("{} load matchDetail : {}", RegionPrinter.getRegion(region), matchId);
             MatchDetail result = executor.execute(riotApi.getMatchDetailById(matchId).includeTimeline(true), summonerId.getRegion(), 1);
@@ -223,9 +219,6 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
             return false;
         }
         if (matchDetailId.getMatchDate().isBefore(LocalDate.now().minus(1, ChronoUnit.MONTHS))) {
-            return false;
-        }
-        if (SimpleQueueType.ARAM_5x5.equals(matchReference.getQueue())) {
             return false;
         }
         return true;
