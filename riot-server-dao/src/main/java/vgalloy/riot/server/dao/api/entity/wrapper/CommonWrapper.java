@@ -6,7 +6,7 @@ import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
  * @author Vincent Galloy - 07/10/16
  *         Created by Vincent Galloy on 07/10/16.
  */
-public class CommonWrapper<DTO> extends ItemWrapper<DTO, ItemId> {
+public class CommonWrapper<DTO> extends AbstractItemWrapper<DTO, ItemId> {
 
     private static final long serialVersionUID = -4168382974522328793L;
 
@@ -31,7 +31,7 @@ public class CommonWrapper<DTO> extends ItemWrapper<DTO, ItemId> {
 
     @Override
     public String toString() {
-        return "ItemWrapper{" +
+        return "AbstractItemWrapper{" +
                 "itemId=" + getItemId() +
                 ", item=" + getItem() +
                 '}';

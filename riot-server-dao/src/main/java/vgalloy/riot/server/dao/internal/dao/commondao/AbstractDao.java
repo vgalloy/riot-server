@@ -15,7 +15,7 @@ import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.GenericDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
-import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
+import vgalloy.riot.server.dao.internal.entity.dataobject.AbstractDataObject;
 import vgalloy.riot.server.dao.internal.entity.mapper.DataObjectMapper;
 import vgalloy.riot.server.dao.internal.entity.mapper.ItemIdMapper;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
@@ -24,7 +24,7 @@ import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 07/07/16.
  */
-public abstract class AbstractCommonDao<DTO, DATA_OBJECT extends DataObject<DTO>> implements CommonDao<DTO> {
+public abstract class AbstractDao<DTO, DATA_OBJECT extends AbstractDataObject<DTO>> implements CommonDao<DTO> {
 
     protected final JacksonDBCollection<DATA_OBJECT, String> collection;
     private final GenericDao<DTO, DATA_OBJECT> genericDao;
@@ -37,7 +37,7 @@ public abstract class AbstractCommonDao<DTO, DATA_OBJECT extends DataObject<DTO>
      * @param databaseName   the database name
      * @param collectionName the collection name
      */
-    protected AbstractCommonDao(String databaseUrl, String databaseName, String collectionName) {
+    protected AbstractDao(String databaseUrl, String databaseName, String collectionName) {
         Objects.requireNonNull(databaseUrl);
         Objects.requireNonNull(databaseName);
         Objects.requireNonNull(collectionName);

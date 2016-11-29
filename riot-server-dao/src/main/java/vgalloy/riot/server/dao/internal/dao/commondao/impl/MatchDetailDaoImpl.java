@@ -28,7 +28,7 @@ import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
-import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
+import vgalloy.riot.server.dao.internal.entity.dataobject.AbstractDataObject;
 import vgalloy.riot.server.dao.internal.entity.dataobject.MatchDetailDo;
 import vgalloy.riot.server.dao.internal.entity.mapper.ItemIdMapper;
 import vgalloy.riot.server.dao.internal.entity.mapper.MatchDetailMapper;
@@ -94,7 +94,7 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
                     .and(DBQuery.is("region", region))
                     .toArray()
                     .stream()
-                    .map(DataObject::getItem)
+                    .map(AbstractDataObject::getItem)
                     .collect(Collectors.toList()));
 
             currentDate = currentDate.plus(1, ChronoUnit.DAYS);

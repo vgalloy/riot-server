@@ -10,7 +10,7 @@ import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 28/05/16.
  */
-public class RankedStatsDo extends DataObject<RankedStatsDto> {
+public class RankedStatsDo extends AbstractDataObject<RankedStatsDto> {
 
     /**
      * Constructor.

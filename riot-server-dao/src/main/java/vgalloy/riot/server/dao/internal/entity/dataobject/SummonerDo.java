@@ -10,7 +10,7 @@ import vgalloy.riot.api.api.dto.summoner.SummonerDto;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 28/05/16.
  */
-public class SummonerDo extends DataObject<SummonerDto> {
+public class SummonerDo extends AbstractDataObject<SummonerDto> {
 
     /**
      * Constructor.

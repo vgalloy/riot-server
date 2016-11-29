@@ -3,13 +3,13 @@ package vgalloy.riot.server.dao.internal.dao.commondao;
 import java.util.Optional;
 
 import vgalloy.riot.api.api.constant.Region;
-import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
+import vgalloy.riot.server.dao.internal.entity.dataobject.AbstractDataObject;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 02/12/15.
  */
-public interface GenericDao<DTO, DATA_OBJECT extends DataObject<DTO>> {
+public interface GenericDao<DTO, DATA_OBJECT extends AbstractDataObject<DTO>> {
 
     /**
      * Find the element with the given id. Return null if no element found.

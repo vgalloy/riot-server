@@ -81,7 +81,8 @@ public final class BrokerFactory {
     private static void startConsumer() {
         for (Region region : Region.values()) {
             ConsumerQueueDefinition<SummonerLoadingMessage> queueDefinition = RegionalSummonerLoaderConsumer.getQueueDefinition(region);
-            Consumer<SummonerLoadingMessage> consumer = new RegionalSummonerLoaderConsumerImpl(region, ExecutorFactory.getRiotApi(), ExecutorFactory.getExecutor(), MongoDaoFactory.getSummonerDao(), MongoDaoFactory.getMatchDetailDao(), MongoDaoFactory.getRankedStatsDao());
+            Consumer<SummonerLoadingMessage> consumer = new RegionalSummonerLoaderConsumerImpl(region, ExecutorFactory.getRiotApi(),
+                    ExecutorFactory.getExecutor(), MongoDaoFactory.getSummonerDao(), MongoDaoFactory.getMatchDetailDao(), MongoDaoFactory.getRankedStatsDao());
             Factory.createConsumer(CONNECTION_FACTORY, queueDefinition, consumer);
         }
     }

@@ -1,12 +1,12 @@
 package vgalloy.riot.server.dao.internal.exception;
 
-import vgalloy.riot.server.dao.api.exception.DaoException;
+import vgalloy.riot.server.dao.api.exception.AbstractDaoException;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 07/07/16.
  */
-public class MongoDaoException extends DaoException {
+public class MongoDaoException extends AbstractDaoException {
 
     public static final String UNABLE_TO_SAVE_THE_DTO = "Unable to save the dto";
 

@@ -16,7 +16,7 @@ import vgalloy.riot.server.dao.internal.entity.Key;
  *         Created by Vincent Galloy on 12/07/16.
  */
 @JsonAutoDetect(fieldVisibility = Visibility.NONE, getterVisibility = Visibility.ANY, setterVisibility = Visibility.NONE)
-public abstract class DataObject<DTO> {
+public abstract class AbstractDataObject<DTO> {
 
     private final Long lastUpdate;
     private final Region region;
@@ -32,7 +32,7 @@ public abstract class DataObject<DTO> {
      * @param item the item
      * @param id the id
      */
-    public DataObject(Long lastUpdate, Region region, Long itemId, DTO item, String id) {
+    public AbstractDataObject(Long lastUpdate, Region region, Long itemId, DTO item, String id) {
         this.lastUpdate = Objects.requireNonNull(lastUpdate);
         this.region = Objects.requireNonNull(region);
         this.itemId = Objects.requireNonNull(itemId);
@@ -46,7 +46,7 @@ public abstract class DataObject<DTO> {
      * @param region the region
      * @param itemId the item id
      */
-    public DataObject(Region region, Long itemId) {
+    public AbstractDataObject(Region region, Long itemId) {
         lastUpdate = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
         this.region = Objects.requireNonNull(region);
         this.itemId = Objects.requireNonNull(itemId);
@@ -83,10 +83,10 @@ public abstract class DataObject<DTO> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof DataObject)) {
+        if (!(o instanceof AbstractDataObject)) {
             return false;
         }
-        DataObject<?> that = (DataObject<?>) o;
+        AbstractDataObject<?> that = (AbstractDataObject<?>) o;
         return Objects.equals(lastUpdate, that.lastUpdate) &&
                 region == that.region &&
                 Objects.equals(itemId, that.itemId) &&
@@ -101,7 +101,7 @@ public abstract class DataObject<DTO> {
 
     @Override
     public String toString() {
-        return "DataObject{" +
+        return "AbstractDataObject{" +
                 "lastUpdate=" + lastUpdate +
                 ", region=" + region +
                 ", ItemId=" + itemId +

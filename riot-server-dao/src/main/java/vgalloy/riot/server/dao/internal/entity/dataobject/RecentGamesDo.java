@@ -10,7 +10,7 @@ import vgalloy.riot.api.api.dto.game.RecentGamesDto;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 28/05/16.
  */
-public class RecentGamesDo extends DataObject<RecentGamesDto> {
+public class RecentGamesDo extends AbstractDataObject<RecentGamesDto> {
 
     /**
      * Constructor.

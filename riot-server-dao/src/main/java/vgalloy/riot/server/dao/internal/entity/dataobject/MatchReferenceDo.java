@@ -10,7 +10,7 @@ import vgalloy.riot.api.api.dto.matchlist.MatchReference;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 28/05/16.
  */
-public class MatchReferenceDo extends DataObject<MatchReference> {
+public class MatchReferenceDo extends AbstractDataObject<MatchReference> {
 
     /**
      * Constructor.

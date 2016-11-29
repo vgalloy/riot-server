@@ -10,7 +10,7 @@ import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
  * @author Vincent Galloy - 05/10/16
  *         Created by Vincent Galloy on 05/10/16.
  */
-public abstract class ItemWrapper<DTO, ID extends ItemId> implements Serializable {
+public abstract class AbstractItemWrapper<DTO, ID extends ItemId> implements Serializable {
 
     private static final long serialVersionUID = 5745585472522922118L;
 
@@ -21,7 +21,7 @@ public abstract class ItemWrapper<DTO, ID extends ItemId> implements Serializabl
      * @param itemId the item id
      * @param item   the item (can be null)
      */
-    public ItemWrapper(ID itemId, DTO item) {
+    public AbstractItemWrapper(ID itemId, DTO item) {
         this.itemId = Objects.requireNonNull(itemId);
         this.item = Objects.requireNonNull(item);
     }
@@ -29,7 +29,7 @@ public abstract class ItemWrapper<DTO, ID extends ItemId> implements Serializabl
     /**
      * @param itemId the item id
      */
-    public ItemWrapper(ID itemId) {
+    public AbstractItemWrapper(ID itemId) {
         this.itemId = Objects.requireNonNull(itemId);
         item = null;
     }

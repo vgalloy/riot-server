@@ -10,13 +10,13 @@ import org.mongojack.JacksonDBCollection;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.internal.dao.commondao.GenericDao;
-import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
+import vgalloy.riot.server.dao.internal.entity.dataobject.AbstractDataObject;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 09/12/15.
  */
-public final class GenericDaoImpl<DTO, DATA_OBJECT extends DataObject<DTO>> implements GenericDao<DTO, DATA_OBJECT> {
+public final class GenericDaoImpl<DTO, DATA_OBJECT extends AbstractDataObject<DTO>> implements GenericDao<DTO, DATA_OBJECT> {
 
     public static final String REGION_CAN_NOT_BE_NULL = "region can not be null";
 

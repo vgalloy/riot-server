@@ -5,7 +5,7 @@ import java.util.Objects;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
-import vgalloy.riot.server.dao.internal.entity.dataobject.DataObject;
+import vgalloy.riot.server.dao.internal.entity.dataobject.AbstractDataObject;
 
 /**
  * @author Vincent Galloy
@@ -28,7 +28,7 @@ public final class DataObjectMapper {
      * @param <DTO>      the dto type
      * @return the entity
      */
-    public static <DTO> Entity<CommonWrapper<DTO>> mapToEntity(DataObject<DTO> dataObject) {
+    public static <DTO> Entity<CommonWrapper<DTO>> mapToEntity(AbstractDataObject<DTO> dataObject) {
         Objects.requireNonNull(dataObject);
 
         CommonWrapper<DTO> wrapper = mapToWrapper(dataObject);
@@ -42,7 +42,7 @@ public final class DataObjectMapper {
      * @param <DTO>      the dto type
      * @return the common wrapper
      */
-    private static <DTO> CommonWrapper<DTO> mapToWrapper(DataObject<DTO> dataObject) {
+    private static <DTO> CommonWrapper<DTO> mapToWrapper(AbstractDataObject<DTO> dataObject) {
         Objects.requireNonNull(dataObject);
 
         ItemId itemId = ItemIdMapper.fromNormalize(dataObject.getId());
