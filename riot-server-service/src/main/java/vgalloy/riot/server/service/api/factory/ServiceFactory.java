@@ -14,7 +14,6 @@ public final class ServiceFactory {
 
     /**
      * Constructor.
-     * <p>
      * To prevent instantiation
      */
     private ServiceFactory() {

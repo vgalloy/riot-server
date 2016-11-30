@@ -1,6 +1,7 @@
 package vgalloy.riot.server.service.api.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import vgalloy.riot.api.api.constant.QueueType;
@@ -23,6 +24,7 @@ public class LastGame implements Serializable {
     private final QueueType queueType;
     private final int spell1Id;
     private final int spell2Id;
+    private final List<Integer> itemIdList;
 
     /**
      * Constructor.
@@ -37,8 +39,9 @@ public class LastGame implements Serializable {
      * @param queueType     the queue type
      * @param spell1Id      the first summoner id
      * @param spell2Id      the second summoner id
+     * @param itemIdList    the item id list
      */
-    public LastGame(String gameId, int championId, long kill, long death, long assist, boolean winner, long matchCreation, QueueType queueType, int spell1Id, int spell2Id) {
+    public LastGame(String gameId, int championId, long kill, long death, long assist, boolean winner, long matchCreation, QueueType queueType, int spell1Id, int spell2Id, List<Integer> itemIdList) {
         this.gameId = gameId;
         this.championId = championId;
         this.kill = kill;
@@ -49,6 +52,7 @@ public class LastGame implements Serializable {
         this.queueType = Objects.requireNonNull(queueType);
         this.spell1Id = spell1Id;
         this.spell2Id = spell2Id;
+        this.itemIdList = Objects.requireNonNull(itemIdList);
     }
 
     public String getGameId() {
@@ -89,5 +93,9 @@ public class LastGame implements Serializable {
 
     public int getSpell2Id() {
         return spell2Id;
+    }
+
+    public List<Integer> getItemIdList() {
+        return itemIdList;
     }
 }

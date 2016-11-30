@@ -1,5 +1,6 @@
 package vgalloy.riot.server.service.internal.service.mapper;
 
+import java.util.List;
 import java.util.Optional;
 
 import vgalloy.riot.api.api.constant.QueueType;
@@ -47,6 +48,8 @@ public final class LastGameMapper {
         QueueType queueType = matchDetail.getQueueType();
         int spell1Id = participant.getSpell1Id();
         int spell2Id = participant.getSpell2Id();
-        return new LastGame(MatchDetailIdMapper.map(MatchDetailIdMapper.map(matchDetail)), championId, kill, death, assist, winner, matchCreation, queueType, spell1Id, spell2Id);
+        List<Integer> itemIdList = ItemListMapper.map(matchDetail.getTimeline(), participant.getParticipantId());
+
+        return new LastGame(MatchDetailIdMapper.map(MatchDetailIdMapper.map(matchDetail)), championId, kill, death, assist, winner, matchCreation, queueType, spell1Id, spell2Id, itemIdList);
     }
 }
