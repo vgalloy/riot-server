@@ -1,0 +1,34 @@
+package vgalloy.riot.server.loader.api.service;
+
+import vgalloy.riot.api.api.constant.Region;
+
+/**
+ * @author Vincent Galloy - 10/10/16
+ *         Created by Vincent Galloy on 10/10/16.
+ */
+public interface LoaderClient {
+
+    /**
+     * Load the item and save it.
+     *
+     * @param region the region of the item
+     * @param itemId the item id
+     */
+    void loadAsyncItemById(Region region, Integer itemId);
+
+    /**
+     * Load the summoner, his ranked stats and all his recent games and save it.
+     *
+     * @param region     the region of the summoner
+     * @param summonerId the summoner id
+     */
+    void loadAsyncSummonerById(Region region, Long summonerId);
+
+    /**
+     * Load and save summoner by name.
+     *
+     * @param region       the region of the summoner
+     * @param summonerName the summoner name
+     */
+    void loadAsyncSummonerByName(Region region, String summonerName);
+}

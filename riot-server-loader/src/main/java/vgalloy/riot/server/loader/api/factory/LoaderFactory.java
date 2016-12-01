@@ -1,6 +1,6 @@
 package vgalloy.riot.server.loader.api.factory;
 
-import vgalloy.riot.server.loader.api.service.SummonerLoaderClient;
+import vgalloy.riot.server.loader.api.service.LoaderClient;
 import vgalloy.riot.server.loader.internal.factory.BrokerFactory;
 
 /**
@@ -18,11 +18,11 @@ public final class LoaderFactory {
     }
 
     /**
-     * Get the instance of SummonerLoaderClient.
+     * Get the instance of LoaderClient.
      *
-     * @return the SummonerLoaderClient
+     * @return the LoaderClient
      */
-    public static SummonerLoaderClient getSummonerLoaderClient() {
+    public static LoaderClient getLoaderClient() {
         return BrokerFactory.getSummonerLoaderClient();
     }
 }

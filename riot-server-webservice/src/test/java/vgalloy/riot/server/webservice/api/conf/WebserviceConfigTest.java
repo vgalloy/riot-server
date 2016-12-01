@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
+import vgalloy.riot.server.service.api.service.ItemService;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
@@ -27,7 +28,7 @@ public class WebserviceConfigTest {
             "vgalloy.riot.server.webservice.internal.controller",
             "vgalloy.riot.server.webservice.api.controller"})
     @SpringBootApplication(exclude = {ErrorMvcAutoConfiguration.class, MongoAutoConfiguration.class})
-    public static class Config {
+    public static class Config { // TODO trouver une meilleur manière de faire
 
         @Bean
         public QueryService queryService() {
@@ -46,6 +47,11 @@ public class WebserviceConfigTest {
 
         @Bean
         public SummonerService summonerService() {
+            return null;
+        }
+
+        @Bean
+        public ItemService itemService() {
             return null;
         }
 

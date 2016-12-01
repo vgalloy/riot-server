@@ -1,10 +1,11 @@
-package vgalloy.riot.server.loader.internal.loader.consumer.impl;
+package vgalloy.riot.server.loader.internal.consumer.impl;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import vgalloy.javaoverrabbitmq.api.marshaller.RabbitMessageMarshaller;
-import vgalloy.riot.server.loader.internal.loader.message.SummonerLoadingMessage;
+import vgalloy.riot.server.loader.internal.loader.mapper.LoadingMessageBuilder;
+import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
 
 /**
  * @author Vincent Galloy
@@ -31,10 +32,8 @@ public class JacksonMarshallerImplTest {
     @Test
     public void testSummonerLoadingMessage() {
         RabbitMessageMarshaller rabbitMessageMarshaller = new JacksonMarshallerImpl();
-        SummonerLoadingMessage summonerLoadingMessage = SummonerLoadingMessage.byId(2L);
+        LoadingMessage loadingMessage = LoadingMessageBuilder.summonerId().wrap(2L);
 
-        System.out.println(new String(rabbitMessageMarshaller.serialize(summonerLoadingMessage)));
-
-        Assert.assertEquals(summonerLoadingMessage, rabbitMessageMarshaller.deserialize(SummonerLoadingMessage.class, rabbitMessageMarshaller.serialize(summonerLoadingMessage)));
+        Assert.assertEquals(loadingMessage, rabbitMessageMarshaller.deserialize(LoadingMessage.class, rabbitMessageMarshaller.serialize(loadingMessage)));
     }
 }

@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 import vgalloy.riot.api.api.constant.Region;
-import vgalloy.riot.server.loader.api.service.SummonerLoaderClient;
+import vgalloy.riot.server.loader.api.service.LoaderClient;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
 
 /**
@@ -14,15 +14,15 @@ import vgalloy.riot.server.service.api.service.exception.ServiceException;
  */
 public class PrivilegedLoader implements Runnable {
 
-    private final SummonerLoaderClient summonerLoaderClient;
+    private final LoaderClient loaderClient;
 
     /**
      * Constructor.
      *
-     * @param summonerLoaderClient the summonerLoaderClient
+     * @param loaderClient the loaderClient
      */
-    public PrivilegedLoader(SummonerLoaderClient summonerLoaderClient) {
-        this.summonerLoaderClient = Objects.requireNonNull(summonerLoaderClient);
+    public PrivilegedLoader(LoaderClient loaderClient) {
+        this.loaderClient = Objects.requireNonNull(loaderClient);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class PrivilegedLoader implements Runnable {
 
         while (true) {
             for (Long currentSummonerId : summonerIdList) {
-                summonerLoaderClient.loaderSummoner(Region.EUW, currentSummonerId);
+                loaderClient.loadAsyncSummonerById(Region.EUW, currentSummonerId);
             }
             try {
                 Thread.sleep(60 * 60 * 1000); // sleep one hour

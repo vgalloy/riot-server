@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import vgalloy.riot.server.service.api.factory.ServiceFactory;
+import vgalloy.riot.server.service.api.service.ItemService;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
@@ -31,6 +32,16 @@ public class InternalConfig {
     @Bean
     public QueryService queryService() {
         return ServiceFactory.getQueryService();
+    }
+
+    /**
+     * Create ItemService bean.
+     *
+     * @return the bean
+     */
+    @Bean
+    public ItemService itemService() {
+        return ServiceFactory.getItemService();
     }
 
     /**

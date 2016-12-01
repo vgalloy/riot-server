@@ -1,5 +1,6 @@
 package vgalloy.riot.server.service.api.factory;
 
+import vgalloy.riot.server.service.api.service.ItemService;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
@@ -18,6 +19,15 @@ public final class ServiceFactory {
      */
     private ServiceFactory() {
         throw new AssertionError();
+    }
+
+    /**
+     * Get the ItemService.
+     *
+     * @return the ItemService
+     */
+    public static ItemService getItemService() {
+        return InternalServiceFactory.getItemService();
     }
 
     /**

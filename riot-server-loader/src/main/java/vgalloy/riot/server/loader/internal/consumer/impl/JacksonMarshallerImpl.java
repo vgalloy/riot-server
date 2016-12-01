@@ -1,4 +1,4 @@
-package vgalloy.riot.server.loader.internal.loader.consumer.impl;
+package vgalloy.riot.server.loader.internal.consumer.impl;
 
 import java.io.IOException;
 
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import vgalloy.javaoverrabbitmq.api.marshaller.RabbitMessageMarshaller;
+import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 
 /**
  * @author Vincent Galloy - 13/10/16
@@ -20,7 +21,7 @@ public class JacksonMarshallerImpl implements RabbitMessageMarshaller {
         try {
             return OBJECT_MAPPER.writeValueAsString(m).getBytes();
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Unable to serialize : " + m, e);
+            throw new LoaderException("Unable to serialize : " + m, e);
         }
     }
 
@@ -29,7 +30,7 @@ public class JacksonMarshallerImpl implements RabbitMessageMarshaller {
         try {
             return OBJECT_MAPPER.readValue(bytes, aClass);
         } catch (IOException e) {
-            throw new RuntimeException("Unable to deserialize : " + bytes + " as instance of " + aClass, e);
+            throw new LoaderException("Unable to deserialize : " + bytes + " as instance of " + aClass, e);
         }
     }
 }

@@ -1,12 +1,12 @@
-package vgalloy.riot.server.loader.api.service;
+package vgalloy.riot.server.loader.internal.loader;
 
 import vgalloy.riot.api.api.constant.Region;
 
 /**
- * @author Vincent Galloy - 10/10/16
- *         Created by Vincent Galloy on 10/10/16.
+ * @author Vincent Galloy - 01/12/16
+ *         Created by Vincent Galloy on 01/12/16.
  */
-public interface SummonerLoaderClient {
+public interface SummonerLoader {
 
     /**
      * Load the summoner, his ranked stats and all his recent games and save it.
@@ -14,13 +14,13 @@ public interface SummonerLoaderClient {
      * @param region     the region of the summoner
      * @param summonerId the summoner id
      */
-    void loaderSummoner(Region region, Long summonerId);
+    void loadSummonerById(Region region, Long summonerId);
 
     /**
-     * Load the summoner, his ranked stats and all his recent games and save it.
+     * Load and save summoner by name.
      *
      * @param region       the region of the summoner
      * @param summonerName the summoner name
      */
-    void loaderSummoner(Region region, String summonerName);
+    void loadSummonerByName(Region region, String summonerName);
 }

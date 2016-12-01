@@ -28,7 +28,7 @@ import vgalloy.riot.server.dao.internal.dao.commondao.impl.SummonerDaoImpl;
  */
 public class SummonerDaoITest {
 
-    private static final int PORT = 29504;
+    private static final int PORT = 29505;
     private static final String URL = "localhost";
 
     private static MongodProcess PROCESS;

@@ -16,7 +16,7 @@ import vgalloy.riot.api.internal.client.filter.RiotRateLimitExceededException;
 import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 import vgalloy.riot.server.loader.internal.executor.RegionExecutor;
 import vgalloy.riot.server.loader.internal.executor.model.Request;
-import vgalloy.riot.server.loader.internal.loader.helper.RegionPrinter;
+import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
 
 /**
  * @author Vincent Galloy

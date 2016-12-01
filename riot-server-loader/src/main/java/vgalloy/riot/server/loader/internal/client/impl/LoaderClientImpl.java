@@ -1,0 +1,59 @@
+package vgalloy.riot.server.loader.internal.client.impl;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+import com.rabbitmq.client.ConnectionFactory;
+
+import vgalloy.javaoverrabbitmq.api.Factory;
+import vgalloy.javaoverrabbitmq.api.model.RabbitClientConsumer;
+import vgalloy.javaoverrabbitmq.api.queue.ConsumerQueueDefinition;
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.server.loader.api.service.LoaderClient;
+import vgalloy.riot.server.loader.internal.consumer.RegionalConsumer;
+import vgalloy.riot.server.loader.internal.loader.mapper.LoadingMessageBuilder;
+import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
+
+/**
+ * @author Vincent Galloy - 10/10/16
+ *         Created by Vincent Galloy on 10/10/16.
+ */
+public class LoaderClientImpl implements LoaderClient {
+
+    private final Map<Region, RabbitClientConsumer<LoadingMessage>> map;
+
+    /**
+     * Constructor.
+     *
+     * @param connectionFactory the getConnectionFactory
+     */
+    public LoaderClientImpl(ConnectionFactory connectionFactory) {
+        map = new HashMap<>();
+        for (Region region : Region.values()) {
+            ConsumerQueueDefinition<LoadingMessage> queueDefinition = RegionalConsumer.getQueueDefinition(region);
+            map.put(region, Factory.createClient(connectionFactory, queueDefinition));
+        }
+    }
+
+    @Override
+    public void loadAsyncSummonerById(Region region, Long summonerId) {
+        Objects.requireNonNull(region);
+        Objects.requireNonNull(summonerId);
+        map.get(region).accept(LoadingMessageBuilder.summonerId().wrap(summonerId));
+    }
+
+    @Override
+    public void loadAsyncSummonerByName(Region region, String summonerName) {
+        Objects.requireNonNull(region);
+        Objects.requireNonNull(summonerName);
+        map.get(region).accept(LoadingMessageBuilder.summonerName().wrap(summonerName));
+    }
+
+    @Override
+    public void loadAsyncItemById(Region region, Integer itemId) {
+        Objects.requireNonNull(region);
+        Objects.requireNonNull(itemId);
+        map.get(region).accept(LoadingMessageBuilder.itemId().wrap(itemId));
+    }
+}

@@ -1,4 +1,4 @@
-package vgalloy.riot.server.loader.internal.loader.consumer.impl;
+package vgalloy.riot.server.loader.internal.loader.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,20 +31,19 @@ import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
+import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 import vgalloy.riot.server.loader.internal.executor.Executor;
-import vgalloy.riot.server.loader.internal.loader.consumer.RegionalSummonerLoaderConsumer;
-import vgalloy.riot.server.loader.internal.loader.helper.RegionPrinter;
-import vgalloy.riot.server.loader.internal.loader.message.SummonerLoadingMessage;
+import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
+import vgalloy.riot.server.loader.internal.loader.SummonerLoader;
 
 /**
  * @author Vincent Galloy - 10/10/16
  *         Created by Vincent Galloy on 10/10/16.
  */
-public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoaderConsumer {
+public class SummonerLoaderImpl implements SummonerLoader {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegionalSummonerLoaderConsumerImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SummonerLoaderImpl.class);
 
-    private final Region region;
     private final RiotApi riotApi;
     private final Executor executor;
     private final SummonerDao summonerDao;
@@ -54,15 +53,13 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
     /**
      * Constructor.
      *
-     * @param region         the region
      * @param riotApi        the riot api
      * @param executor       the executor
      * @param summonerDao    the summoner dao
      * @param matchDetailDao the match detail dao
      * @param rankedStatsDao the ranked stats dao
      */
-    public RegionalSummonerLoaderConsumerImpl(Region region, RiotApi riotApi, Executor executor, SummonerDao summonerDao, MatchDetailDao matchDetailDao, RankedStatsDao rankedStatsDao) {
-        this.region = Objects.requireNonNull(region);
+    public SummonerLoaderImpl(RiotApi riotApi, Executor executor, SummonerDao summonerDao, MatchDetailDao matchDetailDao, RankedStatsDao rankedStatsDao) {
         this.riotApi = Objects.requireNonNull(riotApi);
         this.executor = Objects.requireNonNull(executor);
         this.summonerDao = Objects.requireNonNull(summonerDao);
@@ -71,23 +68,9 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
     }
 
     @Override
-    public void accept(SummonerLoadingMessage summonerLoadingMessage) {
-        Objects.requireNonNull(summonerLoadingMessage);
-        LOGGER.info("{} load full summoner : {}", RegionPrinter.getRegion(region), summonerLoadingMessage);
-        if (SummonerLoadingMessage.LoaderType.BY_ID == summonerLoadingMessage.getLoaderType()) {
-            loaderSummoner(summonerLoadingMessage.getSummonerId());
-        } else {
-            loaderSummoner(summonerLoadingMessage.getSummonerName());
-        }
-    }
-
-    /**
-     * Load the summoner, his ranked stats and all his recent games and save it.
-     *
-     * @param summonerId the summoner id
-     */
-    private void loaderSummoner(Long summonerId) {
+    public void loadSummonerById(Region region, Long summonerId) {
         Objects.requireNonNull(summonerId);
+        LOGGER.info("{} load full summoner with id : {}", RegionPrinter.getRegion(region), summonerId);
         ItemId itemId = new ItemId(region, summonerId);
 
         if (shouldIdLoadThisSummoner(itemId)) {
@@ -100,23 +83,31 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
         }
     }
 
-    /**
-     * Load and save summoner by name.
-     *
-     * @param summonerName the summoner name
-     */
-    private void loaderSummoner(String summonerName) {
+    @Override
+    public void loadSummonerByName(Region region, String summonerName) {
         Objects.requireNonNull(summonerName);
+        LOGGER.info("{} load full summoner with name : {}", RegionPrinter.getRegion(region), summonerName);
+        long summonerId = findSummonerId(region, summonerName);
+        loadSummonerById(region, summonerId);
+    }
+
+    /**
+     * Find the summoner id for the summoner name. First try with database then riot api.
+     *
+     * @param region       the region of the summoner
+     * @param summonerName the summoner name
+     * @return the summoner id
+     */
+    private long findSummonerId(Region region, String summonerName) {
         Optional<SummonerDto> result = summonerDao.getSummonerByName(region, summonerName);
         if (result.isPresent()) {
-            loaderSummoner(result.get().getId());
+            return result.get().getId();
         } else {
             Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonerByNames(summonerName), region, 1);
             if (summonerDtoMap == null || summonerDtoMap.size() == 0) {
-                return;
+                throw new LoaderException("Can not find summoner id for the summoner name : " + summonerName);
             }
-            long summonerId = summonerDtoMap.entrySet().iterator().next().getValue().getId();
-            loaderSummoner(summonerId);
+            return summonerDtoMap.entrySet().iterator().next().getValue().getId();
         }
     }
 
@@ -126,7 +117,7 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
      * @param summonerId the summoner essential information
      */
     private void loadAndSaveSummoner(ItemId summonerId) {
-        LOGGER.info("{} load summoner : {}", RegionPrinter.getRegion(region), summonerId.getId());
+        LOGGER.info("{} load summoner : {}", RegionPrinter.getRegion(summonerId.getRegion()), summonerId.getId());
         Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonersByIds(summonerId.getId()), summonerId.getRegion(), 1);
         SummonerDto summonerDto = summonerDtoMap.entrySet().iterator().next().getValue();
         summonerDao.save(new CommonWrapper<>(summonerId, summonerDto));
@@ -158,7 +149,7 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
     private void loadAndSaveRankedStat(ItemId summonerId) {
         if (shouldILoadThisRankedStat(summonerId)) {
             Query<RankedStatsDto> query = riotApi.getRankedStats(summonerId.getId());
-            LOGGER.info("{} load rankedStat : {}", RegionPrinter.getRegion(region), summonerId.getId());
+            LOGGER.info("{} load rankedStat : {}", RegionPrinter.getRegion(summonerId.getRegion()), summonerId.getId());
             Optional<RankedStatsDto> rankedStatsDto = Optional.ofNullable(executor.execute(query, summonerId.getRegion(), 1));
             if (rankedStatsDto.isPresent()) {
                 rankedStatsDao.save(new CommonWrapper<>(summonerId, rankedStatsDto.get()));
@@ -199,7 +190,7 @@ public class RegionalSummonerLoaderConsumerImpl implements RegionalSummonerLoade
                     .collect(Collectors.toList());
         }
         for (Long matchId : matchIdList) {
-            LOGGER.info("{} load matchDetail : {}", RegionPrinter.getRegion(region), matchId);
+            LOGGER.info("{} load matchDetail : {}", RegionPrinter.getRegion(summonerId.getRegion()), matchId);
             MatchDetail result = executor.execute(riotApi.getMatchDetailById(matchId).includeTimeline(true), summonerId.getRegion(), 1);
             if (result != null) {
                 matchDetailDao.save(new MatchDetailWrapper(MatchDetailIdMapper.map(result), result));

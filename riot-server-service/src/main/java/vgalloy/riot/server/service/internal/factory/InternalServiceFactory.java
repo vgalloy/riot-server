@@ -2,11 +2,13 @@ package vgalloy.riot.server.service.internal.factory;
 
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
 import vgalloy.riot.server.loader.api.factory.LoaderFactory;
+import vgalloy.riot.server.service.api.service.ItemService;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
 import vgalloy.riot.server.service.internal.loader.impl.PrivilegedLoader;
+import vgalloy.riot.server.service.internal.service.ItemServiceImpl;
 import vgalloy.riot.server.service.internal.service.MatchDetailServiceImpl;
 import vgalloy.riot.server.service.internal.service.QueryServiceImpl;
 import vgalloy.riot.server.service.internal.service.RankedStatsServiceImpl;
@@ -18,8 +20,9 @@ import vgalloy.riot.server.service.internal.service.SummonerServiceImpl;
  */
 public final class InternalServiceFactory {
 
+    private static final ItemService ITEM_SERVICE = new ItemServiceImpl(MongoDaoFactory.getItemDao(), LoaderFactory.getLoaderClient());
     private static final MatchDetailService MATCH_DETAIL_SERVICE = new MatchDetailServiceImpl(MongoDaoFactory.getMatchDetailDao());
-    private static final SummonerService SUMMONER_SERVICE = new SummonerServiceImpl(MongoDaoFactory.getSummonerDao(), MongoDaoFactory.getMatchDetailDao(), LoaderFactory.getSummonerLoaderClient());
+    private static final SummonerService SUMMONER_SERVICE = new SummonerServiceImpl(MongoDaoFactory.getSummonerDao(), MongoDaoFactory.getMatchDetailDao(), LoaderFactory.getLoaderClient());
     private static final RankedStatsService RANKED_STATS_SERVICE = new RankedStatsServiceImpl(MongoDaoFactory.getRankedStatsDao());
     private static final QueryService QUERY_SERVICE = new QueryServiceImpl(MongoDaoFactory.getQueryDao(), MongoDaoFactory.getMatchDetailDao());
 
@@ -32,7 +35,11 @@ public final class InternalServiceFactory {
     }
 
     static {
-        new Thread(new PrivilegedLoader(LoaderFactory.getSummonerLoaderClient())).start();
+        new Thread(new PrivilegedLoader(LoaderFactory.getLoaderClient())).start();
+    }
+
+    public static ItemService getItemService() {
+        return ITEM_SERVICE;
     }
 
     public static MatchDetailService getMatchDetailService() {
