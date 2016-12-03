@@ -1,19 +1,14 @@
 package vgalloy.riot.server.loader.internal.factory;
 
 import org.apache.commons.configuration2.Configuration;
-import org.apache.commons.configuration2.FileBasedConfiguration;
-import org.apache.commons.configuration2.PropertiesConfiguration;
-import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
-import org.apache.commons.configuration2.builder.fluent.Parameters;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 
 import vgalloy.riot.api.api.factory.RiotApiFactory;
 import vgalloy.riot.api.api.model.RateLimit;
 import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.api.api.model.RiotApiKey;
-import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 import vgalloy.riot.server.loader.internal.executor.Executor;
 import vgalloy.riot.server.loader.internal.executor.impl.ExecutorImpl;
+import vgalloy.riot.server.loader.internal.factory.supplier.ConfigurationSupplier;
 
 /**
  * @author Vincent Galloy - 12/10/16
@@ -25,15 +20,9 @@ public final class ExecutorFactory {
     private static final Executor EXECUTOR;
 
     static {
-        try {
-            Configuration configuration = new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
-                    .configure(new Parameters().properties().setFileName("application.properties"))
-                    .getConfiguration();
-            String apiKey = (String) configuration.getProperty("api_key");
-            EXECUTOR = new ExecutorImpl(new RiotApiKey(apiKey));
-        } catch (ConfigurationException e) {
-            throw new LoaderException("Unable to load configuration", e);
-        }
+        Configuration configuration = new ConfigurationSupplier("application.properties").get();
+        String apiKey = (String) configuration.getProperty("api_key");
+        EXECUTOR = new ExecutorImpl(new RiotApiKey(apiKey));
     }
 
     /**

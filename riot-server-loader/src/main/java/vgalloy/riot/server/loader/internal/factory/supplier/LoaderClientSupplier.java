@@ -15,7 +15,7 @@ import vgalloy.riot.server.loader.internal.client.impl.LoaderClientImpl;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 03/12/16.
  */
-public class LoaderClientSupplier implements Supplier<LoaderClient> {
+public final class LoaderClientSupplier implements Supplier<LoaderClient> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoaderClientSupplier.class);
 

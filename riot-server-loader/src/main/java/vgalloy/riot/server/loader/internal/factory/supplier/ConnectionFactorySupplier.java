@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 03/12/16.
  */
-public class ConnectionFactorySupplier implements Supplier<ConnectionFactory> {
+public final class ConnectionFactorySupplier implements Supplier<ConnectionFactory> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionFactorySupplier.class);
 
