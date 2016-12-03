@@ -23,6 +23,6 @@ public final class LoaderFactory {
      * @return the LoaderClient
      */
     public static LoaderClient getLoaderClient() {
-        return BrokerFactory.getSummonerLoaderClient();
+        return BrokerFactory.getLoaderClient();
     }
 }

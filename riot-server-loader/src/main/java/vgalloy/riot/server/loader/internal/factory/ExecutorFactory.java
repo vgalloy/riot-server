@@ -11,7 +11,7 @@ import vgalloy.riot.api.api.factory.RiotApiFactory;
 import vgalloy.riot.api.api.model.RateLimit;
 import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.api.api.model.RiotApiKey;
-import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
+import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 import vgalloy.riot.server.loader.internal.executor.Executor;
 import vgalloy.riot.server.loader.internal.executor.impl.ExecutorImpl;
 
@@ -32,7 +32,7 @@ public final class ExecutorFactory {
             String apiKey = (String) configuration.getProperty("api_key");
             EXECUTOR = new ExecutorImpl(new RiotApiKey(apiKey));
         } catch (ConfigurationException e) {
-            throw new MongoDaoException("Unable to load configuration", e);
+            throw new LoaderException("Unable to load configuration", e);
         }
     }
 
