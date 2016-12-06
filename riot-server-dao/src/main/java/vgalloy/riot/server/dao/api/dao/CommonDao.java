@@ -26,7 +26,7 @@ public interface CommonDao<DTO> {
      * @param itemId the item id
      * @return the datable
      */
-    Optional<Entity<CommonWrapper<DTO>>> get(ItemId itemId);
+    Optional<Entity<DTO, ItemId>> get(ItemId itemId);
 
     /**
      * Get one random element in the collection.
@@ -34,5 +34,5 @@ public interface CommonDao<DTO> {
      * @param region the region
      * @return the random element
      */
-    Optional<Entity<CommonWrapper<DTO>>> getRandom(Region region);
+    Optional<Entity<DTO, ItemId>> getRandom(Region region);
 }

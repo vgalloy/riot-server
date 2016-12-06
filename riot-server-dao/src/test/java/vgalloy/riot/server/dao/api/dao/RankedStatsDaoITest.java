@@ -61,7 +61,7 @@ public class RankedStatsDaoITest {
 
     @Test
     public void testEmptyDatabase() {
-        Optional<Entity<CommonWrapper<RankedStatsDto>>> rankedStatsEntity = rankedStatsDao.get(new ItemId(Region.BR, 1L));
+        Optional<Entity<RankedStatsDto, ItemId>> rankedStatsEntity = rankedStatsDao.get(new ItemId(Region.BR, 1L));
         Assert.assertFalse(rankedStatsEntity.isPresent());
     }
 
@@ -72,7 +72,7 @@ public class RankedStatsDaoITest {
 
     @Test
     public void testEmptyRandom() {
-        Optional<Entity<CommonWrapper<RankedStatsDto>>> rankedStatsEntity = rankedStatsDao.getRandom(Region.KR);
+        Optional<Entity<RankedStatsDto, ItemId>> rankedStatsEntity = rankedStatsDao.getRandom(Region.KR);
         Assert.assertFalse(rankedStatsEntity.isPresent());
     }
 
@@ -94,12 +94,12 @@ public class RankedStatsDaoITest {
 
         // WHEN
         rankedStatsDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 10L), rankedStatsDto));
-        Optional<Entity<CommonWrapper<RankedStatsDto>>> result = rankedStatsDao.get(new ItemId(Region.EUW, 10L));
+        Optional<Entity<RankedStatsDto, ItemId>> result = rankedStatsDao.get(new ItemId(Region.EUW, 10L));
 
         // THEN
         Assert.assertTrue(result.isPresent());
-        Assert.assertTrue(result.get().getItemWrapper().getItem().isPresent());
-        Assert.assertEquals(rankedStatsDto, result.get().getItemWrapper().getItem().get());
+        Assert.assertTrue(result.get().getItem().isPresent());
+        Assert.assertEquals(rankedStatsDto, result.get().getItem().get());
     }
 
     @Test
@@ -110,7 +110,7 @@ public class RankedStatsDaoITest {
 
         // WHEN
         rankedStatsDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 11L), rankedStatsDto));
-        Optional<Entity<CommonWrapper<RankedStatsDto>>> result = rankedStatsDao.getRandom(Region.EUW);
+        Optional<Entity<RankedStatsDto, ItemId>> result = rankedStatsDao.getRandom(Region.EUW);
 
         // THEN
         Assert.assertNotNull(result);
@@ -128,12 +128,12 @@ public class RankedStatsDaoITest {
 
         // WHEN
         rankedStatsDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 12L), rankedStatsDto));
-        Optional<Entity<CommonWrapper<RankedStatsDto>>> result = rankedStatsDao.get(new ItemId(Region.EUW, 12L));
+        Optional<Entity<RankedStatsDto, ItemId>> result = rankedStatsDao.get(new ItemId(Region.EUW, 12L));
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertTrue(result.get().getItemWrapper().getItem().isPresent());
-        Assert.assertEquals(rankedStatsDto, result.get().getItemWrapper().getItem().get());
+        Assert.assertTrue(result.get().getItem().isPresent());
+        Assert.assertEquals(rankedStatsDto, result.get().getItem().get());
     }
 }

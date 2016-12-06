@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
+import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
 import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
 import vgalloy.riot.server.service.api.model.Game;
 import vgalloy.riot.server.service.api.model.GameInformation;
@@ -31,14 +31,13 @@ public final class GameMapper {
      * @param entity the match detail entity
      * @return the Game
      */
-    public static Game map(Entity<MatchDetailWrapper> entity) {
+    public static Game map(Entity<MatchDetail, MatchDetailId> entity) {
         Objects.requireNonNull(entity);
 
         long lastUpdate = entity.getLastUpdate();
-        MatchDetailWrapper matchDetailWrapper = entity.getItemWrapper();
-        String matchId = MatchDetailIdMapper.map(matchDetailWrapper.getItemId());
+        String matchId = MatchDetailIdMapper.map(entity.getItemId());
 
-        Optional<MatchDetail> matchDetailOptional = matchDetailWrapper.getItem();
+        Optional<MatchDetail> matchDetailOptional = entity.getItem();
         if (!matchDetailOptional.isPresent()) {
             return new Game(matchId, lastUpdate);
         }

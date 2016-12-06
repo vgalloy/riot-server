@@ -31,7 +31,7 @@ public interface MatchDetailDao {
      * @param matchDetailId the match detail id
      * @return the matchDetail
      */
-    Optional<Entity<MatchDetailWrapper>> get(MatchDetailId matchDetailId);
+    Optional<Entity<MatchDetail, MatchDetailId>> get(MatchDetailId matchDetailId);
 
     /**
      * Get all the games of a summoner during the period : [from, to[. The game ARE NOT sorted

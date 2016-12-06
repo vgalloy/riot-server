@@ -5,7 +5,7 @@ import java.time.ZoneOffset;
 import java.util.Objects;
 
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
+import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
 import vgalloy.riot.server.service.api.model.Model;
 
 /**
@@ -29,11 +29,11 @@ public final class ModelMapper {
      * @param <DTO>  the DTO type
      * @return the model
      */
-    public static <DTO> Model<DTO> map(Entity<CommonWrapper<DTO>> entity) {
+    public static <DTO> Model<DTO> map(Entity<DTO, ItemId> entity) {
         Objects.requireNonNull(entity);
 
-        Model<DTO> result = new Model<>(entity.getItemWrapper().getItemId().getRegion(), entity.getItemWrapper().getItemId().getId(), LocalDateTime.ofEpochSecond(entity.getLastUpdate(), 0, ZoneOffset.UTC));
-        entity.getItemWrapper().getItem().ifPresent(result::setItem);
+        Model<DTO> result = new Model<>(entity.getItemId().getRegion(), entity.getItemId().getId(), LocalDateTime.ofEpochSecond(entity.getLastUpdate(), 0, ZoneOffset.UTC));
+        entity.getItem().ifPresent(result::setItem);
         return result;
     }
 }

@@ -66,12 +66,12 @@ public class RecentGameDaoITest {
 
         // WHEN
         recentGamesDao.save(new CommonWrapper<>(new ItemId(Region.JP, 19L), recentGamesDto));
-        Optional<Entity<CommonWrapper<RecentGamesDto>>> result = recentGamesDao.get(new ItemId(Region.JP, 19L));
+        Optional<Entity<RecentGamesDto, ItemId>> result = recentGamesDao.get(new ItemId(Region.JP, 19L));
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertTrue(result.get().getItemWrapper().getItem().isPresent());
-        Assert.assertEquals(recentGamesDto, result.get().getItemWrapper().getItem().get());
+        Assert.assertTrue(result.get().getItem().isPresent());
+        Assert.assertEquals(recentGamesDto, result.get().getItem().get());
     }
 }

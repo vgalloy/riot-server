@@ -3,10 +3,10 @@ package vgalloy.riot.server.service.internal.service;
 import java.util.Objects;
 import java.util.Optional;
 
+import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
-import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.service.api.model.Game;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.internal.service.mapper.GameMapper;
@@ -32,7 +32,7 @@ public final class MatchDetailServiceImpl implements MatchDetailService {
     public Optional<Game> get(MatchDetailId matchDetailId) {
         Objects.requireNonNull(matchDetailId);
 
-        Optional<Entity<MatchDetailWrapper>> result = matchDetailDao.get(matchDetailId);
+        Optional<Entity<MatchDetail, MatchDetailId>> result = matchDetailDao.get(matchDetailId);
         if (result.isPresent()) {
             return Optional.of(GameMapper.map(result.get()));
         }

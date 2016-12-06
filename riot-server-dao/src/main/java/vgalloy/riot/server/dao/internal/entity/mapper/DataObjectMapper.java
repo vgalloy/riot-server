@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
-import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
 import vgalloy.riot.server.dao.internal.entity.dataobject.AbstractDataObject;
 
 /**
@@ -28,27 +27,13 @@ public final class DataObjectMapper {
      * @param <DTO>      the dto type
      * @return the entity
      */
-    public static <DTO> Entity<CommonWrapper<DTO>> mapToEntity(AbstractDataObject<DTO> dataObject) {
-        Objects.requireNonNull(dataObject);
-
-        CommonWrapper<DTO> wrapper = mapToWrapper(dataObject);
-        return new Entity<>(wrapper, dataObject.getLastUpdate());
-    }
-
-    /**
-     * Converts a database object into an wrapper.
-     *
-     * @param dataObject the database object
-     * @param <DTO>      the dto type
-     * @return the common wrapper
-     */
-    private static <DTO> CommonWrapper<DTO> mapToWrapper(AbstractDataObject<DTO> dataObject) {
+    public static <DTO> Entity<DTO, ItemId> mapToEntity(AbstractDataObject<DTO> dataObject) {
         Objects.requireNonNull(dataObject);
 
         ItemId itemId = ItemIdMapper.fromNormalize(dataObject.getId());
         if (dataObject.getItem() == null) {
-            return new CommonWrapper<>(itemId);
+            return new Entity<>(itemId, dataObject.getLastUpdate());
         }
-        return new CommonWrapper<>(itemId, dataObject.getItem());
+        return new Entity<>(itemId, dataObject.getItem(), dataObject.getLastUpdate());
     }
 }

@@ -130,7 +130,7 @@ public class SummonerLoaderImpl implements SummonerLoader {
      * @return true if the summoner can be loaded
      */
     private boolean shouldIdLoadThisSummoner(ItemId summonerId) {
-        Optional<Entity<CommonWrapper<SummonerDto>>> optionalEntity = summonerDao.get(summonerId);
+        Optional<Entity<SummonerDto, ItemId>> optionalEntity = summonerDao.get(summonerId);
         if (!optionalEntity.isPresent()) {
             return true;
         }
@@ -166,7 +166,7 @@ public class SummonerLoaderImpl implements SummonerLoader {
      * @return true if the ranked stat can be loaded
      */
     private boolean shouldILoadThisRankedStat(ItemId summonerId) {
-        Optional<Entity<CommonWrapper<RankedStatsDto>>> optionalEntity = rankedStatsDao.get(summonerId);
+        Optional<Entity<RankedStatsDto, ItemId>> optionalEntity = rankedStatsDao.get(summonerId);
         if (!optionalEntity.isPresent()) {
             return true;
         }

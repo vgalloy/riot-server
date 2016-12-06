@@ -67,13 +67,13 @@ public class MatchDetailDaoITest {
 
         // WHEN
         matchDetailDao.save(new MatchDetailWrapper(new MatchDetailId(Region.EUW, 10L, LocalDate.now()), matchDetail));
-        Optional<Entity<MatchDetailWrapper>> result = matchDetailDao.get(new MatchDetailId(Region.EUW, 10L, LocalDate.now()));
+        Optional<Entity<MatchDetail, MatchDetailId>> result = matchDetailDao.get(new MatchDetailId(Region.EUW, 10L, LocalDate.now()));
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertTrue(result.get().getItemWrapper().getItem().isPresent());
-        Assert.assertEquals(matchDetail, result.get().getItemWrapper().getItem().get());
+        Assert.assertTrue(result.get().getItem().isPresent());
+        Assert.assertEquals(matchDetail, result.get().getItem().get());
     }
 
     @Test
@@ -98,13 +98,13 @@ public class MatchDetailDaoITest {
 
         // WHEN
         matchDetailDao.save(new MatchDetailWrapper(new MatchDetailId(Region.EUW, 234L, LocalDate.now()), matchDetail));
-        Optional<Entity<MatchDetailWrapper>> result = matchDetailDao.get(new MatchDetailId(Region.EUW, 234L, LocalDate.now()));
+        Optional<Entity<MatchDetail, MatchDetailId>> result = matchDetailDao.get(new MatchDetailId(Region.EUW, 234L, LocalDate.now()));
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertTrue(result.get().getItemWrapper().getItem().isPresent());
-        Assert.assertEquals(matchDetail, result.get().getItemWrapper().getItem().get());
+        Assert.assertTrue(result.get().getItem().isPresent());
+        Assert.assertEquals(matchDetail, result.get().getItem().get());
     }
 
     @Test

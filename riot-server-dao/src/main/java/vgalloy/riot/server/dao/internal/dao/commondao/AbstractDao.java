@@ -67,7 +67,7 @@ public abstract class AbstractDao<DTO, DATA_OBJECT extends AbstractDataObject<DT
     }
 
     @Override
-    public Optional<Entity<CommonWrapper<DTO>>> get(ItemId itemId) {
+    public Optional<Entity<DTO, ItemId>> get(ItemId itemId) {
         Objects.requireNonNull(itemId);
 
         Optional<DATA_OBJECT> dataObject = genericDao.getById(ItemIdMapper.toNormalizeString(itemId));
@@ -78,7 +78,7 @@ public abstract class AbstractDao<DTO, DATA_OBJECT extends AbstractDataObject<DT
     }
 
     @Override
-    public Optional<Entity<CommonWrapper<DTO>>> getRandom(Region region) {
+    public Optional<Entity<DTO, ItemId>> getRandom(Region region) {
         Objects.requireNonNull(region);
 
         Optional<DATA_OBJECT> dataObject = genericDao.getRandom(region);

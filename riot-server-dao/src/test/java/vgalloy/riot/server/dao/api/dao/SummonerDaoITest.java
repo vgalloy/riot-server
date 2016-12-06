@@ -55,7 +55,7 @@ public class SummonerDaoITest {
     @Test
     public void testRandomFalse() {
         // WHEN
-        Optional<Entity<CommonWrapper<SummonerDto>>> result = summonerDao.getRandom(Region.BR);
+        Optional<Entity<SummonerDto, ItemId>> result = summonerDao.getRandom(Region.BR);
 
         // THEN
         Assert.assertNotNull(result);
@@ -70,13 +70,13 @@ public class SummonerDaoITest {
         summonerDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 2L), summoner));
 
         // WHEN
-        Optional<Entity<CommonWrapper<SummonerDto>>> result = summonerDao.getRandom(Region.EUW);
+        Optional<Entity<SummonerDto, ItemId>> result = summonerDao.getRandom(Region.EUW);
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertTrue(result.get().getItemWrapper().getItem().isPresent());
-        Assert.assertEquals(summoner, result.get().getItemWrapper().getItem().get());
+        Assert.assertTrue(result.get().getItem().isPresent());
+        Assert.assertEquals(summoner, result.get().getItem().get());
     }
 
     @Test

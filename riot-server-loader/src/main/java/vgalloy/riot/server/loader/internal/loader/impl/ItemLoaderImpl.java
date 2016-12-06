@@ -63,7 +63,7 @@ public class ItemLoaderImpl implements ItemLoader {
      * @return true if the item can be loaded
      */
     private boolean shouldIdLoadThisItem(ItemId itemId) {
-        Optional<Entity<CommonWrapper<ItemDto>>> optionalEntity = itemDao.get(itemId);
+        Optional<Entity<ItemDto, ItemId>> optionalEntity = itemDao.get(itemId);
         if (!optionalEntity.isPresent()) {
             return true;
         }

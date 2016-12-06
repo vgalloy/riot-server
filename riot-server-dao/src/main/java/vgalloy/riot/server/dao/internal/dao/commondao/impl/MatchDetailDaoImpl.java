@@ -67,7 +67,7 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
     }
 
     @Override
-    public Optional<Entity<MatchDetailWrapper>> get(MatchDetailId matchDetailId) {
+    public Optional<Entity<MatchDetail, MatchDetailId>> get(MatchDetailId matchDetailId) {
         Objects.requireNonNull(matchDetailId);
 
         JacksonDBCollection<MatchDetailDo, String> collection = getCollection(matchDetailId.getMatchDate());

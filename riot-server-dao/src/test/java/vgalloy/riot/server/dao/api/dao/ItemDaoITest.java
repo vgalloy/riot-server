@@ -66,12 +66,12 @@ public class ItemDaoITest {
 
         // WHEN
         itemDao.save(new CommonWrapper<>(new ItemId(Region.JP, 19L), itemDto));
-        Optional<Entity<CommonWrapper<ItemDto>>> result = itemDao.get(new ItemId(Region.JP, 19L));
+        Optional<Entity<ItemDto, ItemId>> result = itemDao.get(new ItemId(Region.JP, 19L));
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
-        Assert.assertTrue(result.get().getItemWrapper().getItem().isPresent());
-        Assert.assertEquals(itemDto, result.get().getItemWrapper().getItem().get());
+        Assert.assertTrue(result.get().getItem().isPresent());
+        Assert.assertEquals(itemDto, result.get().getItem().get());
     }
 }

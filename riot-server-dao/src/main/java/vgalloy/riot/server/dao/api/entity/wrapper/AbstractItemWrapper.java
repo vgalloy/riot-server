@@ -19,7 +19,7 @@ public abstract class AbstractItemWrapper<DTO, ID extends ItemId> implements Ser
 
     /**
      * @param itemId the item id
-     * @param item   the item (can be null)
+     * @param item   the item
      */
     public AbstractItemWrapper(ID itemId, DTO item) {
         this.itemId = Objects.requireNonNull(itemId);
