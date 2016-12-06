@@ -21,7 +21,7 @@ import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
  */
 public class LoaderClientImpl implements LoaderClient {
 
-    private final Map<Region, RabbitClientConsumer<LoadingMessage>> map;
+    private final Map<Region, RabbitClientConsumer<LoadingMessage>> map = new HashMap<>();
 
     /**
      * Constructor.
@@ -29,7 +29,7 @@ public class LoaderClientImpl implements LoaderClient {
      * @param connectionFactory the getConnectionFactory
      */
     public LoaderClientImpl(ConnectionFactory connectionFactory) {
-        map = new HashMap<>();
+        Objects.requireNonNull(connectionFactory);
         for (Region region : Region.values()) {
             ConsumerQueueDefinition<LoadingMessage> queueDefinition = RegionalConsumer.getQueueDefinition(region);
             map.put(region, Factory.createClient(connectionFactory, queueDefinition));
@@ -48,6 +48,12 @@ public class LoaderClientImpl implements LoaderClient {
         Objects.requireNonNull(region);
         Objects.requireNonNull(summonerName);
         map.get(region).accept(LoadingMessageBuilder.summonerName().wrap(summonerName));
+    }
+
+    @Override
+    public int getItemInQueue(Region region) {
+        Objects.requireNonNull(region);
+        return map.get(region).getMessageCount();
     }
 
     @Override

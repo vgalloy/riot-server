@@ -31,4 +31,12 @@ public interface LoaderClient {
      * @param summonerName the summoner name
      */
     void loadAsyncSummonerByName(Region region, String summonerName);
+
+    /**
+     * Get the number of item in the queue.
+     *
+     * @param region the region
+     * @return number of item in the queue.
+     */
+    int getItemInQueue(Region region);
 }

@@ -23,4 +23,9 @@ public class FakeLoaderClientImpl implements LoaderClient {
     public void loadAsyncSummonerByName(Region region, String summonerName) {
 
     }
+
+    @Override
+    public int getItemInQueue(Region region) {
+        return 0;
+    }
 }
