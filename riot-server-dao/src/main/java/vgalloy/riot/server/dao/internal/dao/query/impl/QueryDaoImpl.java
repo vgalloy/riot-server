@@ -24,8 +24,7 @@ public final class QueryDaoImpl implements QueryDao {
      * @param databaseName the database name
      */
     public QueryDaoImpl(String databaseUrl, String databaseName) {
-        mongoDatabaseFactory = MongoDriverObjectFactory.getMongoClient(databaseUrl)
-                .getMongoDatabase(databaseName);
+        mongoDatabaseFactory = MongoDriverObjectFactory.getMongoClient(databaseUrl).getMongoDatabase(databaseName);
         TaskFactory.startTask(new UpdateWinRateTask(mongoDatabaseFactory), 15 * 60 * 1000);
     }
 
