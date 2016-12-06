@@ -209,7 +209,7 @@ public class SummonerLoaderImpl implements SummonerLoader {
         if (matchDetailDao.get(matchDetailId).isPresent()) {
             return false;
         }
-        if (matchDetailId.getMatchDate().isBefore(LocalDate.now().minus(1, ChronoUnit.MONTHS))) {
+        if (matchDetailId.getMatchDate().isBefore(LocalDate.now().minus(2, ChronoUnit.YEARS))) {
             return false;
         }
         return true;
