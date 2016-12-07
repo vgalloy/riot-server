@@ -37,4 +37,13 @@ public final class LoadingMessageBuilder {
     public static LoadingMessageMapper<Integer> itemId() {
         return new IntegerMessageMapper(LoadingMessage.LoaderType.ITEM_BY_ID);
     }
+
+    /**
+     * Obtains a mapper.
+     *
+     * @return the corresponding mapper
+     */
+    public static LoadingMessageMapper<Long> championId() {
+        return new LongMessageMapper(LoadingMessage.LoaderType.CHAMPION_BY_ID);
+    }
 }

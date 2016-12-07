@@ -3,6 +3,7 @@ package vgalloy.riot.server.webservice.api.controller;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.entity.WinRate;
+import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.service.api.model.Model;
+import vgalloy.riot.server.service.api.service.ChampionService;
 import vgalloy.riot.server.service.api.service.QueryService;
 
 /**
@@ -26,6 +32,25 @@ public class ChampionController {
 
     @Autowired
     private QueryService queryService;
+    @Autowired
+    private ChampionService championService;
+
+    /**
+     * Get champion information.
+     *
+     * @param region     the region for the champion information
+     * @param championId the champion id
+     * @return the champion information
+     */
+    @RequestMapping(value = "/champion/{region}/{championId}", method = RequestMethod.GET)
+    public ChampionDto getChampion(@PathVariable Region region, @PathVariable Long championId) {
+        LOGGER.info("[ GET ] : getChampion : {}", championId);
+        Optional<Model<ChampionDto>> result = championService.get(new ItemId(region, championId));
+        if (result.isPresent()) {
+            return result.get().getItem();
+        }
+        return null;
+    }
 
     /**
      * Get the win rate of a champion as a mapToEntity. The key is the number of game played.

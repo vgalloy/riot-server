@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.loader.internal.consumer.RegionalConsumer;
 import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
+import vgalloy.riot.server.loader.internal.loader.ChampionLoader;
 import vgalloy.riot.server.loader.internal.loader.ItemLoader;
 import vgalloy.riot.server.loader.internal.loader.SummonerLoader;
 import vgalloy.riot.server.loader.internal.loader.mapper.LoadingMessageBuilder;
@@ -24,6 +25,7 @@ public class RegionalConsumerImpl implements RegionalConsumer {
     private final Region region;
     private final SummonerLoader summonerLoader;
     private final ItemLoader itemLoader;
+    private final ChampionLoader championLoader;
 
     /**
      * Constructor.
@@ -31,11 +33,13 @@ public class RegionalConsumerImpl implements RegionalConsumer {
      * @param region         the region
      * @param summonerLoader the regional summoner loader
      * @param itemLoader     the item loader
+     * @param championLoader the champion loader
      */
-    public RegionalConsumerImpl(Region region, SummonerLoader summonerLoader, ItemLoader itemLoader) {
+    public RegionalConsumerImpl(Region region, SummonerLoader summonerLoader, ItemLoader itemLoader, ChampionLoader championLoader) {
         this.region = Objects.requireNonNull(region);
         this.summonerLoader = Objects.requireNonNull(summonerLoader);
         this.itemLoader = Objects.requireNonNull(itemLoader);
+        this.championLoader = Objects.requireNonNull(championLoader);
     }
 
     @Override
@@ -50,6 +54,9 @@ public class RegionalConsumerImpl implements RegionalConsumer {
                 break;
             case ITEM_BY_ID:
                 itemLoader.loadItemById(region, LoadingMessageBuilder.itemId().extract(loadingMessage));
+                break;
+            case CHAMPION_BY_ID:
+                championLoader.loadChampionById(region, LoadingMessageBuilder.championId().extract(loadingMessage));
                 break;
         }
     }

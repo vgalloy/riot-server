@@ -12,7 +12,7 @@ import org.junit.Test;
  */
 public class MongoDriverObjectFactoryTest {
 
-    private static final int PORT = 29506;
+    private static final int PORT = 29601;
     private static final String URL = "localhost";
 
     @Test

@@ -4,11 +4,13 @@ import java.util.Timer;
 
 import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
 import vgalloy.riot.server.loader.api.factory.LoaderFactory;
+import vgalloy.riot.server.service.api.service.ChampionService;
 import vgalloy.riot.server.service.api.service.ItemService;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
+import vgalloy.riot.server.service.internal.service.ChampionServiceImpl;
 import vgalloy.riot.server.service.internal.service.ItemServiceImpl;
 import vgalloy.riot.server.service.internal.service.MatchDetailServiceImpl;
 import vgalloy.riot.server.service.internal.service.QueryServiceImpl;
@@ -23,6 +25,7 @@ import vgalloy.riot.server.service.internal.task.SummonerLoaderTask;
  */
 public final class InternalServiceFactory {
 
+    private static final ChampionService CHAMPION_SERVICE = new ChampionServiceImpl(MongoDaoFactory.getChampionDao(), LoaderFactory.getLoaderClient());
     private static final ItemService ITEM_SERVICE = new ItemServiceImpl(MongoDaoFactory.getItemDao(), LoaderFactory.getLoaderClient());
     private static final MatchDetailService MATCH_DETAIL_SERVICE = new MatchDetailServiceImpl(MongoDaoFactory.getMatchDetailDao());
     private static final SummonerService SUMMONER_SERVICE = new SummonerServiceImpl(MongoDaoFactory.getSummonerDao(), MongoDaoFactory.getMatchDetailDao(), LoaderFactory.getLoaderClient());
@@ -41,6 +44,10 @@ public final class InternalServiceFactory {
         Timer timer = new Timer();
         timer.schedule(new SummonerLoaderTask(MongoDaoFactory.getSummonerDao(), LoaderFactory.getLoaderClient()), 0, 60_000);
         timer.schedule(new PrivilegedLoaderTask(LoaderFactory.getLoaderClient()), 0, 3660_000);
+    }
+
+    public static ChampionService getChampionService() {
+        return CHAMPION_SERVICE;
     }
 
     public static ItemService getItemService() {

@@ -40,7 +40,7 @@ import vgalloy.riot.server.loader.internal.loader.SummonerLoader;
  * @author Vincent Galloy - 10/10/16
  *         Created by Vincent Galloy on 10/10/16.
  */
-public class SummonerLoaderImpl implements SummonerLoader {
+public final class SummonerLoaderImpl implements SummonerLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SummonerLoaderImpl.class);
 

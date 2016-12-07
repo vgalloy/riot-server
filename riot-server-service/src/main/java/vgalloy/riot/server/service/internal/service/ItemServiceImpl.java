@@ -12,7 +12,7 @@ import vgalloy.riot.server.service.api.service.ItemService;
 
 /**
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 23/08/16.
+ *         Created by Vincent Galloy on 03/12/16.
  */
 public final class ItemServiceImpl extends AbstractService<ItemDto> implements ItemService {
 

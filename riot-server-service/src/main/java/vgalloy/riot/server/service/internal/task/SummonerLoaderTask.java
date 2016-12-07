@@ -54,7 +54,7 @@ public class SummonerLoaderTask extends TimerTask {
      */
     private void addSummoner(Region region) {
         Optional<Long> summonerId = getRandomSummonerId(region);
-        LOGGER.info("Load summoner : {} for queue : [}", summonerId, region);
+        LOGGER.info("Load summoner : {} for queue : {}", summonerId, region);
         summonerId.ifPresent(id -> loaderClient.loadAsyncSummonerById(region, id));
     }
 

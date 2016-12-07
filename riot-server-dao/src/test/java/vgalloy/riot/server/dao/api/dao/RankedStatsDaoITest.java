@@ -30,7 +30,7 @@ import vgalloy.riot.server.dao.internal.dao.commondao.impl.RankedStatsDaoImpl;
  */
 public class RankedStatsDaoITest {
 
-    private static final int PORT = 29503;
+    private static final int PORT = 29504;
     private static final String URL = "localhost";
 
     private static MongodProcess PROCESS;

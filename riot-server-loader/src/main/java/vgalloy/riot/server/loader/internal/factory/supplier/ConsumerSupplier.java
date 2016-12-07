@@ -3,6 +3,7 @@ package vgalloy.riot.server.loader.internal.factory.supplier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import com.rabbitmq.client.ConnectionFactory;
@@ -17,8 +18,10 @@ import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
 import vgalloy.riot.server.loader.internal.consumer.RegionalConsumer;
 import vgalloy.riot.server.loader.internal.consumer.impl.RegionalConsumerImpl;
 import vgalloy.riot.server.loader.internal.factory.ExecutorFactory;
+import vgalloy.riot.server.loader.internal.loader.ChampionLoader;
 import vgalloy.riot.server.loader.internal.loader.ItemLoader;
 import vgalloy.riot.server.loader.internal.loader.SummonerLoader;
+import vgalloy.riot.server.loader.internal.loader.impl.ChampionLoaderImpl;
 import vgalloy.riot.server.loader.internal.loader.impl.ItemLoaderImpl;
 import vgalloy.riot.server.loader.internal.loader.impl.SummonerLoaderImpl;
 import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
@@ -45,6 +48,9 @@ public final class ConsumerSupplier implements Supplier<Map<Region, RabbitElemen
     @Override
     public Map<Region, RabbitElement> get() {
         Map<Region, RabbitElement> map = new HashMap<>();
+        ItemLoader itemLoader = new ItemLoaderImpl(ExecutorFactory.getRiotApi(), ExecutorFactory.getExecutor(), MongoDaoFactory.getItemDao());
+        ChampionLoader championLoader = new ChampionLoaderImpl(ExecutorFactory.getRiotApi(), ExecutorFactory.getExecutor(), MongoDaoFactory.getChampionDao());
+
         try {
             for (Region region : Region.values()) {
                 ConsumerQueueDefinition<LoadingMessage> queueDefinition = RegionalConsumer.getQueueDefinition(region);
@@ -53,9 +59,8 @@ public final class ConsumerSupplier implements Supplier<Map<Region, RabbitElemen
                         MongoDaoFactory.getSummonerDao(),
                         MongoDaoFactory.getMatchDetailDao(),
                         MongoDaoFactory.getRankedStatsDao());
-                ItemLoader itemLoader = new ItemLoaderImpl(ExecutorFactory.getRiotApi(), ExecutorFactory.getExecutor(), MongoDaoFactory.getItemDao());
 
-                RegionalConsumer consumer = new RegionalConsumerImpl(region, summonerLoader, itemLoader);
+                Consumer<LoadingMessage> consumer = new RegionalConsumerImpl(region, summonerLoader, itemLoader, championLoader);
                 RabbitElement rabbitElement = Factory.createConsumer(connectionFactory, queueDefinition, consumer);
                 map.put(region, rabbitElement);
             }

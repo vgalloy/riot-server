@@ -1,5 +1,6 @@
 package vgalloy.riot.server.service.api.factory;
 
+import vgalloy.riot.server.service.api.service.ChampionService;
 import vgalloy.riot.server.service.api.service.ItemService;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.api.service.QueryService;
@@ -19,6 +20,15 @@ public final class ServiceFactory {
      */
     private ServiceFactory() {
         throw new AssertionError();
+    }
+
+    /**
+     * Get the ChampionService.
+     *
+     * @return the ChampionService
+     */
+    public static ChampionService getChampionService() {
+        return InternalServiceFactory.getChampionService();
     }
 
     /**

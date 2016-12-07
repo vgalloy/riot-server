@@ -7,6 +7,7 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
+import vgalloy.riot.server.dao.api.dao.ChampionDao;
 import vgalloy.riot.server.dao.api.dao.ItemDao;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
@@ -14,6 +15,7 @@ import vgalloy.riot.server.dao.api.dao.QueryDao;
 import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
 import vgalloy.riot.server.dao.api.dao.RecentGamesDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
+import vgalloy.riot.server.dao.internal.dao.commondao.impl.ChampionDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.ItemDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchReferenceDaoImpl;
@@ -37,6 +39,7 @@ public final class MongoDaoFactory {
         throw new AssertionError();
     }
 
+    private static final ChampionDao CHAMPION_DAO;
     private static final MatchDetailDao MATCH_DETAIL_DAO;
     private static final MatchReferenceDao MATCH_REFERENCE_DAO;
     private static final RankedStatsDao RANKED_STATS_DAO;
@@ -53,6 +56,7 @@ public final class MongoDaoFactory {
             String databaseUrl = (String) configuration.getProperty("database.url");
             String databaseName = (String) configuration.getProperty("database.name");
 
+            CHAMPION_DAO = new ChampionDaoImpl(databaseUrl, databaseName);
             MATCH_DETAIL_DAO = new MatchDetailDaoImpl(databaseUrl, databaseName);
             MATCH_REFERENCE_DAO = new MatchReferenceDaoImpl(databaseUrl, databaseName);
             RANKED_STATS_DAO = new RankedStatsDaoImpl(databaseUrl, databaseName);
@@ -63,6 +67,15 @@ public final class MongoDaoFactory {
         } catch (ConfigurationException e) {
             throw new MongoDaoException("Unable to load configuration", e);
         }
+    }
+
+    /**
+     * Get the championDao.
+     *
+     * @return the championDao
+     */
+    public static ChampionDao getChampionDao() {
+        return CHAMPION_DAO;
     }
 
     /**

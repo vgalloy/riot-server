@@ -51,6 +51,13 @@ public class LoaderClientImpl implements LoaderClient {
     }
 
     @Override
+    public void loadChampionById(Region region, Long championId) {
+        Objects.requireNonNull(region);
+        Objects.requireNonNull(championId);
+        map.get(region).accept(LoadingMessageBuilder.championId().wrap(championId));
+    }
+
+    @Override
     public int getItemInQueue(Region region) {
         Objects.requireNonNull(region);
         return map.get(region).getMessageCount();

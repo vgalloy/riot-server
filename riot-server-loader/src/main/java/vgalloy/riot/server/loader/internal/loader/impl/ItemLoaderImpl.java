@@ -24,7 +24,7 @@ import vgalloy.riot.server.loader.internal.loader.ItemLoader;
  * @author Vincent Galloy - 01/12/16
  *         Created by Vincent Galloy on 01/12/16.
  */
-public class ItemLoaderImpl implements ItemLoader {
+public final class ItemLoaderImpl implements ItemLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemLoaderImpl.class);
 

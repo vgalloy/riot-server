@@ -33,6 +33,14 @@ public interface LoaderClient {
     void loadAsyncSummonerByName(Region region, String summonerName);
 
     /**
+     * Load and save champion by id.
+     *
+     * @param region     the region of the summoner
+     * @param championId the champion id
+     */
+    void loadChampionById(Region region, Long championId);
+
+    /**
      * Get the number of item in the queue.
      *
      * @param region the region

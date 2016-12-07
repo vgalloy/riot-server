@@ -35,7 +35,7 @@ import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
  */
 public class WinRateQueryITest {
 
-    private static final int PORT = 29507;
+    private static final int PORT = 29702;
     private static final String URL = "localhost";
 
     private static MongodProcess PROCESS;

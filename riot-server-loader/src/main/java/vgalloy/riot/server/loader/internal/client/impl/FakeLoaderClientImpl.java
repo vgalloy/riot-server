@@ -25,6 +25,11 @@ public class FakeLoaderClientImpl implements LoaderClient {
     }
 
     @Override
+    public void loadChampionById(Region region, Long championId) {
+
+    }
+
+    @Override
     public int getItemInQueue(Region region) {
         return 0;
     }

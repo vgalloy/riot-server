@@ -33,7 +33,7 @@ import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
  */
 public class MatchDetailDaoITest {
 
-    private static final int PORT = 29502;
+    private static final int PORT = 29503;
     private static final String URL = "localhost";
 
     private static MongodProcess PROCESS;

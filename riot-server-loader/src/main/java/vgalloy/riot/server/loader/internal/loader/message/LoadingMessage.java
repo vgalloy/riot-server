@@ -64,6 +64,6 @@ public class LoadingMessage implements Serializable {
     }
 
     public enum LoaderType {
-        SUMMONER_BY_ID, SUMMONER_BY_NAME, ITEM_BY_ID
+        SUMMONER_BY_ID, SUMMONER_BY_NAME, ITEM_BY_ID, CHAMPION_BY_ID
     }
 }
