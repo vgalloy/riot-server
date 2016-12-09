@@ -15,6 +15,7 @@ import vgalloy.riot.api.api.query.Query;
 import vgalloy.riot.api.internal.client.filter.RiotRateLimitExceededException;
 import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 import vgalloy.riot.server.loader.internal.executor.RegionExecutor;
+import vgalloy.riot.server.loader.internal.executor.helper.Sleeper;
 import vgalloy.riot.server.loader.internal.executor.model.Request;
 import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
 
@@ -101,41 +102,25 @@ public final class RegionExecutorImpl implements RegionExecutor {
      * @return the dto
      */
     private <DTO> DTO execute(Query<DTO> query) {
-        long sleepingTimeMillis = DEFAULT_SLEEPING_TIME_MILLIS;
+        Sleeper sleeper = new Sleeper(DEFAULT_SLEEPING_TIME_MILLIS);
         int maxAttempt = 20;
         for (int attempt = 1; attempt < maxAttempt; attempt++) {
             try {
-                DTO result = query.execute();
-                sleepingTimeMillis = Math.max(sleepingTimeMillis / 2, DEFAULT_SLEEPING_TIME_MILLIS);
-                return result;
+                return query.execute();
             } catch (RiotRateLimitExceededException e) {
-                LOGGER.warn("{} : {}, sleepingTimeMillis = {} ms, attempt : {}", RegionPrinter.getRegion(region), e.toString(), sleepingTimeMillis, attempt);
                 if (e.getRetryAfter().isPresent()) {
                     throw new LoaderException(e);
                 }
-                sleep(sleepingTimeMillis);
-                sleepingTimeMillis *= 2;
+                LOGGER.warn("{} : {}, sleepingTimeMillis = {} ms, attempt : {}", RegionPrinter.getRegion(region), e.toString(), sleeper.getSleepingTimeMillis(), attempt);
+                sleeper.sleepAndIncrementTimer();
             } catch (ResponseProcessingException e) {
-                throw new LoaderException("Unable to load the query", e);
+                throw new LoaderException("Unable to deserialize the query", e);
             } catch (Exception e) {
                 LOGGER.error("", e);
-                sleep(sleepingTimeMillis);
-                sleepingTimeMillis *= 2;
+                sleeper.sleepAndIncrementTimer();
             }
         }
-        throw new LoaderException("After " + maxAttempt + " attempts, I give up. I can load the query : " + query.toString());
-    }
-
-    /**
-     * Slow down the request execution.
-     *
-     * @param sleepingTimeMillis the sleeping time (in millis)
-     */
-    private static void sleep(long sleepingTimeMillis) {
-        try {
-            Thread.sleep(sleepingTimeMillis);
-        } catch (InterruptedException e1) {
-            throw new RuntimeException(e1);
-        }
+        throw new LoaderException("After " + maxAttempt + " attempts and " +
+                sleeper.totalExectutionTimeMillis() + " ms, I give up. I can not load the query : " + query.toString());
     }
 }
