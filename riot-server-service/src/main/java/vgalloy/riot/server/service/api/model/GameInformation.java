@@ -14,17 +14,24 @@ public class GameInformation implements Serializable {
     private static final long serialVersionUID = -7279832513719280220L;
 
     private final List<PlayerTimeline> playerTimelines;
+    private final List<SummonerInformation> summonerInformation;
 
     /**
      * Constructor.
      *
      * @param playerTimelines the player timeline
+     * @param summonerInformation the player information
      */
-    public GameInformation(List<PlayerTimeline> playerTimelines) {
+    public GameInformation(List<PlayerTimeline> playerTimelines, List<SummonerInformation> summonerInformation) {
         this.playerTimelines = Objects.requireNonNull(playerTimelines);
+        this.summonerInformation = Objects.requireNonNull(summonerInformation);
     }
 
     public List<PlayerTimeline> getPlayerTimelines() {
         return playerTimelines;
+    }
+
+    public List<SummonerInformation> getSummonerInformation() {
+        return summonerInformation;
     }
 }

@@ -6,6 +6,7 @@ import java.util.Objects;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.service.api.model.GameInformation;
 import vgalloy.riot.server.service.api.model.PlayerTimeline;
+import vgalloy.riot.server.service.api.model.SummonerInformation;
 
 /**
  * @author Vincent Galloy - 07/10/16
@@ -32,7 +33,8 @@ public final class GameInformationMapper {
         Objects.requireNonNull(matchDetail);
 
         List<PlayerTimeline> playerTimelines = HistoryMapper.map(matchDetail);
+        List<SummonerInformation> summonerInformation = SummonerInformationMapper.map(matchDetail);
 
-        return new GameInformation(playerTimelines);
+        return new GameInformation(playerTimelines, summonerInformation);
     }
 }
