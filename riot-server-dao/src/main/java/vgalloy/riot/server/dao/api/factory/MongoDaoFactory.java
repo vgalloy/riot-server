@@ -31,14 +31,6 @@ import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
  */
 public final class MongoDaoFactory {
 
-    /**
-     * Constructor.
-     * Prevent instantiation
-     */
-    private MongoDaoFactory() {
-        throw new AssertionError();
-    }
-
     private static final ChampionDao CHAMPION_DAO;
     private static final MatchDetailDao MATCH_DETAIL_DAO;
     private static final MatchReferenceDao MATCH_REFERENCE_DAO;
@@ -67,6 +59,14 @@ public final class MongoDaoFactory {
         } catch (ConfigurationException e) {
             throw new MongoDaoException("Unable to load configuration", e);
         }
+    }
+
+    /**
+     * Constructor.
+     * Prevent instantiation
+     */
+    private MongoDaoFactory() {
+        throw new AssertionError();
     }
 
     /**

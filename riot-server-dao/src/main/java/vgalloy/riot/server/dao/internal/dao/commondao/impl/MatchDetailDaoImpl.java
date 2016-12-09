@@ -56,6 +56,23 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
         this.databaseName = Objects.requireNonNull(databaseName);
     }
 
+    /**
+     * Create the collection name base on the date.
+     *
+     * @param localDate the local
+     * @return the collection name
+     */
+    private static String getCollectionName(LocalDate localDate) {
+        Objects.requireNonNull(localDate);
+        if (localDate.isBefore(LocalDate.now().minus(4, ChronoUnit.YEARS))) {
+            throw new MongoDaoException("the date " + localDate + " is to old");
+        }
+        if (localDate.isAfter(LocalDate.now().plus(1, ChronoUnit.DAYS))) {
+            throw new MongoDaoException("the date " + localDate + " is in the future");
+        }
+        return COLLECTION_NAME + "_" + localDate.format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
+    }
+
     @Override
     public void save(MatchDetailWrapper matchDetailWrapper) {
         Objects.requireNonNull(matchDetailWrapper);
@@ -176,22 +193,5 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
                 .get();
 
         return JacksonDBCollection.wrap(dbCollection, MatchDetailDo.class, String.class);
-    }
-
-    /**
-     * Create the collection name base on the date.
-     *
-     * @param localDate the local
-     * @return the collection name
-     */
-    private static String getCollectionName(LocalDate localDate) {
-        Objects.requireNonNull(localDate);
-        if (localDate.isBefore(LocalDate.now().minus(4, ChronoUnit.YEARS))) {
-            throw new MongoDaoException("the date " + localDate + " is to old");
-        }
-        if (localDate.isAfter(LocalDate.now().plus(1, ChronoUnit.DAYS))) {
-            throw new MongoDaoException("the date " + localDate + " is in the future");
-        }
-        return COLLECTION_NAME + "_" + localDate.format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
     }
 }

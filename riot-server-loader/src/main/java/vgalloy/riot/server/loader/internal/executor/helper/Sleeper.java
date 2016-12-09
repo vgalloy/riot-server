@@ -7,9 +7,8 @@ package vgalloy.riot.server.loader.internal.executor.helper;
 public final class Sleeper {
 
     private static final long ONE_HOUR = 3_600 * 1000;
-
-    private long sleepingTimeMillis;
     private final long sleeperCreationMillis = System.currentTimeMillis();
+    private long sleepingTimeMillis;
 
     /**
      * Constructor.

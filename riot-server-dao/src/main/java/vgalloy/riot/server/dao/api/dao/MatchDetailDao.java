@@ -47,9 +47,9 @@ public interface MatchDetailDao {
     /**
      * Get the champion win rate during the given period : [from, to[.
      *
-     * @param championId      the champion id
-     * @param from the first day to analyse
-     * @param to   the first to not analyse
+     * @param championId the champion id
+     * @param from       the first day to analyse
+     * @param to         the first to not analyse
      * @return the win rate of the champion during the given period
      */
     Map<LocalDate, WinRate> getWinRate(int championId, LocalDate from, LocalDate to);

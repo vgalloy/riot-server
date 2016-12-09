@@ -14,18 +14,19 @@ public class SummonerDo extends AbstractDataObject<SummonerDto> {
 
     /**
      * Constructor.
+     *
      * @param lastUpdate the last update
-     * @param region the region of the item
-     * @param itemId the item id
-     * @param item the item
-     * @param id the id
+     * @param region     the region of the item
+     * @param itemId     the item id
+     * @param item       the item
+     * @param id         the id
      */
     @JsonCreator
     public SummonerDo(@JsonProperty("lastUpdate") Long lastUpdate,
-                         @JsonProperty("region") Region region,
-                         @JsonProperty("itemId") Long itemId,
-                         @JsonProperty("item") SummonerDto item,
-                         @JsonProperty("_id") String id) {
+                      @JsonProperty("region") Region region,
+                      @JsonProperty("itemId") Long itemId,
+                      @JsonProperty("item") SummonerDto item,
+                      @JsonProperty("_id") String id) {
         super(lastUpdate, region, itemId, item, id);
     }
 

@@ -14,11 +14,12 @@ public class RankedStatsDo extends AbstractDataObject<RankedStatsDto> {
 
     /**
      * Constructor.
+     *
      * @param lastUpdate the last update
-     * @param region the region of the item
-     * @param itemId the item id
-     * @param item the item
-     * @param id the id
+     * @param region     the region of the item
+     * @param itemId     the item id
+     * @param item       the item
+     * @param id         the id
      */
     @JsonCreator
     public RankedStatsDo(@JsonProperty("lastUpdate") Long lastUpdate,

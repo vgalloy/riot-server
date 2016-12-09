@@ -20,10 +20,11 @@ public class SummonerInformation implements Serializable {
 
     /**
      * Constructor.
-     * @param region the region
-     * @param summonerId the summoner id
+     *
+     * @param region       the region
+     * @param summonerId   the summoner id
      * @param summonerName the summoner name
-     * @param championId the champion id played by the summoner
+     * @param championId   the champion id played by the summoner
      */
     public SummonerInformation(Region region, long summonerId, String summonerName, int championId) {
         this.region = Objects.requireNonNull(region);

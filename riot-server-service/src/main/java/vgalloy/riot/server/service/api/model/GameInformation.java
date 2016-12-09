@@ -19,7 +19,7 @@ public class GameInformation implements Serializable {
     /**
      * Constructor.
      *
-     * @param playerTimelines the player timeline
+     * @param playerTimelines     the player timeline
      * @param summonerInformation the player information
      */
     public GameInformation(List<PlayerTimeline> playerTimelines, List<SummonerInformation> summonerInformation) {

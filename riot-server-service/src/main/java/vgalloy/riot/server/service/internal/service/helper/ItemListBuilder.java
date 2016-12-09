@@ -67,6 +67,13 @@ public class ItemListBuilder {
         return new ArrayList<>(result);
     }
 
+    private enum ActionType {
+        BUY,
+        SOLD,
+        UNDO,
+        DESTROY
+    }
+
     private class Action {
 
         private final long timestamp;
@@ -85,12 +92,5 @@ public class ItemListBuilder {
             this.actionType = Objects.requireNonNull(actionType);
             this.itemId = Objects.requireNonNull(itemId);
         }
-    }
-
-    private enum ActionType {
-        BUY,
-        SOLD,
-        UNDO,
-        DESTROY
     }
 }

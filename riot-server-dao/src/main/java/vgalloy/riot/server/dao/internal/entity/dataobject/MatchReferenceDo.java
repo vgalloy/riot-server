@@ -14,18 +14,19 @@ public class MatchReferenceDo extends AbstractDataObject<MatchReference> {
 
     /**
      * Constructor.
+     *
      * @param lastUpdate the last update
-     * @param region the region of the item
-     * @param itemId the item id
-     * @param item the item
-     * @param id the id
+     * @param region     the region of the item
+     * @param itemId     the item id
+     * @param item       the item
+     * @param id         the id
      */
     @JsonCreator
     public MatchReferenceDo(@JsonProperty("lastUpdate") Long lastUpdate,
-                      @JsonProperty("region") Region region,
-                      @JsonProperty("itemId") Long itemId,
-                      @JsonProperty("item") MatchReference item,
-                      @JsonProperty("_id") String id) {
+                            @JsonProperty("region") Region region,
+                            @JsonProperty("itemId") Long itemId,
+                            @JsonProperty("item") MatchReference item,
+                            @JsonProperty("_id") String id) {
         super(lastUpdate, region, itemId, item, id);
     }
 

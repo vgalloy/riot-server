@@ -21,16 +21,17 @@ public abstract class AbstractDataObject<DTO> {
     private final Long lastUpdate;
     private final Region region;
     private final Long itemId;
-    private DTO item;
     private final Key key;
+    private DTO item;
 
     /**
      * Constructor.
+     *
      * @param lastUpdate the last update time in second (UTC)
-     * @param region the region of the item
-     * @param itemId the item id
-     * @param item the item
-     * @param id the id
+     * @param region     the region of the item
+     * @param itemId     the item id
+     * @param item       the item
+     * @param id         the id
      */
     public AbstractDataObject(Long lastUpdate, Region region, Long itemId, DTO item, String id) {
         this.lastUpdate = Objects.requireNonNull(lastUpdate);

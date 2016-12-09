@@ -32,18 +32,18 @@ public final class InternalServiceFactory {
     private static final RankedStatsService RANKED_STATS_SERVICE = new RankedStatsServiceImpl(MongoDaoFactory.getRankedStatsDao());
     private static final QueryService QUERY_SERVICE = new QueryServiceImpl(MongoDaoFactory.getQueryDao(), MongoDaoFactory.getMatchDetailDao());
 
+    static {
+        Timer timer = new Timer();
+        timer.schedule(new SummonerLoaderTask(MongoDaoFactory.getSummonerDao(), LoaderFactory.getLoaderClient()), 0, 60_000);
+        timer.schedule(new PrivilegedLoaderTask(LoaderFactory.getLoaderClient()), 0, 3660_000);
+    }
+
     /**
      * Constructor.
      * To prevent instantiation
      */
     private InternalServiceFactory() {
         throw new AssertionError();
-    }
-
-    static {
-        Timer timer = new Timer();
-        timer.schedule(new SummonerLoaderTask(MongoDaoFactory.getSummonerDao(), LoaderFactory.getLoaderClient()), 0, 60_000);
-        timer.schedule(new PrivilegedLoaderTask(LoaderFactory.getLoaderClient()), 0, 3660_000);
     }
 
     public static ChampionService getChampionService() {

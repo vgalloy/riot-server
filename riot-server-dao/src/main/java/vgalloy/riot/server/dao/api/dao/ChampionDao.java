@@ -7,4 +7,5 @@ import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
  *         Created by Vincent Galloy on 28/08/16.
  */
 public interface ChampionDao extends CommonDao<ChampionDto> {
+
 }
