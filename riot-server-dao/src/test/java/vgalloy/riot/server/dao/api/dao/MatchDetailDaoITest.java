@@ -9,19 +9,18 @@ import java.util.Optional;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
-import de.flapdoodle.embed.mongo.MongodStarter;
-import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
-import de.flapdoodle.embed.mongo.config.Net;
-import de.flapdoodle.embed.mongo.distribution.Version.Main;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
 import vgalloy.riot.api.api.dto.mach.Player;
+import vgalloy.riot.server.dao.DaoTestUtil;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
@@ -33,8 +32,9 @@ import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
  */
 public class MatchDetailDaoITest {
 
-    private static final int PORT = 29503;
+    private static final Logger LOGGER = LoggerFactory.getLogger(MatchDetailDaoITest.class);
     private static final String URL = "localhost";
+    private static final int PORT = 29503;
 
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
@@ -43,11 +43,7 @@ public class MatchDetailDaoITest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        MongodStarter starter = MongodStarter.getDefaultInstance();
-        EXECUTABLE = starter.prepare(new MongodConfigBuilder()
-                .version(Main.V3_2)
-                .net(new Net(URL, PORT, false))
-                .build());
+        EXECUTABLE = DaoTestUtil.createMongodExecutable(LOGGER, URL, PORT);
         PROCESS = EXECUTABLE.start();
     }
 

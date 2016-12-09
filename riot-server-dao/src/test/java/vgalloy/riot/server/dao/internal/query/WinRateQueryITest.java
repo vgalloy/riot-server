@@ -10,20 +10,18 @@ import java.util.Map;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodProcess;
-import de.flapdoodle.embed.mongo.MongodStarter;
-import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
-import de.flapdoodle.embed.mongo.config.Net;
-import de.flapdoodle.embed.mongo.distribution.Version;
-import de.flapdoodle.embed.process.runtime.Network;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.Participant;
 import vgalloy.riot.api.api.dto.mach.ParticipantStats;
+import vgalloy.riot.server.dao.DaoTestUtil;
 import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
@@ -35,8 +33,9 @@ import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
  */
 public class WinRateQueryITest {
 
-    private static final int PORT = 29702;
+    private static final Logger LOGGER = LoggerFactory.getLogger(WinRateQueryITest.class);
     private static final String URL = "localhost";
+    private static final int PORT = 29702;
 
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
@@ -45,11 +44,7 @@ public class WinRateQueryITest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        MongodStarter starter = MongodStarter.getDefaultInstance();
-        EXECUTABLE = starter.prepare(new MongodConfigBuilder()
-                .version(Version.Main.V3_2)
-                .net(new Net(PORT, Network.localhostIsIPv6()))
-                .build());
+        EXECUTABLE = DaoTestUtil.createMongodExecutable(LOGGER, URL, PORT);
         PROCESS = EXECUTABLE.start();
     }
 
