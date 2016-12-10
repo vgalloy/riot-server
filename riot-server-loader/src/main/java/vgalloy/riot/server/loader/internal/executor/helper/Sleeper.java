@@ -6,17 +6,17 @@ package vgalloy.riot.server.loader.internal.executor.helper;
  */
 public final class Sleeper {
 
-    private static final long ONE_HOUR = 3_600 * 1000;
+    private static final long DEFAULT_SLEEPING_TIME_MILLIS = 2_000;
+    private static final long ONE_MINUTE = 60 * 1000;
+
     private final long sleeperCreationMillis = System.currentTimeMillis();
     private long sleepingTimeMillis;
 
     /**
      * Constructor.
-     *
-     * @param defaultSleepingTimeMillis the default first sleeping timer
      */
-    public Sleeper(long defaultSleepingTimeMillis) {
-        sleepingTimeMillis = defaultSleepingTimeMillis;
+    public Sleeper() {
+        sleepingTimeMillis = DEFAULT_SLEEPING_TIME_MILLIS;
     }
 
     /**
@@ -24,7 +24,7 @@ public final class Sleeper {
      */
     public void sleepAndIncrementTimer() {
         sleepSilently();
-        sleepingTimeMillis = Math.min(ONE_HOUR, 2 * sleepingTimeMillis);
+        sleepingTimeMillis = Math.min(60 * ONE_MINUTE, 2 * sleepingTimeMillis);
     }
 
     /**
@@ -32,7 +32,7 @@ public final class Sleeper {
      *
      * @return the life time in millis
      */
-    public long totalExectutionTimeMillis() {
+    public long totalExecutionTimeMillis() {
         return System.currentTimeMillis() - sleeperCreationMillis;
     }
 

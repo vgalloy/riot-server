@@ -10,6 +10,11 @@ import vgalloy.riot.server.loader.api.service.LoaderClient;
 public class FakeLoaderClientImpl implements LoaderClient {
 
     @Override
+    public int getItemInQueue(Region region) {
+        return 0;
+    }
+
+    @Override
     public void loadAsyncItemById(Region region, Integer itemId) {
 
     }
@@ -27,10 +32,5 @@ public class FakeLoaderClientImpl implements LoaderClient {
     @Override
     public void loadChampionById(Region region, Long championId) {
 
-    }
-
-    @Override
-    public int getItemInQueue(Region region) {
-        return 0;
     }
 }

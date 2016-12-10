@@ -9,6 +9,14 @@ import vgalloy.riot.api.api.constant.Region;
 public interface LoaderClient {
 
     /**
+     * Get the number of item in the queue.
+     *
+     * @param region the region
+     * @return number of item in the queue.
+     */
+    int getItemInQueue(Region region);
+
+    /**
      * Load the item and save it.
      *
      * @param region the region of the item
@@ -39,12 +47,4 @@ public interface LoaderClient {
      * @param championId the champion id
      */
     void loadChampionById(Region region, Long championId);
-
-    /**
-     * Get the number of item in the queue.
-     *
-     * @param region the region
-     * @return number of item in the queue.
-     */
-    int getItemInQueue(Region region);
 }

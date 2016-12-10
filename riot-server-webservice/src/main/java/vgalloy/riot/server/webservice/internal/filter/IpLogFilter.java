@@ -35,10 +35,9 @@ public class IpLogFilter implements Filter {
         MDC.put("requestUuid", requestUuid);
 
         LOGGER.info("ip : {}", servletRequest.getRemoteAddr());
-
         long startTimeNano = System.nanoTime();
         filterChain.doFilter(servletRequest, servletResponse);
-        LOGGER.info("execution time : {}", System.nanoTime() - startTimeNano);
+        LOGGER.info("execution time : {} ns", System.nanoTime() - startTimeNano);
     }
 
     @Override

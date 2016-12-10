@@ -27,7 +27,6 @@ import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
 public final class RegionExecutorImpl implements RegionExecutor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegionExecutorImpl.class);
-    private static final long DEFAULT_SLEEPING_TIME_MILLIS = 2_000;
 
     private final Random random = new SecureRandom();
     private final Collection<Request<?>> requestList = new ArrayList<>();
@@ -103,7 +102,7 @@ public final class RegionExecutorImpl implements RegionExecutor {
      * @return the dto
      */
     private <DTO> DTO execute(Query<DTO> query) {
-        Sleeper sleeper = new Sleeper(DEFAULT_SLEEPING_TIME_MILLIS);
+        Sleeper sleeper = new Sleeper();
         int maxAttempt = 20;
         for (int attempt = 1; attempt < maxAttempt; attempt++) {
             try {
@@ -113,15 +112,14 @@ public final class RegionExecutorImpl implements RegionExecutor {
                     throw new LoaderException(e);
                 }
                 LOGGER.warn("{} : {}, sleepingTimeMillis = {} ms, attempt : {}", RegionPrinter.getRegion(region), e.toString(), sleeper.getSleepingTimeMillis(), attempt);
-                sleeper.sleepAndIncrementTimer();
             } catch (ResponseProcessingException e) {
                 throw new LoaderException("Unable to deserialize the query", e);
             } catch (Exception e) {
                 LOGGER.error("", e);
-                sleeper.sleepAndIncrementTimer();
             }
+            sleeper.sleepAndIncrementTimer();
         }
         throw new LoaderException("After " + maxAttempt + " attempts and " +
-                sleeper.totalExectutionTimeMillis() + " ms, I give up. I can not load the query : " + query.toString());
+                sleeper.totalExecutionTimeMillis() + " ms, I give up. I can not load the query : " + query.toString());
     }
 }

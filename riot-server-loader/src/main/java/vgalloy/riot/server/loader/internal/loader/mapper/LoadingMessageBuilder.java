@@ -12,6 +12,14 @@ import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
 public final class LoadingMessageBuilder {
 
     /**
+     * Constructor.
+     * To prevent instantiation
+     */
+    private LoadingMessageBuilder() {
+        throw new AssertionError();
+    }
+
+    /**
      * Obtains a mapper.
      *
      * @return the corresponding mapper
