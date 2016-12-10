@@ -16,7 +16,7 @@ import vgalloy.riot.api.api.query.Query;
 import vgalloy.riot.api.internal.client.filter.RiotRateLimitExceededException;
 import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 import vgalloy.riot.server.loader.internal.executor.RegionExecutor;
-import vgalloy.riot.server.loader.internal.executor.helper.Sleeper;
+import vgalloy.riot.server.loader.internal.executor.helper.CycleManager;
 import vgalloy.riot.server.loader.internal.executor.model.Request;
 import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
 
@@ -102,24 +102,23 @@ public final class RegionExecutorImpl implements RegionExecutor {
      * @return the dto
      */
     private <DTO> DTO execute(Query<DTO> query) {
-        Sleeper sleeper = new Sleeper();
-        int maxAttempt = 20;
-        for (int attempt = 1; attempt < maxAttempt; attempt++) {
+        CycleManager cycleManager = new CycleManager();
+        do {
             try {
                 return query.execute();
             } catch (RiotRateLimitExceededException e) {
                 if (e.getRetryAfter().isPresent()) {
                     throw new LoaderException(e);
                 }
-                LOGGER.warn("{} : {}, sleepingTimeMillis = {} ms, attempt : {}", RegionPrinter.getRegion(region), e.toString(), sleeper.getSleepingTimeMillis(), attempt);
+                LOGGER.warn("{} : {}, sleepingTimeMillis = {} ms, attempt : {}", RegionPrinter.getRegion(region), e.toString(), cycleManager.getSleepingTimeMillis(), cycleManager.getIteration());
             } catch (ResponseProcessingException e) {
                 throw new LoaderException("Unable to deserialize the query", e);
             } catch (Exception e) {
                 LOGGER.error("", e);
             }
-            sleeper.sleepAndIncrementTimer();
-        }
-        throw new LoaderException("After " + maxAttempt + " attempts and " +
-                sleeper.totalExecutionTimeMillis() + " ms, I give up. I can not load the query : " + query.toString());
+            cycleManager.sleep();
+        } while (cycleManager.tryAgain());
+        throw new LoaderException("After " + cycleManager.getIteration() + " attempts and " +
+                cycleManager.totalExecutionTimeMillis() + " ms, I give up. I can not load the query : " + query.toString());
     }
 }
