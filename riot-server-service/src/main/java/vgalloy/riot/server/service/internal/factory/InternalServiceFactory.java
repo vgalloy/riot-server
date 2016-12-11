@@ -35,7 +35,7 @@ public final class InternalServiceFactory {
     static {
         Timer timer = new Timer();
         timer.schedule(new SummonerLoaderTask(MongoDaoFactory.getSummonerDao(), LoaderFactory.getLoaderClient()), 0, 60_000);
-        timer.schedule(new PrivilegedLoaderTask(LoaderFactory.getLoaderClient()), 0, 3660_000);
+        timer.schedule(new PrivilegedLoaderTask(LoaderFactory.getLoaderClient()), 0, 3600_000);
     }
 
     /**
