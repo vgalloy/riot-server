@@ -1,6 +1,7 @@
 package vgalloy.riot.server.webservice.internal.filter;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,6 +12,7 @@ import javax.servlet.ServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -18,11 +20,11 @@ import org.springframework.stereotype.Component;
  * @author Vincent Galloy - 19/09/16
  *         Created by Vincent Galloy on 19/09/16.
  */
-@Order(2)
+@Order(1)
 @Component
-public class IpLogFilter implements Filter {
+public class TimeExecutionFilter implements Filter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(IpLogFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TimeExecutionFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -31,8 +33,11 @@ public class IpLogFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        LOGGER.info("ip : {}", servletRequest.getRemoteAddr());
+        String requestUuid = UUID.randomUUID().toString();
+        MDC.put("requestUuid", requestUuid);
+        long startTimeNano = System.nanoTime();
         filterChain.doFilter(servletRequest, servletResponse);
+        LOGGER.info("execution time : {} ns", System.nanoTime() - startTimeNano);
     }
 
     @Override
