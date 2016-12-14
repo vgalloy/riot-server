@@ -57,7 +57,7 @@ public class MatchDetailDaoITest {
     public void testInsertWithCorrectSimpleMatchDetailDto() {
         // GIVEN
         MatchDetail matchDetail = new MatchDetail();
-        matchDetail.setMatchId(10);
+        matchDetail.setMatchId(10L);
         matchDetail.setRegion(Region.EUW);
         matchDetail.setMatchCreation(LocalDate.now().toEpochDay() * 24 * 3600 * 1000);
 
@@ -76,7 +76,7 @@ public class MatchDetailDaoITest {
     public void testInsertWithCorrectComplexMatchDetailDto() {
         // GIVEN
         Player player = new Player();
-        player.setSummonerId(12345);
+        player.setSummonerId(12345L);
         player.setSummonerName("Name");
 
         ParticipantIdentity participantIdentity = new ParticipantIdentity();
@@ -87,7 +87,7 @@ public class MatchDetailDaoITest {
         participantIdentities.add(participantIdentity);
 
         MatchDetail matchDetail = new MatchDetail();
-        matchDetail.setMatchId(234);
+        matchDetail.setMatchId(234L);
         matchDetail.setRegion(Region.EUW);
         matchDetail.setParticipantIdentities(participantIdentities);
         matchDetail.setMatchCreation(LocalDate.now().toEpochDay() * 24 * 3600 * 1000);

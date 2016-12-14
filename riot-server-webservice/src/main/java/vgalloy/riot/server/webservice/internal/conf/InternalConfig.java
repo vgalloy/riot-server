@@ -17,7 +17,7 @@ import vgalloy.riot.server.service.api.service.SummonerService;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 24/08/16.
  */
-@Import(SwaggerConfig.class)
+@Import({JacksonConfiguration.class, SwaggerConfig.class})
 @ComponentScan(value = {
         "vgalloy.riot.server.webservice.internal.filter",
         "vgalloy.riot.server.webservice.internal.controller",

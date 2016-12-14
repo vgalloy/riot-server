@@ -54,7 +54,7 @@ public class RecentGameDaoITest {
     public void testInsertOk() {
         // GIVEN
         RecentGamesDto recentGamesDto = new RecentGamesDto();
-        recentGamesDto.setSummonerId(19);
+        recentGamesDto.setSummonerId(19L);
         Set<GameDto> gameDtoSet = new HashSet<>();
         gameDtoSet.add(new GameDto());
         recentGamesDto.setGames(gameDtoSet);

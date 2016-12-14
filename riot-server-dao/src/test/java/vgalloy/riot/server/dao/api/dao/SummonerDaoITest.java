@@ -61,7 +61,7 @@ public class SummonerDaoITest {
     public void testRandomTrue() {
         // GIVEN
         SummonerDto summoner = new SummonerDto();
-        summoner.setId(2);
+        summoner.setId(2L);
         summonerDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 2L), summoner));
 
         // WHEN
@@ -79,7 +79,7 @@ public class SummonerDaoITest {
         // GIVEN
         SummonerDto summoner = new SummonerDto();
         summoner.setName("NAME");
-        summoner.setId(2);
+        summoner.setId(2L);
         summonerDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 2L), summoner));
 
         // WHEN

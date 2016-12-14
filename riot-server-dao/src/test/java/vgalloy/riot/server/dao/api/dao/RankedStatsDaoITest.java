@@ -85,7 +85,7 @@ public class RankedStatsDaoITest {
     public void testInsertWithCorrectRankedStatsDto() {
         // GIVEN
         RankedStatsDto rankedStatsDto = new RankedStatsDto();
-        rankedStatsDto.setSummonerId(10);
+        rankedStatsDto.setSummonerId(10L);
 
         // WHEN
         rankedStatsDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 10L), rankedStatsDto));
@@ -101,7 +101,7 @@ public class RankedStatsDaoITest {
     public void testRandomWithCorrectRankedStatsDto() {
         // GIVEN
         RankedStatsDto rankedStatsDto = new RankedStatsDto();
-        rankedStatsDto.setSummonerId(11);
+        rankedStatsDto.setSummonerId(11L);
 
         // WHEN
         rankedStatsDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 11L), rankedStatsDto));
@@ -119,7 +119,7 @@ public class RankedStatsDaoITest {
         rankedStatsDto.getChampions().add(new ChampionStatsDto());
         rankedStatsDto.getChampions().get(0).setId(10);
         rankedStatsDto.getChampions().add(new ChampionStatsDto());
-        rankedStatsDto.setSummonerId(12);
+        rankedStatsDto.setSummonerId(12L);
 
         // WHEN
         rankedStatsDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 12L), rankedStatsDto));
