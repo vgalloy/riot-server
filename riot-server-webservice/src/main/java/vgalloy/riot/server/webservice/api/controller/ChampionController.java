@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import vgalloy.riot.api.api.constant.Region;
@@ -43,11 +44,11 @@ public class ChampionController {
      * @return the champion information
      */
     @RequestMapping(value = "/champion/{region}/{championId}", method = RequestMethod.GET)
-    public ChampionDto getChampion(@PathVariable Region region, @PathVariable Long championId) {
+    public Model<ChampionDto> getChampion(@PathVariable Region region, @PathVariable Long championId) {
         LOGGER.info("[ GET ] : getChampion : {}", championId);
         Optional<Model<ChampionDto>> result = championService.get(new ItemId(region, championId));
         if (result.isPresent()) {
-            return result.get().getItem();
+            return result.get();
         }
         return null;
     }
@@ -58,7 +59,7 @@ public class ChampionController {
      * @param championId the champion id
      * @return the win rates as a mapToEntity
      */
-    @RequestMapping(value = "/champion/{championId}/winRate", method = RequestMethod.GET)
+    @RequestMapping(value = "/champion/{championId}/winRateByGamePlayed", method = RequestMethod.GET)
     public Map<Integer, Double> getWinRateByGamePlayed(@PathVariable Integer championId) {
         LOGGER.info("[ GET ] : getWinRateByGamePlayed : {}", championId);
         return queryService.getWinRate(championId);
@@ -68,17 +69,18 @@ public class ChampionController {
      * Get the win rate of a champion as a mapToEntity. The key is the number of game played.
      *
      * @param championId the champion id
-     * @param startDay   the start date as a timestamp in Millis (included)
-     * @param endDay     the end date as a timestamp in Millis (excluded)
+     * @param fromMillis the start search date in millis
+     * @param toMillis   the end search date in millis
      * @return the win rates as a mapToEntity
      */
-    @RequestMapping(value = "/champion/{championId}/winRate/{startDay}/{endDay}", method = RequestMethod.GET)
-    public Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId, @PathVariable Long startDay, @PathVariable Long endDay) {
-        LOGGER.info("[ GET ] : getWinRateDuringPeriodOfTime, championId : {},  startDay : {}, endDay : {}", championId, startDay, endDay);
+    @RequestMapping(value = "/champion/{championId}/winRateByDate", method = RequestMethod.GET)
+    public Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId, @RequestParam Long fromMillis, @RequestParam Long toMillis) {
+        LOGGER.info("[ GET ] : getWinRateDuringPeriodOfTime, championId : {},  fromMillis : {}, toMillis : {}", championId, fromMillis, toMillis);
+        LocalDate fromLocalDate = LocalDate.ofEpochDay(fromMillis / 1000 / 3600 / 24);
+        LocalDate toLocalDate = LocalDate.ofEpochDay(toMillis / 1000 / 3600 / 24);
+
         Map<Long, WinRate> result = new HashMap<>();
-        LocalDate startDate = LocalDate.ofEpochDay(startDay / 3600 / 24 / 1000);
-        LocalDate endDate = LocalDate.ofEpochDay(endDay / 3600 / 24 / 1000);
-        for (Map.Entry<LocalDate, WinRate> entry : queryService.getWinRate(championId, startDate, endDate).entrySet()) {
+        for (Map.Entry<LocalDate, WinRate> entry : queryService.getWinRate(championId, fromLocalDate, toLocalDate).entrySet()) {
             result.put(entry.getKey().toEpochDay(), entry.getValue());
         }
         return result;
