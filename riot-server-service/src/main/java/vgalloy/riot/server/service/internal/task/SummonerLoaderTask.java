@@ -38,12 +38,16 @@ public class SummonerLoaderTask extends TimerTask {
 
     @Override
     public void run() {
-        for (Region region : Region.values()) {
-            int queueLength = loaderClient.getItemInQueue(region);
-            LOGGER.info("Queue {} has {} message(s)", region, queueLength);
-            if (queueLength == 0) {
-                addSummoner(region);
+        try {
+            for (Region region : Region.values()) {
+                int queueLength = loaderClient.getItemInQueue(region);
+                LOGGER.info("Queue {} has {} message(s)", region, queueLength);
+                if (queueLength == 0) {
+                    addSummoner(region);
+                }
             }
+        } catch (Exception e) {
+            LOGGER.error("", e);
         }
     }
 
