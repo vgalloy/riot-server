@@ -16,9 +16,9 @@ public interface CommonDao<DTO> {
     /**
      * Save the dto.
      *
-     * @param itemWrapper the item wrapper
+     * @param dpoWrapper the dpo wrapper
      */
-    void save(CommonDpoWrapper<DTO> itemWrapper);
+    void save(CommonDpoWrapper<DTO> dpoWrapper);
 
     /**
      * Get the entity.

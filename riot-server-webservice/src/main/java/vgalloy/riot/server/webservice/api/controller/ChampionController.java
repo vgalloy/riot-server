@@ -20,7 +20,6 @@ import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.service.ChampionService;
-import vgalloy.riot.server.service.api.service.QueryService;
 
 /**
  * @author Vincent Galloy
@@ -31,8 +30,6 @@ public class ChampionController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChampionController.class);
 
-    @Autowired
-    private QueryService queryService;
     @Autowired
     private ChampionService championService;
 
@@ -62,7 +59,7 @@ public class ChampionController {
     @RequestMapping(value = "/champion/{championId}/winRateByGamePlayed", method = RequestMethod.GET)
     public Map<Integer, Double> getWinRateByGamePlayed(@PathVariable Integer championId) {
         LOGGER.info("[ GET ] : getWinRateByGamePlayed : {}", championId);
-        return queryService.getWinRate(championId);
+        return championService.getWinRate(championId);
     }
 
     /**
@@ -80,7 +77,7 @@ public class ChampionController {
         LocalDate toLocalDate = LocalDate.ofEpochDay(toMillis / 1000 / 3600 / 24);
 
         Map<Long, WinRate> result = new HashMap<>();
-        for (Map.Entry<LocalDate, WinRate> entry : queryService.getWinRate(championId, fromLocalDate, toLocalDate).entrySet()) {
+        for (Map.Entry<LocalDate, WinRate> entry : championService.getWinRate(championId, fromLocalDate, toLocalDate).entrySet()) {
             result.put(entry.getKey().toEpochDay(), entry.getValue());
         }
         return result;

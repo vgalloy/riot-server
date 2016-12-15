@@ -41,7 +41,7 @@ public final class ConnectionFactorySupplier implements Supplier<ConnectionFacto
             connectionFactory.setUsername(brokerUsername);
             connectionFactory.setPassword(brokerPassword);
         } catch (Exception e) {
-            LOGGER.warn("", e);
+            LOGGER.warn("Unable to create connection factory", e);
         }
         return connectionFactory;
     }

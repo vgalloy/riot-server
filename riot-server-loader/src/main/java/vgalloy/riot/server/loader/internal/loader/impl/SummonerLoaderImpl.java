@@ -75,7 +75,7 @@ public final class SummonerLoaderImpl implements SummonerLoader {
         LOGGER.info("{} load full summoner with id : {}", RegionPrinter.getRegion(region), summonerId);
         DpoId dpoId = new DpoId(region, summonerId);
 
-        if (shouldIdLoadThisSummoner(dpoId)) {
+        if (shouldILoadThisSummoner(dpoId)) {
             /* Load and save the summoner */
             loadAndSaveSummoner(dpoId);
             /* Load and save ranked stat */
@@ -131,7 +131,7 @@ public final class SummonerLoaderImpl implements SummonerLoader {
      * @param summonerId the summoner id
      * @return true if the summoner can be loaded
      */
-    private boolean shouldIdLoadThisSummoner(DpoId summonerId) {
+    private boolean shouldILoadThisSummoner(DpoId summonerId) {
         Optional<Entity<SummonerDto, DpoId>> optionalEntity = summonerDao.get(summonerId);
         if (!optionalEntity.isPresent()) {
             return true;
@@ -192,7 +192,7 @@ public final class SummonerLoaderImpl implements SummonerLoader {
                     .collect(Collectors.toList());
         }
         for (Long matchId : matchIdList) {
-            LOGGER.info("{} load matchDetail : {}", RegionPrinter.getRegion(summonerId.getRegion()), matchId);
+            LOGGER.info("{} load matchdetail : {}", RegionPrinter.getRegion(summonerId.getRegion()), matchId);
             MatchDetail result = executor.execute(riotApi.getMatchDetailById(matchId).includeTimeline(true), summonerId.getRegion(), 1);
             if (result != null) {
                 matchDetailDao.save(new MatchDetailWrapper(MatchDetailIdMapper.map(result), result));

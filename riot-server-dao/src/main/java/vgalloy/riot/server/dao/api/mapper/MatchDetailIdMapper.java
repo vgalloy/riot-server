@@ -42,7 +42,7 @@ public final class MatchDetailIdMapper {
      * @param matchDetailId the match detail id as string.
      * @return the normalized string of the match detail
      */
-    public static MatchDetailId map(String matchDetailId) {
+    public static MatchDetailId map(String matchDetailId) { // TODO Exception ?
         Objects.requireNonNull(matchDetailId);
 
         String[] split = matchDetailId.split("_");
@@ -76,7 +76,7 @@ public final class MatchDetailIdMapper {
     }
 
     /**
-     * Extract MatchDetailId from a matchDetail.
+     * Extract MatchDetailId from a matchdetail.
      *
      * @param matchDetail the match detail
      * @return the match detail

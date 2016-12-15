@@ -27,7 +27,7 @@ public interface MatchDetailDao {
      * Get the match detail.
      *
      * @param matchDetailId the match detail id
-     * @return the matchDetail
+     * @return the matchdetail
      */
     Optional<Entity<MatchDetail, MatchDetailId>> get(MatchDetailId matchDetailId);
 

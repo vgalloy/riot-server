@@ -52,7 +52,7 @@
         <springfox.version>2.6.1</springfox.version>
 
         <!-- Mongo -->
-        <mongo-java-driver.version>3.4.0</mongo-java-driver.version>
+        <mongo-java-driver.version>3.2.1</mongo-java-driver.version> <!-- TODO : do not upgrade -->
         <mongojack.version>2.6.1</mongojack.version>
 
         <!-- Rabbitmq -->

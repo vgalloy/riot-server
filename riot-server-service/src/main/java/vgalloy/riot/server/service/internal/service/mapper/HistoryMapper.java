@@ -30,7 +30,7 @@ public final class HistoryMapper {
     /**
      * Extract the list of playerTimeline from the Timeline.
      *
-     * @param matchDetail the matchDetail
+     * @param matchDetail the matchdetail
      * @return the list of PlayerTimeline
      */
     public static List<PlayerTimeline> map(MatchDetail matchDetail) {

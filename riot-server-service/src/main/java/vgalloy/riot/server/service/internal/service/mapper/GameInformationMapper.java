@@ -24,7 +24,7 @@ public final class GameInformationMapper {
     }
 
     /**
-     * Convert a matchDetail into a game information.
+     * Convert a matchdetail into a game information.
      *
      * @param matchDetail the match detail
      * @return the Game

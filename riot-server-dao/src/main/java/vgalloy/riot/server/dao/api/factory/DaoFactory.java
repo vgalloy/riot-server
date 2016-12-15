@@ -7,7 +7,7 @@ import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
 import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
 import vgalloy.riot.server.dao.api.dao.RecentGamesDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
-import vgalloy.riot.server.dao.internal.factory.InternalMongoDaoFactory;
+import vgalloy.riot.server.dao.internal.common.factory.InternalCommonDaoFactory;
 
 /**
  * @author Vincent Galloy
@@ -29,7 +29,7 @@ public final class DaoFactory {
      * @return the championDao
      */
     public static ChampionDao getChampionDao() {
-        return InternalMongoDaoFactory.getChampionDao();
+        return InternalCommonDaoFactory.getChampionDao();
     }
 
     /**
@@ -38,7 +38,7 @@ public final class DaoFactory {
      * @return the matchDetailDao
      */
     public static MatchDetailDao getMatchDetailDao() {
-        return InternalMongoDaoFactory.getGlobalMatchDetailDao();
+        return InternalCommonDaoFactory.getMatchDetailDao();
     }
 
     /**
@@ -47,7 +47,7 @@ public final class DaoFactory {
      * @return the matchReferenceDao
      */
     public static MatchReferenceDao getMatchReferenceDao() {
-        return InternalMongoDaoFactory.getMatchReferenceDao();
+        return InternalCommonDaoFactory.getMatchReferenceDao();
     }
 
     /**
@@ -56,7 +56,7 @@ public final class DaoFactory {
      * @return the rankedStatsDao
      */
     public static RankedStatsDao getRankedStatsDao() {
-        return InternalMongoDaoFactory.getRankedStatsDao();
+        return InternalCommonDaoFactory.getRankedStatsDao();
     }
 
     /**
@@ -65,7 +65,7 @@ public final class DaoFactory {
      * @return the RecentGamesDao
      */
     public static RecentGamesDao getRecentGamesDao() {
-        return InternalMongoDaoFactory.getRecentGamesDao();
+        return InternalCommonDaoFactory.getRecentGamesDao();
     }
 
     /**
@@ -74,7 +74,7 @@ public final class DaoFactory {
      * @return the SummonerDao
      */
     public static SummonerDao getSummonerDao() {
-        return InternalMongoDaoFactory.getSummonerDao();
+        return InternalCommonDaoFactory.getSummonerDao();
     }
 
     /**
@@ -83,6 +83,6 @@ public final class DaoFactory {
      * @return the ItemDao
      */
     public static ItemDao getItemDao() {
-        return InternalMongoDaoFactory.getItemDao();
+        return InternalCommonDaoFactory.getItemDao();
     }
 }

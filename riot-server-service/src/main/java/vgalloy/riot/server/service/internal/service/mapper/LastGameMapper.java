@@ -26,7 +26,7 @@ public final class LastGameMapper {
     }
 
     /**
-     * Convert a matchDetail into a LastGame.
+     * Convert a matchdetail into a LastGame.
      *
      * @param matchDetail the match Detail
      * @param summonerId  the summoner id
