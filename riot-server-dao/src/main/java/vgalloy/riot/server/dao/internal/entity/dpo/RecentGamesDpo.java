@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.entity.dataobject;
+package vgalloy.riot.server.dao.internal.entity.dpo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,7 +10,7 @@ import vgalloy.riot.api.api.dto.game.RecentGamesDto;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 28/05/16.
  */
-public class RecentGamesDo extends AbstractDataObject<RecentGamesDto> {
+public class RecentGamesDpo extends AbstractDpo<RecentGamesDto> {
 
     /**
      * Constructor.
@@ -22,11 +22,11 @@ public class RecentGamesDo extends AbstractDataObject<RecentGamesDto> {
      * @param id         the id
      */
     @JsonCreator
-    public RecentGamesDo(@JsonProperty("lastUpdate") Long lastUpdate,
-                         @JsonProperty("region") Region region,
-                         @JsonProperty("itemId") Long itemId,
-                         @JsonProperty("item") RecentGamesDto item,
-                         @JsonProperty("_id") String id) {
+    public RecentGamesDpo(@JsonProperty("lastUpdate") Long lastUpdate,
+                          @JsonProperty("region") Region region,
+                          @JsonProperty("itemId") Long itemId,
+                          @JsonProperty("item") RecentGamesDto item,
+                          @JsonProperty("_id") String id) {
         super(lastUpdate, region, itemId, item, id);
     }
 
@@ -36,7 +36,7 @@ public class RecentGamesDo extends AbstractDataObject<RecentGamesDto> {
      * @param region the region
      * @param itemId the item id
      */
-    public RecentGamesDo(Region region, Long itemId) {
+    public RecentGamesDpo(Region region, Long itemId) {
         super(region, itemId);
     }
 }

@@ -5,7 +5,7 @@ import java.time.ZoneOffset;
 import java.util.Objects;
 
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.service.api.model.Model;
 
 /**
@@ -29,7 +29,7 @@ public final class ModelMapper {
      * @param <DTO>  the DTO type
      * @return the model
      */
-    public static <DTO> Model<DTO> map(Entity<DTO, ItemId> entity) {
+    public static <DTO> Model<DTO> map(Entity<DTO, DpoId> entity) {
         Objects.requireNonNull(entity);
 
         Model<DTO> result = new Model<>(entity.getItemId().getRegion(), entity.getItemId().getId(), LocalDateTime.ofEpochSecond(entity.getLastUpdate(), 0, ZoneOffset.UTC));

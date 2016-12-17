@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.api.entity.itemid;
+package vgalloy.riot.server.dao.api.entity.dpoid;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -9,7 +9,7 @@ import vgalloy.riot.api.api.constant.Region;
  * @author Vincent Galloy - 07/10/16
  *         Created by Vincent Galloy on 07/10/16.
  */
-public class ItemId implements Serializable {
+public class DpoId implements Serializable {
 
     private static final long serialVersionUID = 6936153576810566295L;
 
@@ -22,7 +22,7 @@ public class ItemId implements Serializable {
      * @param region the region
      * @param id     the id
      */
-    public ItemId(Region region, Long id) {
+    public DpoId(Region region, Long id) {
         this.region = Objects.requireNonNull(region);
         this.id = Objects.requireNonNull(id);
         if (id == 0L) {
@@ -40,7 +40,7 @@ public class ItemId implements Serializable {
 
     @Override
     public String toString() {
-        return "ItemId{" +
+        return "DpoId{" +
                 "region=" + region +
                 ", id=" + id +
                 '}';

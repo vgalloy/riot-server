@@ -1,16 +1,16 @@
-package vgalloy.riot.server.dao.internal.entity.dataobject;
+package vgalloy.riot.server.dao.internal.entity.dpo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import vgalloy.riot.api.api.constant.Region;
-import vgalloy.riot.api.api.dto.lolstaticdata.ItemDto;
+import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 28/05/16.
  */
-public class ItemDo extends AbstractDataObject<ItemDto> {
+public class SummonerDpo extends AbstractDpo<SummonerDto> {
 
     /**
      * Constructor.
@@ -22,11 +22,11 @@ public class ItemDo extends AbstractDataObject<ItemDto> {
      * @param id         the id
      */
     @JsonCreator
-    public ItemDo(@JsonProperty("lastUpdate") Long lastUpdate,
-                  @JsonProperty("region") Region region,
-                  @JsonProperty("itemId") Long itemId,
-                  @JsonProperty("item") ItemDto item,
-                  @JsonProperty("_id") String id) {
+    public SummonerDpo(@JsonProperty("lastUpdate") Long lastUpdate,
+                       @JsonProperty("region") Region region,
+                       @JsonProperty("itemId") Long itemId,
+                       @JsonProperty("item") SummonerDto item,
+                       @JsonProperty("_id") String id) {
         super(lastUpdate, region, itemId, item, id);
     }
 
@@ -36,7 +36,7 @@ public class ItemDo extends AbstractDataObject<ItemDto> {
      * @param region the region
      * @param itemId the item id
      */
-    public ItemDo(Region region, Long itemId) {
+    public SummonerDpo(Region region, Long itemId) {
         super(region, itemId);
     }
 }

@@ -7,7 +7,7 @@ import java.util.Objects;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 09/09/16.
  */
-public class WinRate implements Serializable {
+public final class WinRate implements Serializable {
 
     private static final long serialVersionUID = 2798464362605793360L;
 

@@ -11,20 +11,20 @@ import org.mongojack.JacksonDBCollection;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
-import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.GenericDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
-import vgalloy.riot.server.dao.internal.entity.dataobject.AbstractDataObject;
-import vgalloy.riot.server.dao.internal.entity.mapper.DataObjectMapper;
-import vgalloy.riot.server.dao.internal.entity.mapper.ItemIdMapper;
+import vgalloy.riot.server.dao.internal.entity.dpo.AbstractDpo;
+import vgalloy.riot.server.dao.internal.entity.mapper.DpoIdMapper;
+import vgalloy.riot.server.dao.internal.entity.mapper.DpoMapper;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 07/07/16.
  */
-public abstract class AbstractDao<DTO, DATA_OBJECT extends AbstractDataObject<DTO>> implements CommonDao<DTO> {
+public abstract class AbstractDao<DTO, DATA_OBJECT extends AbstractDpo<DTO>> implements CommonDao<DTO> {
 
     protected final JacksonDBCollection<DATA_OBJECT, String> collection;
     private final GenericDao<DTO, DATA_OBJECT> genericDao;
@@ -53,7 +53,7 @@ public abstract class AbstractDao<DTO, DATA_OBJECT extends AbstractDataObject<DT
     }
 
     @Override
-    public void save(CommonWrapper<DTO> itemWrapper) {
+    public void save(CommonDpoWrapper<DTO> itemWrapper) {
         Objects.requireNonNull(itemWrapper);
 
         try {
@@ -67,23 +67,23 @@ public abstract class AbstractDao<DTO, DATA_OBJECT extends AbstractDataObject<DT
     }
 
     @Override
-    public Optional<Entity<DTO, ItemId>> get(ItemId itemId) {
-        Objects.requireNonNull(itemId);
+    public Optional<Entity<DTO, DpoId>> get(DpoId dpoId) {
+        Objects.requireNonNull(dpoId);
 
-        Optional<DATA_OBJECT> dataObject = genericDao.getById(ItemIdMapper.toNormalizeString(itemId));
+        Optional<DATA_OBJECT> dataObject = genericDao.getById(DpoIdMapper.toNormalizeString(dpoId));
         if (dataObject.isPresent()) {
-            return Optional.of(DataObjectMapper.mapToEntity(dataObject.get()));
+            return Optional.of(DpoMapper.mapToEntity(dataObject.get()));
         }
         return Optional.empty();
     }
 
     @Override
-    public Optional<Entity<DTO, ItemId>> getRandom(Region region) {
+    public Optional<Entity<DTO, DpoId>> getRandom(Region region) {
         Objects.requireNonNull(region);
 
         Optional<DATA_OBJECT> dataObject = genericDao.getRandom(region);
         if (dataObject.isPresent()) {
-            return Optional.of(DataObjectMapper.mapToEntity(dataObject.get()));
+            return Optional.of(DpoMapper.mapToEntity(dataObject.get()));
         }
         return Optional.empty();
     }

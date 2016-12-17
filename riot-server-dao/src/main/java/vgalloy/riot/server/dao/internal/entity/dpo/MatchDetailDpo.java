@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.entity.dataobject;
+package vgalloy.riot.server.dao.internal.entity.dpo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,7 +10,7 @@ import vgalloy.riot.api.api.dto.mach.MatchDetail;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 28/05/16.
  */
-public class MatchDetailDo extends AbstractDataObject<MatchDetail> {
+public class MatchDetailDpo extends AbstractDpo<MatchDetail> {
 
     private long matchCreationDateFromEpochDay;
 
@@ -24,11 +24,11 @@ public class MatchDetailDo extends AbstractDataObject<MatchDetail> {
      * @param id         the id
      */
     @JsonCreator
-    public MatchDetailDo(@JsonProperty("lastUpdate") Long lastUpdate,
-                         @JsonProperty("region") Region region,
-                         @JsonProperty("itemId") Long itemId,
-                         @JsonProperty("item") MatchDetail item,
-                         @JsonProperty("_id") String id) {
+    public MatchDetailDpo(@JsonProperty("lastUpdate") Long lastUpdate,
+                          @JsonProperty("region") Region region,
+                          @JsonProperty("itemId") Long itemId,
+                          @JsonProperty("item") MatchDetail item,
+                          @JsonProperty("_id") String id) {
         super(lastUpdate, region, itemId, item, id);
     }
 
@@ -39,7 +39,7 @@ public class MatchDetailDo extends AbstractDataObject<MatchDetail> {
      * @param itemId                        the item id
      * @param matchCreationDateFromEpochDay the match creation date from epoch (in days)
      */
-    public MatchDetailDo(Region region, Long itemId, long matchCreationDateFromEpochDay) {
+    public MatchDetailDpo(Region region, Long itemId, long matchCreationDateFromEpochDay) {
         super(region, itemId);
         this.matchCreationDateFromEpochDay = matchCreationDateFromEpochDay;
     }

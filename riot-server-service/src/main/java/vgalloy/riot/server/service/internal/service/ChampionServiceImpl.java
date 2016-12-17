@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.dao.ChampionDao;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.loader.api.service.LoaderClient;
 import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.service.ChampionService;
@@ -30,8 +30,8 @@ public final class ChampionServiceImpl extends AbstractService<ChampionDto> impl
     }
 
     @Override
-    public Optional<Model<ChampionDto>> get(ItemId itemId) {
-        loaderClient.loadChampionById(itemId.getRegion(), itemId.getId());
-        return super.get(itemId);
+    public Optional<Model<ChampionDto>> get(DpoId dpoId) {
+        loaderClient.loadChampionById(dpoId.getRegion(), dpoId.getId());
+        return super.get(dpoId);
     }
 }

@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.api.entity.itemid;
+package vgalloy.riot.server.dao.api.entity.dpoid;
 
 import java.time.LocalDate;
 
@@ -8,7 +8,7 @@ import vgalloy.riot.api.api.constant.Region;
  * @author Vincent Galloy - 07/10/16
  *         Created by Vincent Galloy on 07/10/16.
  */
-public class MatchDetailId extends ItemId {
+public class MatchDetailId extends DpoId {
 
     private static final long serialVersionUID = 536360614566269643L;
 

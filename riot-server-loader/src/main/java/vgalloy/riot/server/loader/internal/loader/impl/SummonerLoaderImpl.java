@@ -26,9 +26,9 @@ import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
-import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
-import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
 import vgalloy.riot.server.loader.api.service.exception.LoaderException;
@@ -71,15 +71,15 @@ public final class SummonerLoaderImpl implements SummonerLoader {
     public void loadSummonerById(Region region, Long summonerId) {
         Objects.requireNonNull(summonerId);
         LOGGER.info("{} load full summoner with id : {}", RegionPrinter.getRegion(region), summonerId);
-        ItemId itemId = new ItemId(region, summonerId);
+        DpoId dpoId = new DpoId(region, summonerId);
 
-        if (shouldIdLoadThisSummoner(itemId)) {
+        if (shouldIdLoadThisSummoner(dpoId)) {
             /* Load and save the summoner */
-            loadAndSaveSummoner(itemId);
+            loadAndSaveSummoner(dpoId);
             /* Load and save ranked stat */
-            loadAndSaveRankedStat(itemId);
+            loadAndSaveRankedStat(dpoId);
             /* Load and save recent game */
-            loadAndSaveMatch(itemId);
+            loadAndSaveMatch(dpoId);
         }
     }
 
@@ -116,11 +116,11 @@ public final class SummonerLoaderImpl implements SummonerLoader {
      *
      * @param summonerId the summoner essential information
      */
-    private void loadAndSaveSummoner(ItemId summonerId) {
+    private void loadAndSaveSummoner(DpoId summonerId) {
         LOGGER.info("{} load summoner : {}", RegionPrinter.getRegion(summonerId.getRegion()), summonerId.getId());
         Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonersByIds(summonerId.getId()), summonerId.getRegion(), 1);
         SummonerDto summonerDto = summonerDtoMap.entrySet().iterator().next().getValue();
-        summonerDao.save(new CommonWrapper<>(summonerId, summonerDto));
+        summonerDao.save(new CommonDpoWrapper<>(summonerId, summonerDto));
     }
 
     /**
@@ -129,8 +129,8 @@ public final class SummonerLoaderImpl implements SummonerLoader {
      * @param summonerId the summoner id
      * @return true if the summoner can be loaded
      */
-    private boolean shouldIdLoadThisSummoner(ItemId summonerId) {
-        Optional<Entity<SummonerDto, ItemId>> optionalEntity = summonerDao.get(summonerId);
+    private boolean shouldIdLoadThisSummoner(DpoId summonerId) {
+        Optional<Entity<SummonerDto, DpoId>> optionalEntity = summonerDao.get(summonerId);
         if (!optionalEntity.isPresent()) {
             return true;
         }
@@ -146,15 +146,15 @@ public final class SummonerLoaderImpl implements SummonerLoader {
      *
      * @param summonerId the summoner essential information
      */
-    private void loadAndSaveRankedStat(ItemId summonerId) {
+    private void loadAndSaveRankedStat(DpoId summonerId) {
         if (shouldILoadThisRankedStat(summonerId)) {
             Query<RankedStatsDto> query = riotApi.getRankedStats(summonerId.getId());
             LOGGER.info("{} load rankedStat : {}", RegionPrinter.getRegion(summonerId.getRegion()), summonerId.getId());
             Optional<RankedStatsDto> rankedStatsDto = Optional.ofNullable(executor.execute(query, summonerId.getRegion(), 1));
             if (rankedStatsDto.isPresent()) {
-                rankedStatsDao.save(new CommonWrapper<>(summonerId, rankedStatsDto.get()));
+                rankedStatsDao.save(new CommonDpoWrapper<>(summonerId, rankedStatsDto.get()));
             } else {
-                rankedStatsDao.save(new CommonWrapper<>(summonerId));
+                rankedStatsDao.save(new CommonDpoWrapper<>(summonerId));
             }
         }
     }
@@ -165,8 +165,8 @@ public final class SummonerLoaderImpl implements SummonerLoader {
      * @param summonerId the summoner id
      * @return true if the ranked stat can be loaded
      */
-    private boolean shouldILoadThisRankedStat(ItemId summonerId) {
-        Optional<Entity<RankedStatsDto, ItemId>> optionalEntity = rankedStatsDao.get(summonerId);
+    private boolean shouldILoadThisRankedStat(DpoId summonerId) {
+        Optional<Entity<RankedStatsDto, DpoId>> optionalEntity = rankedStatsDao.get(summonerId);
         if (!optionalEntity.isPresent()) {
             return true;
         }
@@ -179,7 +179,7 @@ public final class SummonerLoaderImpl implements SummonerLoader {
      *
      * @param summonerId the summoner essential information
      */
-    private void loadAndSaveMatch(ItemId summonerId) {
+    private void loadAndSaveMatch(DpoId summonerId) {
         Query<MatchList> query = riotApi.getMatchListBySummonerId(summonerId.getId()).region(summonerId.getRegion());
         MatchList matchList = executor.execute(query, summonerId.getRegion(), 1);
         List<Long> matchIdList = new ArrayList<>();

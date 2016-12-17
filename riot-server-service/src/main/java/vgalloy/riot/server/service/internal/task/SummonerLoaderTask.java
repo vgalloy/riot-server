@@ -11,7 +11,7 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.loader.api.service.LoaderClient;
 
 /**
@@ -69,7 +69,7 @@ public class SummonerLoaderTask extends TimerTask {
      * @return an optional with the id
      */
     private Optional<Long> getRandomSummonerId(Region region) {
-        Optional<Entity<SummonerDto, ItemId>> optionalSummonerDto = summonerDao.getRandom(region);
+        Optional<Entity<SummonerDto, DpoId>> optionalSummonerDto = summonerDao.getRandom(region);
         if (optionalSummonerDto.isPresent() && optionalSummonerDto.get().getItem().isPresent()) {
             SummonerDto summonerDto = optionalSummonerDto.get().getItem().get();
             return Optional.of(summonerDto.getId());

@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
-import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 
 /**
  * @author Vincent Galloy
@@ -18,15 +18,15 @@ public interface CommonDao<DTO> {
      *
      * @param itemWrapper the item wrapper
      */
-    void save(CommonWrapper<DTO> itemWrapper);
+    void save(CommonDpoWrapper<DTO> itemWrapper);
 
     /**
      * Get the entity.
      *
-     * @param itemId the item id
+     * @param dpoId the item id
      * @return the datable
      */
-    Optional<Entity<DTO, ItemId>> get(ItemId itemId);
+    Optional<Entity<DTO, DpoId>> get(DpoId dpoId);
 
     /**
      * Get one random element in the collection.
@@ -34,5 +34,5 @@ public interface CommonDao<DTO> {
      * @param region the region
      * @return the random element
      */
-    Optional<Entity<DTO, ItemId>> getRandom(Region region);
+    Optional<Entity<DTO, DpoId>> getRandom(Region region);
 }

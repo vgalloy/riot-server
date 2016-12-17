@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.service.CommonService;
 import vgalloy.riot.server.service.internal.service.mapper.ModelMapper;
@@ -27,8 +27,8 @@ public abstract class AbstractService<DTO> implements CommonService<DTO> {
     }
 
     @Override
-    public Optional<Model<DTO>> get(ItemId itemId) {
-        Optional<Entity<DTO, ItemId>> result = commonDao.get(itemId);
+    public Optional<Model<DTO>> get(DpoId dpoId) {
+        Optional<Entity<DTO, DpoId>> result = commonDao.get(dpoId);
         if (result.isPresent()) {
             return Optional.of(ModelMapper.map(result.get()));
         }

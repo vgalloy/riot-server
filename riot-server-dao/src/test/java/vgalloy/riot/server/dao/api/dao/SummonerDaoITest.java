@@ -16,8 +16,8 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.DaoTestUtil;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
-import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.SummonerDaoImpl;
 
 /**
@@ -50,7 +50,7 @@ public class SummonerDaoITest {
     @Test
     public void testRandomFalse() {
         // WHEN
-        Optional<Entity<SummonerDto, ItemId>> result = summonerDao.getRandom(Region.BR);
+        Optional<Entity<SummonerDto, DpoId>> result = summonerDao.getRandom(Region.BR);
 
         // THEN
         Assert.assertNotNull(result);
@@ -62,10 +62,10 @@ public class SummonerDaoITest {
         // GIVEN
         SummonerDto summoner = new SummonerDto();
         summoner.setId(2L);
-        summonerDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 2L), summoner));
+        summonerDao.save(new CommonDpoWrapper<>(new DpoId(Region.EUW, 2L), summoner));
 
         // WHEN
-        Optional<Entity<SummonerDto, ItemId>> result = summonerDao.getRandom(Region.EUW);
+        Optional<Entity<SummonerDto, DpoId>> result = summonerDao.getRandom(Region.EUW);
 
         // THEN
         Assert.assertNotNull(result);
@@ -80,7 +80,7 @@ public class SummonerDaoITest {
         SummonerDto summoner = new SummonerDto();
         summoner.setName("NAME");
         summoner.setId(2L);
-        summonerDao.save(new CommonWrapper<>(new ItemId(Region.EUW, 2L), summoner));
+        summonerDao.save(new CommonDpoWrapper<>(new DpoId(Region.EUW, 2L), summoner));
 
         // WHEN
         Optional<SummonerDto> resultEmpty = summonerDao.getSummonerByName(Region.EUW, "azeR");

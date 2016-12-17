@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import vgalloy.riot.api.api.dto.lolstaticdata.ItemDto;
 import vgalloy.riot.server.dao.api.dao.ItemDao;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.loader.api.service.LoaderClient;
 import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.service.ItemService;
@@ -30,8 +30,8 @@ public final class ItemServiceImpl extends AbstractService<ItemDto> implements I
     }
 
     @Override
-    public Optional<Model<ItemDto>> get(ItemId itemId) {
-        loaderClient.loadAsyncItemById(itemId.getRegion(), Math.toIntExact(itemId.getId()));
-        return super.get(itemId);
+    public Optional<Model<ItemDto>> get(DpoId dpoId) {
+        loaderClient.loadAsyncItemById(dpoId.getRegion(), Math.toIntExact(dpoId.getId()));
+        return super.get(dpoId);
     }
 }

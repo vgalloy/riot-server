@@ -1,16 +1,16 @@
-package vgalloy.riot.server.dao.internal.entity.dataobject;
+package vgalloy.riot.server.dao.internal.entity.dpo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import vgalloy.riot.api.api.constant.Region;
-import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
+import vgalloy.riot.api.api.dto.mach.Timeline;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 28/05/16.
  */
-public class ChampionDo extends AbstractDataObject<ChampionDto> {
+public class TimelineDpo extends AbstractDpo<Timeline> {
 
     /**
      * Constructor.
@@ -22,11 +22,11 @@ public class ChampionDo extends AbstractDataObject<ChampionDto> {
      * @param id         the id
      */
     @JsonCreator
-    public ChampionDo(@JsonProperty("lastUpdate") Long lastUpdate,
-                      @JsonProperty("region") Region region,
-                      @JsonProperty("itemId") Long itemId,
-                      @JsonProperty("item") ChampionDto item,
-                      @JsonProperty("_id") String id) {
+    public TimelineDpo(@JsonProperty("lastUpdate") Long lastUpdate,
+                       @JsonProperty("region") Region region,
+                       @JsonProperty("itemId") Long itemId,
+                       @JsonProperty("item") Timeline item,
+                       @JsonProperty("_id") String id) {
         super(lastUpdate, region, itemId, item, id);
     }
 
@@ -36,7 +36,7 @@ public class ChampionDo extends AbstractDataObject<ChampionDto> {
      * @param region the region
      * @param itemId the item id
      */
-    public ChampionDo(Region region, Long itemId) {
+    public TimelineDpo(Region region, Long itemId) {
         super(region, itemId);
     }
 }

@@ -16,8 +16,8 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.DaoTestUtil;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
-import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.ChampionDaoImpl;
 
 /**
@@ -54,8 +54,8 @@ public class ChampionDaoTestUtil {
         dto.setName("Le Blanc");
 
         // WHEN
-        dao.save(new CommonWrapper<>(new ItemId(Region.JP, 19L), dto));
-        Optional<Entity<ChampionDto, ItemId>> result = dao.get(new ItemId(Region.JP, 19L));
+        dao.save(new CommonDpoWrapper<>(new DpoId(Region.JP, 19L), dto));
+        Optional<Entity<ChampionDto, DpoId>> result = dao.get(new DpoId(Region.JP, 19L));
 
         // THEN
         Assert.assertNotNull(result);

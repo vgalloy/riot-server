@@ -29,7 +29,7 @@ public class Model<DTO> implements Serializable {
     public Model(Region region, Long itemId, LocalDateTime lastUpdate) {
         this.lastUpdate = Objects.requireNonNull(lastUpdate, "lastUpdate can not be null");
         this.region = Objects.requireNonNull(region, "region can not be null");
-        this.itemId = Objects.requireNonNull(itemId, "ItemId can not be null");
+        this.itemId = Objects.requireNonNull(itemId, "DpoId can not be null");
     }
 
     public LocalDateTime getLastUpdate() {

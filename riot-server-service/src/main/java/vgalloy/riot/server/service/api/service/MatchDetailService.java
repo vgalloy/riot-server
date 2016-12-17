@@ -2,7 +2,7 @@ package vgalloy.riot.server.service.api.service;
 
 import java.util.Optional;
 
-import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
+import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.service.api.model.Game;
 
 /**

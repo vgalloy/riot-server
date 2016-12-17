@@ -2,7 +2,7 @@ package vgalloy.riot.server.service.api.service;
 
 import java.util.Optional;
 
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.service.api.model.Model;
 
 /**
@@ -14,8 +14,8 @@ public interface CommonService<DTO> {
     /**
      * Get the model.
      *
-     * @param itemId the item id
+     * @param dpoId the item id
      * @return the datable
      */
-    Optional<Model<DTO>> get(ItemId itemId);
+    Optional<Model<DTO>> get(DpoId dpoId);
 }

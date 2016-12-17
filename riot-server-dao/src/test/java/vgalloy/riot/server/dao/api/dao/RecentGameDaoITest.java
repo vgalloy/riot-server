@@ -19,8 +19,8 @@ import vgalloy.riot.api.api.dto.game.GameDto;
 import vgalloy.riot.api.api.dto.game.RecentGamesDto;
 import vgalloy.riot.server.dao.DaoTestUtil;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
-import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.dao.internal.dao.commondao.impl.RecentGamesDaoImpl;
 
 /**
@@ -60,8 +60,8 @@ public class RecentGameDaoITest {
         recentGamesDto.setGames(gameDtoSet);
 
         // WHEN
-        recentGamesDao.save(new CommonWrapper<>(new ItemId(Region.JP, 19L), recentGamesDto));
-        Optional<Entity<RecentGamesDto, ItemId>> result = recentGamesDao.get(new ItemId(Region.JP, 19L));
+        recentGamesDao.save(new CommonDpoWrapper<>(new DpoId(Region.JP, 19L), recentGamesDto));
+        Optional<Entity<RecentGamesDto, DpoId>> result = recentGamesDao.get(new DpoId(Region.JP, 19L));
 
         // THEN
         Assert.assertNotNull(result);

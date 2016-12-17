@@ -9,8 +9,8 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.server.dao.api.dao.ChampionDao;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
-import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.loader.internal.executor.Executor;
 import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
 import vgalloy.riot.server.loader.internal.loader.ChampionLoader;
@@ -45,9 +45,9 @@ public final class ChampionLoaderImpl implements ChampionLoader {
         Objects.requireNonNull(region);
         Objects.requireNonNull(championId);
         LOGGER.info("{} load full champion with id : {}", RegionPrinter.getRegion(region), championId);
-        ItemId item = new ItemId(region, championId);
+        DpoId item = new DpoId(region, championId);
 
         ChampionDto championDto = executor.execute(riotApi.getChampionDataById(item.getId()), item.getRegion(), 1);
-        championDao.save(new CommonWrapper<>(item, championDto));
+        championDao.save(new CommonDpoWrapper<>(item, championDto));
     }
 }

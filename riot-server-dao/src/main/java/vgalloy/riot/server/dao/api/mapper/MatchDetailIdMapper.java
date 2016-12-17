@@ -7,7 +7,7 @@ import java.util.Objects;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.matchlist.MatchReference;
-import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
+import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 
 /**
  * @author Vincent Galloy

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ItemDto;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.service.ItemService;
 
@@ -38,7 +38,7 @@ public class ItemController {
     @RequestMapping(value = "/item/{region}/{itemId}", method = RequestMethod.GET)
     public ItemDto getItemById(@PathVariable Region region, @PathVariable Long itemId) {
         LOGGER.info("[ GET ] : getItemById, region : {}, itemId : {}", region, itemId);
-        Optional<Model<ItemDto>> result = itemService.get(new ItemId(region, itemId));
+        Optional<Model<ItemDto>> result = itemService.get(new DpoId(region, itemId));
         if (result.isPresent()) {
             return result.get().getItem();
         }

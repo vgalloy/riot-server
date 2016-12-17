@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.entity.dataobject;
+package vgalloy.riot.server.dao.internal.entity.dpo;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -16,7 +16,7 @@ import vgalloy.riot.server.dao.internal.entity.Key;
  *         Created by Vincent Galloy on 12/07/16.
  */
 @JsonAutoDetect(fieldVisibility = Visibility.NONE, getterVisibility = Visibility.ANY, setterVisibility = Visibility.NONE)
-public abstract class AbstractDataObject<DTO> {
+public abstract class AbstractDpo<DTO> {
 
     private final Long lastUpdate;
     private final Region region;
@@ -33,7 +33,7 @@ public abstract class AbstractDataObject<DTO> {
      * @param item       the item
      * @param id         the id
      */
-    public AbstractDataObject(Long lastUpdate, Region region, Long itemId, DTO item, String id) {
+    public AbstractDpo(Long lastUpdate, Region region, Long itemId, DTO item, String id) {
         this.lastUpdate = Objects.requireNonNull(lastUpdate);
         this.region = Objects.requireNonNull(region);
         this.itemId = Objects.requireNonNull(itemId);
@@ -47,7 +47,7 @@ public abstract class AbstractDataObject<DTO> {
      * @param region the region
      * @param itemId the item id
      */
-    public AbstractDataObject(Region region, Long itemId) {
+    public AbstractDpo(Region region, Long itemId) {
         lastUpdate = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
         this.region = Objects.requireNonNull(region);
         this.itemId = Objects.requireNonNull(itemId);
@@ -84,10 +84,10 @@ public abstract class AbstractDataObject<DTO> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AbstractDataObject)) {
+        if (!(o instanceof AbstractDpo)) {
             return false;
         }
-        AbstractDataObject<?> that = (AbstractDataObject<?>) o;
+        AbstractDpo<?> that = (AbstractDpo<?>) o;
         return Objects.equals(lastUpdate, that.lastUpdate) &&
                 region == that.region &&
                 Objects.equals(itemId, that.itemId) &&
@@ -102,10 +102,10 @@ public abstract class AbstractDataObject<DTO> {
 
     @Override
     public String toString() {
-        return "AbstractDataObject{" +
+        return "AbstractDpo{" +
                 "lastUpdate=" + lastUpdate +
                 ", region=" + region +
-                ", ItemId=" + itemId +
+                ", DpoId=" + itemId +
                 ", item=" + item +
                 ", key=" + key +
                 '}';

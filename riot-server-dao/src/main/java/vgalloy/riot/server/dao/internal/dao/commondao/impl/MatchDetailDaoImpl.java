@@ -25,12 +25,12 @@ import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.WinRate;
-import vgalloy.riot.server.dao.api.entity.itemid.MatchDetailId;
+import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
-import vgalloy.riot.server.dao.internal.entity.dataobject.AbstractDataObject;
-import vgalloy.riot.server.dao.internal.entity.dataobject.MatchDetailDo;
-import vgalloy.riot.server.dao.internal.entity.mapper.ItemIdMapper;
+import vgalloy.riot.server.dao.internal.entity.dpo.AbstractDpo;
+import vgalloy.riot.server.dao.internal.entity.dpo.MatchDetailDpo;
+import vgalloy.riot.server.dao.internal.entity.mapper.DpoIdMapper;
 import vgalloy.riot.server.dao.internal.entity.mapper.MatchDetailMapper;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 
@@ -77,8 +77,8 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
     public void save(MatchDetailWrapper matchDetailWrapper) {
         Objects.requireNonNull(matchDetailWrapper);
 
-        JacksonDBCollection<MatchDetailDo, String> collection = getCollection(matchDetailWrapper.getItemId().getMatchDate());
-        MatchDetailDo dataObject = new MatchDetailDo(matchDetailWrapper.getItemId().getRegion(), matchDetailWrapper.getItemId().getId(), matchDetailWrapper.getItemId().getMatchDate().toEpochDay());
+        JacksonDBCollection<MatchDetailDpo, String> collection = getCollection(matchDetailWrapper.getItemId().getMatchDate());
+        MatchDetailDpo dataObject = new MatchDetailDpo(matchDetailWrapper.getItemId().getRegion(), matchDetailWrapper.getItemId().getId(), matchDetailWrapper.getItemId().getMatchDate().toEpochDay());
         matchDetailWrapper.getItem().ifPresent(dataObject::setItem);
         new GenericDaoImpl<>(collection).update(dataObject);
     }
@@ -87,8 +87,8 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
     public Optional<Entity<MatchDetail, MatchDetailId>> get(MatchDetailId matchDetailId) {
         Objects.requireNonNull(matchDetailId);
 
-        JacksonDBCollection<MatchDetailDo, String> collection = getCollection(matchDetailId.getMatchDate());
-        Optional<MatchDetailDo> dataObject = new GenericDaoImpl<>(collection).getById(ItemIdMapper.toNormalizeString(matchDetailId));
+        JacksonDBCollection<MatchDetailDpo, String> collection = getCollection(matchDetailId.getMatchDate());
+        Optional<MatchDetailDpo> dataObject = new GenericDaoImpl<>(collection).getById(DpoIdMapper.toNormalizeString(matchDetailId));
         if (dataObject.isPresent()) {
             return Optional.of(MatchDetailMapper.mapToEntity(dataObject.get()));
         }
@@ -106,12 +106,12 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
         List<MatchDetail> result = new ArrayList<>();
 
         while (currentDate.isBefore(to)) {
-            JacksonDBCollection<MatchDetailDo, String> collection = getCollection(currentDate);
+            JacksonDBCollection<MatchDetailDpo, String> collection = getCollection(currentDate);
             result.addAll(collection.find(DBQuery.is("item.participantIdentities.player.summonerId", summonerId))
                     .and(DBQuery.is("region", region))
                     .toArray()
                     .stream()
-                    .map(AbstractDataObject::getItem)
+                    .map(AbstractDpo::getItem)
                     .collect(Collectors.toList()));
 
             currentDate = currentDate.plus(1, ChronoUnit.DAYS);
@@ -185,13 +185,13 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
      * @param localDate the index date
      * @return the mongoJackCollection
      */
-    private JacksonDBCollection<MatchDetailDo, String> getCollection(LocalDate localDate) {
+    private JacksonDBCollection<MatchDetailDpo, String> getCollection(LocalDate localDate) {
         Objects.requireNonNull(localDate);
         DBCollection dbCollection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
                 .getDB(databaseName)
                 .getDBCollection(getCollectionName(localDate))
                 .get();
 
-        return JacksonDBCollection.wrap(dbCollection, MatchDetailDo.class, String.class);
+        return JacksonDBCollection.wrap(dbCollection, MatchDetailDpo.class, String.class);
     }
 }

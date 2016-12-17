@@ -14,8 +14,8 @@ import vgalloy.riot.api.api.dto.lolstaticdata.ItemDto;
 import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.server.dao.api.dao.ItemDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
-import vgalloy.riot.server.dao.api.entity.wrapper.CommonWrapper;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.loader.internal.executor.Executor;
 import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
 import vgalloy.riot.server.loader.internal.loader.ItemLoader;
@@ -49,21 +49,21 @@ public final class ItemLoaderImpl implements ItemLoader {
     public void loadItemById(Region region, Integer itemId) {
         Objects.requireNonNull(itemId);
         LOGGER.info("{} load item with id : {}", RegionPrinter.getRegion(region), itemId);
-        ItemId item = new ItemId(region, (long) itemId);
+        DpoId item = new DpoId(region, (long) itemId);
         if (shouldIdLoadThisItem(item)) {
             ItemDto itemDto = executor.execute(riotApi.getItemById(item.getId()), item.getRegion(), 1);
-            itemDao.save(new CommonWrapper<>(item, itemDto));
+            itemDao.save(new CommonDpoWrapper<>(item, itemDto));
         }
     }
 
     /**
      * Check if the item is ok for loading.
      *
-     * @param itemId the item id
+     * @param dpoId the item id
      * @return true if the item can be loaded
      */
-    private boolean shouldIdLoadThisItem(ItemId itemId) {
-        Optional<Entity<ItemDto, ItemId>> optionalEntity = itemDao.get(itemId);
+    private boolean shouldIdLoadThisItem(DpoId dpoId) {
+        Optional<Entity<ItemDto, DpoId>> optionalEntity = itemDao.get(dpoId);
         if (!optionalEntity.isPresent()) {
             return true;
         }

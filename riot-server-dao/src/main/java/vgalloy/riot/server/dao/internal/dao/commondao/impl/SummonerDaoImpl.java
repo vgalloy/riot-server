@@ -9,13 +9,13 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.dao.internal.dao.commondao.AbstractDao;
-import vgalloy.riot.server.dao.internal.entity.dataobject.SummonerDo;
+import vgalloy.riot.server.dao.internal.entity.dpo.SummonerDpo;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 28/05/16.
  */
-public final class SummonerDaoImpl extends AbstractDao<SummonerDto, SummonerDo> implements SummonerDao {
+public final class SummonerDaoImpl extends AbstractDao<SummonerDto, SummonerDpo> implements SummonerDao {
 
     public static final String COLLECTION_NAME = "summoner";
 
@@ -34,7 +34,7 @@ public final class SummonerDaoImpl extends AbstractDao<SummonerDto, SummonerDo> 
         Objects.requireNonNull(region);
         Objects.requireNonNull(summonerName);
 
-        Optional<SummonerDo> summonerDo = Optional.ofNullable(collection.findOne(DBQuery.is("item.name", summonerName).and(DBQuery.is("region", region))));
+        Optional<SummonerDpo> summonerDo = Optional.ofNullable(collection.findOne(DBQuery.is("item.name", summonerName).and(DBQuery.is("region", region))));
 
         if (summonerDo.isPresent()) {
             return Optional.of(summonerDo.get().getItem());

@@ -3,20 +3,20 @@ package vgalloy.riot.server.dao.internal.entity.mapper;
 import java.util.Objects;
 
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
-import vgalloy.riot.server.dao.internal.entity.dataobject.AbstractDataObject;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.internal.entity.dpo.AbstractDpo;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 12/07/16.
  */
-public final class DataObjectMapper {
+public final class DpoMapper {
 
     /**
      * Constructor.
      * To prevent instantiation
      */
-    private DataObjectMapper() {
+    private DpoMapper() {
         throw new AssertionError();
     }
 
@@ -27,13 +27,13 @@ public final class DataObjectMapper {
      * @param <DTO>      the dto type
      * @return the entity
      */
-    public static <DTO> Entity<DTO, ItemId> mapToEntity(AbstractDataObject<DTO> dataObject) {
+    public static <DTO> Entity<DTO, DpoId> mapToEntity(AbstractDpo<DTO> dataObject) {
         Objects.requireNonNull(dataObject);
 
-        ItemId itemId = ItemIdMapper.fromNormalize(dataObject.getId());
+        DpoId dpoId = DpoIdMapper.fromNormalize(dataObject.getId());
         if (dataObject.getItem() == null) {
-            return new Entity<>(itemId, dataObject.getLastUpdate());
+            return new Entity<>(dpoId, dataObject.getLastUpdate());
         }
-        return new Entity<>(itemId, dataObject.getItem(), dataObject.getLastUpdate());
+        return new Entity<>(dpoId, dataObject.getItem(), dataObject.getLastUpdate());
     }
 }

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.entity.WinRate;
-import vgalloy.riot.server.dao.api.entity.itemid.ItemId;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.service.ChampionService;
 import vgalloy.riot.server.service.api.service.QueryService;
@@ -46,7 +46,7 @@ public class ChampionController {
     @RequestMapping(value = "/champion/{region}/{championId}", method = RequestMethod.GET)
     public Model<ChampionDto> getChampion(@PathVariable Region region, @PathVariable Long championId) {
         LOGGER.info("[ GET ] : getChampion : {}", championId);
-        Optional<Model<ChampionDto>> result = championService.get(new ItemId(region, championId));
+        Optional<Model<ChampionDto>> result = championService.get(new DpoId(region, championId));
         if (result.isPresent()) {
             return result.get();
         }
