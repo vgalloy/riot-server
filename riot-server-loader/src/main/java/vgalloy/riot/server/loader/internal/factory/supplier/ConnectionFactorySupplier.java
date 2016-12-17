@@ -31,10 +31,10 @@ public final class ConnectionFactorySupplier implements Supplier<ConnectionFacto
     public ConnectionFactory get() {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         try {
-            String brokerUrl = (String) configuration.getProperty("broker.url");
-            int brokerPort = Integer.valueOf((String) configuration.getProperty("broker.port"));
-            String brokerUsername = (String) configuration.getProperty("broker.username");
-            String brokerPassword = (String) configuration.getProperty("broker.password");
+            String brokerUrl = configuration.getString("broker.url");
+            int brokerPort = configuration.getInt("broker.port");
+            String brokerUsername = configuration.getString("broker.username");
+            String brokerPassword = configuration.getString("broker.password");
 
             connectionFactory.setHost(brokerUrl);
             connectionFactory.setPort(brokerPort);

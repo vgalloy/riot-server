@@ -21,7 +21,7 @@ public final class ExecutorFactory {
 
     static {
         Configuration configuration = new ConfigurationSupplier("application.properties").get();
-        String apiKey = (String) configuration.getProperty("api_key");
+        String apiKey = configuration.getString("api_key");
         EXECUTOR = new ExecutorImpl(new RiotApiKey(apiKey));
     }
 
