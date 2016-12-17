@@ -18,15 +18,15 @@ import vgalloy.riot.server.dao.DaoTestUtil;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.ChampionDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.ChampionDaoImpl;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 01/07/16.
  */
-public class ChampionDaoTestUtil {
+public class ChampionDaoITest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChampionDaoTestUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChampionDaoITest.class);
     private static final String URL = "localhost";
     private static final int PORT = 29501;
 

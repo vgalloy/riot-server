@@ -1,8 +1,8 @@
-package vgalloy.riot.server.dao.internal.dao.commondao.impl;
+package vgalloy.riot.server.dao.internal.dao.impl;
 
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
 import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
-import vgalloy.riot.server.dao.internal.dao.commondao.AbstractDao;
+import vgalloy.riot.server.dao.internal.dao.AbstractDao;
 import vgalloy.riot.server.dao.internal.entity.dpo.RankedStatsDpo;
 
 /**

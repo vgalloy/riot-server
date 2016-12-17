@@ -8,14 +8,16 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import org.bson.Document;
 
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.RankedStatsDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDatabaseFactory;
+import vgalloy.riot.server.dao.internal.dao.impl.RankedStatsDaoImpl;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 10/09/16.
  */
 public final class WinRateQuery {
+
+    private static final String COLLECTION_NAME = "winRate";
 
     /**
      * Constructor.
@@ -34,7 +36,7 @@ public final class WinRateQuery {
      */
     public static Map<Integer, Double> getWinRate(MongoDatabaseFactory mongoDatabaseFactory, int championId) {
         Map<Integer, Double> map = new HashMap<>();
-        FindIterable<Document> result = mongoDatabaseFactory.getMongoCollection("winRate").get().find(new Document("_id.championId", championId));
+        FindIterable<Document> result = mongoDatabaseFactory.getMongoCollection(COLLECTION_NAME).get().find(new Document("_id.championId", championId));
         for (Document o : result) {
             Integer index = ((Document) o.get("_id")).getInteger("played");
             map.put(index, Math.floor(1000 * o.getDouble("result")) / 10);
@@ -58,7 +60,7 @@ public final class WinRateQuery {
                 ),
                 new BasicDBObject("$project", new Document("result", new Document("$divide", new String[]{"$won", "$played"})).append("total", 1)),
                 new BasicDBObject("$sort", new Document("_id", 1)),
-                new BasicDBObject("$out", "winRate")
+                new BasicDBObject("$out", COLLECTION_NAME)
         )).iterator();
     }
 }

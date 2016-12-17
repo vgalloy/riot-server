@@ -18,7 +18,7 @@ import vgalloy.riot.server.dao.DaoTestUtil;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.ItemDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.ItemDaoImpl;
 
 /**
  * @author Vincent Galloy

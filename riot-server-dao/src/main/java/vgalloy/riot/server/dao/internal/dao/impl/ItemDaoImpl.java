@@ -1,8 +1,8 @@
-package vgalloy.riot.server.dao.internal.dao.commondao.impl;
+package vgalloy.riot.server.dao.internal.dao.impl;
 
 import vgalloy.riot.api.api.dto.lolstaticdata.ItemDto;
 import vgalloy.riot.server.dao.api.dao.ItemDao;
-import vgalloy.riot.server.dao.internal.dao.commondao.AbstractDao;
+import vgalloy.riot.server.dao.internal.dao.AbstractDao;
 import vgalloy.riot.server.dao.internal.entity.dpo.ItemDpo;
 
 /**

@@ -14,7 +14,7 @@ import vgalloy.javaoverrabbitmq.api.Factory;
 import vgalloy.javaoverrabbitmq.api.model.RabbitElement;
 import vgalloy.javaoverrabbitmq.api.queue.ConsumerQueueDefinition;
 import vgalloy.riot.api.api.constant.Region;
-import vgalloy.riot.server.dao.api.factory.MongoDaoFactory;
+import vgalloy.riot.server.dao.api.factory.DaoFactory;
 import vgalloy.riot.server.loader.internal.consumer.RegionalConsumer;
 import vgalloy.riot.server.loader.internal.consumer.impl.RegionalConsumerImpl;
 import vgalloy.riot.server.loader.internal.factory.ExecutorFactory;
@@ -48,17 +48,17 @@ public final class ConsumerSupplier implements Supplier<Map<Region, RabbitElemen
     @Override
     public Map<Region, RabbitElement> get() {
         Map<Region, RabbitElement> map = new HashMap<>();
-        ItemLoader itemLoader = new ItemLoaderImpl(ExecutorFactory.getRiotApi(), ExecutorFactory.getExecutor(), MongoDaoFactory.getItemDao());
-        ChampionLoader championLoader = new ChampionLoaderImpl(ExecutorFactory.getRiotApi(), ExecutorFactory.getExecutor(), MongoDaoFactory.getChampionDao());
+        ItemLoader itemLoader = new ItemLoaderImpl(ExecutorFactory.getRiotApi(), ExecutorFactory.getExecutor(), DaoFactory.getItemDao());
+        ChampionLoader championLoader = new ChampionLoaderImpl(ExecutorFactory.getRiotApi(), ExecutorFactory.getExecutor(), DaoFactory.getChampionDao());
 
         try {
             for (Region region : Region.values()) {
                 ConsumerQueueDefinition<LoadingMessage> queueDefinition = RegionalConsumer.getQueueDefinition(region);
                 SummonerLoader summonerLoader = new SummonerLoaderImpl(ExecutorFactory.getRiotApi(),
                         ExecutorFactory.getExecutor(),
-                        MongoDaoFactory.getSummonerDao(),
-                        MongoDaoFactory.getMatchDetailDao(),
-                        MongoDaoFactory.getRankedStatsDao());
+                        DaoFactory.getSummonerDao(),
+                        DaoFactory.getMatchDetailDao(),
+                        DaoFactory.getRankedStatsDao());
 
                 Consumer<LoadingMessage> consumer = new RegionalConsumerImpl(region, summonerLoader, itemLoader, championLoader);
                 RabbitElement rabbitElement = Factory.createConsumer(connectionFactory, queueDefinition, consumer);

@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.dao.commondao.impl;
+package vgalloy.riot.server.dao.internal.dao.impl;
 
 import java.security.SecureRandom;
 import java.util.Objects;
@@ -9,7 +9,7 @@ import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
 
 import vgalloy.riot.api.api.constant.Region;
-import vgalloy.riot.server.dao.internal.dao.commondao.GenericDao;
+import vgalloy.riot.server.dao.internal.dao.GenericDao;
 import vgalloy.riot.server.dao.internal.entity.dpo.AbstractDpo;
 
 /**

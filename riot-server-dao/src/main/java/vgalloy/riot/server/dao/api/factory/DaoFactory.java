@@ -4,7 +4,6 @@ import vgalloy.riot.server.dao.api.dao.ChampionDao;
 import vgalloy.riot.server.dao.api.dao.ItemDao;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
-import vgalloy.riot.server.dao.api.dao.QueryDao;
 import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
 import vgalloy.riot.server.dao.api.dao.RecentGamesDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
@@ -14,13 +13,13 @@ import vgalloy.riot.server.dao.internal.factory.InternalMongoDaoFactory;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 09/06/16.
  */
-public final class MongoDaoFactory {
+public final class DaoFactory {
 
     /**
      * Constructor.
      * Prevent instantiation
      */
-    private MongoDaoFactory() {
+    private DaoFactory() {
         throw new AssertionError();
     }
 
@@ -39,7 +38,7 @@ public final class MongoDaoFactory {
      * @return the matchDetailDao
      */
     public static MatchDetailDao getMatchDetailDao() {
-        return InternalMongoDaoFactory.getMatchDetailDao();
+        return InternalMongoDaoFactory.getGlobalMatchDetailDao();
     }
 
     /**
@@ -85,14 +84,5 @@ public final class MongoDaoFactory {
      */
     public static ItemDao getItemDao() {
         return InternalMongoDaoFactory.getItemDao();
-    }
-
-    /**
-     * Get the queryDao.
-     *
-     * @return the queryDao
-     */
-    public static QueryDao getQueryDao() {
-        return InternalMongoDaoFactory.getQueryDao();
     }
 }

@@ -1,8 +1,8 @@
-package vgalloy.riot.server.dao.internal.dao.commondao.impl;
+package vgalloy.riot.server.dao.internal.dao.impl.matchdetail;
 
 import vgalloy.riot.api.api.dto.mach.Timeline;
-import vgalloy.riot.server.dao.internal.dao.commondao.AbstractDao;
-import vgalloy.riot.server.dao.internal.dao.commondao.TimelineDao;
+import vgalloy.riot.server.dao.internal.dao.AbstractDao;
+import vgalloy.riot.server.dao.internal.dao.TimelineDao;
 import vgalloy.riot.server.dao.internal.entity.dpo.TimelineDpo;
 
 /**

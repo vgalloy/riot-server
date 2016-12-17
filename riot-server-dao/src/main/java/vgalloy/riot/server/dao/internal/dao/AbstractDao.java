@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.dao.commondao;
+package vgalloy.riot.server.dao.internal.dao;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
@@ -13,8 +13,8 @@ import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.GenericDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
+import vgalloy.riot.server.dao.internal.dao.impl.GenericDaoImpl;
 import vgalloy.riot.server.dao.internal.entity.dpo.AbstractDpo;
 import vgalloy.riot.server.dao.internal.entity.mapper.DpoIdMapper;
 import vgalloy.riot.server.dao.internal.entity.mapper.DpoMapper;
@@ -24,11 +24,11 @@ import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 07/07/16.
  */
-public abstract class AbstractDao<DTO, DATA_OBJECT extends AbstractDpo<DTO>> implements CommonDao<DTO> {
+public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements CommonDao<DTO> {
 
-    protected final JacksonDBCollection<DATA_OBJECT, String> collection;
-    private final GenericDao<DTO, DATA_OBJECT> genericDao;
-    private final Class<DATA_OBJECT> dataObjectClass;
+    protected final JacksonDBCollection<DPO, String> collection;
+    private final GenericDao<DTO, DPO> genericDao;
+    private final Class<DPO> dataObjectClass;
 
     /**
      * Constructor.
@@ -42,7 +42,7 @@ public abstract class AbstractDao<DTO, DATA_OBJECT extends AbstractDpo<DTO>> imp
         Objects.requireNonNull(databaseName);
         Objects.requireNonNull(collectionName);
 
-        dataObjectClass = (Class<DATA_OBJECT>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        dataObjectClass = (Class<DPO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         Objects.requireNonNull(dataObjectClass);
         DBCollection dbCollection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
                 .getDB(databaseName)
@@ -57,8 +57,8 @@ public abstract class AbstractDao<DTO, DATA_OBJECT extends AbstractDpo<DTO>> imp
         Objects.requireNonNull(itemWrapper);
 
         try {
-            Constructor<DATA_OBJECT> constructor = dataObjectClass.getConstructor(Region.class, Long.class);
-            DATA_OBJECT dataObject = constructor.newInstance(itemWrapper.getItemId().getRegion(), itemWrapper.getItemId().getId());
+            Constructor<DPO> constructor = dataObjectClass.getConstructor(Region.class, Long.class);
+            DPO dataObject = constructor.newInstance(itemWrapper.getItemId().getRegion(), itemWrapper.getItemId().getId());
             itemWrapper.getItem().ifPresent(dataObject::setItem);
             genericDao.update(dataObject);
         } catch (Exception e) {
@@ -70,7 +70,7 @@ public abstract class AbstractDao<DTO, DATA_OBJECT extends AbstractDpo<DTO>> imp
     public Optional<Entity<DTO, DpoId>> get(DpoId dpoId) {
         Objects.requireNonNull(dpoId);
 
-        Optional<DATA_OBJECT> dataObject = genericDao.getById(DpoIdMapper.toNormalizeString(dpoId));
+        Optional<DPO> dataObject = genericDao.getById(DpoIdMapper.toNormalizeString(dpoId));
         if (dataObject.isPresent()) {
             return Optional.of(DpoMapper.mapToEntity(dataObject.get()));
         }
@@ -81,7 +81,7 @@ public abstract class AbstractDao<DTO, DATA_OBJECT extends AbstractDpo<DTO>> imp
     public Optional<Entity<DTO, DpoId>> getRandom(Region region) {
         Objects.requireNonNull(region);
 
-        Optional<DATA_OBJECT> dataObject = genericDao.getRandom(region);
+        Optional<DPO> dataObject = genericDao.getRandom(region);
         if (dataObject.isPresent()) {
             return Optional.of(DpoMapper.mapToEntity(dataObject.get()));
         }

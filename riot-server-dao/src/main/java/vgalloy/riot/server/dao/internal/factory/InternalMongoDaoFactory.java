@@ -11,20 +11,19 @@ import vgalloy.riot.server.dao.api.dao.ChampionDao;
 import vgalloy.riot.server.dao.api.dao.ItemDao;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
-import vgalloy.riot.server.dao.api.dao.QueryDao;
 import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
 import vgalloy.riot.server.dao.api.dao.RecentGamesDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
-import vgalloy.riot.server.dao.internal.dao.commondao.TimelineDao;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.ChampionDaoImpl;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.ItemDaoImpl;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchReferenceDaoImpl;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.RankedStatsDaoImpl;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.RecentGamesDaoImpl;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.SummonerDaoImpl;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.TimelineDaoImpl;
-import vgalloy.riot.server.dao.internal.dao.query.impl.QueryDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.TimelineDao;
+import vgalloy.riot.server.dao.internal.dao.impl.ChampionDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.ItemDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.MatchReferenceDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.RankedStatsDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.RecentGamesDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.SummonerDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.GlobalMatchDetailDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.MatchDetailDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.TimelineDaoImpl;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 
 /**
@@ -40,8 +39,8 @@ public final class InternalMongoDaoFactory {
     private static final RecentGamesDao RECENT_GAMES_DAO;
     private static final SummonerDao SUMMONER_DAO;
     private static final ItemDao ITEM_DAO;
-    private static final QueryDao QUERY_DAO;
     private static final TimelineDao TIMELINE_DAO;
+    private static final MatchDetailDao GLOBAL_MATCH_DETAIL_DAO;
 
     static {
         try {
@@ -57,9 +56,9 @@ public final class InternalMongoDaoFactory {
             RANKED_STATS_DAO = new RankedStatsDaoImpl(databaseUrl, databaseName);
             RECENT_GAMES_DAO = new RecentGamesDaoImpl(databaseUrl, databaseName);
             SUMMONER_DAO = new SummonerDaoImpl(databaseUrl, databaseName);
-            QUERY_DAO = new QueryDaoImpl(databaseUrl, databaseName);
             ITEM_DAO = new ItemDaoImpl(databaseUrl, databaseName);
             TIMELINE_DAO = new TimelineDaoImpl(databaseUrl, databaseName);
+            GLOBAL_MATCH_DETAIL_DAO = new GlobalMatchDetailDaoImpl(TIMELINE_DAO, MATCH_DETAIL_DAO);
         } catch (ConfigurationException e) {
             throw new MongoDaoException("Unable to load configuration", e);
         }
@@ -137,20 +136,20 @@ public final class InternalMongoDaoFactory {
     }
 
     /**
-     * Get the queryDao.
-     *
-     * @return the queryDao
-     */
-    public static QueryDao getQueryDao() {
-        return QUERY_DAO;
-    }
-
-    /**
      * Get the TimelineDao.
      *
      * @return the TimelineDao
      */
     public static TimelineDao getTimelineDao() {
         return TIMELINE_DAO;
+    }
+
+    /**
+     * Get the MatchDetailDao.
+     *
+     * @return the MatchDetailDao
+     */
+    public static MatchDetailDao getGlobalMatchDetailDao() {
+        return GLOBAL_MATCH_DETAIL_DAO;
     }
 }

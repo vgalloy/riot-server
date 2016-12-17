@@ -5,8 +5,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Objects;
 
-import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
-import vgalloy.riot.server.dao.api.dao.QueryDao;
+import vgalloy.riot.server.dao.api.dao.ChampionDao;
 import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.exception.UserException;
@@ -14,26 +13,24 @@ import vgalloy.riot.server.service.api.service.exception.UserException;
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 23/08/16.
+ *         // TODO Remove ?
  */
 public final class QueryServiceImpl implements QueryService {
 
-    private final QueryDao queryDao;
-    private final MatchDetailDao matchDetailDao;
+    private final ChampionDao championDao;
 
     /**
      * Constructor.
      *
-     * @param queryDao       the query dao
-     * @param matchDetailDao the match detail dao
+     * @param championDao the champion dao
      */
-    public QueryServiceImpl(QueryDao queryDao, MatchDetailDao matchDetailDao) {
-        this.queryDao = Objects.requireNonNull(queryDao);
-        this.matchDetailDao = Objects.requireNonNull(matchDetailDao);
+    public QueryServiceImpl(ChampionDao championDao) {
+        this.championDao = Objects.requireNonNull(championDao);
     }
 
     @Override
     public Map<Integer, Double> getWinRate(int championId) {
-        return queryDao.getWinRate(championId);
+        return championDao.getWinRate(championId);
     }
 
     @Override
@@ -51,6 +48,6 @@ public final class QueryServiceImpl implements QueryService {
             throw new UserException("endDate " + endDate + " is in the future");
         }
 
-        return matchDetailDao.getWinRate(championId, startDate, endDate);
+        return championDao.getWinRate(championId, startDate, endDate);
     }
 }

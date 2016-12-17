@@ -22,10 +22,16 @@ import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.Participant;
 import vgalloy.riot.api.api.dto.mach.ParticipantStats;
 import vgalloy.riot.server.dao.DaoTestUtil;
+import vgalloy.riot.server.dao.api.dao.ChampionDao;
+import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
-import vgalloy.riot.server.dao.internal.dao.commondao.impl.MatchDetailDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.TimelineDao;
+import vgalloy.riot.server.dao.internal.dao.impl.ChampionDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.GlobalMatchDetailDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.MatchDetailDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.TimelineDaoImpl;
 
 /**
  * @author Vincent Galloy
@@ -35,24 +41,27 @@ public class WinRateQueryITest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WinRateQueryITest.class);
     private static final String URL = "localhost";
-    private static final int PORT = 29702;
+    private static final int PORT = 28001;
 
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
 
-    private final MatchDetailDaoImpl matchDetailDao = new MatchDetailDaoImpl(URL + ":" + PORT, "riotTest");
+    private final MatchDetailDao matchDetailDao = new MatchDetailDaoImpl(URL + ":" + PORT, "riotTest");
+    private final TimelineDao timelineDao = new TimelineDaoImpl(URL + ":" + PORT, "riotTest");
+    private final MatchDetailDao globalMatchDetailDao = new GlobalMatchDetailDaoImpl(timelineDao, matchDetailDao);
+    private final ChampionDao dao = new ChampionDaoImpl(URL + ":" + PORT, "riotTest");
 
-    @BeforeClass
-    public static void setUp() throws IOException {
-        EXECUTABLE = DaoTestUtil.createMongodExecutable(LOGGER, URL, PORT);
-        PROCESS = EXECUTABLE.start();
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        PROCESS.stop();
-        EXECUTABLE.stop();
-    }
+//    @BeforeClass
+//    public static void setUp() throws IOException {
+//        EXECUTABLE = DaoTestUtil.createMongodExecutable(LOGGER, URL, PORT);
+//        PROCESS = EXECUTABLE.start();
+//    }
+//
+//    @AfterClass
+//    public static void tearDown() {
+//        PROCESS.stop();
+//        EXECUTABLE.stop();
+//    }
 
     @Test
     public void testWinRateDuringOneDay() {
@@ -75,8 +84,8 @@ public class WinRateQueryITest {
         }
 
         // THEN
-        Assert.assertEquals(2, matchDetailDao.getWinRate(7, LocalDate.ofEpochDay(startDay)).getLose());
-        Assert.assertEquals(1, matchDetailDao.getWinRate(7, LocalDate.ofEpochDay(startDay)).getWin());
+        Assert.assertEquals(2, dao.getWinRate(7, LocalDate.ofEpochDay(startDay)).getLose());
+        Assert.assertEquals(1, dao.getWinRate(7, LocalDate.ofEpochDay(startDay)).getWin());
     }
 
     @Test
@@ -97,11 +106,11 @@ public class WinRateQueryITest {
 
         // WHEN
         for (int i = 0; i < input.size(); i++) {
-            matchDetailDao.save(input.get(i));
+            globalMatchDetailDao.save(input.get(i));
         }
 
         // THEN
-        Map<LocalDate, WinRate> result = matchDetailDao.getWinRate(17, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay));
+        Map<LocalDate, WinRate> result = dao.getWinRate(17, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay));
         Assert.assertEquals(7, result.size());
     }
 
@@ -116,11 +125,11 @@ public class WinRateQueryITest {
 
         // WHEN
         for (int i = 0; i < input.size(); i++) {
-            matchDetailDao.save(input.get(i));
+            globalMatchDetailDao.save(input.get(i));
         }
 
         // THEN
-        Assert.assertEquals(0, matchDetailDao.getWinRate(27, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay)).size());
+        Assert.assertEquals(0, dao.getWinRate(27, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay)).size());
     }
 
     /**
