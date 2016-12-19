@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
+import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
 import vgalloy.riot.api.api.dto.matchlist.MatchList;
 import vgalloy.riot.api.api.dto.matchlist.MatchReference;
 import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
@@ -35,6 +36,7 @@ import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 import vgalloy.riot.server.loader.internal.executor.Executor;
 import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
 import vgalloy.riot.server.loader.internal.loader.SummonerLoader;
+import vgalloy.riot.server.loader.internal.loader.mapper.SummonerMapper;
 
 /**
  * @author Vincent Galloy - 10/10/16
@@ -194,6 +196,7 @@ public final class SummonerLoaderImpl implements SummonerLoader {
             MatchDetail result = executor.execute(riotApi.getMatchDetailById(matchId).includeTimeline(true), summonerId.getRegion(), 1);
             if (result != null) {
                 matchDetailDao.save(new MatchDetailWrapper(MatchDetailIdMapper.map(result), result));
+                extractPlayer(result);
             }
         }
     }
@@ -213,5 +216,24 @@ public final class SummonerLoaderImpl implements SummonerLoader {
             return false;
         }
         return true;
+    }
+
+    /**
+     * .
+     * Extract player for match detail.
+     *
+     * @param matchDetail the match detail
+     */
+    private void extractPlayer(MatchDetail matchDetail) {
+        if (matchDetail.getParticipantIdentities() == null) {
+            return;
+        }
+        matchDetail.getParticipantIdentities().stream()
+                .filter(e -> e != null)
+                .map(ParticipantIdentity::getPlayer)
+                .filter(e -> e != null)
+                .map(SummonerMapper::map)
+                .map(e -> new CommonDpoWrapper<>(new DpoId(matchDetail.getRegion(), e.getId()), e))
+                .forEach(summonerDao::save);
     }
 }
