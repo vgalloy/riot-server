@@ -39,6 +39,7 @@ public final class ItemListMapper {
                     .filter(events -> events != null)
                     .forEach(events -> events.stream()
                             .filter(event -> event != null)
+                            .filter(event -> event.getParticipantId() != null)
                             .filter(event -> event.getParticipantId() == participantId)
                             .forEach(itemListBuilder::addEvent));
         }
