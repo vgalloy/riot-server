@@ -30,22 +30,27 @@ public class ItemListBuilder {
      */
     public ItemListBuilder addEvent(Event event) {
         Objects.requireNonNull(event, "event can not be null");
-        switch (event.getEventType()) {
-            case ITEM_PURCHASED:
-                actionList.add(new Action(event.getTimestamp(), ActionType.BUY, event.getItemId()));
-                break;
-            case ITEM_SOLD:
-                actionList.add(new Action(event.getTimestamp(), ActionType.SOLD, event.getItemId()));
-                break;
-            case ITEM_UNDO:
-                actionList.add(new Action(event.getTimestamp(), ActionType.UNDO, event.getItemId()));
-                break;
-            case ITEM_DESTROYED:
-                actionList.add(new Action(event.getTimestamp(), ActionType.DESTROY, event.getItemId()));
-                break;
-            default:
-                LOGGER.trace("Can not convert the event : {}", event);
+        try {
+            switch (event.getEventType()) {
+                case ITEM_PURCHASED:
+                    actionList.add(new Action(event.getTimestamp(), ActionType.BUY, event.getItemId()));
+                    break;
+                case ITEM_SOLD:
+                    actionList.add(new Action(event.getTimestamp(), ActionType.SOLD, event.getItemId()));
+                    break;
+                case ITEM_UNDO:
+                    actionList.add(new Action(event.getTimestamp(), ActionType.UNDO, event.getItemBefore()));
+                    break;
+                case ITEM_DESTROYED:
+                    actionList.add(new Action(event.getTimestamp(), ActionType.DESTROY, event.getItemId()));
+                    break;
+                default:
+                    LOGGER.trace("Can not convert the event : {}", event);
+            }
+        } catch (Exception e) {
+            LOGGER.error("{}", event, e);
         }
+
         return this;
     }
 
