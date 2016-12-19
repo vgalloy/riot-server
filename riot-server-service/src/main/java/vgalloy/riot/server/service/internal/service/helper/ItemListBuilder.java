@@ -29,7 +29,7 @@ public class ItemListBuilder {
      * @return the builder
      */
     public ItemListBuilder addEvent(Event event) {
-        Objects.requireNonNull(event);
+        Objects.requireNonNull(event, "event can not be null");
         switch (event.getEventType()) {
             case ITEM_PURCHASED:
                 actionList.add(new Action(event.getTimestamp(), ActionType.BUY, event.getItemId()));

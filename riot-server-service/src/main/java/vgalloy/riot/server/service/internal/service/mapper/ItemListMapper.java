@@ -3,6 +3,7 @@ package vgalloy.riot.server.service.internal.service.mapper;
 import java.util.List;
 import java.util.Objects;
 
+import vgalloy.riot.api.api.dto.mach.Frame;
 import vgalloy.riot.api.api.dto.mach.Timeline;
 import vgalloy.riot.server.service.internal.service.helper.ItemListBuilder;
 
@@ -31,13 +32,16 @@ public final class ItemListMapper {
         Objects.requireNonNull(timeline);
         ItemListBuilder itemListBuilder = new ItemListBuilder();
 
-        timeline.getFrames().stream()
-                .filter(frame -> frame.getEvents() != null)
-                .forEach(frame -> frame.getEvents()
-                        .stream()
-                        .filter(event -> event != null)
-                        .filter(event -> event.getParticipantId() == participantId)
-                        .forEach(itemListBuilder::addEvent));
+        if (timeline.getFrames() != null) {
+            timeline.getFrames().stream()
+                    .filter(frame -> frame != null)
+                    .map(Frame::getEvents)
+                    .filter(events -> events != null)
+                    .forEach(events -> events.stream()
+                            .filter(event -> event != null)
+                            .filter(event -> event.getParticipantId() == participantId)
+                            .forEach(itemListBuilder::addEvent));
+        }
 
         return itemListBuilder.getItemAtTheEnd();
     }

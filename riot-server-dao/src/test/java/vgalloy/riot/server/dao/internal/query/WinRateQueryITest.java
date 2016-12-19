@@ -41,7 +41,7 @@ public class WinRateQueryITest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WinRateQueryITest.class);
     private static final String URL = "localhost";
-    private static final int PORT = 28001;
+    private static final int PORT = 29702;
 
     private static MongodProcess PROCESS;
     private static MongodExecutable EXECUTABLE;
@@ -51,17 +51,17 @@ public class WinRateQueryITest {
     private final MatchDetailDao globalMatchDetailDao = new GlobalMatchDetailDaoImpl(timelineDao, matchDetailDao);
     private final ChampionDao dao = new ChampionDaoImpl(URL + ":" + PORT, "riotTest");
 
-//    @BeforeClass
-//    public static void setUp() throws IOException {
-//        EXECUTABLE = DaoTestUtil.createMongodExecutable(LOGGER, URL, PORT);
-//        PROCESS = EXECUTABLE.start();
-//    }
-//
-//    @AfterClass
-//    public static void tearDown() {
-//        PROCESS.stop();
-//        EXECUTABLE.stop();
-//    }
+    @BeforeClass
+    public static void setUp() throws IOException {
+        EXECUTABLE = DaoTestUtil.createMongodExecutable(LOGGER, URL, PORT);
+        PROCESS = EXECUTABLE.start();
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        PROCESS.stop();
+        EXECUTABLE.stop();
+    }
 
     @Test
     public void testWinRateDuringOneDay() {
