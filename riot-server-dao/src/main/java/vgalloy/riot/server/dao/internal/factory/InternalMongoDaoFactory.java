@@ -15,6 +15,8 @@ import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
 import vgalloy.riot.server.dao.api.dao.RecentGamesDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.dao.internal.dao.TimelineDao;
+import vgalloy.riot.server.dao.internal.dao.factory.MongoDatabaseFactory;
+import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
 import vgalloy.riot.server.dao.internal.dao.impl.ChampionDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.impl.ItemDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.impl.MatchReferenceDaoImpl;
@@ -25,6 +27,8 @@ import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.GlobalMatchDetailDa
 import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.MatchDetailDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.TimelineDaoImpl;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
+import vgalloy.riot.server.dao.internal.task.factory.TaskFactory;
+import vgalloy.riot.server.dao.internal.task.impl.UpdateWinRateTask;
 
 /**
  * @author Vincent Galloy
@@ -59,6 +63,9 @@ public final class InternalMongoDaoFactory {
             ITEM_DAO = new ItemDaoImpl(databaseUrl, databaseName);
             TIMELINE_DAO = new TimelineDaoImpl(databaseUrl, databaseName);
             GLOBAL_MATCH_DETAIL_DAO = new GlobalMatchDetailDaoImpl(TIMELINE_DAO, MATCH_DETAIL_DAO);
+
+            MongoDatabaseFactory mongoDatabaseFactory = MongoDriverObjectFactory.getMongoClient(databaseUrl).getMongoDatabase(databaseName);
+            TaskFactory.startTask(new UpdateWinRateTask(mongoDatabaseFactory), 15 * 60 * 1000);
         } catch (ConfigurationException e) {
             throw new MongoDaoException("Unable to load configuration", e);
         }

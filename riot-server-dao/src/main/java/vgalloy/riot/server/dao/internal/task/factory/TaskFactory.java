@@ -22,12 +22,12 @@ public final class TaskFactory {
     /**
      * Build a new {@link java.util.TimerTask}.
      *
-     * @param task             the task to for repeated execution
-     * @param periodAfterEnded the sleeping time between to execution. The time start after the end of the previous
-     *                         execution. This time must be in millis sec.
+     * @param task                   the task to for repeated execution
+     * @param periodAfterEndedMillis the sleeping time between to execution. The time start after the end of the previous
+     *                               execution. This time must be in millis sec.
      */
-    public static void startTask(Task task, int periodAfterEnded) {
+    public static void startTask(Task task, int periodAfterEndedMillis) {
         Timer timer = new Timer();
-        timer.schedule(new TaskImpl(task, timer, periodAfterEnded), 0);
+        timer.schedule(new TaskImpl(task, timer, periodAfterEndedMillis), 0);
     }
 }
