@@ -11,8 +11,10 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.loader.api.service.LoaderClient;
 import vgalloy.riot.server.service.api.model.LastGame;
+import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.service.SummonerService;
 import vgalloy.riot.server.service.internal.service.mapper.LastGameMapper;
 
@@ -52,5 +54,11 @@ public final class SummonerServiceImpl extends AbstractService<SummonerDto> impl
     public Optional<SummonerDto> getSummonerByName(Region region, String summonerName) {
         loaderClient.loadAsyncSummonerByName(region, summonerName);
         return summonerDao.getSummonerByName(region, summonerName);
+    }
+
+    @Override
+    public Optional<Model<SummonerDto>> get(DpoId dpoId) {
+        loaderClient.loadAsyncSummonerById(dpoId.getRegion(), dpoId.getId());
+        return super.get(dpoId);
     }
 }

@@ -45,7 +45,7 @@ public class SummonerController {
      */
     @RequestMapping(value = "/summoner/{region}/{summonerId}/rankedStats", method = RequestMethod.GET)
     public Model<RankedStatsDto> getRankedStat(@PathVariable Region region, @PathVariable Long summonerId) {
-        LOGGER.info("[ GET ] : getRankedStat, region : {}, matchId : {}", region, summonerId);
+        LOGGER.info("[ GET ] : getRankedStat, region : {}, summonerId : {}", region, summonerId);
         Optional<Model<RankedStatsDto>> rankedStatsEntity = rankedStatsService.get(new DpoId(region, summonerId));
         if (rankedStatsEntity.isPresent()) {
             return rankedStatsEntity.get();
@@ -97,7 +97,7 @@ public class SummonerController {
      */
     @RequestMapping(value = "/summoner/{region}/{summonerId}/byId", method = RequestMethod.GET)
     public SummonerDto getSummonerById(@PathVariable Region region, @PathVariable Long summonerId) {
-        LOGGER.info("[ GET ] : getSummonerByName, region : {}, summonerId : {}", region, summonerId);
+        LOGGER.info("[ GET ] : getSummonerById, region : {}, summonerId : {}", region, summonerId);
         Optional<Model<SummonerDto>> optionalSummonerDto = summonerService.get(new DpoId(region, summonerId));
         if (optionalSummonerDto.isPresent()) {
             return optionalSummonerDto.get().getItem();
