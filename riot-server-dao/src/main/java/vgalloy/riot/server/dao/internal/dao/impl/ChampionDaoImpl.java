@@ -71,18 +71,18 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
 
     @Override
     public WinRate getWinRate(int championId, LocalDate localDate) {
+        MongoCollection<Document> collection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
+                .getMongoDatabase(databaseName)
+                .getMongoCollection(getCollectionName(localDate))
+                .get();
+
         BasicDBObject projectObject = new BasicDBObject("item.participants.championId", 1);
         projectObject.put("item.participants.stats.winner", 1);
 
         BasicDBObject groupObject = new BasicDBObject("_id", "$item.participants.stats.winner");
         groupObject.put("value", new BasicDBObject("$sum", 1));
 
-        MongoCollection<Document> collection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
-                .getMongoDatabase(databaseName)
-                .getMongoCollection(getCollectionName(localDate))
-                .get();
-
-        AggregateIterable<Document> result = collection.aggregate(Arrays.asList(
+        AggregateIterable<Document> aggregationResult = collection.aggregate(Arrays.asList(
                 new BasicDBObject("$match", new BasicDBObject("item.participants.championId", championId)),
                 new BasicDBObject("$project", projectObject),
                 new BasicDBObject("$unwind", "$item.participants"),
@@ -92,7 +92,7 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
 
         Integer win = 0;
         Integer lose = 0;
-        for (Document o : result) {
+        for (Document o : aggregationResult) {
             boolean index = o.getBoolean("_id");
             if (index) {
                 win = o.getInteger("value");
@@ -102,6 +102,46 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
         }
 
         return new WinRate(win, lose);
+    }
+
+    @Override
+    public Map<Integer, WinRate> getWinRateForAllChampion(LocalDate date) {
+        MongoCollection<Document> collection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
+                .getMongoDatabase(databaseName)
+                .getMongoCollection(getCollectionName(date))
+                .get();
+
+        BasicDBObject projectObject = new BasicDBObject("item.participants.championId", 1);
+        projectObject.put("item.participants.stats.winner", 1);
+
+        BasicDBObject test = new BasicDBObject("champion", "$item.participants.championId");
+        test.put("winner", "$item.participants.stats.winner");
+
+        BasicDBObject groupObject = new BasicDBObject("_id", test);
+        groupObject.put("value", new BasicDBObject("$sum", 1));
+
+        AggregateIterable<Document> aggregationResult = collection.aggregate(Arrays.asList(
+                new BasicDBObject("$project", projectObject),
+                new BasicDBObject("$unwind", "$item.participants"),
+                new BasicDBObject("$group", groupObject)
+        ));
+
+        Map<Integer, WinRate> result = new HashMap<>();
+
+        for (Document o : aggregationResult) {
+            Integer championId = (Integer) ((Map<String, Object>) o.get("_id")).get("champion");
+            Boolean win = (Boolean) ((Map<String, Object>) o.get("_id")).get("winner");
+            Integer value = o.getInteger("value");
+
+            WinRate currentWinRate = result.getOrDefault(championId, new WinRate(0, 0));
+
+            if (win) {
+                result.put(championId, new WinRate(value, currentWinRate.getLose()));
+            } else {
+                result.put(championId, new WinRate(currentWinRate.getWin(), value));
+            }
+        }
+        return result;
     }
 
     /**

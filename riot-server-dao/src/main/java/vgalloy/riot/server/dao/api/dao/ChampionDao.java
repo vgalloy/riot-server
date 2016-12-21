@@ -38,4 +38,12 @@ public interface ChampionDao extends CommonDao<ChampionDto> {
      * @return the win rate of the champion during the day
      */
     WinRate getWinRate(int championId, LocalDate localDate);
+
+    /**
+     * Get the win rate for all champion for the given day.
+     *
+     * @param date the day to analyse
+     * @return a map (champion Id, win rate)
+     */
+    Map<Integer, WinRate> getWinRateForAllChampion(LocalDate date);
 }

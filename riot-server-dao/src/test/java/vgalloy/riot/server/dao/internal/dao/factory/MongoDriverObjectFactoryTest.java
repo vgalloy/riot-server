@@ -35,10 +35,10 @@ public class MongoDriverObjectFactoryTest {
 
     @Test
     public void testMongoCollectionCreation() {
-        MongoCollection result1 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest").getMongoCollection("collection").get();
-        MongoCollection result2 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest2").getMongoCollection("collection2").get();
-        MongoCollection result3 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest").getMongoCollection("collection").get();
-        MongoCollection result4 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest2").getMongoCollection("collection").get();
+        MongoCollection<?> result1 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest").getMongoCollection("collection").get();
+        MongoCollection<?> result2 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest2").getMongoCollection("collection2").get();
+        MongoCollection<?> result3 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest").getMongoCollection("collection").get();
+        MongoCollection<?> result4 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest2").getMongoCollection("collection").get();
 
         Assert.assertNotEquals(result1, result2);
         Assert.assertNotEquals(result1, result4);

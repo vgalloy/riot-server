@@ -85,4 +85,17 @@ public class ChampionController {
         }
         return result;
     }
+
+    /**
+     * Get the win rate for all champion for the given day.
+     *
+     * @param dataMillis the day to analyse
+     * @return a map (champion Id, win rate)
+     */
+    @RequestMapping(value = "/champion/winRateByDate/{dataMillis}", method = RequestMethod.GET)
+    public Map<Integer, WinRate> getWinRateForAllChampion(@PathVariable Long dataMillis) {
+        LOGGER.info("[ GET ] : getWinRateForAllChampion, dataMillis : {}", dataMillis);
+        LocalDate date = LocalDate.ofEpochDay(dataMillis / 1000 / 3600 / 24);
+        return championService.getWinRateForAllChampion(date);
+    }
 }
