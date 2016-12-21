@@ -234,6 +234,7 @@ public final class SummonerLoaderImpl implements SummonerLoader {
                 .filter(e -> e != null)
                 .map(SummonerMapper::map)
                 .map(e -> new CommonDpoWrapper<>(new DpoId(matchDetail.getRegion(), e.getId()), e))
+                .filter(e -> !summonerDao.get(e.getItemId()).isPresent())
                 .forEach(summonerDao::save);
     }
 }
