@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import com.mongodb.MongoClient;
 
@@ -11,7 +12,7 @@ import com.mongodb.MongoClient;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 14/06/16.
  */
-public final class MongoClientFactory {
+public final class MongoClientFactory implements Supplier<MongoClient> {
 
     private final Map<String, MongoDatabaseFactory> mongoDatabaseFactoryMap = new HashMap<>();
     private final Map<String, DBFactory> mongoDBFactoryMap = new HashMap<>();

@@ -71,8 +71,7 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
 
     @Override
     public WinRate getWinRate(int championId, LocalDate localDate) {
-        BasicDBObject projectObject = new BasicDBObject("item.matchDuration", 1);
-        projectObject.put("item.participants.championId", 1);
+        BasicDBObject projectObject = new BasicDBObject("item.participants.championId", 1);
         projectObject.put("item.participants.stats.winner", 1);
 
         BasicDBObject groupObject = new BasicDBObject("_id", "$item.participants.stats.winner");
