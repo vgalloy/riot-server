@@ -10,7 +10,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,9 +25,9 @@ public class CorsFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) servletRequest;
+        HttpServletResponse res = (HttpServletResponse) servletResponse;
 
         res.setHeader("Access-Control-Allow-Origin", req.getHeader("Origin"));
         res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -36,7 +35,7 @@ public class CorsFilter implements Filter {
         res.setHeader("Access-Control-Max-Age", "3600");
         res.setHeader("Access-Control-Allow-Headers", "Content-Type, *");
 
-        chain.doFilter(request, response);
+        chain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * @author Vincent Galloy - 19/09/16
  *         Created by Vincent Galloy on 19/09/16.
  */
-@Order(2)
+@Order(3)
 @Component
 public class IpLogFilter implements Filter {
 
