@@ -65,7 +65,7 @@ public final class ConsumerSupplier implements Supplier<Map<Region, RabbitElemen
                 map.put(region, rabbitElement);
             }
         } catch (Exception e) {
-            LOGGER.error("Unable to start consumer", e);
+            LOGGER.warn("Unable to start consumer", e.getMessage());
         }
         return map;
     }

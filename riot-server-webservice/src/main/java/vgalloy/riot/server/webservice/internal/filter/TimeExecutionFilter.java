@@ -36,7 +36,7 @@ public class TimeExecutionFilter implements Filter {
         long executionTimeMillis = (System.nanoTime() - startTimeNano) / 1_000_000;
 
         LOGGER.info("execution time : {} ms", executionTimeMillis);
-        ((HttpServletResponse) servletResponse).addHeader("executionTimeMillis", executionTimeMillis + " ms");
+        ((HttpServletResponse) servletResponse).setHeader("X-executionTimeMillis", executionTimeMillis + " ms");
     }
 
     @Override

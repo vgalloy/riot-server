@@ -35,7 +35,7 @@ public final class LoaderClientSupplier implements Supplier<LoaderClient> {
         try {
             return new LoaderClientImpl(connectionFactory);
         } catch (Exception e) {
-            LOGGER.warn("Unable to start client", e);
+            LOGGER.warn("Unable to start client", e.getMessage());
             return new FakeLoaderClientImpl();
         }
     }
