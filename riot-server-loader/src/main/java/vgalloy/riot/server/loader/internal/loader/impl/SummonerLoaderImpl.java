@@ -32,7 +32,6 @@ import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
-import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 import vgalloy.riot.server.loader.internal.executor.Executor;
 import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
 import vgalloy.riot.server.loader.internal.loader.SummonerLoader;
@@ -89,8 +88,12 @@ public final class SummonerLoaderImpl implements SummonerLoader {
     public void loadSummonerByName(Region region, String summonerName) {
         Objects.requireNonNull(summonerName);
         LOGGER.info("{} load full summoner with name : {}", RegionPrinter.getRegion(region), summonerName);
-        long summonerId = findSummonerId(region, summonerName);
-        loadSummonerById(region, summonerId);
+        Optional<Long> summonerId = findSummonerId(region, summonerName);
+        if (summonerId.isPresent()) {
+            loadSummonerById(region, summonerId.get());
+        } else {
+            LOGGER.warn("Can not find summoner id for the summoner name : {}", summonerName);
+        }
     }
 
     /**
@@ -100,16 +103,16 @@ public final class SummonerLoaderImpl implements SummonerLoader {
      * @param summonerName the summoner name
      * @return the summoner id
      */
-    private long findSummonerId(Region region, String summonerName) {
+    private Optional<Long> findSummonerId(Region region, String summonerName) {
         Optional<SummonerDto> result = summonerDao.getSummonerByName(region, summonerName);
         if (result.isPresent()) {
-            return result.get().getId();
+            return Optional.of(result.get().getId());
         } else {
             Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonerByNames(summonerName), region, 1);
             if (summonerDtoMap == null || summonerDtoMap.size() == 0) {
-                throw new LoaderException("Can not find summoner id for the summoner name : " + summonerName);
+                return Optional.empty();
             }
-            return summonerDtoMap.entrySet().iterator().next().getValue().getId();
+            return Optional.of(summonerDtoMap.entrySet().iterator().next().getValue().getId());
         }
     }
 

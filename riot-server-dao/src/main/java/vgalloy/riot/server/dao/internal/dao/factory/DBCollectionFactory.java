@@ -1,6 +1,7 @@
 package vgalloy.riot.server.dao.internal.dao.factory;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -9,7 +10,7 @@ import com.mongodb.DBCollection;
  * @author Vincent Galloy - 19/09/16
  *         Created by Vincent Galloy on 19/09/16.
  */
-public final class DBCollectionFactory {
+public final class DBCollectionFactory implements Supplier<DBCollection> {
 
     private final DBCollection dbCollection;
 
@@ -26,11 +27,7 @@ public final class DBCollectionFactory {
         dbCollection = db.getCollection(dbCollectionName);
     }
 
-    /**
-     * Get a DBCollection object.
-     *
-     * @return the DBCollection
-     */
+    @Override
     public DBCollection get() {
         return dbCollection;
     }

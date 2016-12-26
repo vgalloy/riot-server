@@ -89,7 +89,7 @@ public final class GlobalMatchDetailDaoImpl implements MatchDetailDao {
      * Get the timeline from the matchDetailId.
      *
      * @param matchDetailId the matchDetailId
-     * @return the timeline
+     * @return the timeline can be null
      */
     private Timeline getTimeline(MatchDetailId matchDetailId) {
         Optional<Entity<Timeline, DpoId>> timelineOptional = timelineDao.get(matchDetailId);

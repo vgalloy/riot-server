@@ -1,7 +1,6 @@
 package vgalloy.riot.server.dao.internal.dao.impl.matchdetail;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +8,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
@@ -19,13 +21,13 @@ import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
+import vgalloy.riot.server.dao.internal.dao.factory.MatchDetailHelper;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
 import vgalloy.riot.server.dao.internal.dao.impl.GenericDaoImpl;
 import vgalloy.riot.server.dao.internal.entity.dpo.AbstractDpo;
 import vgalloy.riot.server.dao.internal.entity.dpo.MatchDetailDpo;
 import vgalloy.riot.server.dao.internal.entity.mapper.DpoIdMapper;
 import vgalloy.riot.server.dao.internal.entity.mapper.MatchDetailMapper;
-import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 
 /**
  * @author Vincent Galloy
@@ -34,6 +36,7 @@ import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 public final class MatchDetailDaoImpl implements MatchDetailDao {
 
     public static final String COLLECTION_NAME = "matchDetail";
+    private static final Logger LOGGER = LoggerFactory.getLogger(MatchDetailDaoImpl.class);
 
     private final String databaseUrl;
     private final String databaseName;
@@ -106,26 +109,12 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
         Objects.requireNonNull(localDate);
         DBCollection dbCollection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
                 .getDB(databaseName)
-                .getDBCollection(getCollectionName(localDate))
+                .getDBCollection(MatchDetailHelper.getCollectionName(localDate))
                 .get();
-
+        LOGGER.debug("start index creation");
+        dbCollection.createIndex(new BasicDBObject("region", 1));
+        dbCollection.createIndex(new BasicDBObject("item.participantIdentities.participantId", 1));
+        LOGGER.debug("end index creation");
         return JacksonDBCollection.wrap(dbCollection, MatchDetailDpo.class, String.class);
-    }
-
-    /**
-     * Create the collection name base on the date.
-     *
-     * @param localDate the local
-     * @return the collection name
-     */
-    private static String getCollectionName(LocalDate localDate) {
-        Objects.requireNonNull(localDate);
-        if (localDate.isBefore(LocalDate.now().minus(4, ChronoUnit.YEARS))) {
-            throw new MongoDaoException("the date " + localDate + " is to old");
-        }
-        if (localDate.isAfter(LocalDate.now().plus(1, ChronoUnit.DAYS))) {
-            throw new MongoDaoException("the date " + localDate + " is in the future");
-        }
-        return COLLECTION_NAME + "_" + localDate.format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
     }
 }

@@ -29,11 +29,7 @@ public final class MongoClientFactory implements Supplier<MongoClient> {
         mongoClient = new MongoClient(databaseUrl);
     }
 
-    /**
-     * Get the mongo client.
-     *
-     * @return the mongo client
-     */
+    @Override
     public MongoClient get() {
         return mongoClient;
     }

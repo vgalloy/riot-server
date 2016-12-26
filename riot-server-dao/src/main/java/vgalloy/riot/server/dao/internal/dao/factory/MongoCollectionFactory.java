@@ -28,11 +28,7 @@ public final class MongoCollectionFactory implements Supplier<MongoCollection<Do
         mongoCollection = mongoDatabase.getCollection(collectionName);
     }
 
-    /**
-     * Get a MongoCollection object.
-     *
-     * @return the MongoCollection
-     */
+    @Override
     public MongoCollection<Document> get() {
         return mongoCollection;
     }

@@ -1,7 +1,6 @@
 package vgalloy.riot.server.dao.internal.dao.impl;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,11 +16,10 @@ import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.dao.ChampionDao;
 import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.internal.dao.AbstractDao;
+import vgalloy.riot.server.dao.internal.dao.factory.MatchDetailHelper;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDatabaseFactory;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
-import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.MatchDetailDaoImpl;
 import vgalloy.riot.server.dao.internal.entity.dpo.ChampionDpo;
-import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 import vgalloy.riot.server.dao.internal.query.WinRateQuery;
 
 /**
@@ -73,7 +71,7 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
     public WinRate getWinRate(int championId, LocalDate localDate) {
         MongoCollection<Document> collection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
                 .getMongoDatabase(databaseName)
-                .getMongoCollection(getCollectionName(localDate))
+                .getMongoCollection(MatchDetailHelper.getCollectionName(localDate))
                 .get();
 
         BasicDBObject projectObject = new BasicDBObject("item.participants.championId", 1);
@@ -108,7 +106,7 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
     public Map<Integer, WinRate> getWinRateForAllChampion(LocalDate date) {
         MongoCollection<Document> collection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
                 .getMongoDatabase(databaseName)
-                .getMongoCollection(getCollectionName(date))
+                .getMongoCollection(MatchDetailHelper.getCollectionName(date))
                 .get();
 
         BasicDBObject projectObject = new BasicDBObject("item.participants.championId", 1);
@@ -142,22 +140,5 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
             }
         }
         return result;
-    }
-
-    /**
-     * Create the collection name base on the date.
-     *
-     * @param localDate the local
-     * @return the collection name
-     */
-    private static String getCollectionName(LocalDate localDate) {
-        Objects.requireNonNull(localDate);
-        if (localDate.isBefore(LocalDate.now().minus(4, ChronoUnit.YEARS))) {
-            throw new MongoDaoException("the date " + localDate + " is to old");
-        }
-        if (localDate.isAfter(LocalDate.now().plus(1, ChronoUnit.DAYS))) {
-            throw new MongoDaoException("the date " + localDate + " is in the future");
-        }
-        return MatchDetailDaoImpl.COLLECTION_NAME + "_" + localDate.format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
     }
 }

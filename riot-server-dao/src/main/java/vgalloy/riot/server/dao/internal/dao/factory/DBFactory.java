@@ -31,11 +31,7 @@ public final class DBFactory implements Supplier<DB> {
         db = mongoClient.getDB(dbName);
     }
 
-    /**
-     * Get a DB object.
-     *
-     * @return the DB
-     */
+    @Override
     public DB get() {
         return db;
     }

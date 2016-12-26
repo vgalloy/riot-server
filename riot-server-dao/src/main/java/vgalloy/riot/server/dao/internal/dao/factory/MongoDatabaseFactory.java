@@ -31,11 +31,7 @@ public final class MongoDatabaseFactory implements Supplier<MongoDatabase> {
         mongoDatabase = mongoClient.getDatabase(databaseName);
     }
 
-    /**
-     * Get a DB object.
-     *
-     * @return the DB object
-     */
+    @Override
     public MongoDatabase get() {
         return mongoDatabase;
     }
