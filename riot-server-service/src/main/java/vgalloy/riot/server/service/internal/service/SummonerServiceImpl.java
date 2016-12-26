@@ -1,7 +1,6 @@
 package vgalloy.riot.server.service.internal.service;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -43,10 +42,9 @@ public final class SummonerServiceImpl extends AbstractService<SummonerDto> impl
     }
 
     @Override
-    public List<LastGame> getLastGames(Region region, long summonerId, LocalDate from, LocalDate to) {
-        return matchDetailDao.findMatchDetailBySummonerId(region, summonerId, from, to.plus(1, ChronoUnit.DAYS)).stream()
+    public List<LastGame> getLastGames(Region region, long summonerId, LocalDateTime from, LocalDateTime to) {
+        return matchDetailDao.findMatchDetailBySummonerId(region, summonerId, from, to).stream()
                 .map(e -> LastGameMapper.map(e, summonerId))
-                .sorted((o1, o2) -> Long.compare(o1.getMatchCreation(), o2.getMatchCreation()))
                 .collect(Collectors.toList());
     }
 

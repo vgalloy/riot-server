@@ -92,7 +92,7 @@ public final class SummonerLoaderImpl implements SummonerLoader {
         if (summonerId.isPresent()) {
             loadSummonerById(region, summonerId.get());
         } else {
-            LOGGER.warn("Can not find summoner id for the summoner name : {}", summonerName);
+            LOGGER.warn("{} Can not find summoner id for the summoner name : {}", RegionPrinter.getRegion(region), summonerName);
         }
     }
 

@@ -1,6 +1,8 @@
 package vgalloy.riot.server.dao.internal.dao.impl.matchdetail;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,18 +78,21 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
     }
 
     @Override
-    public List<MatchDetail> findMatchDetailBySummonerId(Region region, long summonerId, LocalDate from, LocalDate to) {
+    public List<MatchDetail> findMatchDetailBySummonerId(Region region, long summonerId, LocalDateTime from, LocalDateTime to) {
         Objects.requireNonNull(region);
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
 
-        LocalDate currentDate = from;
+        LocalDateTime currentDate = from;
         List<MatchDetail> result = new ArrayList<>();
 
-        while (currentDate.isBefore(to)) {
-            JacksonDBCollection<MatchDetailDpo, String> collection = getCollection(currentDate);
+        while (currentDate.toLocalDate().isBefore(to.plus(1, ChronoUnit.DAYS).toLocalDate())) {
+            JacksonDBCollection<MatchDetailDpo, String> collection = getCollection(currentDate.toLocalDate());
             result.addAll(collection.find(DBQuery.is("item.participantIdentities.player.summonerId", summonerId))
                     .and(DBQuery.is("region", region))
+                    .and(DBQuery.greaterThan("item.matchCreation", from.toEpochSecond(ZoneOffset.UTC) * 1000))
+                    .and(DBQuery.lessThan("item.matchCreation", to.toEpochSecond(ZoneOffset.UTC) * 1000))
+                    .sort(new BasicDBObject("item.matchCreation", 1))
                     .toArray()
                     .stream()
                     .map(AbstractDpo::getItem)
@@ -111,10 +116,20 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
                 .getDB(databaseName)
                 .getDBCollection(MatchDetailHelper.getCollectionName(localDate))
                 .get();
+
+        createOrUpdateIndexes(dbCollection);
+        return JacksonDBCollection.wrap(dbCollection, MatchDetailDpo.class, String.class);
+    }
+
+    /**
+     * Create or update index.
+     *
+     * @param dbCollection the db collection
+     */
+    private static void createOrUpdateIndexes(DBCollection dbCollection) {
         LOGGER.debug("start index creation");
         dbCollection.createIndex(new BasicDBObject("region", 1));
         dbCollection.createIndex(new BasicDBObject("item.participantIdentities.participantId", 1));
         LOGGER.debug("end index creation");
-        return JacksonDBCollection.wrap(dbCollection, MatchDetailDpo.class, String.class);
     }
 }

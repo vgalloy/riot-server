@@ -1,6 +1,8 @@
 package vgalloy.riot.server.webservice.api.controller;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,12 +65,16 @@ public class SummonerController {
      * @return the last games
      */
     @RequestMapping(value = "/summoner/{region}/{summonerId}/lastGames", method = RequestMethod.GET)
-    public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId, @RequestParam Long fromMillis, @RequestParam Long toMillis) {
+    public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId, @RequestParam(required = false) Long fromMillis, @RequestParam(required = false) Long toMillis) {
         LOGGER.info("[ GET ] : getLastGames, region : {}, summonerId : {}, from : {}, to : {}", region, summonerId, fromMillis, toMillis);
-        LocalDate fromLocalDate = LocalDate.ofEpochDay(fromMillis / 1000 / 3600 / 24);
-        LocalDate toLocalDate = LocalDate.ofEpochDay(toMillis / 1000 / 3600 / 24);
+        LocalDateTime fromLocalDateTime = Optional.ofNullable(fromMillis)
+                .map(e -> LocalDateTime.ofEpochSecond(e / 1000, 0, ZoneOffset.UTC))
+                .orElseGet(() -> LocalDateTime.now().minus(1, ChronoUnit.WEEKS));
+        LocalDateTime toLocalDateTime = Optional.ofNullable(toMillis)
+                .map(e -> LocalDateTime.ofEpochSecond(e / 1000, 0, ZoneOffset.UTC))
+                .orElseGet(LocalDateTime::now);
 
-        return summonerService.getLastGames(region, summonerId, fromLocalDate, toLocalDate);
+        return summonerService.getLastGames(region, summonerId, fromLocalDateTime, toLocalDateTime);
     }
 
     /**

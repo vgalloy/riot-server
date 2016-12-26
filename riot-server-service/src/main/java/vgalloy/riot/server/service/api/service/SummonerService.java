@@ -1,6 +1,6 @@
 package vgalloy.riot.server.service.api.service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +15,7 @@ import vgalloy.riot.server.service.api.model.LastGame;
 public interface SummonerService extends CommonService<SummonerDto> {
 
     /**
-     * Get the games of a summoner during the period : [from, to]. The games are sorted by date.
+     * Get the games of a summoner during the period : [from, to[. The games are sorted by date (ascending).
      *
      * @param region     the region
      * @param summonerId the summoner id
@@ -23,7 +23,7 @@ public interface SummonerService extends CommonService<SummonerDto> {
      * @param to         the search end date
      * @return the last games
      */
-    List<LastGame> getLastGames(Region region, long summonerId, LocalDate from, LocalDate to);
+    List<LastGame> getLastGames(Region region, long summonerId, LocalDateTime from, LocalDateTime to);
 
     /**
      * Get the summoner by name and region.

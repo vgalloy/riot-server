@@ -1,6 +1,6 @@
 package vgalloy.riot.server.dao.internal.dao.impl.matchdetail;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -70,7 +70,7 @@ public final class GlobalMatchDetailDaoImpl implements MatchDetailDao {
     }
 
     @Override
-    public List<MatchDetail> findMatchDetailBySummonerId(Region region, long summonerId, LocalDate from, LocalDate to) {
+    public List<MatchDetail> findMatchDetailBySummonerId(Region region, long summonerId, LocalDateTime from, LocalDateTime to) {
         Objects.requireNonNull(region);
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);

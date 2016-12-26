@@ -2,6 +2,8 @@ package vgalloy.riot.server.dao.api.dao;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,31 +115,52 @@ public class GlobalMatchDetailDaoITest {
         // GIVEN
         long correctPlayerId = 12345;
         long wrongPlayerId = 12346;
+        LocalDateTime now = LocalDateTime.now();
 
         // WHEN
-        dao.save(createMatchDetail(new MatchDetailId(Region.EUW, 10_001L, LocalDate.now()), correctPlayerId));
-        dao.save(createMatchDetail(new MatchDetailId(Region.EUW, 10_002L, LocalDate.now()), correctPlayerId));
-        dao.save(createMatchDetail(new MatchDetailId(Region.EUW, 10_003L, LocalDate.now()), wrongPlayerId));
+        dao.save(createMatchDetail(Region.EUW, 10_001L, now.plus(1, ChronoUnit.MINUTES), correctPlayerId));
+        dao.save(createMatchDetail(Region.EUW, 10_002L, now.plus(2, ChronoUnit.MINUTES), correctPlayerId));
+        dao.save(createMatchDetail(Region.EUW, 10_003L, now.plus(1, ChronoUnit.MINUTES).minus(1, ChronoUnit.DAYS), correctPlayerId));
+        dao.save(createMatchDetail(Region.EUW, 10_004L, now.plus(1, ChronoUnit.MINUTES), wrongPlayerId));
 
         // THEN
         // Wrong id
-        List<MatchDetail> result = dao.findMatchDetailBySummonerId(Region.BR, 105246, LocalDate.now(), LocalDate.now().plus(1, ChronoUnit.DAYS));
+        List<MatchDetail> result = dao.findMatchDetailBySummonerId(Region.EUW, 105246, now, now.plus(1, ChronoUnit.DAYS));
         Assert.assertEquals(0, result.size());
 
         // Wrong region
-        result = dao.findMatchDetailBySummonerId(Region.BR, correctPlayerId, LocalDate.now(), LocalDate.now().plus(1, ChronoUnit.DAYS));
+        result = dao.findMatchDetailBySummonerId(Region.BR, correctPlayerId, now, now.plus(1, ChronoUnit.DAYS));
         Assert.assertEquals(0, result.size());
 
         // Everything ok
-        result = dao.findMatchDetailBySummonerId(Region.EUW, correctPlayerId, LocalDate.now(), LocalDate.now().plus(1, ChronoUnit.DAYS));
-        Assert.assertEquals(2, result.size());
+        result = dao.findMatchDetailBySummonerId(Region.EUW, correctPlayerId, now.minus(1, ChronoUnit.DAYS), now.plus(1, ChronoUnit.DAYS));
+        Assert.assertEquals(3, result.size());
+        Assert.assertEquals(new Long(10_003), result.get(0).getMatchId());
+        Assert.assertEquals(new Long(10_002), result.get(2).getMatchId());
 
         // Wrong data time
-        result = dao.findMatchDetailBySummonerId(Region.EUW, correctPlayerId, LocalDate.now().plus(1, ChronoUnit.DAYS), LocalDate.now().plus(2, ChronoUnit.DAYS));
+        result = dao.findMatchDetailBySummonerId(Region.EUW, correctPlayerId, now.minus(2, ChronoUnit.DAYS), now.minus(1, ChronoUnit.DAYS));
         Assert.assertEquals(0, result.size());
     }
 
-    private MatchDetailWrapper createMatchDetail(MatchDetailId matchDetailId, long summonerId) {
+    @Test
+    public void testLastGameLimitCondition() {
+        // GIVEN
+        long correctPlayerId = 123456;
+        LocalDateTime now = LocalDateTime.now();
+
+        // WHEN
+        dao.save(createMatchDetail(Region.EUW, 11_001L, now.minus(5, ChronoUnit.MINUTES), correctPlayerId));
+
+        // THEN
+        // Everything ok
+        List<MatchDetail> result = dao.findMatchDetailBySummonerId(Region.EUW, correctPlayerId, now.minus(1, ChronoUnit.DAYS).plus(5, ChronoUnit.MINUTES), now);
+        Assert.assertEquals(1, result.size());
+    }
+
+    private static MatchDetailWrapper createMatchDetail(Region region, Long id, LocalDateTime matchCreation, long summonerId) {
+        MatchDetailId matchDetailId = new MatchDetailId(region, id, matchCreation.toLocalDate());
+
         Player player = new Player();
         player.setSummonerId(summonerId);
 
@@ -152,7 +175,7 @@ public class GlobalMatchDetailDaoITest {
         matchDetail.setParticipantIdentities(participantIdentityList);
         matchDetail.setMatchId(matchDetailId.getId());
         matchDetail.setRegion(matchDetailId.getRegion());
-        matchDetail.setMatchCreation(matchDetailId.getMatchDate().toEpochDay() * 24 * 3600 * 1000);
+        matchDetail.setMatchCreation(matchCreation.toEpochSecond(ZoneOffset.UTC) * 1000);
 
         return new MatchDetailWrapper(matchDetailId, matchDetail);
     }

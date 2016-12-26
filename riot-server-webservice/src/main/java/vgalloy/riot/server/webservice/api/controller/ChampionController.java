@@ -1,6 +1,7 @@
 package vgalloy.riot.server.webservice.api.controller;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -69,15 +70,19 @@ public class ChampionController {
      * Get the win rate of a champion as a mapToEntity. The key is the number of game played.
      *
      * @param championId the champion id
-     * @param fromMillis the start search date in millis
-     * @param toMillis   the end search date in millis
+     * @param fromDay    the start search date in day
+     * @param toDay      the end search date in day
      * @return the win rates as a mapToEntity
      */
     @RequestMapping(value = "/champion/{championId}/winRateByDate", method = RequestMethod.GET)
-    public Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId, @RequestParam Long fromMillis, @RequestParam Long toMillis) {
-        LOGGER.info("[ GET ] : getWinRateDuringPeriodOfTime, championId : {},  fromMillis : {}, toMillis : {}", championId, fromMillis, toMillis);
-        LocalDate fromLocalDate = LocalDate.ofEpochDay(fromMillis / 1000 / 3600 / 24);
-        LocalDate toLocalDate = LocalDate.ofEpochDay(toMillis / 1000 / 3600 / 24);
+    public Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId, @RequestParam(required = false) Long fromDay, @RequestParam(required = false) Long toDay) {
+        LOGGER.info("[ GET ] : getWinRateDuringPeriodOfTime, championId : {},  fromDay : {}, toDay : {}", championId, fromDay, toDay);
+        LocalDate fromLocalDate = Optional.ofNullable(fromDay)
+                .map(LocalDate::ofEpochDay)
+                .orElseGet(() -> LocalDate.now().minus(1, ChronoUnit.WEEKS));
+        LocalDate toLocalDate = Optional.ofNullable(toDay)
+                .map(LocalDate::ofEpochDay)
+                .orElseGet(LocalDate::now);
 
         Map<Long, WinRate> result = new HashMap<>();
         for (Map.Entry<LocalDate, WinRate> entry : queryService.getWinRate(championId, fromLocalDate, toLocalDate).entrySet()) {

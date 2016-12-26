@@ -1,6 +1,6 @@
 package vgalloy.riot.server.dao.api.dao;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +32,7 @@ public interface MatchDetailDao {
     Optional<Entity<MatchDetail, MatchDetailId>> get(MatchDetailId matchDetailId);
 
     /**
-     * Get all the games of a summoner during the period : [from, to[. The game ARE NOT sorted
+     * Get all the games of a summoner during the period : [from, to[. The games are sorted by date (ascending).
      *
      * @param region     the region
      * @param summonerId the summoner id
@@ -40,5 +40,5 @@ public interface MatchDetailDao {
      * @param to         the first to not analyse
      * @return the last games
      */
-    List<MatchDetail> findMatchDetailBySummonerId(Region region, long summonerId, LocalDate from, LocalDate to);
+    List<MatchDetail> findMatchDetailBySummonerId(Region region, long summonerId, LocalDateTime from, LocalDateTime to);
 }
