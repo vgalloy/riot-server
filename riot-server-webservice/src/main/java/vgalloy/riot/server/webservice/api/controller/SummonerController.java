@@ -66,7 +66,7 @@ public class SummonerController {
      */
     @RequestMapping(value = "/summoner/{region}/{summonerId}/lastGames", method = RequestMethod.GET)
     public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId, @RequestParam(required = false) Long fromMillis, @RequestParam(required = false) Long toMillis) {
-        LOGGER.info("[ GET ] : getLastGames, region : {}, summonerId : {}, from : {}, to : {}", region, summonerId, fromMillis, toMillis);
+        LOGGER.info("[ GET ] : getLastGames, region : {}, summonerId : {}, fromMillis : {}, toMillis : {}", region, summonerId, fromMillis, toMillis);
         LocalDateTime fromLocalDateTime = Optional.ofNullable(fromMillis)
                 .map(e -> LocalDateTime.ofEpochSecond(e / 1000, 0, ZoneOffset.UTC))
                 .orElseGet(() -> LocalDateTime.now().minus(1, ChronoUnit.WEEKS));

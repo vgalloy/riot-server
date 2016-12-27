@@ -34,7 +34,7 @@ public class CorrelationIdFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String requestUuid = UUID.randomUUID().toString();
         MDC.put("requestUuid", requestUuid);
-        LOGGER.info("add correlation Id : ", requestUuid);
+        LOGGER.info("add correlation Id : {}", requestUuid);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
