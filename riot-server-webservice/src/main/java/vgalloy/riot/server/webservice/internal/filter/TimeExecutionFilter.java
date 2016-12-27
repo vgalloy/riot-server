@@ -9,20 +9,16 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
  * @author Vincent Galloy - 19/09/16
  *         Created by Vincent Galloy on 19/09/16.
  */
-@Order(2)
 @Component
 public class TimeExecutionFilter implements Filter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TimeExecutionFilter.class);
+    public static final String RUNTIME_EXECUTION_HEADER = "X-executionTimeMillis";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -30,13 +26,9 @@ public class TimeExecutionFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        long startTimeNano = System.nanoTime();
-        filterChain.doFilter(servletRequest, servletResponse);
-        long executionTimeMillis = (System.nanoTime() - startTimeNano) / 1_000_000;
-
-        LOGGER.info("execution time : {} ms", executionTimeMillis);
-        ((HttpServletResponse) servletResponse).setHeader("X-executionTimeMillis", executionTimeMillis + " ms");
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+        ((HttpServletResponse) servletResponse).setHeader(RUNTIME_EXECUTION_HEADER, String.valueOf(System.currentTimeMillis()));
+        chain.doFilter(servletRequest, servletResponse);
     }
 
     @Override
