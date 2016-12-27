@@ -94,13 +94,15 @@ public class ChampionController {
     /**
      * Get the win rate for all champion for the given day.
      *
-     * @param dataMillis the day to analyse
+     * @param day the day to analyse
      * @return a map (champion Id, win rate)
      */
-    @RequestMapping(value = "/champion/winRateByDate/{dataMillis}", method = RequestMethod.GET)
-    public Map<Integer, WinRate> getWinRateForAllChampion(@PathVariable Long dataMillis) {
-        LOGGER.info("[ GET ] : getWinRateForAllChampion, dataMillis : {}", dataMillis);
-        LocalDate date = LocalDate.ofEpochDay(dataMillis / 1000 / 3600 / 24);
-        return championService.getWinRateForAllChampion(date);
+    @RequestMapping(value = "/champion/winRateByDate/{day}", method = RequestMethod.GET)
+    public Map<Integer, WinRate> getWinRateForAllChampion(@PathVariable(required = false) Long day) {
+        LOGGER.info("[ GET ] : getWinRateForAllChampion, day : {}", day);
+        LocalDate localDate = Optional.ofNullable(day)
+                .map(LocalDate::ofEpochDay)
+                .orElseGet(LocalDate::now);
+        return championService.getWinRateForAllChampion(localDate);
     }
 }
