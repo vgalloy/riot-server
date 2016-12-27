@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TimeExecutionFilter implements Filter {
 
-    public static final String RUNTIME_EXECUTION_HEADER = "X-executionTimeMillis";
+    public static final String X_START_TIME_MILLIS = "X-startTimeMillis";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -27,7 +27,7 @@ public class TimeExecutionFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
-        ((HttpServletResponse) servletResponse).setHeader(RUNTIME_EXECUTION_HEADER, String.valueOf(System.currentTimeMillis()));
+        ((HttpServletResponse) servletResponse).setHeader(X_START_TIME_MILLIS, String.valueOf(System.currentTimeMillis()));
         chain.doFilter(servletRequest, servletResponse);
     }
 

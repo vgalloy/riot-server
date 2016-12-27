@@ -19,6 +19,7 @@ import vgalloy.riot.server.webservice.internal.filter.TimeExecutionFilter;
 @ControllerAdvice
 public class HeaderModifierAdvice implements ResponseBodyAdvice<Object> {
 
+    private static final String X_EXECUTION_TIME_MILLIS = "X-executionTimeMillis";
     private static final Logger LOGGER = LoggerFactory.getLogger(HeaderModifierAdvice.class);
 
     @Override
@@ -28,12 +29,12 @@ public class HeaderModifierAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        long startTimeMillis = Long.valueOf(serverHttpResponse.getHeaders().get(TimeExecutionFilter.RUNTIME_EXECUTION_HEADER).get(0));
+        long startTimeMillis = Long.valueOf(serverHttpResponse.getHeaders().get(TimeExecutionFilter.X_START_TIME_MILLIS).get(0));
 
         long executionTimeMillis = System.currentTimeMillis() - startTimeMillis;
 
         LOGGER.info("execution time : {} ms", executionTimeMillis);
-        serverHttpResponse.getHeaders().set(TimeExecutionFilter.RUNTIME_EXECUTION_HEADER, String.valueOf(executionTimeMillis));
+        serverHttpResponse.getHeaders().set(HeaderModifierAdvice.X_EXECUTION_TIME_MILLIS, String.valueOf(executionTimeMillis));
 
         return body;
     }
