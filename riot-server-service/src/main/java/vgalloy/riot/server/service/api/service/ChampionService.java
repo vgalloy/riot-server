@@ -19,4 +19,22 @@ public interface ChampionService extends CommonService<ChampionDto> {
      * @return a map (champion Id, win rate)
      */
     Map<Integer, WinRate> getWinRateForAllChampion(LocalDate date);
+
+    /**
+     * Get the winRate of a champion as a mapToEntity where the key is the number of game played.
+     *
+     * @param championId the champion id
+     * @return the winRate
+     */
+    Map<Integer, Double> getWinRate(int championId);
+
+    /**
+     * Get the champion win rate during the given period.
+     *
+     * @param championId the champion id
+     * @param startDate  the start date (included)
+     * @param endDate    the end date (excluded)
+     * @return the win rate of the champion. Each entry is given with a timestamp.
+     */
+    Map<LocalDate, WinRate> getWinRate(int championId, LocalDate startDate, LocalDate endDate);
 }

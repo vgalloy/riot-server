@@ -9,7 +9,6 @@ import vgalloy.riot.server.service.api.factory.ServiceFactory;
 import vgalloy.riot.server.service.api.service.ChampionService;
 import vgalloy.riot.server.service.api.service.ItemService;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
-import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
 
@@ -24,16 +23,6 @@ import vgalloy.riot.server.service.api.service.SummonerService;
         "vgalloy.riot.server.webservice.api.controller"})
 @Configuration
 public class InternalConfig {
-
-    /**
-     * Create QueryService bean.
-     *
-     * @return the bean
-     */
-    @Bean
-    public QueryService queryService() {
-        return ServiceFactory.getQueryService();
-    }
 
     /**
      * Create ItemService bean.

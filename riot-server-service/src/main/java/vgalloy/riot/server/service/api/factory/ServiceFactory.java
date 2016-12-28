@@ -3,7 +3,6 @@ package vgalloy.riot.server.service.api.factory;
 import vgalloy.riot.server.service.api.service.ChampionService;
 import vgalloy.riot.server.service.api.service.ItemService;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
-import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
 import vgalloy.riot.server.service.internal.factory.InternalServiceFactory;
@@ -65,14 +64,5 @@ public final class ServiceFactory {
      */
     public static RankedStatsService getRankedStatsService() {
         return InternalServiceFactory.getRankedStatsService();
-    }
-
-    /**
-     * Get the QueryService.
-     *
-     * @return the QueryService
-     */
-    public static QueryService getQueryService() {
-        return InternalServiceFactory.getQueryService();
     }
 }

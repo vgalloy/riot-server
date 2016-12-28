@@ -7,13 +7,11 @@ import vgalloy.riot.server.loader.api.factory.LoaderFactory;
 import vgalloy.riot.server.service.api.service.ChampionService;
 import vgalloy.riot.server.service.api.service.ItemService;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
-import vgalloy.riot.server.service.api.service.QueryService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
 import vgalloy.riot.server.service.internal.service.ChampionServiceImpl;
 import vgalloy.riot.server.service.internal.service.ItemServiceImpl;
 import vgalloy.riot.server.service.internal.service.MatchDetailServiceImpl;
-import vgalloy.riot.server.service.internal.service.QueryServiceImpl;
 import vgalloy.riot.server.service.internal.service.RankedStatsServiceImpl;
 import vgalloy.riot.server.service.internal.service.SummonerServiceImpl;
 import vgalloy.riot.server.service.internal.task.PrivilegedLoaderTask;
@@ -30,7 +28,6 @@ public final class InternalServiceFactory {
     private static final MatchDetailService MATCH_DETAIL_SERVICE;
     private static final SummonerService SUMMONER_SERVICE;
     private static final RankedStatsService RANKED_STATS_SERVICE;
-    private static final QueryService QUERY_SERVICE;
 
     static {
         Timer timer = new Timer();
@@ -42,7 +39,6 @@ public final class InternalServiceFactory {
         MATCH_DETAIL_SERVICE = new MatchDetailServiceImpl(DaoFactory.getMatchDetailDao());
         SUMMONER_SERVICE = new SummonerServiceImpl(DaoFactory.getSummonerDao(), DaoFactory.getMatchDetailDao(), LoaderFactory.getLoaderClient());
         RANKED_STATS_SERVICE = new RankedStatsServiceImpl(DaoFactory.getRankedStatsDao());
-        QUERY_SERVICE = new QueryServiceImpl(DaoFactory.getChampionDao());
     }
 
     /**
@@ -71,9 +67,5 @@ public final class InternalServiceFactory {
 
     public static RankedStatsService getRankedStatsService() {
         return RANKED_STATS_SERVICE;
-    }
-
-    public static QueryService getQueryService() {
-        return QUERY_SERVICE;
     }
 }
