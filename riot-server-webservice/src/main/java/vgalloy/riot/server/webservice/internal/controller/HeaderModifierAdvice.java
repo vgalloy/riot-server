@@ -1,5 +1,14 @@
 package vgalloy.riot.server.webservice.internal.controller;
 
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -10,16 +19,16 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import vgalloy.riot.server.webservice.internal.filter.TimeExecutionFilter;
-
 /**
  * @author Vincent Galloy - 27/12/16
  *         Created by Vincent Galloy on 27/12/16.
+ *         This class must add 'X-executionTimeMillis' header for each request
  */
 @ControllerAdvice
-public class HeaderModifierAdvice implements ResponseBodyAdvice<Object> {
+public class HeaderModifierAdvice implements ResponseBodyAdvice<Object>, Filter {
 
     private static final String X_EXECUTION_TIME_MILLIS = "X-executionTimeMillis";
+    private static final String X_START_TIME_MILLIS = "X-startTimeMillis";
     private static final Logger LOGGER = LoggerFactory.getLogger(HeaderModifierAdvice.class);
 
     @Override
@@ -29,13 +38,35 @@ public class HeaderModifierAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        long startTimeMillis = Long.valueOf(serverHttpResponse.getHeaders().get(TimeExecutionFilter.X_START_TIME_MILLIS).get(0));
+        Long executionTimeMillis = null;
 
-        long executionTimeMillis = System.currentTimeMillis() - startTimeMillis;
+        if (serverHttpResponse.getHeaders() != null &&
+                serverHttpResponse.getHeaders().get(HeaderModifierAdvice.X_START_TIME_MILLIS) != null &&
+                serverHttpResponse.getHeaders().get(HeaderModifierAdvice.X_START_TIME_MILLIS).size() > 0) {
+            Long startTimeMillis = Long.valueOf(serverHttpResponse.getHeaders().get(HeaderModifierAdvice.X_START_TIME_MILLIS).get(0));
+            executionTimeMillis = System.currentTimeMillis() - startTimeMillis;
+        }
 
         LOGGER.info("execution time : {} ms", executionTimeMillis);
         serverHttpResponse.getHeaders().set(HeaderModifierAdvice.X_EXECUTION_TIME_MILLIS, String.valueOf(executionTimeMillis));
+        serverHttpResponse.getHeaders().remove(HeaderModifierAdvice.X_START_TIME_MILLIS);
 
         return body;
+    }
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+        ((HttpServletResponse) servletResponse).setHeader(X_START_TIME_MILLIS, String.valueOf(System.currentTimeMillis()));
+        chain.doFilter(servletRequest, servletResponse);
+    }
+
+    @Override
+    public void destroy() {
+
     }
 }
