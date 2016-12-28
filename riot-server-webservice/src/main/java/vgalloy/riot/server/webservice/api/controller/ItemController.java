@@ -39,9 +39,6 @@ public class ItemController {
     public ItemDto getItemById(@PathVariable Region region, @PathVariable Long itemId) {
         LOGGER.info("[ GET ] : getItemById, region : {}, itemId : {}", region, itemId);
         Optional<Model<ItemDto>> result = itemService.get(new DpoId(region, itemId));
-        if (result.isPresent()) {
-            return result.get().getItem();
-        }
-        return null;
+        return result.map(Model::getItem).orElse(null);
     }
 }

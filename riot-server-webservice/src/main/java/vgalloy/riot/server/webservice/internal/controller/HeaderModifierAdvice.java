@@ -27,8 +27,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @ControllerAdvice
 public class HeaderModifierAdvice implements ResponseBodyAdvice<Object>, Filter {
 
-    private static final String X_EXECUTION_TIME_MILLIS = "X-executionTimeMillis";
-    private static final String X_START_TIME_MILLIS = "X-startTimeMillis";
+    private static final String X_EXECUTION_TIME_MILLIS = "X-execution-time-millis";
+    private static final String X_START_TIME_MILLIS = "X-start-time-millis";
     private static final Logger LOGGER = LoggerFactory.getLogger(HeaderModifierAdvice.class);
 
     @Override

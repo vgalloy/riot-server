@@ -16,13 +16,4 @@ public class ServiceException extends RuntimeException {
     public ServiceException(String message) {
         super(message);
     }
-
-    /**
-     * Constructor.
-     *
-     * @param cause the cause
-     */
-    public ServiceException(Throwable cause) {
-        super(cause);
-    }
 }

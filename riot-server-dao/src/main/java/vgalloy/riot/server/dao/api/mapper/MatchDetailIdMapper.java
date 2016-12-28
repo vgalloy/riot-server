@@ -8,6 +8,7 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.matchlist.MatchReference;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
+import vgalloy.riot.server.dao.api.exception.MatchDetailConversionException;
 
 /**
  * @author Vincent Galloy
@@ -41,13 +42,14 @@ public final class MatchDetailIdMapper {
      *
      * @param matchDetailId the match detail id as string.
      * @return the normalized string of the match detail
+     * @throws MatchDetailConversionException if the string can not be converted
      */
-    public static MatchDetailId map(String matchDetailId) {
+    public static MatchDetailId map(String matchDetailId) throws MatchDetailConversionException {
         Objects.requireNonNull(matchDetailId);
 
         String[] split = matchDetailId.split("_");
         if (split.length != 3) {
-            throw new IllegalArgumentException("the String : " + matchDetailId + " can not be convert into MatchDetailId");
+            throw new MatchDetailConversionException("the String : " + matchDetailId + " can not be convert into MatchDetailId");
         }
         try {
             Region region = Region.valueOf(split[0]);
@@ -55,7 +57,7 @@ public final class MatchDetailIdMapper {
             LocalDate localDate = LocalDate.from(DATE_TIME_FORMATTER.parse(split[2]));
             return new MatchDetailId(region, matchId, localDate);
         } catch (Exception e) {
-            throw new IllegalArgumentException("the String : " + matchDetailId + " can not be convert into MatchDetailId");
+            throw new MatchDetailConversionException("the String : " + matchDetailId + " can not be convert into MatchDetailId");
         }
     }
 

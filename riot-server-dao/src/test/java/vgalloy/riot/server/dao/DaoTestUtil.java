@@ -50,7 +50,7 @@ public final class DaoTestUtil {
                 .build();
         return MongodStarter.getInstance(runtimeConfig)
                 .prepare(new MongodConfigBuilder()
-                        .version(Version.Main.V3_2)
+                        .version(Version.Main.V3_3)
                         .net(new Net(url, port, Network.localhostIsIPv6()))
                         .build());
     }

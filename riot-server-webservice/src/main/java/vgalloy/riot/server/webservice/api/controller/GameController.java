@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
+import vgalloy.riot.server.dao.api.exception.MatchDetailConversionException;
 import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
 import vgalloy.riot.server.service.api.model.Game;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
@@ -40,14 +41,11 @@ public class GameController {
         MatchDetailId matchDetailId;
         try {
             matchDetailId = MatchDetailIdMapper.map(gameId);
-        } catch (IllegalArgumentException e) {
+        } catch (MatchDetailConversionException e) {
             throw new UserException(e.getMessage());
         }
 
         Optional<Game> optionalResult = matchDetailService.get(matchDetailId);
-        if (optionalResult.isPresent()) {
-            return optionalResult.get();
-        }
-        return null;
+        return optionalResult.orElse(null);
     }
 }

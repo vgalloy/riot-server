@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -31,7 +32,11 @@ public class IpLogFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        LOGGER.info("ip : {}", servletRequest.getRemoteAddr());
+        String ipAddress = ((HttpServletRequest) servletRequest).getHeader("X-FORWARDED-FOR");
+        if (ipAddress == null) {
+            ipAddress = servletRequest.getRemoteAddr();
+        }
+        LOGGER.info("ip : {}", ipAddress);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

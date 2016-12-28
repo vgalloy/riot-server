@@ -45,10 +45,7 @@ public class ChampionController {
     public Model<ChampionDto> getChampion(@PathVariable Region region, @PathVariable Long championId) {
         LOGGER.info("[ GET ] : getChampion : {}", championId);
         Optional<Model<ChampionDto>> result = championService.get(new DpoId(region, championId));
-        if (result.isPresent()) {
-            return result.get();
-        }
-        return null;
+        return result.orElse(null);
     }
 
     /**
@@ -94,8 +91,8 @@ public class ChampionController {
      * @param day the day to analyse
      * @return a map (champion Id, win rate)
      */
-    @RequestMapping(value = "/champion/winRateByDate/{day}", method = RequestMethod.GET)
-    public Map<Integer, WinRate> getWinRateForAllChampion(@PathVariable(required = false) Long day) {
+    @RequestMapping(value = "/champion/winRateByDate", method = RequestMethod.GET)
+    public Map<Integer, WinRate> getWinRateForAllChampion(@RequestParam(required = false) Long day) {
         LOGGER.info("[ GET ] : getWinRateForAllChampion, day : {}", day);
         LocalDate localDate = Optional.ofNullable(day)
                 .map(LocalDate::ofEpochDay)

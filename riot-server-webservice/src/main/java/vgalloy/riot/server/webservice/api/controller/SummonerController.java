@@ -49,10 +49,7 @@ public class SummonerController {
     public Model<RankedStatsDto> getRankedStat(@PathVariable Region region, @PathVariable Long summonerId) {
         LOGGER.info("[ GET ] : getRankedStat, region : {}, summonerId : {}", region, summonerId);
         Optional<Model<RankedStatsDto>> rankedStatsEntity = rankedStatsService.get(new DpoId(region, summonerId));
-        if (rankedStatsEntity.isPresent()) {
-            return rankedStatsEntity.get();
-        }
-        return null;
+        return rankedStatsEntity.orElse(null);
     }
 
     /**
@@ -88,10 +85,7 @@ public class SummonerController {
     public SummonerDto getSummonerByName(@PathVariable Region region, @PathVariable String summonerName) {
         LOGGER.info("[ GET ] : getSummonerByName, region : {}, summonerName : {}", region, summonerName);
         Optional<SummonerDto> optionalSummonerDto = summonerService.getSummonerByName(region, summonerName);
-        if (optionalSummonerDto.isPresent()) {
-            return optionalSummonerDto.get();
-        }
-        return null;
+        return optionalSummonerDto.orElse(null);
     }
 
     /**
@@ -105,9 +99,6 @@ public class SummonerController {
     public SummonerDto getSummonerById(@PathVariable Region region, @PathVariable Long summonerId) {
         LOGGER.info("[ GET ] : getSummonerById, region : {}, summonerId : {}", region, summonerId);
         Optional<Model<SummonerDto>> optionalSummonerDto = summonerService.get(new DpoId(region, summonerId));
-        if (optionalSummonerDto.isPresent()) {
-            return optionalSummonerDto.get().getItem();
-        }
-        return null;
+        return optionalSummonerDto.map(Model::getItem).orElse(null);
     }
 }
