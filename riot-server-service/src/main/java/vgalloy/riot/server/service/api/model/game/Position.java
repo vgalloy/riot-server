@@ -1,15 +1,12 @@
-package vgalloy.riot.server.service.api.model;
+package vgalloy.riot.server.service.api.model.game;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 23/08/16.
  */
-public class Position implements Serializable {
-
-    private static final long serialVersionUID = -5368974864917401398L;
+public class Position {
 
     private int x;
     private int y;

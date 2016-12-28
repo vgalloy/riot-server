@@ -20,15 +20,6 @@ public class CommonDpoWrapper<DTO> extends AbstractDpoWrapper<DTO, DpoId> {
         super(dpoId, item);
     }
 
-    /**
-     * Constructor.
-     *
-     * @param dpoId the item id
-     */
-    public CommonDpoWrapper(DpoId dpoId) {
-        super(dpoId);
-    }
-
     @Override
     public String toString() {
         return "AbstractDpoWrapper{" +

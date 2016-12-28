@@ -6,37 +6,37 @@ import java.util.Optional;
 import vgalloy.riot.api.api.constant.QueueType;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.Participant;
-import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
-import vgalloy.riot.server.service.api.model.LastGame;
-import vgalloy.riot.server.service.api.service.exception.ServiceException;
+import vgalloy.riot.server.service.api.model.game.GameSummary;
 import vgalloy.riot.server.service.internal.service.helper.MatchDetailHelper;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 23/08/16.
  */
-public final class LastGameMapper {
+public final class GameSummaryMapper {
 
     /**
      * Constructor.
      * To prevent instantiation
      */
-    private LastGameMapper() {
+    private GameSummaryMapper() {
         throw new AssertionError();
     }
 
     /**
-     * Convert a matchDetail into a LastGame.
+     * Convert a matchDetail into a GameSummary.
      *
      * @param matchDetail the match Detail
      * @param summonerId  the summoner id
-     * @return the LastGame
+     * @return the GameSummary
      */
-    public static LastGame map(MatchDetail matchDetail, long summonerId) {
+    public static Optional<GameSummary> map(MatchDetail matchDetail, long summonerId) {
         Optional<Participant> optionalParticipant = MatchDetailHelper.getParticipant(matchDetail, summonerId);
+
         if (!optionalParticipant.isPresent()) {
-            throw new ServiceException("The summoner : " + summonerId + "didn't played the game : " + matchDetail.getMatchId());
+            return Optional.empty();
         }
+
         Participant participant = optionalParticipant.get();
 
         int championId = participant.getChampionId();
@@ -50,6 +50,7 @@ public final class LastGameMapper {
         int spell2Id = participant.getSpell2Id();
         List<Integer> itemIdList = ItemListMapper.map(matchDetail.getTimeline(), participant.getParticipantId());
 
-        return new LastGame(MatchDetailIdMapper.map(MatchDetailIdMapper.map(matchDetail)), championId, kill, death, assist, winner, matchCreation, queueType, spell1Id, spell2Id, itemIdList);
+        GameSummary gameSummary = new GameSummary(GameIdMapper.map(matchDetail), championId, kill, death, assist, winner, matchCreation, queueType, spell1Id, spell2Id, itemIdList);
+        return Optional.of(gameSummary);
     }
 }

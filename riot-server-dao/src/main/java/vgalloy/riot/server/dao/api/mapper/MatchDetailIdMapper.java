@@ -8,7 +8,6 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.matchlist.MatchReference;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
-import vgalloy.riot.server.dao.api.exception.MatchDetailConversionException;
 
 /**
  * @author Vincent Galloy
@@ -24,41 +23,6 @@ public final class MatchDetailIdMapper {
      */
     private MatchDetailIdMapper() {
         throw new AssertionError();
-    }
-
-    /**
-     * Convert a MatchDetailId into a String.
-     *
-     * @param matchDetailId the match detail id
-     * @return the normalized string of the match detail
-     */
-    public static String map(MatchDetailId matchDetailId) {
-        Objects.requireNonNull(matchDetailId);
-        return matchDetailId.getRegion() + "_" + matchDetailId.getId() + "_" + matchDetailId.getMatchDate().format(DATE_TIME_FORMATTER);
-    }
-
-    /**
-     * Convert a String into a MatchDetailId.
-     *
-     * @param matchDetailId the match detail id as string.
-     * @return the normalized string of the match detail
-     * @throws MatchDetailConversionException if the string can not be converted
-     */
-    public static MatchDetailId map(String matchDetailId) throws MatchDetailConversionException {
-        Objects.requireNonNull(matchDetailId);
-
-        String[] split = matchDetailId.split("_");
-        if (split.length != 3) {
-            throw new MatchDetailConversionException("the String : " + matchDetailId + " can not be convert into MatchDetailId");
-        }
-        try {
-            Region region = Region.valueOf(split[0]);
-            Long matchId = new Long(split[1]);
-            LocalDate localDate = LocalDate.from(DATE_TIME_FORMATTER.parse(split[2]));
-            return new MatchDetailId(region, matchId, localDate);
-        } catch (Exception e) {
-            throw new MatchDetailConversionException("the String : " + matchDetailId + " can not be convert into MatchDetailId");
-        }
     }
 
     /**

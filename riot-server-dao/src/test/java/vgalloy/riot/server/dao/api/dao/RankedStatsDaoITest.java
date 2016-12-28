@@ -72,11 +72,6 @@ public class RankedStatsDaoITest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testInsertWithNullRankedStatsDto() {
-        rankedStatsDao.save(new CommonDpoWrapper<>(new DpoId(Region.EUW, 1L), null));
-    }
-
-    @Test(expected = NullPointerException.class)
     public void testInsertWithNullId() {
         rankedStatsDao.save(new CommonDpoWrapper<>(new DpoId(Region.EUW, null), new RankedStatsDto()));
     }

@@ -1,15 +1,12 @@
-package vgalloy.riot.server.service.api.model;
+package vgalloy.riot.server.service.api.model.game;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 08/09/16.
  */
-public class TimedEvent<T> implements Serializable {
-
-    private static final long serialVersionUID = 3797859626501231651L;
+public class TimedEvent<T> {
 
     private final long timestamp;
     private final T value;

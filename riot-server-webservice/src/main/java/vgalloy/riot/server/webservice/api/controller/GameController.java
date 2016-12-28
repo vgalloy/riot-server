@@ -1,7 +1,5 @@
 package vgalloy.riot.server.webservice.api.controller;
 
-import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
-import vgalloy.riot.server.dao.api.exception.MatchDetailConversionException;
-import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
-import vgalloy.riot.server.service.api.model.Game;
+import vgalloy.riot.server.service.api.model.game.Game;
+import vgalloy.riot.server.service.api.model.game.GameId;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
-import vgalloy.riot.server.service.api.service.exception.UserException;
+import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistException;
+import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
 
 /**
  * @author Vincent Galloy
@@ -35,17 +32,12 @@ public class GameController {
      * @param gameId the game id
      * @return the players information as a list
      */
-    @RequestMapping(value = "/game/{gameId}", method = RequestMethod.GET)
-    public Game getGame(@PathVariable String gameId) {
+    @RequestMapping(value = "/games/{gameId}", method = RequestMethod.GET)
+    public Game getGame(@PathVariable GameId gameId) {
         LOGGER.info("[ GET ] : getGame, gameId : {}, ", gameId);
-        MatchDetailId matchDetailId;
-        try {
-            matchDetailId = MatchDetailIdMapper.map(gameId);
-        } catch (MatchDetailConversionException e) {
-            throw new UserException(e.getMessage());
-        }
 
-        Optional<Game> optionalResult = matchDetailService.get(matchDetailId);
-        return optionalResult.orElse(null);
+        return matchDetailService.get(gameId)
+                .ifNotLoadedThrow(ResourceNotLoadedException::new)
+                .ifDoesNotExistThrow(ResourceDoesNotExistException::new);
     }
 }

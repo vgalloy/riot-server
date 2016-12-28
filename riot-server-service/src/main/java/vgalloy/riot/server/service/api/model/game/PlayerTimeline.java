@@ -1,6 +1,5 @@
-package vgalloy.riot.server.service.api.model;
+package vgalloy.riot.server.service.api.model.game;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,9 +10,7 @@ import vgalloy.riot.api.api.constant.Region;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 08/09/16.
  */
-public class PlayerTimeline implements Serializable {
-
-    private static final long serialVersionUID = -7718763464685566742L;
+public class PlayerTimeline {
 
     private final Region region;
     private final Long playerId;

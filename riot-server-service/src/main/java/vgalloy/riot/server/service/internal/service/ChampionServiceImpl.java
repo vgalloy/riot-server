@@ -4,14 +4,14 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.dao.ChampionDao;
+import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.loader.api.service.LoaderClient;
-import vgalloy.riot.server.service.api.model.Model;
+import vgalloy.riot.server.service.api.model.wrapper.ResourceWrapper;
 import vgalloy.riot.server.service.api.service.ChampionService;
 import vgalloy.riot.server.service.api.service.exception.UserException;
 
@@ -19,7 +19,7 @@ import vgalloy.riot.server.service.api.service.exception.UserException;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 08/12/16.
  */
-public final class ChampionServiceImpl extends AbstractService<ChampionDto> implements ChampionService {
+public final class ChampionServiceImpl implements ChampionService {
 
     private final LoaderClient loaderClient;
     private final ChampionDao championDao;
@@ -31,15 +31,18 @@ public final class ChampionServiceImpl extends AbstractService<ChampionDto> impl
      * @param loaderClient the summoner loader client
      */
     public ChampionServiceImpl(ChampionDao championDao, LoaderClient loaderClient) {
-        super(championDao);
         this.loaderClient = Objects.requireNonNull(loaderClient);
         this.championDao = Objects.requireNonNull(championDao);
     }
 
     @Override
-    public Optional<Model<ChampionDto>> get(DpoId dpoId) {
+    public ResourceWrapper<ChampionDto> get(DpoId dpoId) {
         loaderClient.loadChampionById(dpoId.getRegion(), dpoId.getId());
-        return super.get(dpoId);
+        return championDao.get(dpoId)
+                .map(Entity::getItem)
+                .map(e -> e.map(ResourceWrapper::of)
+                        .orElseGet(ResourceWrapper::doesNotExist))
+                .orElseGet(ResourceWrapper::notLoaded);
     }
 
     @Override
@@ -48,12 +51,12 @@ public final class ChampionServiceImpl extends AbstractService<ChampionDto> impl
     }
 
     @Override
-    public Map<Integer, Double> getWinRate(int championId) {
-        return championDao.getWinRate(championId);
+    public Map<Integer, Double> getWinRateByGamePlayed(int championId) {
+        return championDao.getWinRateByGamePlayed(championId);
     }
 
     @Override
-    public Map<LocalDate, WinRate> getWinRate(int championId, LocalDate startDate, LocalDate endDate) {
+    public Map<LocalDate, WinRate> getWinRateDuringPeriodOfTime(int championId, LocalDate startDate, LocalDate endDate) {
         Objects.requireNonNull(startDate);
         Objects.requireNonNull(endDate);
 
@@ -67,6 +70,6 @@ public final class ChampionServiceImpl extends AbstractService<ChampionDto> impl
             throw new UserException("endDate " + endDate + " is in the future");
         }
 
-        return championDao.getWinRate(championId, startDate, endDate);
+        return championDao.getWinRateDuringPeriodOfTime(championId, startDate, endDate);
     }
 }

@@ -1,14 +1,11 @@
 package vgalloy.riot.server.service.internal.service.mapper;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
-import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
-import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
-import vgalloy.riot.server.service.api.model.Game;
-import vgalloy.riot.server.service.api.model.GameInformation;
+import vgalloy.riot.server.service.api.model.game.Game;
+import vgalloy.riot.server.service.api.model.game.GameId;
+import vgalloy.riot.server.service.api.model.game.GameInformation;
 
 /**
  * @author Vincent Galloy - 07/10/16
@@ -26,22 +23,15 @@ public final class GameMapper {
     }
 
     /**
-     * Convert a entity into a Game.
+     * Convert a matchDetail into a Game.
      *
-     * @param entity the match detail entity
+     * @param matchDetail the match detail
      * @return the Game
      */
-    public static Game map(Entity<MatchDetail, MatchDetailId> entity) {
-        Objects.requireNonNull(entity);
-
-        long lastUpdate = entity.getLastUpdate();
-        String matchId = MatchDetailIdMapper.map(entity.getItemId());
-
-        Optional<MatchDetail> matchDetailOptional = entity.getItem();
-        if (!matchDetailOptional.isPresent()) {
-            return new Game(matchId, lastUpdate);
-        }
-        GameInformation gameInformation = GameInformationMapper.map(matchDetailOptional.get());
-        return new Game(matchId, lastUpdate, gameInformation);
+    public static Game map(MatchDetail matchDetail) {
+        Objects.requireNonNull(matchDetail);
+        GameInformation gameInformation = GameInformationMapper.map(matchDetail);
+        GameId gameId = GameIdMapper.map(matchDetail);
+        return new Game(gameId, gameInformation);
     }
 }

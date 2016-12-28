@@ -7,7 +7,10 @@ import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
-import vgalloy.riot.server.service.api.model.Game;
+import vgalloy.riot.server.dao.api.entity.wrapper.AbstractDpoWrapper;
+import vgalloy.riot.server.service.api.model.game.Game;
+import vgalloy.riot.server.service.api.model.game.GameId;
+import vgalloy.riot.server.service.api.model.wrapper.ResourceWrapper;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.internal.service.mapper.GameMapper;
 
@@ -29,13 +32,14 @@ public final class MatchDetailServiceImpl implements MatchDetailService {
     }
 
     @Override
-    public Optional<Game> get(MatchDetailId matchDetailId) {
-        Objects.requireNonNull(matchDetailId);
+    public ResourceWrapper<Game> get(GameId gameId) {
+        Objects.requireNonNull(gameId);
 
-        Optional<Entity<MatchDetail, MatchDetailId>> result = matchDetailDao.get(matchDetailId);
-        if (result.isPresent()) {
-            return Optional.of(GameMapper.map(result.get()));
-        }
-        return Optional.empty();
+        Optional<Entity<MatchDetail, MatchDetailId>> result = matchDetailDao.get(new MatchDetailId(gameId.getRegion(), gameId.getId(), gameId.getMatchDate()));
+        return result.map(AbstractDpoWrapper::getItem)
+                .map(e -> e.map(GameMapper::map)
+                        .map(ResourceWrapper::of)
+                        .orElseGet(ResourceWrapper::doesNotExist))
+                .orElseGet(ResourceWrapper::notLoaded);
     }
 }

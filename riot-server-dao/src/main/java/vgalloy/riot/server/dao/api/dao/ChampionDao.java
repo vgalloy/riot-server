@@ -18,7 +18,7 @@ public interface ChampionDao extends CommonDao<ChampionDto> {
      * @param championId the champion id
      * @return the winRate
      */
-    Map<Integer, Double> getWinRate(int championId);
+    Map<Integer, Double> getWinRateByGamePlayed(int championId);
 
     /**
      * Get the champion win rate during the given period : [from, to[.
@@ -28,7 +28,7 @@ public interface ChampionDao extends CommonDao<ChampionDto> {
      * @param to         the first to not analyse
      * @return the win rate of the champion during the given period
      */
-    Map<LocalDate, WinRate> getWinRate(int championId, LocalDate from, LocalDate to);
+    Map<LocalDate, WinRate> getWinRateDuringPeriodOfTime(int championId, LocalDate from, LocalDate to);
 
     /**
      * Get the champion win rate during the given day.

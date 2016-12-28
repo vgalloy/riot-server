@@ -10,7 +10,7 @@ import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 03/12/16.
  */
-public class LongSummonerMapperTest {
+public class LongMessageMapperTest {
 
     @Test
     public void testCorrectTransformation() {

@@ -19,22 +19,11 @@ public final class Entity<DTO, ID extends DpoId> extends AbstractDpoWrapper<DTO,
      * Constructor.
      *
      * @param itemId     the item id
-     * @param item       the item
+     * @param item       the item (can be null)
      * @param lastUpdate the last update time in second (UTC)
      */
     public Entity(ID itemId, DTO item, Long lastUpdate) {
         super(itemId, item);
-        this.lastUpdate = Objects.requireNonNull(lastUpdate);
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param itemId     the item id
-     * @param lastUpdate the last update time in second (UTC)
-     */
-    public Entity(ID itemId, Long lastUpdate) {
-        super(itemId);
         this.lastUpdate = Objects.requireNonNull(lastUpdate);
     }
 

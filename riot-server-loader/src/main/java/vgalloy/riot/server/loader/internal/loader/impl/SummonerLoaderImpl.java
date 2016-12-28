@@ -32,10 +32,11 @@ import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
+import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
 import vgalloy.riot.server.loader.internal.executor.Executor;
 import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
 import vgalloy.riot.server.loader.internal.loader.SummonerLoader;
-import vgalloy.riot.server.loader.internal.loader.mapper.SummonerMapper;
+import vgalloy.riot.server.loader.internal.loader.mapper.SummonerDtoMapper;
 
 /**
  * @author Vincent Galloy - 10/10/16
@@ -104,9 +105,9 @@ public final class SummonerLoaderImpl implements SummonerLoader {
      * @return the summoner id
      */
     private Optional<Long> findSummonerId(Region region, String summonerName) {
-        Optional<SummonerDto> result = summonerDao.getSummonerByName(region, summonerName);
-        if (result.isPresent()) {
-            return Optional.of(result.get().getId());
+        List<Entity<SummonerDto, DpoId>> result = summonerDao.getSummoners(GetSummonersQuery.build().addRegions(region).addSummonersName(summonerName));
+        if (result.size() == 1 && result.get(0).getItem().isPresent()) {
+            return Optional.of(result.get(0).getItemId().getId());
         } else {
             Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonerByNames(summonerName), region, 1);
             if (summonerDtoMap == null || summonerDtoMap.size() == 0) {
@@ -124,8 +125,12 @@ public final class SummonerLoaderImpl implements SummonerLoader {
     private void loadAndSaveSummoner(DpoId summonerId) {
         LOGGER.info("{} load summoner : {}", RegionPrinter.getRegion(summonerId.getRegion()), summonerId.getId());
         Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonersByIds(summonerId.getId()), summonerId.getRegion(), 1);
-        SummonerDto summonerDto = summonerDtoMap.entrySet().iterator().next().getValue();
-        summonerDao.save(new CommonDpoWrapper<>(summonerId, summonerDto));
+        if (summonerDtoMap == null || summonerDtoMap.isEmpty()) {
+            summonerDao.save(new CommonDpoWrapper<>(summonerId, null));
+        } else {
+            SummonerDto summonerDto = summonerDtoMap.entrySet().iterator().next().getValue();
+            summonerDao.save(new CommonDpoWrapper<>(summonerId, summonerDto));
+        }
     }
 
     /**
@@ -155,12 +160,8 @@ public final class SummonerLoaderImpl implements SummonerLoader {
         if (shouldILoadThisRankedStat(summonerId)) {
             Query<RankedStatsDto> query = riotApi.getRankedStats(summonerId.getId());
             LOGGER.info("{} load rankedStat : {}", RegionPrinter.getRegion(summonerId.getRegion()), summonerId.getId());
-            Optional<RankedStatsDto> rankedStatsDto = Optional.ofNullable(executor.execute(query, summonerId.getRegion(), 1));
-            if (rankedStatsDto.isPresent()) {
-                rankedStatsDao.save(new CommonDpoWrapper<>(summonerId, rankedStatsDto.get()));
-            } else {
-                rankedStatsDao.save(new CommonDpoWrapper<>(summonerId));
-            }
+            RankedStatsDto rankedStatsDto = executor.execute(query, summonerId.getRegion(), 1);
+            rankedStatsDao.save(new CommonDpoWrapper<>(summonerId, rankedStatsDto));
         }
     }
 
@@ -235,7 +236,7 @@ public final class SummonerLoaderImpl implements SummonerLoader {
                 .filter(e -> e != null)
                 .map(ParticipantIdentity::getPlayer)
                 .filter(e -> e != null)
-                .map(SummonerMapper::map)
+                .map(SummonerDtoMapper::map)
                 .map(e -> new CommonDpoWrapper<>(new DpoId(matchDetail.getRegion(), e.getId()), e))
                 .filter(e -> !summonerDao.get(e.getItemId()).isPresent())
                 .forEach(summonerDao::save);

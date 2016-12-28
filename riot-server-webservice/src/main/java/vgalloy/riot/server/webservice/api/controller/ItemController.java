@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ItemDto;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
-import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.service.ItemService;
+import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistException;
+import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
 
 /**
  * @author Vincent Galloy
@@ -35,10 +37,12 @@ public class ItemController {
      * @param itemId the item id
      * @return the item information
      */
-    @RequestMapping(value = "/item/{region}/{itemId}", method = RequestMethod.GET)
-    public ItemDto getItemById(@PathVariable Region region, @PathVariable Long itemId) {
-        LOGGER.info("[ GET ] : getItemById, region : {}, itemId : {}", region, itemId);
-        Optional<Model<ItemDto>> result = itemService.get(new DpoId(region, itemId));
-        return result.map(Model::getItem).orElse(null);
+    @RequestMapping(value = "/items/{itemId}", method = RequestMethod.GET)
+    public ItemDto getItemById(@PathVariable Long itemId, @RequestParam(required = false) Region region) {
+        LOGGER.info("[ GET ] : getItemById, itemId : {}, region : {}", itemId, region);
+        region = Optional.ofNullable(region).orElse(Region.EUW);
+        return itemService.get(new DpoId(region, itemId))
+                .ifNotLoadedThrow(ResourceNotLoadedException::new)
+                .ifDoesNotExistThrow(ResourceDoesNotExistException::new);
     }
 }

@@ -106,7 +106,7 @@ public class WinRateQueryITest {
         input.forEach(globalMatchDetailDao::save);
 
         // THEN
-        Map<LocalDate, WinRate> result = dao.getWinRate(17, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay));
+        Map<LocalDate, WinRate> result = dao.getWinRateDuringPeriodOfTime(17, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay));
         Assert.assertEquals(7, result.size());
     }
 
@@ -123,7 +123,7 @@ public class WinRateQueryITest {
         input.forEach(globalMatchDetailDao::save);
 
         // THEN
-        Assert.assertEquals(0, dao.getWinRate(27, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay)).size());
+        Assert.assertEquals(0, dao.getWinRateDuringPeriodOfTime(27, LocalDate.ofEpochDay(startDay), LocalDate.ofEpochDay(endDay)).size());
     }
 
     @Test

@@ -19,8 +19,9 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
-import vgalloy.riot.server.service.api.model.Model;
 import vgalloy.riot.server.service.api.service.ChampionService;
+import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistException;
+import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
 
 /**
  * @author Vincent Galloy
@@ -37,15 +38,17 @@ public class ChampionController {
     /**
      * Get champion information.
      *
-     * @param region     the region for the champion information
      * @param championId the champion id
+     * @param region     the region for the champion information (default EUW)
      * @return the champion information
      */
-    @RequestMapping(value = "/champion/{region}/{championId}", method = RequestMethod.GET)
-    public Model<ChampionDto> getChampion(@PathVariable Region region, @PathVariable Long championId) {
-        LOGGER.info("[ GET ] : getChampion : {}", championId);
-        Optional<Model<ChampionDto>> result = championService.get(new DpoId(region, championId));
-        return result.orElse(null);
+    @RequestMapping(value = "/champions/{championId}", method = RequestMethod.GET)
+    public ChampionDto getChampion(@PathVariable Long championId, @RequestParam(required = false) Region region) {
+        LOGGER.info("[ GET ] : getChampion : {}, Region : {}", championId, region);
+        region = Optional.ofNullable(region).orElse(Region.EUW);
+        return championService.get(new DpoId(region, championId))
+                .ifNotLoadedThrow(ResourceNotLoadedException::new)
+                .ifDoesNotExistThrow(ResourceDoesNotExistException::new);
     }
 
     /**
@@ -54,10 +57,10 @@ public class ChampionController {
      * @param championId the champion id
      * @return the win rates as a mapToEntity
      */
-    @RequestMapping(value = "/champion/{championId}/winRateByGamePlayed", method = RequestMethod.GET)
+    @RequestMapping(value = "/champions/{championId}/winRateByGamePlayed", method = RequestMethod.GET)
     public Map<Integer, Double> getWinRateByGamePlayed(@PathVariable Integer championId) {
         LOGGER.info("[ GET ] : getWinRateByGamePlayed : {}", championId);
-        return championService.getWinRate(championId);
+        return championService.getWinRateByGamePlayed(championId);
     }
 
     /**
@@ -68,8 +71,10 @@ public class ChampionController {
      * @param toDay      the end search date in day
      * @return the win rates as a mapToEntity
      */
-    @RequestMapping(value = "/champion/{championId}/winRateByDate", method = RequestMethod.GET)
-    public Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId, @RequestParam(required = false) Long fromDay, @RequestParam(required = false) Long toDay) {
+    @RequestMapping(value = "/champions/{championId}/winRateByDate", method = RequestMethod.GET)
+    public Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId,
+                                                           @RequestParam(required = false) Long fromDay,
+                                                           @RequestParam(required = false) Long toDay) {
         LOGGER.info("[ GET ] : getWinRateDuringPeriodOfTime, championId : {},  fromDay : {}, toDay : {}", championId, fromDay, toDay);
         LocalDate fromLocalDate = Optional.ofNullable(fromDay)
                 .map(LocalDate::ofEpochDay)
@@ -79,7 +84,7 @@ public class ChampionController {
                 .orElseGet(LocalDate::now);
 
         Map<Long, WinRate> result = new HashMap<>();
-        for (Map.Entry<LocalDate, WinRate> entry : championService.getWinRate(championId, fromLocalDate, toLocalDate).entrySet()) {
+        for (Map.Entry<LocalDate, WinRate> entry : championService.getWinRateDuringPeriodOfTime(championId, fromLocalDate, toLocalDate).entrySet()) {
             result.put(entry.getKey().toEpochDay(), entry.getValue());
         }
         return result;
@@ -91,7 +96,7 @@ public class ChampionController {
      * @param day the day to analyse
      * @return a map (champion Id, win rate)
      */
-    @RequestMapping(value = "/champion/winRateByDate", method = RequestMethod.GET)
+    @RequestMapping(value = "/champions/winRateByDate", method = RequestMethod.GET)
     public Map<Integer, WinRate> getWinRateForAllChampion(@RequestParam(required = false) Long day) {
         LOGGER.info("[ GET ] : getWinRateForAllChampion, day : {}", day);
         LocalDate localDate = Optional.ofNullable(day)

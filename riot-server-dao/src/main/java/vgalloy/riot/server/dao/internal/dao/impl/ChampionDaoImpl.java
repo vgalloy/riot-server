@@ -46,13 +46,13 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
     }
 
     @Override
-    public Map<Integer, Double> getWinRate(int championId) {
+    public Map<Integer, Double> getWinRateByGamePlayed(int championId) {
         MongoDatabaseFactory mongoDatabaseFactory = MongoDriverObjectFactory.getMongoClient(databaseUrl).getMongoDatabase(databaseName);
         return WinRateQuery.getWinRate(mongoDatabaseFactory, championId);
     }
 
     @Override
-    public Map<LocalDate, WinRate> getWinRate(int championId, LocalDate from, LocalDate to) {
+    public Map<LocalDate, WinRate> getWinRateDuringPeriodOfTime(int championId, LocalDate from, LocalDate to) {
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
 

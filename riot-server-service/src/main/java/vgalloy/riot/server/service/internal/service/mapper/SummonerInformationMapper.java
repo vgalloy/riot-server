@@ -8,7 +8,8 @@ import java.util.Optional;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.Participant;
 import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
-import vgalloy.riot.server.service.api.model.SummonerInformation;
+import vgalloy.riot.server.service.api.model.game.SummonerInformation;
+import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 import vgalloy.riot.server.service.internal.service.helper.MatchDetailHelper;
 
 /**
@@ -39,7 +40,8 @@ public final class SummonerInformationMapper {
         for (ParticipantIdentity participantIdentity : matchDetail.getParticipantIdentities()) {
             Optional<Participant> optionalParticipant = MatchDetailHelper.getParticipant(matchDetail, participantIdentity.getPlayer().getSummonerId());
             if (optionalParticipant.isPresent()) {
-                result.add(new SummonerInformation(matchDetail.getRegion(), participantIdentity.getPlayer().getSummonerId(), participantIdentity.getPlayer().getSummonerName(), optionalParticipant.get().getChampionId()));
+                SummonerId summonerId = new SummonerId(matchDetail.getRegion(), participantIdentity.getPlayer().getSummonerId());
+                result.add(new SummonerInformation(summonerId, participantIdentity.getPlayer().getSummonerName(), optionalParticipant.get().getChampionId()));
             }
         }
 

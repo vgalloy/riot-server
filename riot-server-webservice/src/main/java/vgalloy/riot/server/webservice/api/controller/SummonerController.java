@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import vgalloy.riot.api.api.constant.Region;
-import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
-import vgalloy.riot.api.api.dto.summoner.SummonerDto;
-import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
-import vgalloy.riot.server.service.api.model.LastGame;
-import vgalloy.riot.server.service.api.model.Model;
+import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
+import vgalloy.riot.server.service.api.model.game.GameSummary;
+import vgalloy.riot.server.service.api.model.summoner.RankedStats;
+import vgalloy.riot.server.service.api.model.summoner.Summoner;
+import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
+import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistException;
+import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
 
 /**
  * @author Vincent Galloy
@@ -39,66 +41,77 @@ public class SummonerController {
     private RankedStatsService rankedStatsService;
 
     /**
-     * Get the ranked stats.
+     * Get the summoner with criteria.
      *
-     * @param region     the region
-     * @param summonerId the summoner id
-     * @return the ranked stats
-     */
-    @RequestMapping(value = "/summoner/{region}/{summonerId}/rankedStats", method = RequestMethod.GET)
-    public Model<RankedStatsDto> getRankedStat(@PathVariable Region region, @PathVariable Long summonerId) {
-        LOGGER.info("[ GET ] : getRankedStat, region : {}, summonerId : {}", region, summonerId);
-        Optional<Model<RankedStatsDto>> rankedStatsEntity = rankedStatsService.get(new DpoId(region, summonerId));
-        return rankedStatsEntity.orElse(null);
-    }
-
-    /**
-     * Get the last games of a summoner during the period [from, to]. Game sorted by date.
-     *
-     * @param region     the region
-     * @param summonerId the summoner id
-     * @param fromMillis the start search date in millis
-     * @param toMillis   the end search date in millis
+     * @param region       the region (default ALL)
+     * @param summonerName the summoner name (default ALL)
+     * @param offset       the request offset (default 0)
+     * @param limit        the max limit (default 10)
      * @return the last games
      */
-    @RequestMapping(value = "/summoner/{region}/{summonerId}/lastGames", method = RequestMethod.GET)
-    public List<LastGame> getLastGames(@PathVariable Region region, @PathVariable Long summonerId, @RequestParam(required = false) Long fromMillis, @RequestParam(required = false) Long toMillis) {
-        LOGGER.info("[ GET ] : getLastGames, region : {}, summonerId : {}, fromMillis : {}, toMillis : {}", region, summonerId, fromMillis, toMillis);
-        LocalDateTime fromLocalDateTime = Optional.ofNullable(fromMillis)
-                .map(e -> LocalDateTime.ofEpochSecond(e / 1000, 0, ZoneOffset.UTC))
-                .orElseGet(() -> LocalDateTime.now().minus(1, ChronoUnit.WEEKS));
-        LocalDateTime toLocalDateTime = Optional.ofNullable(toMillis)
-                .map(e -> LocalDateTime.ofEpochSecond(e / 1000, 0, ZoneOffset.UTC))
-                .orElseGet(LocalDateTime::now);
+    @RequestMapping(value = "/summoners", method = RequestMethod.GET)
+    public List<Summoner> getSummoners(@RequestParam(required = false) List<Region> region,
+                                       @RequestParam(required = false) List<String> summonerName,
+                                       @RequestParam(required = false) Integer offset,
+                                       @RequestParam(required = false) Integer limit) {
+        LOGGER.info("[ GET ] : getSummonerByName, region : {}, summonerName : {}, offset : {}, limit : {}", region, summonerName, offset, limit);
+        GetSummonersQuery query = GetSummonersQuery.build();
+        Optional.ofNullable(region).ifPresent(query::addRegions);
+        Optional.ofNullable(summonerName).ifPresent(query::addSummonersName);
+        Optional.ofNullable(offset).ifPresent(query::setOffset);
+        Optional.ofNullable(limit).ifPresent(query::setLimit);
 
-        return summonerService.getLastGames(region, summonerId, fromLocalDateTime, toLocalDateTime);
-    }
-
-    /**
-     * Get the summoner by name.
-     *
-     * @param region       the region
-     * @param summonerName the summoner name
-     * @return the last games
-     */
-    @RequestMapping(value = "/summoner/{region}/{summonerName}/byName", method = RequestMethod.GET)
-    public SummonerDto getSummonerByName(@PathVariable Region region, @PathVariable String summonerName) {
-        LOGGER.info("[ GET ] : getSummonerByName, region : {}, summonerName : {}", region, summonerName);
-        Optional<SummonerDto> optionalSummonerDto = summonerService.getSummonerByName(region, summonerName);
-        return optionalSummonerDto.orElse(null);
+        return summonerService.getSummoners(query);
     }
 
     /**
      * Get the summoner by id.
      *
-     * @param region     the region
      * @param summonerId the summoner id
      * @return the last games
      */
-    @RequestMapping(value = "/summoner/{region}/{summonerId}/byId", method = RequestMethod.GET)
-    public SummonerDto getSummonerById(@PathVariable Region region, @PathVariable Long summonerId) {
-        LOGGER.info("[ GET ] : getSummonerById, region : {}, summonerId : {}", region, summonerId);
-        Optional<Model<SummonerDto>> optionalSummonerDto = summonerService.get(new DpoId(region, summonerId));
-        return optionalSummonerDto.map(Model::getItem).orElse(null);
+    @RequestMapping(value = "/summoners/{summonerId}", method = RequestMethod.GET)
+    public Summoner getSummonerById(@PathVariable SummonerId summonerId) {
+        LOGGER.info("[ GET ] : getSummonerById, summonerId : {}", summonerId);
+        return summonerService.get(summonerId)
+                .ifNotLoadedThrow(ResourceNotLoadedException::new)
+                .ifDoesNotExistThrow(ResourceDoesNotExistException::new);
+    }
+
+    /**
+     * Get the ranked stats.
+     *
+     * @param summonerId the summoner id
+     * @return the ranked stats
+     */
+    @RequestMapping(value = "/summoners/{summonerId}/rankedStats", method = RequestMethod.GET)
+    public RankedStats getRankedStat(@PathVariable SummonerId summonerId) {
+        LOGGER.info("[ GET ] : getRankedStat, region : {}, summonerId : {}", summonerId);
+        return rankedStatsService.get(summonerId)
+                .ifNotLoadedThrow(ResourceNotLoadedException::new)
+                .ifDoesNotExistThrow(ResourceDoesNotExistException::new);
+    }
+
+    /**
+     * Get the last games of a summoner during the period [from, to]. Game sorted by date.
+     *
+     * @param summonerId the summoner id
+     * @param fromDay    the start search date in day
+     * @param toDay      the end search date in day
+     * @return the last games
+     */
+    @RequestMapping(value = "/summoners/{summonerId}/lastGames", method = RequestMethod.GET)
+    public List<GameSummary> getLastGames(@PathVariable SummonerId summonerId,
+                                          @RequestParam(required = false) Long fromDay,
+                                          @RequestParam(required = false) Long toDay) {
+        LOGGER.info("[ GET ] : getLastGames, region : {}, summonerId : {}, fromDay : {}, toDay : {}", summonerId, fromDay, toDay);
+        LocalDateTime fromLocalDateTime = Optional.ofNullable(fromDay)
+                .map(e -> LocalDateTime.ofEpochSecond(fromDay * 24 * 3600, 0, ZoneOffset.UTC))
+                .orElseGet(() -> LocalDateTime.now().minus(1, ChronoUnit.WEEKS));
+        LocalDateTime toLocalDateTime = Optional.ofNullable(toDay)
+                .map(e -> LocalDateTime.ofEpochSecond(toDay * 24 * 3600, 0, ZoneOffset.UTC))
+                .orElseGet(LocalDateTime::now);
+
+        return summonerService.getLastGames(summonerId, fromLocalDateTime, toLocalDateTime);
     }
 }

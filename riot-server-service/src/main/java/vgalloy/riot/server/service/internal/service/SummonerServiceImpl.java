@@ -1,27 +1,32 @@
 package vgalloy.riot.server.service.internal.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
+import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
 import vgalloy.riot.server.loader.api.service.LoaderClient;
-import vgalloy.riot.server.service.api.model.LastGame;
-import vgalloy.riot.server.service.api.model.Model;
+import vgalloy.riot.server.service.api.model.game.GameSummary;
+import vgalloy.riot.server.service.api.model.summoner.Summoner;
+import vgalloy.riot.server.service.api.model.summoner.SummonerId;
+import vgalloy.riot.server.service.api.model.wrapper.ResourceWrapper;
 import vgalloy.riot.server.service.api.service.SummonerService;
-import vgalloy.riot.server.service.internal.service.mapper.LastGameMapper;
+import vgalloy.riot.server.service.internal.service.mapper.GameSummaryMapper;
+import vgalloy.riot.server.service.internal.service.mapper.SummonerMapper;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 23/08/16.
  */
-public final class SummonerServiceImpl extends AbstractService<SummonerDto> implements SummonerService {
+public final class SummonerServiceImpl implements SummonerService {
 
     private final SummonerDao summonerDao;
     private final MatchDetailDao matchDetailDao;
@@ -35,28 +40,49 @@ public final class SummonerServiceImpl extends AbstractService<SummonerDto> impl
      * @param loaderClient   the summoner loader client
      */
     public SummonerServiceImpl(SummonerDao summonerDao, MatchDetailDao matchDetailDao, LoaderClient loaderClient) {
-        super(summonerDao);
         this.summonerDao = Objects.requireNonNull(summonerDao);
         this.matchDetailDao = Objects.requireNonNull(matchDetailDao);
         this.loaderClient = Objects.requireNonNull(loaderClient);
     }
 
     @Override
-    public List<LastGame> getLastGames(Region region, long summonerId, LocalDateTime from, LocalDateTime to) {
-        return matchDetailDao.findMatchDetailBySummonerId(region, summonerId, from, to).stream()
-                .map(e -> LastGameMapper.map(e, summonerId))
+    public List<GameSummary> getLastGames(SummonerId summonerId, LocalDateTime from, LocalDateTime to) {
+        return matchDetailDao.findMatchDetailBySummonerId(summonerId.getRegion(), summonerId.getId(), from, to).stream()
+                .map(e -> GameSummaryMapper.map(e, summonerId.getId()))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<SummonerDto> getSummonerByName(Region region, String summonerName) {
-        loaderClient.loadAsyncSummonerByName(region, summonerName);
-        return summonerDao.getSummonerByName(region, summonerName);
+    public ResourceWrapper<Summoner> get(SummonerId summonerId) {
+        ResourceWrapper<Summoner> result = summonerDao.get(new DpoId(summonerId.getRegion(), summonerId.getId()))
+                .map(Entity::getItem)
+                .map(e -> e.map(i -> SummonerMapper.map(summonerId.getRegion(), i))
+                        .map(ResourceWrapper::of)
+                        .orElseGet(ResourceWrapper::doesNotExist))
+                .orElseGet(ResourceWrapper::notLoaded);
+        loaderClient.loadAsyncSummonerById(summonerId.getRegion(), summonerId.getId());
+        return result;
     }
 
     @Override
-    public Optional<Model<SummonerDto>> get(DpoId dpoId) {
-        loaderClient.loadAsyncSummonerById(dpoId.getRegion(), dpoId.getId());
-        return super.get(dpoId);
+    public List<Summoner> getSummoners(GetSummonersQuery getSummonersQuery) {
+        List<Entity<SummonerDto, DpoId>> dbResult = summonerDao.getSummoners(getSummonersQuery);
+        List<Summoner> result = new ArrayList<>();
+
+        for (Entity<SummonerDto, DpoId> entity : dbResult) {
+            if (entity.getItem().isPresent()) {
+                result.add(SummonerMapper.map(entity.getItemId().getRegion(), entity.getItem().get()));
+            } else {
+                result.add(new Summoner(new SummonerId(entity.getItemId().getRegion(), entity.getItemId().getId()), null, null, null));
+            }
+        }
+
+        if (result.size() == 1) {
+            loaderClient.loadAsyncSummonerById(result.get(0).getSummonerId().getRegion(), result.get(0).getSummonerId().getId());
+        }
+
+        return result;
     }
 }

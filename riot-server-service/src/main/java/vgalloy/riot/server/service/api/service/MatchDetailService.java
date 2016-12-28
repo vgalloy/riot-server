@@ -1,9 +1,8 @@
 package vgalloy.riot.server.service.api.service;
 
-import java.util.Optional;
-
-import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
-import vgalloy.riot.server.service.api.model.Game;
+import vgalloy.riot.server.service.api.model.game.Game;
+import vgalloy.riot.server.service.api.model.game.GameId;
+import vgalloy.riot.server.service.api.model.wrapper.ResourceWrapper;
 
 /**
  * @author Vincent Galloy
@@ -14,8 +13,8 @@ public interface MatchDetailService {
     /**
      * Get the game.
      *
-     * @param matchDetailId the game information key
+     * @param gameId the game id
      * @return the game information
      */
-    Optional<Game> get(MatchDetailId matchDetailId);
+    ResourceWrapper<Game> get(GameId gameId);
 }

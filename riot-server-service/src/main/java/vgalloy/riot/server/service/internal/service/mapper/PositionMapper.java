@@ -1,6 +1,6 @@
 package vgalloy.riot.server.service.internal.service.mapper;
 
-import vgalloy.riot.server.service.api.model.Position;
+import vgalloy.riot.server.service.api.model.game.Position;
 
 /**
  * @author Vincent Galloy

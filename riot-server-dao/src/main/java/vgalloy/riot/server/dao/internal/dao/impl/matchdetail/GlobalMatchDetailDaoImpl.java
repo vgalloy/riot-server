@@ -70,8 +70,9 @@ public final class GlobalMatchDetailDaoImpl implements MatchDetailDao {
     }
 
     @Override
-    public List<MatchDetail> findMatchDetailBySummonerId(Region region, long summonerId, LocalDateTime from, LocalDateTime to) {
+    public List<MatchDetail> findMatchDetailBySummonerId(Region region, Long summonerId, LocalDateTime from, LocalDateTime to) {
         Objects.requireNonNull(region);
+        Objects.requireNonNull(summonerId);
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
 

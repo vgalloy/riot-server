@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 /**
  * @author Vincent Galloy - 27/12/16
  *         Created by Vincent Galloy on 27/12/16.
- *         This class must add 'X-executionTimeMillis' header for each request
+ *         This class must add X_EXECUTION_TIME_MILLIS header for each request
  */
 @ControllerAdvice
 public class HeaderModifierAdvice implements ResponseBodyAdvice<Object>, Filter {

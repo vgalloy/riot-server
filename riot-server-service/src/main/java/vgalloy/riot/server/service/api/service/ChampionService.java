@@ -5,12 +5,22 @@ import java.util.Map;
 
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.entity.WinRate;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.service.api.model.wrapper.ResourceWrapper;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 08/12/16.
  */
-public interface ChampionService extends CommonService<ChampionDto> {
+public interface ChampionService {
+
+    /**
+     * Get the ChampionDto.
+     *
+     * @param dpoId the champion id
+     * @return the champion dto
+     */
+    ResourceWrapper<ChampionDto> get(DpoId dpoId);
 
     /**
      * Get the win rate for all champion for the given day.
@@ -26,7 +36,7 @@ public interface ChampionService extends CommonService<ChampionDto> {
      * @param championId the champion id
      * @return the winRate
      */
-    Map<Integer, Double> getWinRate(int championId);
+    Map<Integer, Double> getWinRateByGamePlayed(int championId);
 
     /**
      * Get the champion win rate during the given period.
@@ -36,5 +46,5 @@ public interface ChampionService extends CommonService<ChampionDto> {
      * @param endDate    the end date (excluded)
      * @return the win rate of the champion. Each entry is given with a timestamp.
      */
-    Map<LocalDate, WinRate> getWinRate(int championId, LocalDate startDate, LocalDate endDate);
+    Map<LocalDate, WinRate> getWinRateDuringPeriodOfTime(int championId, LocalDate startDate, LocalDate endDate);
 }

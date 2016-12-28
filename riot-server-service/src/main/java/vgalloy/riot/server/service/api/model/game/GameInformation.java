@@ -1,6 +1,5 @@
-package vgalloy.riot.server.service.api.model;
+package vgalloy.riot.server.service.api.model.game;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,9 +8,7 @@ import java.util.Objects;
  *         Created by Vincent Galloy on 07/10/16.
  *         This class represent all information for one game.
  */
-public class GameInformation implements Serializable {
-
-    private static final long serialVersionUID = -7279832513719280220L;
+public class GameInformation {
 
     private final List<PlayerTimeline> playerTimelines;
     private final List<SummonerInformation> summonerInformation;

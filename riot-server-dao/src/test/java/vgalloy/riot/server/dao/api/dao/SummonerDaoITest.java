@@ -1,6 +1,7 @@
 package vgalloy.riot.server.dao.api.dao;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
@@ -18,7 +19,8 @@ import vgalloy.riot.server.dao.DaoTestUtil;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
-import vgalloy.riot.server.dao.internal.dao.impl.SummonerDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
+import vgalloy.riot.server.dao.internal.dao.impl.summoner.SummonerDaoImpl;
 
 /**
  * @author Vincent Galloy
@@ -82,16 +84,43 @@ public class SummonerDaoITest {
         summoner.setId(2L);
         summonerDao.save(new CommonDpoWrapper<>(new DpoId(Region.EUW, 2L), summoner));
 
-        // WHEN
-        Optional<SummonerDto> resultEmpty = summonerDao.getSummonerByName(Region.EUW, "azeR");
-        Optional<SummonerDto> resultEmpty2 = summonerDao.getSummonerByName(Region.BR, summoner.getName());
-        Optional<SummonerDto> result = summonerDao.getSummonerByName(Region.EUW, summoner.getName());
+        SummonerDto summoner2 = new SummonerDto();
+        summoner2.setName("NAME2");
+        summoner2.setId(3L);
+        summonerDao.save(new CommonDpoWrapper<>(new DpoId(Region.EUW, 3L), summoner2));
 
         // THEN
-        Assert.assertFalse(resultEmpty.isPresent());
-        Assert.assertFalse(resultEmpty2.isPresent());
-        Assert.assertNotNull(result);
-        Assert.assertTrue(result.isPresent());
-        Assert.assertEquals(summoner, result.get());
+        // all result (max 10)
+        List<Entity<SummonerDto, DpoId>> result = summonerDao.getSummoners(GetSummonersQuery.build());
+        Assert.assertEquals(2, result.size());
+
+        // with limit 1
+        result = summonerDao.getSummoners(GetSummonersQuery.build().setLimit(1));
+        Assert.assertEquals(1, result.size());
+        Assert.assertEquals(summoner, result.get(0).getItem().get());
+
+        // with limit 0
+        result = summonerDao.getSummoners(GetSummonersQuery.build().setLimit(0));
+        Assert.assertEquals(0, result.size());
+
+        // with offset 1
+        result = summonerDao.getSummoners(GetSummonersQuery.build().setOffset(1));
+        Assert.assertEquals(1, result.size());
+        Assert.assertEquals(summoner2, result.get(0).getItem().get());
+
+        // with 2 names
+        result = summonerDao.getSummoners(GetSummonersQuery.build().addSummonersName(summoner.getName(), summoner2.getName()));
+        Assert.assertEquals(2, result.size());
+        Assert.assertEquals(summoner, result.get(0).getItem().get());
+        Assert.assertEquals(summoner2, result.get(1).getItem().get());
+
+        // with 1 name and correct region
+        result = summonerDao.getSummoners(GetSummonersQuery.build().addSummonersName(summoner2.getName()).addRegions(Region.EUW));
+        Assert.assertEquals(1, result.size());
+        Assert.assertEquals(summoner2, result.get(0).getItem().get());
+
+        // with wrong region
+        result = summonerDao.getSummoners(GetSummonersQuery.build().addRegions(Region.BR));
+        Assert.assertEquals(0, result.size());
     }
 }

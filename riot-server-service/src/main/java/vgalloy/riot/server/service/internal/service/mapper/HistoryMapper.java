@@ -10,8 +10,8 @@ import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.ParticipantFrame;
 import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
 import vgalloy.riot.api.api.dto.mach.Timeline;
-import vgalloy.riot.server.service.api.model.PlayerTimeline;
-import vgalloy.riot.server.service.api.model.TimedEvent;
+import vgalloy.riot.server.service.api.model.game.PlayerTimeline;
+import vgalloy.riot.server.service.api.model.game.TimedEvent;
 
 /**
  * @author Vincent Galloy

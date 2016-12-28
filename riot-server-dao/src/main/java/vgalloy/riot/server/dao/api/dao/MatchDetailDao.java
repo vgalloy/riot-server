@@ -32,7 +32,7 @@ public interface MatchDetailDao {
     Optional<Entity<MatchDetail, MatchDetailId>> get(MatchDetailId matchDetailId);
 
     /**
-     * Get all the games of a summoner during the period : [from, to[. The games are sorted by date (ascending).
+     * Get all the games of a summoner during the period : [from, to[. The games are sorted by date (ascending). // TODO Remplacer par un DpoId ?
      *
      * @param region     the region
      * @param summonerId the summoner id
@@ -40,5 +40,5 @@ public interface MatchDetailDao {
      * @param to         the first to not analyse
      * @return the last games
      */
-    List<MatchDetail> findMatchDetailBySummonerId(Region region, long summonerId, LocalDateTime from, LocalDateTime to);
+    List<MatchDetail> findMatchDetailBySummonerId(Region region, Long summonerId, LocalDateTime from, LocalDateTime to);
 }

@@ -15,19 +15,10 @@ public class MatchDetailWrapper extends AbstractDpoWrapper<MatchDetail, MatchDet
      * Constructor.
      *
      * @param itemId the item id
-     * @param item   the item
+     * @param item   the item (can be null)
      */
     public MatchDetailWrapper(MatchDetailId itemId, MatchDetail item) {
         super(itemId, item);
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param itemId the item id
-     */
-    public MatchDetailWrapper(MatchDetailId itemId) {
-        super(itemId);
     }
 
     @Override

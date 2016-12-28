@@ -125,7 +125,7 @@ public class GlobalMatchDetailDaoITest {
 
         // THEN
         // Wrong id
-        List<MatchDetail> result = dao.findMatchDetailBySummonerId(Region.EUW, 105246, now, now.plus(1, ChronoUnit.DAYS));
+        List<MatchDetail> result = dao.findMatchDetailBySummonerId(Region.EUW, 105246L, now, now.plus(1, ChronoUnit.DAYS));
         Assert.assertEquals(0, result.size());
 
         // Wrong region

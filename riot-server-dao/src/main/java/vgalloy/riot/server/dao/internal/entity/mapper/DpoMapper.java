@@ -31,9 +31,6 @@ public final class DpoMapper {
         Objects.requireNonNull(dataObject);
 
         DpoId dpoId = DpoIdMapper.fromNormalize(dataObject.getId());
-        if (dataObject.getItem() == null) {
-            return new Entity<>(dpoId, dataObject.getLastUpdate());
-        }
         return new Entity<>(dpoId, dataObject.getItem(), dataObject.getLastUpdate());
     }
 }

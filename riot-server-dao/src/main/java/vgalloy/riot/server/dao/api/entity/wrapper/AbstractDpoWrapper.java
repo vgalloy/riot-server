@@ -19,19 +19,11 @@ public abstract class AbstractDpoWrapper<DTO, ID extends DpoId> implements Seria
 
     /**
      * @param itemId the item id
-     * @param item   the item
+     * @param item   the item (can be null)
      */
-    public AbstractDpoWrapper(ID itemId, DTO item) {
+    protected AbstractDpoWrapper(ID itemId, DTO item) {
         this.itemId = Objects.requireNonNull(itemId);
-        this.item = Objects.requireNonNull(item);
-    }
-
-    /**
-     * @param itemId the item id
-     */
-    public AbstractDpoWrapper(ID itemId) {
-        this.itemId = Objects.requireNonNull(itemId);
-        item = null;
+        this.item = item;
     }
 
     public ID getItemId() {

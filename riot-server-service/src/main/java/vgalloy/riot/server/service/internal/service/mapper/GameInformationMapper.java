@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Objects;
 
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
-import vgalloy.riot.server.service.api.model.GameInformation;
-import vgalloy.riot.server.service.api.model.PlayerTimeline;
-import vgalloy.riot.server.service.api.model.SummonerInformation;
+import vgalloy.riot.server.service.api.model.game.GameInformation;
+import vgalloy.riot.server.service.api.model.game.PlayerTimeline;
+import vgalloy.riot.server.service.api.model.game.SummonerInformation;
 
 /**
  * @author Vincent Galloy - 07/10/16

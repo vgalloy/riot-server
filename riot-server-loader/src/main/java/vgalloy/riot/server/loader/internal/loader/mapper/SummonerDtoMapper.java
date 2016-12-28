@@ -9,13 +9,13 @@ import vgalloy.riot.api.api.dto.summoner.SummonerDto;
  * @author Vincent Galloy - 19/12/16
  *         Created by Vincent Galloy on 19/12/16.
  */
-public final class SummonerMapper {
+public final class SummonerDtoMapper {
 
     /**
      * Constructor.
      * To prevent instantiation
      */
-    private SummonerMapper() {
+    private SummonerDtoMapper() {
         throw new AssertionError();
     }
 

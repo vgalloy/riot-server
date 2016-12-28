@@ -2,35 +2,42 @@ package vgalloy.riot.server.service.api.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
-import vgalloy.riot.api.api.constant.Region;
-import vgalloy.riot.api.api.dto.summoner.SummonerDto;
-import vgalloy.riot.server.service.api.model.LastGame;
+import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
+import vgalloy.riot.server.service.api.model.game.GameSummary;
+import vgalloy.riot.server.service.api.model.summoner.Summoner;
+import vgalloy.riot.server.service.api.model.summoner.SummonerId;
+import vgalloy.riot.server.service.api.model.wrapper.ResourceWrapper;
 
 /**
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 23/06/16.
  */
-public interface SummonerService extends CommonService<SummonerDto> {
+public interface SummonerService {
+
+    /**
+     * Get the summoner by id.
+     *
+     * @param summonerId the summoner id
+     * @return the summoner
+     */
+    ResourceWrapper<Summoner> get(SummonerId summonerId);
 
     /**
      * Get the games of a summoner during the period : [from, to[. The games are sorted by date (ascending).
      *
-     * @param region     the region
      * @param summonerId the summoner id
      * @param from       the search start date
      * @param to         the search end date
      * @return the last games
      */
-    List<LastGame> getLastGames(Region region, long summonerId, LocalDateTime from, LocalDateTime to);
+    List<GameSummary> getLastGames(SummonerId summonerId, LocalDateTime from, LocalDateTime to);
 
     /**
      * Get the summoner by name and region.
      *
-     * @param region       the region
-     * @param summonerName the summoner name
-     * @return the summoner
+     * @param getSummonersQuery the param for the query
+     * @return the summoner'id matching with request
      */
-    Optional<SummonerDto> getSummonerByName(Region region, String summonerName);
+    List<Summoner> getSummoners(GetSummonersQuery getSummonersQuery);
 }
