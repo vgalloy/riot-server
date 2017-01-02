@@ -40,7 +40,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .globalResponseMessage(RequestMethod.GET, Arrays.asList(
                         new ResponseMessageBuilder().code(200).message("OK").responseModel(new ModelRef("Success")).build(),
-                        new ResponseMessageBuilder().code(404).message("Not Found").responseModel(new ModelRef("Error")).build(),
+                        new ResponseMessageBuilder().code(202).message("Resource not loaded yet. Retry Later").responseModel(new ModelRef("Accepted")).build(),
                         new ResponseMessageBuilder().code(401).message("Unauthorized").responseModel(new ModelRef("Error")).build(),
                         new ResponseMessageBuilder().code(500).message("Internal Server Error").responseModel(new ModelRef("Error")).build()));
     }
