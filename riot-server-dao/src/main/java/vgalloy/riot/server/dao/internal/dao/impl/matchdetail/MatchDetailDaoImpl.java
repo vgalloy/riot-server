@@ -130,7 +130,7 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
     private static void createOrUpdateIndexes(DBCollection dbCollection) {
         LOGGER.debug("start index creation");
         dbCollection.createIndex(new BasicDBObject("region", 1));
-        dbCollection.createIndex(new BasicDBObject("item.participantIdentities.participantId", 1));
+        dbCollection.createIndex(new BasicDBObject("item.participantIdentities.player.summonerId", 1));
         LOGGER.debug("end index creation");
     }
 }
