@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 
 /**
  * @author Vincent Galloy
@@ -12,8 +12,7 @@ import vgalloy.riot.api.api.constant.Region;
  */
 public class PlayerTimeline {
 
-    private final Region region;
-    private final Long playerId;
+    private final SummonerId summonerId;
     private final List<TimedEvent<Integer>> farming = new ArrayList<>();
     private final List<TimedEvent<Position>> position = new ArrayList<>();
     private final List<TimedEvent<Integer>> gold = new ArrayList<>();
@@ -22,20 +21,14 @@ public class PlayerTimeline {
     /**
      * Constructor.
      *
-     * @param region   the region of the player
-     * @param playerId the player id
+     * @param summonerId the summoner id
      */
-    public PlayerTimeline(Region region, Long playerId) {
-        this.region = Objects.requireNonNull(region);
-        this.playerId = Objects.requireNonNull(playerId);
+    public PlayerTimeline(SummonerId summonerId) {
+        this.summonerId = Objects.requireNonNull(summonerId);
     }
 
-    public Region getRegion() {
-        return region;
-    }
-
-    public Long getPlayerId() {
-        return playerId;
+    public SummonerId getSummonerId() {
+        return summonerId;
     }
 
     public List<TimedEvent<Integer>> getFarming() {

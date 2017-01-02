@@ -1,9 +1,10 @@
-package vgalloy.riot.server.service.api.model.game;
+package vgalloy.riot.server.service.api.model.summoner;
 
 import java.util.List;
 import java.util.Objects;
 
 import vgalloy.riot.api.api.constant.QueueType;
+import vgalloy.riot.server.service.api.model.game.GameId;
 
 /**
  * @author Vincent Galloy

@@ -12,6 +12,7 @@ import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
 import vgalloy.riot.api.api.dto.mach.Timeline;
 import vgalloy.riot.server.service.api.model.game.PlayerTimeline;
 import vgalloy.riot.server.service.api.model.game.TimedEvent;
+import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 
 /**
  * @author Vincent Galloy
@@ -43,7 +44,7 @@ public final class HistoryMapper {
 
         Map<Integer, PlayerTimeline> result = new HashMap<>();
         for (ParticipantIdentity participantIdentity : participantIdentities) {
-            result.put(participantIdentity.getParticipantId(), new PlayerTimeline(matchDetail.getRegion(), participantIdentity.getPlayer().getSummonerId()));
+            result.put(participantIdentity.getParticipantId(), new PlayerTimeline(new SummonerId(matchDetail.getRegion(), participantIdentity.getPlayer().getSummonerId())));
         }
 
         for (Frame frame : timeline.getFrames()) {

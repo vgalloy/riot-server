@@ -6,7 +6,7 @@ import java.util.Optional;
 import vgalloy.riot.api.api.constant.QueueType;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.Participant;
-import vgalloy.riot.server.service.api.model.game.GameSummary;
+import vgalloy.riot.server.service.api.model.summoner.GameSummary;
 import vgalloy.riot.server.service.internal.service.helper.MatchDetailHelper;
 
 /**

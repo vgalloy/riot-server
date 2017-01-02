@@ -14,7 +14,7 @@ import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
 import vgalloy.riot.server.loader.api.service.LoaderClient;
-import vgalloy.riot.server.service.api.model.game.GameSummary;
+import vgalloy.riot.server.service.api.model.summoner.GameSummary;
 import vgalloy.riot.server.service.api.model.summoner.Summoner;
 import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 import vgalloy.riot.server.service.api.model.wrapper.ResourceWrapper;

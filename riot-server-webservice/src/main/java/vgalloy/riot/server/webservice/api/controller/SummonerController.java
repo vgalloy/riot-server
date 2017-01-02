@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
-import vgalloy.riot.server.service.api.model.game.GameSummary;
+import vgalloy.riot.server.service.api.model.summoner.GameSummary;
 import vgalloy.riot.server.service.api.model.summoner.RankedStats;
 import vgalloy.riot.server.service.api.model.summoner.Summoner;
 import vgalloy.riot.server.service.api.model.summoner.SummonerId;
