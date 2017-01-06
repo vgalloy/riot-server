@@ -7,4 +7,5 @@ package vgalloy.riot.server.webservice.internal.model;
 public class ResourceNotLoadedException extends RuntimeException {
 
     private static final long serialVersionUID = 8185951433747766959L;
+    public static final String MESSAGE = "The resource will be loaded soon. Retry later";
 }

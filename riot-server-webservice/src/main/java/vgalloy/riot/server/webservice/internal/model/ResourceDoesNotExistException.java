@@ -7,4 +7,5 @@ package vgalloy.riot.server.webservice.internal.model;
 public class ResourceDoesNotExistException extends RuntimeException {
 
     private static final long serialVersionUID = -6310069484240866471L;
+    public static final String MESSAGE = "Resource doesn't exist";
 }

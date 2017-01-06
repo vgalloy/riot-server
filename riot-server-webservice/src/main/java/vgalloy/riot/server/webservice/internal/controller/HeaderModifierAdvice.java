@@ -8,7 +8,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -27,9 +27,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @ControllerAdvice
 public class HeaderModifierAdvice implements ResponseBodyAdvice<Object>, Filter {
 
-    private static final String X_EXECUTION_TIME_MILLIS = "X-execution-time-millis";
-    private static final String X_START_TIME_MILLIS = "X-start-time-millis";
     private static final Logger LOGGER = LoggerFactory.getLogger(HeaderModifierAdvice.class);
+    private static final String X_EXECUTION_TIME_MILLIS = "X-execution-time-millis";
+
+    private final ThreadLocal<Long> requestStartTimeMillis = new ThreadLocal<>();
 
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
@@ -40,16 +41,12 @@ public class HeaderModifierAdvice implements ResponseBodyAdvice<Object>, Filter 
     public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
         Long executionTimeMillis = null;
 
-        if (serverHttpResponse.getHeaders() != null &&
-                serverHttpResponse.getHeaders().get(HeaderModifierAdvice.X_START_TIME_MILLIS) != null &&
-                serverHttpResponse.getHeaders().get(HeaderModifierAdvice.X_START_TIME_MILLIS).size() > 0) {
-            Long startTimeMillis = Long.valueOf(serverHttpResponse.getHeaders().get(HeaderModifierAdvice.X_START_TIME_MILLIS).get(0));
-            executionTimeMillis = System.currentTimeMillis() - startTimeMillis;
+        if (requestStartTimeMillis.get() != null) {
+            executionTimeMillis = System.currentTimeMillis() - requestStartTimeMillis.get();
         }
 
         LOGGER.info("execution time : {} ms", executionTimeMillis);
         serverHttpResponse.getHeaders().set(HeaderModifierAdvice.X_EXECUTION_TIME_MILLIS, String.valueOf(executionTimeMillis));
-        serverHttpResponse.getHeaders().remove(HeaderModifierAdvice.X_START_TIME_MILLIS);
 
         return body;
     }
@@ -61,7 +58,7 @@ public class HeaderModifierAdvice implements ResponseBodyAdvice<Object>, Filter 
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
-        ((HttpServletResponse) servletResponse).setHeader(X_START_TIME_MILLIS, String.valueOf(System.currentTimeMillis()));
+        requestStartTimeMillis.set(System.currentTimeMillis());
         chain.doFilter(servletRequest, servletResponse);
     }
 

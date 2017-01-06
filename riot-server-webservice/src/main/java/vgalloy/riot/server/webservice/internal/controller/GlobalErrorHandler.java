@@ -34,7 +34,7 @@ public final class GlobalErrorHandler {
     @ExceptionHandler(Throwable.class)
     public Error handleException(Throwable e) {
         LOGGER.error("", e);
-        return new Error(500, "Ups ... unexpected error occurred ! !");
+        return new Error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Ups ... unexpected error occurred ! !");
     }
 
     /**
@@ -48,7 +48,7 @@ public final class GlobalErrorHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public Error handleArgumentMismatchException(MethodArgumentTypeMismatchException e) {
         LOGGER.error("{}", e.getMessage());
-        return new Error(400, "Value of '" + e.getName() + "' can not be convert into [" + e.getRequiredType().getSimpleName() + "]");
+        return new Error(HttpStatus.BAD_REQUEST.value(), "Value of '" + e.getName() + "' can not be convert into [" + e.getRequiredType().getSimpleName() + "]");
     }
 
     /**
@@ -62,7 +62,7 @@ public final class GlobalErrorHandler {
     @ExceptionHandler(UserException.class)
     public Error handleServiceException(UserException e) {
         LOGGER.error("{}", e.getMessage());
-        return new Error(400, e.getMessage());
+        return new Error(HttpStatus.BAD_REQUEST.value(), e.getMessage());
     }
 
     /**
@@ -75,7 +75,7 @@ public final class GlobalErrorHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceDoesNotExistException.class)
     public Error handleServiceException(ResourceDoesNotExistException e) {
-        return null;
+        return new Error(HttpStatus.NOT_FOUND.value(), ResourceDoesNotExistException.MESSAGE);
     }
 
     /**
@@ -88,6 +88,6 @@ public final class GlobalErrorHandler {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ExceptionHandler(ResourceNotLoadedException.class)
     public Error handleServiceException(ResourceNotLoadedException e) {
-        return null;
+        return new Error(HttpStatus.ACCEPTED.value(), ResourceNotLoadedException.MESSAGE);
     }
 }
