@@ -41,18 +41,18 @@
         <riot-api-java.version>3.11.0</riot-api-java.version>
 
         <!-- Log -->
-        <slf4j-api.version>1.7.21</slf4j-api.version>
+        <slf4j-api.version>1.7.22</slf4j-api.version>
         <logback-classic.version>1.1.8</logback-classic.version>
 
         <!-- Spring -->
-        <spring.version>4.3.3.RELEASE</spring.version>
-        <spring-boot.version>1.4.2.RELEASE</spring-boot.version>
+        <spring.version>4.3.5.RELEASE</spring.version>
+        <spring-boot.version>1.4.3.RELEASE</spring-boot.version>
 
         <!-- Springfox (Swagger)-->
         <springfox.version>2.6.1</springfox.version>
 
         <!-- Mongo -->
-        <mongo-java-driver.version>3.4.0</mongo-java-driver.version>
+        <mongo-java-driver.version>3.4.1</mongo-java-driver.version>
         <mongojack.version>2.6.1</mongojack.version>
 
         <!-- Rabbitmq -->
