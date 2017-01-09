@@ -39,15 +39,20 @@ public class HeaderModifierAdvice implements ResponseBodyAdvice<Object>, Filter 
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        Long executionTimeMillis = null;
+        Long executionTimeMillis;
 
         if (requestStartTimeMillis.get() != null) {
             executionTimeMillis = System.currentTimeMillis() - requestStartTimeMillis.get();
+            String message = "execution time : " + executionTimeMillis + " ms";
+            if (executionTimeMillis < 300) {
+                LOGGER.info(message);
+            } else {
+                LOGGER.warn(message);
+            }
+            serverHttpResponse.getHeaders().set(HeaderModifierAdvice.X_EXECUTION_TIME_MILLIS, String.valueOf(executionTimeMillis));
+        } else {
+            LOGGER.error("No start time for the request");
         }
-
-        LOGGER.info("execution time : {} ms", executionTimeMillis);
-        serverHttpResponse.getHeaders().set(HeaderModifierAdvice.X_EXECUTION_TIME_MILLIS, String.valueOf(executionTimeMillis));
-
         return body;
     }
 

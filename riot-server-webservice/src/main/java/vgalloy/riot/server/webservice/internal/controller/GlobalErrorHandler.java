@@ -3,6 +3,7 @@ package vgalloy.riot.server.webservice.internal.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,6 +50,20 @@ public final class GlobalErrorHandler {
     public Error handleArgumentMismatchException(MethodArgumentTypeMismatchException e) {
         LOGGER.error("{}", e.getMessage());
         return new Error(HttpStatus.BAD_REQUEST.value(), "Value of '" + e.getName() + "' can not be convert into [" + e.getRequiredType().getSimpleName() + "]");
+    }
+
+    /**
+     * Handle error and set the correct response status.
+     *
+     * @param e The handle exception
+     * @return The error message for web user
+     */
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public Error handleMissingParameterException(MissingServletRequestParameterException e) {
+        LOGGER.error("{}", e.getMessage());
+        return new Error(HttpStatus.BAD_REQUEST.value(), "The parameter : " + e.getParameterName() + " is mandatory.");
     }
 
     /**
