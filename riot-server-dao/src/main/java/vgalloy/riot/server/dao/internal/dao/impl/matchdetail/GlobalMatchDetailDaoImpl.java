@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.Timeline;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
@@ -70,13 +69,12 @@ public final class GlobalMatchDetailDaoImpl implements MatchDetailDao {
     }
 
     @Override
-    public List<MatchDetail> findMatchDetailBySummonerId(Region region, Long summonerId, LocalDateTime from, LocalDateTime to) {
-        Objects.requireNonNull(region);
+    public List<MatchDetail> findMatchDetailBySummonerId(DpoId summonerId, LocalDateTime from, LocalDateTime to) {
         Objects.requireNonNull(summonerId);
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
 
-        List<MatchDetail> resultWithoutTimeline = matchDetailDao.findMatchDetailBySummonerId(region, summonerId, from, to);
+        List<MatchDetail> resultWithoutTimeline = matchDetailDao.findMatchDetailBySummonerId(summonerId, from, to);
 
         for (MatchDetail matchDetail : resultWithoutTimeline) {
             MatchDetailId matchDetailId = MatchDetailIdMapper.map(matchDetail);
@@ -90,7 +88,7 @@ public final class GlobalMatchDetailDaoImpl implements MatchDetailDao {
      * Get the timeline from the matchDetailId.
      *
      * @param matchDetailId the matchDetailId
-     * @return the timeline can be null
+     * @return the timeline (can be null)
      */
     private Timeline getTimeline(MatchDetailId matchDetailId) {
         Optional<Entity<Timeline, DpoId>> timelineOptional = timelineDao.get(matchDetailId);

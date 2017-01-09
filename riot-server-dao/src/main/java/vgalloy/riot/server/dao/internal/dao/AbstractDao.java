@@ -29,6 +29,8 @@ public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements 
     protected final JacksonDBCollection<DPO, String> collection;
     private final GenericDao<DTO, DPO> genericDao;
     private final Class<DPO> dataObjectClass;
+    private final String databaseUrl;
+    private final String databaseName;
 
     /**
      * Constructor.
@@ -38,8 +40,8 @@ public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements 
      * @param collectionName the collection name
      */
     protected AbstractDao(String databaseUrl, String databaseName, String collectionName) {
-        Objects.requireNonNull(databaseUrl);
-        Objects.requireNonNull(databaseName);
+        this.databaseUrl = Objects.requireNonNull(databaseUrl);
+        this.databaseName = Objects.requireNonNull(databaseName);
         Objects.requireNonNull(collectionName);
 
         dataObjectClass = (Class<DPO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
@@ -86,5 +88,13 @@ public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements 
             return Optional.of(DpoMapper.mapToEntity(dataObject.get()));
         }
         return Optional.empty();
+    }
+
+    public String getDatabaseUrl() {
+        return databaseUrl;
+    }
+
+    public String getDatabaseName() {
+        return databaseName;
     }
 }

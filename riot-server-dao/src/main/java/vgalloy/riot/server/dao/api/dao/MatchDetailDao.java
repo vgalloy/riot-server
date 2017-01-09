@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 
@@ -32,13 +32,12 @@ public interface MatchDetailDao {
     Optional<Entity<MatchDetail, MatchDetailId>> get(MatchDetailId matchDetailId);
 
     /**
-     * Get all the games of a summoner during the period : [from, to[. The games are sorted by date (ascending). // TODO Remplacer par un DpoId ?
+     * Get all the games of a summoner during the period : [from, to[. The games are sorted by date (ascending).
      *
-     * @param region     the region
      * @param summonerId the summoner id
      * @param from       the first day to analyse
      * @param to         the first to not analyse
      * @return the last games
      */
-    List<MatchDetail> findMatchDetailBySummonerId(Region region, Long summonerId, LocalDateTime from, LocalDateTime to);
+    List<MatchDetail> findMatchDetailBySummonerId(DpoId summonerId, LocalDateTime from, LocalDateTime to);
 }

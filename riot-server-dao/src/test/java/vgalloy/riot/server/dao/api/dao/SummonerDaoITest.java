@@ -91,31 +91,31 @@ public class SummonerDaoITest {
 
         // THEN
         // all result (max 10)
-        List<Entity<SummonerDto, DpoId>> result = summonerDao.getSummoners(GetSummonersQuery.build());
+        List<Entity<SummonerDto, DpoId>> result = summonerDao.getSummoners(GetSummonersQuery.build().addRegions(Region.values()));
         Assert.assertEquals(2, result.size());
 
         // with limit 1
-        result = summonerDao.getSummoners(GetSummonersQuery.build().setLimit(1));
+        result = summonerDao.getSummoners(GetSummonersQuery.build().addRegions(Region.values()).setLimit(1));
         Assert.assertEquals(1, result.size());
         Assert.assertEquals(summoner, result.get(0).getItem().get());
 
         // with limit 0
-        result = summonerDao.getSummoners(GetSummonersQuery.build().setLimit(0));
+        result = summonerDao.getSummoners(GetSummonersQuery.build().addRegions(Region.values()).setLimit(0));
         Assert.assertEquals(0, result.size());
 
         // with offset 1
-        result = summonerDao.getSummoners(GetSummonersQuery.build().setOffset(1));
+        result = summonerDao.getSummoners(GetSummonersQuery.build().addRegions(Region.values()).setOffset(1));
         Assert.assertEquals(1, result.size());
         Assert.assertEquals(summoner2, result.get(0).getItem().get());
 
         // with 2 names
-        result = summonerDao.getSummoners(GetSummonersQuery.build().addSummonersName(summoner.getName(), summoner2.getName()));
+        result = summonerDao.getSummoners(GetSummonersQuery.build().addRegions(Region.values()).addSummonersName(summoner.getName(), summoner2.getName()));
         Assert.assertEquals(2, result.size());
         Assert.assertEquals(summoner, result.get(0).getItem().get());
         Assert.assertEquals(summoner2, result.get(1).getItem().get());
 
         // with 1 name and correct region
-        result = summonerDao.getSummoners(GetSummonersQuery.build().addSummonersName(summoner2.getName()).addRegions(Region.EUW));
+        result = summonerDao.getSummoners(GetSummonersQuery.build().addRegions(Region.EUW).addSummonersName(summoner2.getName()));
         Assert.assertEquals(1, result.size());
         Assert.assertEquals(summoner2, result.get(0).getItem().get());
 

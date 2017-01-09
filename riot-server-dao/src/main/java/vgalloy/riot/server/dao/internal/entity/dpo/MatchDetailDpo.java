@@ -17,19 +17,22 @@ public class MatchDetailDpo extends AbstractDpo<MatchDetail> {
     /**
      * Constructor.
      *
-     * @param lastUpdate the last update
-     * @param region     the region of the item
-     * @param itemId     the item id
-     * @param item       the item
-     * @param id         the id
+     * @param lastUpdate                    the last update
+     * @param region                        the region of the item
+     * @param itemId                        the item id
+     * @param item                          the item
+     * @param id                            the id
+     * @param matchCreationDateFromEpochDay the match creation date from epoch (in days)
      */
     @JsonCreator
     public MatchDetailDpo(@JsonProperty("lastUpdate") Long lastUpdate,
                           @JsonProperty("region") Region region,
                           @JsonProperty("itemId") Long itemId,
                           @JsonProperty("item") MatchDetail item,
-                          @JsonProperty("_id") String id) {
+                          @JsonProperty("_id") String id,
+                          @JsonProperty("matchCreationDateFromEpochDay") Long matchCreationDateFromEpochDay) {
         super(lastUpdate, region, itemId, item, id);
+        this.matchCreationDateFromEpochDay = matchCreationDateFromEpochDay;
     }
 
     /**

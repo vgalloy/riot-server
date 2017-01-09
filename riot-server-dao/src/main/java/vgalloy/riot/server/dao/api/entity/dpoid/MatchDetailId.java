@@ -1,6 +1,7 @@
 package vgalloy.riot.server.dao.api.entity.dpoid;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import vgalloy.riot.api.api.constant.Region;
 
@@ -24,13 +25,27 @@ public class MatchDetailId extends DpoId {
     public MatchDetailId(Region region, Long id, LocalDate matchDate) {
         super(region, id);
         this.matchDate = matchDate;
-        if (matchDate.isBefore(LocalDate.of(2010, 1, 1)) || matchDate.isAfter(LocalDate.of(2020, 1, 1))) {
-            throw new IllegalArgumentException("the date " + matchDate + " is out of possible match range");
-        }
     }
 
     public LocalDate getMatchDate() {
         return matchDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        MatchDetailId that = (MatchDetailId) o;
+        return Objects.equals(matchDate, that.matchDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(matchDate);
     }
 
     @Override

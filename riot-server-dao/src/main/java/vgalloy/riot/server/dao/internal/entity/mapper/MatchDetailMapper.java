@@ -1,12 +1,11 @@
 package vgalloy.riot.server.dao.internal.entity.mapper;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
+import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
 import vgalloy.riot.server.dao.internal.entity.dpo.MatchDetailDpo;
 
 /**
@@ -32,8 +31,7 @@ public final class MatchDetailMapper {
     public static Entity<MatchDetail, MatchDetailId> mapToEntity(MatchDetailDpo matchDetailDpo) {
         Objects.requireNonNull(matchDetailDpo);
 
-        DpoId dpoId = DpoIdMapper.fromNormalize(matchDetailDpo.getId());
-        MatchDetailId matchDetailId = new MatchDetailId(dpoId.getRegion(), dpoId.getId(), LocalDate.ofEpochDay(matchDetailDpo.getMatchCreationDateFromEpochDay()));
+        MatchDetailId matchDetailId = MatchDetailIdMapper.map(matchDetailDpo);
         return new Entity<>(matchDetailId, matchDetailDpo.getItem(), matchDetailDpo.getLastUpdate());
     }
 }

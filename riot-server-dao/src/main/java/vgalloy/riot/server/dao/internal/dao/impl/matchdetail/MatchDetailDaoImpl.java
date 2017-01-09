@@ -17,10 +17,10 @@ import org.mongojack.JacksonDBCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.internal.dao.factory.MatchDetailHelper;
@@ -78,8 +78,7 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
     }
 
     @Override
-    public List<MatchDetail> findMatchDetailBySummonerId(Region region, Long summonerId, LocalDateTime from, LocalDateTime to) {
-        Objects.requireNonNull(region);
+    public List<MatchDetail> findMatchDetailBySummonerId(DpoId summonerId, LocalDateTime from, LocalDateTime to) {
         Objects.requireNonNull(summonerId);
         Objects.requireNonNull(from);
         Objects.requireNonNull(to);
@@ -89,8 +88,8 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
 
         while (currentDate.toLocalDate().isBefore(to.plus(1, ChronoUnit.DAYS).toLocalDate())) {
             JacksonDBCollection<MatchDetailDpo, String> collection = getCollection(currentDate.toLocalDate());
-            result.addAll(collection.find(DBQuery.is("item.participantIdentities.player.summonerId", summonerId))
-                    .and(DBQuery.is("region", region))
+            result.addAll(collection.find(DBQuery.is("item.participantIdentities.player.summonerId", summonerId.getId()))
+                    .and(DBQuery.is("region", summonerId.getRegion()))
                     .and(DBQuery.greaterThan("item.matchCreation", from.toEpochSecond(ZoneOffset.UTC) * 1000))
                     .and(DBQuery.lessThan("item.matchCreation", to.toEpochSecond(ZoneOffset.UTC) * 1000))
                     .sort(new BasicDBObject("item.matchCreation", 1))

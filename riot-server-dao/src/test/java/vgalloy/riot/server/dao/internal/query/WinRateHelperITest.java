@@ -28,7 +28,7 @@ import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.internal.dao.TimelineDao;
-import vgalloy.riot.server.dao.internal.dao.impl.ChampionDaoImpl;
+import vgalloy.riot.server.dao.internal.dao.impl.champion.ChampionDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.GlobalMatchDetailDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.MatchDetailDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.TimelineDaoImpl;
@@ -37,9 +37,9 @@ import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.TimelineDaoImpl;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 10/09/16.
  */
-public class WinRateQueryITest {
+public class WinRateHelperITest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WinRateQueryITest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WinRateHelperITest.class);
     private static final String URL = "localhost";
     private static final int PORT = 29702;
 

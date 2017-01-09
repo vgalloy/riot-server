@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.query;
+package vgalloy.riot.server.dao.internal.dao.impl.champion;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import vgalloy.riot.server.dao.internal.dao.impl.RankedStatsDaoImpl;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 10/09/16.
  */
-public final class WinRateQuery {
+public final class WinRateHelper {
 
     private static final String COLLECTION_NAME = "winRate";
 
@@ -23,7 +23,7 @@ public final class WinRateQuery {
      * Constructor.
      * To prevent instantiation
      */
-    private WinRateQuery() {
+    private WinRateHelper() {
         throw new AssertionError();
     }
 

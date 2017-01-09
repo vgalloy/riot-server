@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDatabaseFactory;
-import vgalloy.riot.server.dao.internal.query.WinRateQuery;
+import vgalloy.riot.server.dao.internal.dao.impl.champion.WinRateHelper;
 import vgalloy.riot.server.dao.internal.task.Task;
 
 /**
@@ -32,7 +32,7 @@ public final class UpdateWinRateTask implements Task {
     public void execute() {
         long startTime = System.currentTimeMillis();
         LOGGER.info("[ START ] : updateWinRate");
-        WinRateQuery.updateWinRate(mongoDatabaseFactory);
+        WinRateHelper.updateWinRate(mongoDatabaseFactory);
         LOGGER.info("[ END   ] : updateWinRate {} ms", System.currentTimeMillis() - startTime);
     }
 }

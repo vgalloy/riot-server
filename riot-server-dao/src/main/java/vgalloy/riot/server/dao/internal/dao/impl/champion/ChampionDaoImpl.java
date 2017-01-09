@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.dao.impl;
+package vgalloy.riot.server.dao.internal.dao.impl.champion;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -20,7 +20,6 @@ import vgalloy.riot.server.dao.internal.dao.factory.MatchDetailHelper;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDatabaseFactory;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
 import vgalloy.riot.server.dao.internal.entity.dpo.ChampionDpo;
-import vgalloy.riot.server.dao.internal.query.WinRateQuery;
 
 /**
  * @author Vincent Galloy
@@ -30,9 +29,6 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
 
     public static final String COLLECTION_NAME = "champion";
 
-    private final String databaseUrl;
-    private final String databaseName;
-
     /**
      * Constructor.
      *
@@ -41,14 +37,12 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
      */
     public ChampionDaoImpl(String databaseUrl, String databaseName) {
         super(databaseUrl, databaseName, COLLECTION_NAME);
-        this.databaseUrl = Objects.requireNonNull(databaseUrl);
-        this.databaseName = Objects.requireNonNull(databaseName);
     }
 
     @Override
     public Map<Integer, Double> getWinRateByGamePlayed(int championId) {
-        MongoDatabaseFactory mongoDatabaseFactory = MongoDriverObjectFactory.getMongoClient(databaseUrl).getMongoDatabase(databaseName);
-        return WinRateQuery.getWinRate(mongoDatabaseFactory, championId);
+        MongoDatabaseFactory mongoDatabaseFactory = MongoDriverObjectFactory.getMongoClient(getDatabaseUrl()).getMongoDatabase(getDatabaseName());
+        return WinRateHelper.getWinRate(mongoDatabaseFactory, championId);
     }
 
     @Override
@@ -69,8 +63,8 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
 
     @Override
     public WinRate getWinRate(int championId, LocalDate localDate) {
-        MongoCollection<Document> collection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
-                .getMongoDatabase(databaseName)
+        MongoCollection<Document> collection = MongoDriverObjectFactory.getMongoClient(getDatabaseUrl())
+                .getMongoDatabase(getDatabaseName())
                 .getMongoCollection(MatchDetailHelper.getCollectionName(localDate))
                 .get();
 
@@ -104,8 +98,8 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
 
     @Override
     public Map<Integer, WinRate> getWinRateForAllChampion(LocalDate date) {
-        MongoCollection<Document> collection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
-                .getMongoDatabase(databaseName)
+        MongoCollection<Document> collection = MongoDriverObjectFactory.getMongoClient(getDatabaseUrl())
+                .getMongoDatabase(getDatabaseName())
                 .getMongoCollection(MatchDetailHelper.getCollectionName(date))
                 .get();
 

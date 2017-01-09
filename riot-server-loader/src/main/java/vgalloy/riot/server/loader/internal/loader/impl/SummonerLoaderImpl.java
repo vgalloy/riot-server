@@ -33,6 +33,7 @@ import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
 import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
+import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 import vgalloy.riot.server.loader.internal.executor.Executor;
 import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
 import vgalloy.riot.server.loader.internal.loader.SummonerLoader;
@@ -108,6 +109,8 @@ public final class SummonerLoaderImpl implements SummonerLoader {
         List<Entity<SummonerDto, DpoId>> result = summonerDao.getSummoners(GetSummonersQuery.build().addRegions(region).addSummonersName(summonerName));
         if (result.size() == 1 && result.get(0).getItem().isPresent()) {
             return Optional.of(result.get(0).getItemId().getId());
+        } else if (result.size() > 1) {
+            throw new LoaderException("There is more than one summoner for region : " + region + " summonerName : " + summonerName);
         } else {
             Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonerByNames(summonerName), region, 1);
             if (summonerDtoMap == null || summonerDtoMap.size() == 0) {

@@ -1,13 +1,11 @@
 package vgalloy.riot.server.service.internal.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
@@ -47,7 +45,7 @@ public final class SummonerServiceImpl implements SummonerService {
 
     @Override
     public List<GameSummary> getLastGames(SummonerId summonerId, LocalDateTime from, LocalDateTime to) {
-        return matchDetailDao.findMatchDetailBySummonerId(summonerId.getRegion(), summonerId.getId(), from, to).stream()
+        return matchDetailDao.findMatchDetailBySummonerId(new DpoId(summonerId.getRegion(), summonerId.getId()), from, to).stream()
                 .map(e -> GameSummaryMapper.map(e, summonerId.getId()))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -68,20 +66,14 @@ public final class SummonerServiceImpl implements SummonerService {
 
     @Override
     public List<Summoner> getSummoners(GetSummonersQuery getSummonersQuery) {
-        List<Entity<SummonerDto, DpoId>> dbResult = summonerDao.getSummoners(getSummonersQuery);
-        List<Summoner> result = new ArrayList<>();
+        List<Summoner> result = summonerDao.getSummoners(getSummonersQuery)
+                .stream()
+                .map(SummonerMapper::map)
+                .collect(Collectors.toList());
 
-        for (Entity<SummonerDto, DpoId> entity : dbResult) {
-            if (entity.getItem().isPresent()) {
-                result.add(SummonerMapper.map(entity.getItemId().getRegion(), entity.getItem().get()));
-            } else {
-                result.add(new Summoner(new SummonerId(entity.getItemId().getRegion(), entity.getItemId().getId()), null, null, null));
-            }
-        }
-
-        if (result.size() == 1) {
-            loaderClient.loadAsyncSummonerById(result.get(0).getSummonerId().getRegion(), result.get(0).getSummonerId().getId());
-        }
+        getSummonersQuery.getSummonersName()
+                .forEach(summonerName -> getSummonersQuery.getRegions()
+                        .forEach(region -> loaderClient.loadAsyncSummonerByName(region, summonerName)));
 
         return result;
     }

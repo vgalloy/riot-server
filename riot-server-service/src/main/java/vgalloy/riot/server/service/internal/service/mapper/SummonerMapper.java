@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
+import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.service.api.model.summoner.Summoner;
 import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 
@@ -33,5 +35,19 @@ public final class SummonerMapper {
         Objects.requireNonNull(summonerDto);
 
         return new Summoner(new SummonerId(region, summonerDto.getId()), summonerDto.getName(), summonerDto.getSummonerLevel(), summonerDto.getProfileIconId());
+    }
+
+    /**
+     * Map the {@link Entity} into {@link Summoner}.
+     *
+     * @param entity the entity
+     * @return the summoner
+     */
+    public static Summoner map(Entity<SummonerDto, DpoId> entity) {
+        if (entity.getItem().isPresent()) {
+            return SummonerMapper.map(entity.getItemId().getRegion(), entity.getItem().get());
+        } else {
+            return new Summoner(new SummonerId(entity.getItemId().getRegion(), entity.getItemId().getId()), null, null, null);
+        }
     }
 }

@@ -24,6 +24,7 @@ import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
 import vgalloy.riot.api.api.dto.mach.Player;
 import vgalloy.riot.server.dao.DaoTestUtil;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.internal.dao.TimelineDao;
@@ -63,20 +64,23 @@ public class GlobalMatchDetailDaoITest {
     @Test
     public void testInsertWithCorrectSimpleMatchDetailDto() {
         // GIVEN
+        LocalDateTime now = LocalDateTime.now();
+
         MatchDetail matchDetail = new MatchDetail();
         matchDetail.setMatchId(10L);
         matchDetail.setRegion(Region.EUW);
-        matchDetail.setMatchCreation(LocalDate.now().toEpochDay() * 24 * 3600 * 1000);
+        matchDetail.setMatchCreation(now.toEpochSecond(ZoneOffset.UTC) * 1000);
 
         // WHEN
-        dao.save(new MatchDetailWrapper(new MatchDetailId(Region.EUW, 10L, LocalDate.now()), matchDetail));
-        Optional<Entity<MatchDetail, MatchDetailId>> result = dao.get(new MatchDetailId(Region.EUW, 10L, LocalDate.now()));
+        dao.save(new MatchDetailWrapper(new MatchDetailId(Region.EUW, 10L, now.toLocalDate()), matchDetail));
+        Optional<Entity<MatchDetail, MatchDetailId>> result = dao.get(new MatchDetailId(Region.EUW, 10L, now.toLocalDate()));
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertTrue(result.isPresent());
         Assert.assertTrue(result.get().getItem().isPresent());
         Assert.assertEquals(matchDetail, result.get().getItem().get());
+        Assert.assertEquals(new MatchDetailId(Region.EUW, 10L, now.toLocalDate()), result.get().getItemId());
     }
 
     @Test
@@ -125,21 +129,21 @@ public class GlobalMatchDetailDaoITest {
 
         // THEN
         // Wrong id
-        List<MatchDetail> result = dao.findMatchDetailBySummonerId(Region.EUW, 105246L, now, now.plus(1, ChronoUnit.DAYS));
+        List<MatchDetail> result = dao.findMatchDetailBySummonerId(new DpoId(Region.EUW, 105246L), now, now.plus(1, ChronoUnit.DAYS));
         Assert.assertEquals(0, result.size());
 
         // Wrong region
-        result = dao.findMatchDetailBySummonerId(Region.BR, correctPlayerId, now, now.plus(1, ChronoUnit.DAYS));
+        result = dao.findMatchDetailBySummonerId(new DpoId(Region.BR, correctPlayerId), now, now.plus(1, ChronoUnit.DAYS));
         Assert.assertEquals(0, result.size());
 
         // Everything ok
-        result = dao.findMatchDetailBySummonerId(Region.EUW, correctPlayerId, now.minus(1, ChronoUnit.DAYS), now.plus(1, ChronoUnit.DAYS));
+        result = dao.findMatchDetailBySummonerId(new DpoId(Region.EUW, correctPlayerId), now.minus(1, ChronoUnit.DAYS), now.plus(1, ChronoUnit.DAYS));
         Assert.assertEquals(3, result.size());
         Assert.assertEquals(new Long(10_003), result.get(0).getMatchId());
         Assert.assertEquals(new Long(10_002), result.get(2).getMatchId());
 
         // Wrong data time
-        result = dao.findMatchDetailBySummonerId(Region.EUW, correctPlayerId, now.minus(2, ChronoUnit.DAYS), now.minus(1, ChronoUnit.DAYS));
+        result = dao.findMatchDetailBySummonerId(new DpoId(Region.EUW, correctPlayerId), now.minus(2, ChronoUnit.DAYS), now.minus(1, ChronoUnit.DAYS));
         Assert.assertEquals(0, result.size());
     }
 
@@ -154,7 +158,7 @@ public class GlobalMatchDetailDaoITest {
 
         // THEN
         // Everything ok
-        List<MatchDetail> result = dao.findMatchDetailBySummonerId(Region.EUW, correctPlayerId, now.minus(1, ChronoUnit.DAYS).plus(5, ChronoUnit.MINUTES), now);
+        List<MatchDetail> result = dao.findMatchDetailBySummonerId(new DpoId(Region.EUW, correctPlayerId), now.minus(1, ChronoUnit.DAYS).plus(5, ChronoUnit.MINUTES), now);
         Assert.assertEquals(1, result.size());
     }
 

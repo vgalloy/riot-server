@@ -44,9 +44,9 @@ public final class SummonerDaoImpl extends AbstractDao<SummonerDto, SummonerDpo>
         }
 
         DBQuery.Query dbQuery = DBQuery.empty();
-        if (!getSummonersQuery.getRegions().isEmpty()) {
+//        if (!getSummonersQuery.getRegions().isEmpty()) {
             dbQuery.in("region", getSummonersQuery.getRegions());
-        }
+//        }
         if (!getSummonersQuery.getSummonersName().isEmpty()) {
             dbQuery.in("item.name", getSummonersQuery.getSummonersName());
         }

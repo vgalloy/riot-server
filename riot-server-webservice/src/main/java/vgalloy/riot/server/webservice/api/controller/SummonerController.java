@@ -43,21 +43,21 @@ public class SummonerController {
     /**
      * Get the summoner with criteria.
      *
-     * @param region       the region (default ALL)
-     * @param summonerName the summoner name (default ALL)
+     * @param regions       the region (default ALL)
+     * @param summonerNames the summoner name (default ALL)
      * @param offset       the request offset (default 0)
      * @param limit        the max limit (default 10)
      * @return the last games
      */
     @RequestMapping(value = "/summoners", method = RequestMethod.GET)
-    public List<Summoner> getSummoners(@RequestParam(required = false) List<Region> region,
-                                       @RequestParam(required = false) List<String> summonerName,
+    public List<Summoner> getSummoners(@RequestParam List<Region> regions,
+                                       @RequestParam(required = false) List<String> summonerNames,
                                        @RequestParam(required = false) Integer offset,
                                        @RequestParam(required = false) Integer limit) {
-        LOGGER.info("[ GET ] : getSummonerByName, region : {}, summonerName : {}, offset : {}, limit : {}", region, summonerName, offset, limit);
+        LOGGER.info("[ GET ] : getSummonerByName, regions : {}, summonerNames : {}, offset : {}, limit : {}", regions, summonerNames, offset, limit);
         GetSummonersQuery query = GetSummonersQuery.build();
-        Optional.ofNullable(region).ifPresent(query::addRegions);
-        Optional.ofNullable(summonerName).ifPresent(query::addSummonersName);
+        Optional.ofNullable(regions).ifPresent(query::addRegions);
+        Optional.ofNullable(summonerNames).ifPresent(query::addSummonersName);
         Optional.ofNullable(offset).ifPresent(query::setOffset);
         Optional.ofNullable(limit).ifPresent(query::setLimit);
 
