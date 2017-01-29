@@ -1,5 +1,6 @@
 package vgalloy.riot.server.dao.internal.dao.impl.matchdetail;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -82,6 +83,20 @@ public final class GlobalMatchDetailDaoImpl implements MatchDetailDao {
             matchDetail.setTimeline(timeline);
         }
         return resultWithoutTimeline;
+    }
+
+    @Override
+    public List<MatchDetailId> cleanAllMatchForADay(LocalDate localDate) {
+        Objects.requireNonNull(localDate);
+        List<MatchDetailId> deletedMatchDetailId = matchDetailDao.cleanAllMatchForADay(localDate);
+        deletedMatchDetailId.forEach(timelineDao::remove);
+        return deletedMatchDetailId;
+    }
+
+    @Override
+    public void remove(MatchDetailId matchDetailId) {
+        matchDetailDao.remove(matchDetailId);
+        timelineDao.remove(matchDetailId);
     }
 
     /**

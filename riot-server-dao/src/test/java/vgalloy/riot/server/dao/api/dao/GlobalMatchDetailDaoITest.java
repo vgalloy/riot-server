@@ -22,6 +22,7 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
 import vgalloy.riot.api.api.dto.mach.Player;
+import vgalloy.riot.api.api.dto.mach.Timeline;
 import vgalloy.riot.server.dao.DaoTestUtil;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
@@ -122,10 +123,10 @@ public class GlobalMatchDetailDaoITest {
         LocalDateTime now = LocalDateTime.now();
 
         // WHEN
-        dao.save(createMatchDetail(Region.EUW, 10_001L, now.plus(1, ChronoUnit.MINUTES), correctPlayerId));
-        dao.save(createMatchDetail(Region.EUW, 10_002L, now.plus(2, ChronoUnit.MINUTES), correctPlayerId));
-        dao.save(createMatchDetail(Region.EUW, 10_003L, now.plus(1, ChronoUnit.MINUTES).minus(1, ChronoUnit.DAYS), correctPlayerId));
-        dao.save(createMatchDetail(Region.EUW, 10_004L, now.plus(1, ChronoUnit.MINUTES), wrongPlayerId));
+        dao.save(createMatchDetail(Region.EUW, 10_001L, now, correctPlayerId));
+        dao.save(createMatchDetail(Region.EUW, 10_002L, now, correctPlayerId));
+        dao.save(createMatchDetail(Region.EUW, 10_003L, now.minus(1, ChronoUnit.DAYS), correctPlayerId));
+        dao.save(createMatchDetail(Region.EUW, 10_004L, now, wrongPlayerId));
 
         // THEN
         // Wrong id
@@ -162,6 +163,26 @@ public class GlobalMatchDetailDaoITest {
         Assert.assertEquals(1, result.size());
     }
 
+    @Test
+    public void testDeleteGameForADay() {
+        // GIVEN
+        long correctPlayerId = 12345;
+        LocalDateTime now = LocalDateTime.now();
+
+        // WHEN
+        dao.save(createMatchDetail(Region.EUW, 10_001L, now, correctPlayerId));
+        dao.save(createMatchDetail(Region.EUW, 10_002L, now, correctPlayerId));
+        dao.save(createMatchDetail(Region.EUW, 10_003L, now.minus(1, ChronoUnit.DAYS), correctPlayerId));
+        dao.save(createMatchDetail(Region.EUW, 10_004L, now, correctPlayerId));
+        dao.cleanAllMatchForADay(now.toLocalDate());
+
+        // THEN
+        List<MatchDetail> result = dao.findMatchDetailBySummonerId(new DpoId(Region.EUW, correctPlayerId), now, now.plus(1, ChronoUnit.DAYS));
+        Assert.assertEquals(0, result.size());
+        Assert.assertFalse(timelineDao.get(new DpoId(Region.EUW, 10_001L)).isPresent());
+        Assert.assertTrue(timelineDao.get(new DpoId(Region.EUW, 10_003L)).isPresent());
+    }
+
     private static MatchDetailWrapper createMatchDetail(Region region, Long id, LocalDateTime matchCreation, long summonerId) {
         MatchDetailId matchDetailId = new MatchDetailId(region, id, matchCreation.toLocalDate());
 
@@ -180,6 +201,7 @@ public class GlobalMatchDetailDaoITest {
         matchDetail.setMatchId(matchDetailId.getId());
         matchDetail.setRegion(matchDetailId.getRegion());
         matchDetail.setMatchCreation(matchCreation.toEpochSecond(ZoneOffset.UTC) * 1000);
+        matchDetail.setTimeline(new Timeline());
 
         return new MatchDetailWrapper(matchDetailId, matchDetail);
     }

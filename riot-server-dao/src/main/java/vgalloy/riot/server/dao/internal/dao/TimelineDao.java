@@ -2,6 +2,7 @@ package vgalloy.riot.server.dao.internal.dao;
 
 import vgalloy.riot.api.api.dto.mach.Timeline;
 import vgalloy.riot.server.dao.api.dao.CommonDao;
+import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 
 /**
  * @author Vincent Galloy
@@ -9,4 +10,10 @@ import vgalloy.riot.server.dao.api.dao.CommonDao;
  */
 public interface TimelineDao extends CommonDao<Timeline> {
 
+    /**
+     * Remove the timeline.
+     *
+     * @param matchDetailId the match detail id
+     */
+    void remove(MatchDetailId matchDetailId);
 }

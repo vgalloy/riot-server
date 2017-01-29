@@ -1,5 +1,6 @@
 package vgalloy.riot.server.dao.api.dao;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -40,4 +41,19 @@ public interface MatchDetailDao {
      * @return the last games
      */
     List<MatchDetail> findMatchDetailBySummonerId(DpoId summonerId, LocalDateTime from, LocalDateTime to);
+
+    /**
+     * Remove all the match and timeline for a given day.
+     *
+     * @param localDate the day to clean
+     * @return the list of deleted match detail ids
+     */
+    List<MatchDetailId> cleanAllMatchForADay(LocalDate localDate);
+
+    /**
+     * Remove the match detail and timeline.
+     *
+     * @param matchDetailId the match detail id
+     */
+    void remove(MatchDetailId matchDetailId);
 }

@@ -37,9 +37,9 @@ import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.TimelineDaoImpl;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 10/09/16.
  */
-public class WinRateHelperITest {
+public class DatabaseCleanerHelperITest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WinRateHelperITest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseCleanerHelperITest.class);
     private static final String URL = "localhost";
     private static final int PORT = 29702;
 

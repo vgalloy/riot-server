@@ -1,9 +1,11 @@
 package vgalloy.riot.server.dao.internal.dao.impl.matchdetail;
 
 import vgalloy.riot.api.api.dto.mach.Timeline;
+import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.dao.internal.dao.AbstractDao;
 import vgalloy.riot.server.dao.internal.dao.TimelineDao;
 import vgalloy.riot.server.dao.internal.entity.dpo.TimelineDpo;
+import vgalloy.riot.server.dao.internal.entity.mapper.DpoIdMapper;
 
 /**
  * @author Vincent Galloy
@@ -21,5 +23,10 @@ public final class TimelineDaoImpl extends AbstractDao<Timeline, TimelineDpo> im
      */
     public TimelineDaoImpl(String databaseUrl, String databaseName) {
         super(databaseUrl, databaseName, COLLECTION_NAME);
+    }
+
+    @Override
+    public void remove(MatchDetailId matchDetailId) {
+        this.collection.removeById(DpoIdMapper.toNormalizeString(matchDetailId));
     }
 }

@@ -28,6 +28,7 @@ import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.TimelineDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.impl.summoner.SummonerDaoImpl;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 import vgalloy.riot.server.dao.internal.task.factory.TaskFactory;
+import vgalloy.riot.server.dao.internal.task.impl.DatabaseCleanerTask;
 import vgalloy.riot.server.dao.internal.task.impl.UpdateWinRateTask;
 
 /**
@@ -66,6 +67,7 @@ public final class InternalMongoDaoFactory {
 
             MongoDatabaseFactory mongoDatabaseFactory = MongoDriverObjectFactory.getMongoClient(databaseUrl).getMongoDatabase(databaseName);
             TaskFactory.startTask(new UpdateWinRateTask(mongoDatabaseFactory), 15 * 60 * 1000);
+            TaskFactory.startTask(new DatabaseCleanerTask(GLOBAL_MATCH_DETAIL_DAO), 24 * 60 * 60 * 1000);
         } catch (ConfigurationException e) {
             throw new MongoDaoException("Unable to load configuration", e);
         }

@@ -23,6 +23,7 @@ import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
+import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
 import vgalloy.riot.server.dao.internal.dao.factory.MatchDetailHelper;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
 import vgalloy.riot.server.dao.internal.dao.impl.GenericDaoImpl;
@@ -90,7 +91,7 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
             JacksonDBCollection<MatchDetailDpo, String> collection = getCollection(currentDate.toLocalDate());
             result.addAll(collection.find(DBQuery.is("item.participantIdentities.player.summonerId", summonerId.getId()))
                     .and(DBQuery.is("region", summonerId.getRegion()))
-                    .and(DBQuery.greaterThan("item.matchCreation", from.toEpochSecond(ZoneOffset.UTC) * 1000))
+                    .and(DBQuery.greaterThanEquals("item.matchCreation", from.toEpochSecond(ZoneOffset.UTC) * 1000))
                     .and(DBQuery.lessThan("item.matchCreation", to.toEpochSecond(ZoneOffset.UTC) * 1000))
                     .sort(new BasicDBObject("item.matchCreation", 1))
                     .toArray()
@@ -102,6 +103,23 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
         }
 
         return result;
+    }
+
+    @Override
+    public List<MatchDetailId> cleanAllMatchForADay(LocalDate localDate) {
+        List<MatchDetailId> result = getCollection(localDate).find()
+                .toArray()
+                .stream()
+                .map(AbstractDpo::getItem)
+                .map(MatchDetailIdMapper::map)
+                .collect(Collectors.toList());
+        getCollection(localDate).remove(DBQuery.empty());
+        return result;
+    }
+
+    @Override
+    public void remove(MatchDetailId matchDetailId) {
+        getCollection(matchDetailId.getMatchDate()).removeById(DpoIdMapper.toNormalizeString(matchDetailId));
     }
 
     /**
