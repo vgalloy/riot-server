@@ -6,6 +6,22 @@ bootRepackage {
     mainClass = 'vgalloy.riot.server.webservice.api.conf.WebserviceConfig'
 }
 
+
+ext {
+    junitVersion = '4.12'
+    riotApiJavaVersion = '3.11.0'
+    slf4jApi = '1.7.22'
+    logbackClassicVersion = '1.1.9'
+    mongoJavaDriverVersion = '3.4.2'
+    mongoJackVersion = '2.6.1'
+    flapdoodleEmbedMongoVersion = '1.50.5'
+    commonsConfiguration2Version = '2.1'
+    commonsBeanutilsVersion = '1.9.3'
+    javaOverRabbitmqVersion = '1.3.0'
+    springBootVersion = '1.5.1.RELEASE'
+    springfoxSwaggerVersion = '2.6.1'
+}
+
 subprojects {
     apply plugin: 'java'
 //    apply plugin: 'checkstyle'
@@ -26,20 +42,19 @@ subprojects {
 //    }
 
     dependencies {
-        testCompile 'junit:junit:4.12'
-        compile 'vgalloy:riot-api-java:3.11.0'
-        compile 'org.slf4j:slf4j-api:1.7.22'
-        compile 'ch.qos.logback:logback-classic:1.1.9'
-        compile 'org.mongodb:mongo-java-driver:3.4.2'
-        compile 'org.mongojack:mongojack:2.6.1'
-        compile 'junit:junit:4.12'
-        compile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.50.5'
-        compile 'org.apache.commons:commons-configuration2:2.1'
-        compile 'commons-beanutils:commons-beanutils:1.9.3'
-        compile 'vgalloy:java-over-rabbitmq:1.3.0'
-        compile 'org.springframework.boot:spring-boot-starter-web:1.5.1.RELEASE'
-        compile 'io.springfox:springfox-swagger-ui:2.6.1'
-        compile 'io.springfox:springfox-swagger2:2.6.1'
+        compile "junit:junit:$junitVersion"
+        compile "vgalloy:riot-api-java:$riotApiJavaVersion"
+        compile "org.slf4j:slf4j-api:$slf4jApi"
+        compile "ch.qos.logback:logback-classic:$logbackClassicVersion"
+        compile "org.mongodb:mongo-java-driver:$mongoJavaDriverVersion"
+        compile "org.mongojack:mongojack:$mongoJackVersion"
+        compile "de.flapdoodle.embed:de.flapdoodle.embed.mongo:$flapdoodleEmbedMongoVersion"
+        compile "org.apache.commons:commons-configuration2:$commonsConfiguration2Version"
+        compile "commons-beanutils:commons-beanutils:$commonsBeanutilsVersion"
+        compile "vgalloy:java-over-rabbitmq:$javaOverRabbitmqVersion"
+        compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+        compile "io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion"
+        compile "io.springfox:springfox-swagger2:$springfoxSwaggerVersion"
     }
 }
 
