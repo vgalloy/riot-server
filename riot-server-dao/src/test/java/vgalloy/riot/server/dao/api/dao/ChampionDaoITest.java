@@ -30,21 +30,21 @@ public class ChampionDaoITest {
     private static final String URL = "localhost";
     private static final int PORT = 29501;
 
-    private static MongodProcess PROCESS;
-    private static MongodExecutable EXECUTABLE;
+    private static MongodProcess process;
+    private static MongodExecutable executable;
 
     private final ChampionDao dao = new ChampionDaoImpl(URL + ":" + PORT, "riotTest");
 
     @BeforeClass
     public static void setUp() throws IOException {
-        EXECUTABLE = DaoTestUtil.createMongodExecutable(LOGGER, URL, PORT);
-        PROCESS = EXECUTABLE.start();
+        executable = DaoTestUtil.createMongodExecutable(LOGGER, URL, PORT);
+        process = executable.start();
     }
 
     @AfterClass
     public static void tearDown() {
-        PROCESS.stop();
-        EXECUTABLE.stop();
+        process.stop();
+        executable.stop();
     }
 
     @Test

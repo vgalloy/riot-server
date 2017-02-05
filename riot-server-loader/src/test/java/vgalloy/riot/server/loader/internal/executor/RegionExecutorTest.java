@@ -33,14 +33,14 @@ public class RegionExecutorTest {
         Assert.assertTrue(result > 20);
     }
 
-    private boolean test(int number1, int number2) {
+    private boolean test(int priority1, int priority2) {
         RegionExecutor regionExecutor = new RegionExecutorImpl(Region.EUNE);
 
         List<Integer> list = new ArrayList<>();
 
         createStartThread(regionExecutor);
-        createRequestThread(regionExecutor, list, number1);
-        createRequestThread(regionExecutor, list, number2);
+        createRequestThread(regionExecutor, list, priority1);
+        createRequestThread(regionExecutor, list, priority2);
 
         try {
             Thread.sleep(40);
@@ -48,7 +48,7 @@ public class RegionExecutorTest {
             e.printStackTrace();
         }
 
-        return list.get(0) == number1;
+        return list.get(0) == priority1;
     }
 
     private void createStartThread(RegionExecutor regionExecutor) {

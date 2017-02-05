@@ -43,8 +43,8 @@ public class GlobalMatchDetailDaoITest {
     private static final String URL = "localhost";
     private static final int PORT = 29503;
 
-    private static MongodProcess PROCESS;
-    private static MongodExecutable EXECUTABLE;
+    private static MongodProcess process;
+    private static MongodExecutable executable;
 
     private final MatchDetailDao matchDetailDao = new MatchDetailDaoImpl(URL + ":" + PORT, "riotTest");
     private final TimelineDao timelineDao = new TimelineDaoImpl(URL + ":" + PORT, "riotTest");
@@ -52,14 +52,14 @@ public class GlobalMatchDetailDaoITest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        EXECUTABLE = DaoTestUtil.createMongodExecutable(LOGGER, URL, PORT);
-        PROCESS = EXECUTABLE.start();
+        executable = DaoTestUtil.createMongodExecutable(LOGGER, URL, PORT);
+        process = executable.start();
     }
 
     @AfterClass
     public static void tearDown() {
-        PROCESS.stop();
-        EXECUTABLE.stop();
+        process.stop();
+        executable.stop();
     }
 
     @Test

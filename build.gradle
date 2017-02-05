@@ -1,11 +1,5 @@
-plugins {
-    id 'org.springframework.boot' version '1.5.1.RELEASE'
-}
-
-bootRepackage {
-    mainClass = 'vgalloy.riot.server.webservice.api.conf.WebserviceConfig'
-}
-
+group = 'vgalloy'
+version = '1.0-SNAPSHOT'
 
 ext {
     junitVersion = '4.12'
@@ -24,23 +18,33 @@ ext {
 
 subprojects {
     apply plugin: 'java'
-//    apply plugin: 'checkstyle'
-    group = 'vgalloy'
-    version = '1.0-SNAPSHOT'
-
+    apply plugin: 'checkstyle'
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
     repositories {
         mavenLocal()
         mavenCentral()
+        jcenter()
+        maven { url 'http://repo.spring.io/snapshot' }
+        maven { url 'http://repo.spring.io/milestone' }
     }
 
-//    checkstyle {
-//        toolVersion = '7.5'
-//        configFile = rootProject.file('conf/checkstyle.xml')
-//    }
+    checkstyle {
+        toolVersion = '7.5'
+        configFile = rootProject.file('conf/checkstyle.xml')
+        checkstyleTest.enabled = false
+    }
 
+    test {
+        testLogging {
+            events "passed", "skipped", "failed", "standardOut", "standardError"
+        }
+        testLogging.showStandardStreams = true
+    }
+}
+
+project(':riot-server-dao') {
     dependencies {
         compile "junit:junit:$junitVersion"
         compile "vgalloy:riot-api-java:$riotApiJavaVersion"
@@ -51,16 +55,13 @@ subprojects {
         compile "de.flapdoodle.embed:de.flapdoodle.embed.mongo:$flapdoodleEmbedMongoVersion"
         compile "org.apache.commons:commons-configuration2:$commonsConfiguration2Version"
         compile "commons-beanutils:commons-beanutils:$commonsBeanutilsVersion"
-        compile "vgalloy:java-over-rabbitmq:$javaOverRabbitmqVersion"
-        compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-        compile "io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion"
-        compile "io.springfox:springfox-swagger2:$springfoxSwaggerVersion"
     }
 }
 
 project(':riot-server-loader') {
     dependencies {
         compile project(':riot-server-dao')
+        compile "vgalloy:java-over-rabbitmq:$javaOverRabbitmqVersion"
     }
 }
 
@@ -71,7 +72,26 @@ project(':riot-server-service') {
 }
 
 project(':riot-server-webservice') {
+
+    buildscript {
+        repositories {
+            jcenter()
+            maven { url 'http://repo.spring.io/snapshot' }
+            maven { url 'http://repo.spring.io/milestone' }
+        }
+        dependencies {
+            classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE'
+        }
+    }
+
     dependencies {
         compile project(':riot-server-service')
+        compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+        compile "io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion"
+        compile "io.springfox:springfox-swagger2:$springfoxSwaggerVersion"
     }
+    apply plugin: 'java'
+    apply plugin: 'checkstyle'
+//    apply plugin: 'spring-boot'
+//    apply plugin: 'org.springframework.boot'
 }
