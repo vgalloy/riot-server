@@ -123,9 +123,4 @@ public class SummonerDaoITest {
         result = summonerDao.getSummoners(GetSummonersQuery.build().addRegions(Region.BR));
         Assert.assertEquals(0, result.size());
     }
-
-    @Test
-    public void simple() {
-        System.out.println("############# OK");
-    }
 }

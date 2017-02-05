@@ -113,7 +113,7 @@ public final class SummonerLoaderImpl implements SummonerLoader {
             throw new LoaderException("There is more than one summoner for region : " + region + " summonerName : " + summonerName);
         } else {
             Map<String, SummonerDto> summonerDtoMap = executor.execute(riotApi.getSummonerByNames(summonerName), region, 1);
-            if (summonerDtoMap == null || summonerDtoMap.size() == 0) {
+            if (summonerDtoMap == null || summonerDtoMap.isEmpty()) {
                 return Optional.empty();
             }
             return Optional.of(summonerDtoMap.entrySet().iterator().next().getValue().getId());

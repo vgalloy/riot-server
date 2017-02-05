@@ -58,6 +58,9 @@ public class RegionalConsumerImpl implements RegionalConsumer {
             case CHAMPION_BY_ID:
                 championLoader.loadChampionById(region, LoadingMessageBuilder.championId().extract(loadingMessage));
                 break;
+            default:
+                LOGGER.error("Unknown message type {}", loadingMessage.getLoaderType());
+                break;
         }
     }
 }

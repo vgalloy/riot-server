@@ -40,8 +40,8 @@ public class ItemController {
     @RequestMapping(value = "/items/{itemId}", method = RequestMethod.GET)
     public ItemDto getItemById(@PathVariable Long itemId, @RequestParam(required = false) Region region) {
         LOGGER.info("[ GET ] : getItemById, itemId : {}, region : {}", itemId, region);
-        region = Optional.ofNullable(region).orElse(Region.EUW);
-        return itemService.get(new DpoId(region, itemId))
+        Region computedRegion = Optional.ofNullable(region).orElse(Region.EUW);
+        return itemService.get(new DpoId(computedRegion, itemId))
                 .ifNotLoadedThrow(ResourceNotLoadedException::new)
                 .ifDoesNotExistThrow(ResourceDoesNotExistException::new);
     }

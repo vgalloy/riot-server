@@ -46,6 +46,7 @@ public class ItemListBuilder {
                     break;
                 default:
                     LOGGER.trace("Can not convert the event : {}", event);
+                    break;
             }
         } catch (Exception e) {
             LOGGER.error("{}", event, e);

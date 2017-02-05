@@ -45,8 +45,8 @@ public class ChampionController {
     @RequestMapping(value = "/champions/{championId}", method = RequestMethod.GET)
     public ChampionDto getChampion(@PathVariable Long championId, @RequestParam(required = false) Region region) {
         LOGGER.info("[ GET ] : getChampion : {}, Region : {}", championId, region);
-        region = Optional.ofNullable(region).orElse(Region.EUW);
-        return championService.get(new DpoId(region, championId))
+        Region computedRegion = Optional.ofNullable(region).orElse(Region.EUW);
+        return championService.get(new DpoId(computedRegion, championId))
                 .ifNotLoadedThrow(ResourceNotLoadedException::new)
                 .ifDoesNotExistThrow(ResourceDoesNotExistException::new);
     }

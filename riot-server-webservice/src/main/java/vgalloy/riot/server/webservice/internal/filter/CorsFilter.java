@@ -2,14 +2,13 @@ package vgalloy.riot.server.webservice.internal.filter;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,12 +16,7 @@ import org.springframework.stereotype.Component;
  *         Created by Vincent Galloy on 20/06/16.
  */
 @Component
-public class CorsFilter implements Filter {
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
+public class CorsFilter implements SimpleFilter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
@@ -36,10 +30,5 @@ public class CorsFilter implements Filter {
         res.setHeader("Access-Control-Allow-Headers", "Content-Type, *");
 
         chain.doFilter(servletRequest, servletResponse);
-    }
-
-    @Override
-    public void destroy() {
-
     }
 }
