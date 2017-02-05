@@ -19,6 +19,9 @@ ext {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'checkstyle'
+    apply plugin: 'pmd'
+    apply plugin: 'findbugs'
+
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
@@ -32,8 +35,18 @@ subprojects {
 
     checkstyle {
         toolVersion = '7.5'
-        configFile = rootProject.file('conf/checkstyle.xml')
+        configFile = rootProject.file('config/checkstyle/checkstyle.xml')
         checkstyleTest.enabled = false
+    }
+
+    pmd {
+        consoleOutput = true
+        ruleSetFiles = rootProject.files('config/pmd/ruleset.xml')
+    }
+
+    findbugs {
+        toolVersion = "3.0.1"
+        excludeFilter = file("$rootProject.projectDir/config/findbugs/findbugs-exception-filter.xml")
     }
 
     test {
@@ -46,7 +59,7 @@ subprojects {
 
 project(':riot-server-dao') {
     dependencies {
-        compile "junit:junit:$junitVersion"
+        testCompile "junit:junit:$junitVersion"
         compile "vgalloy:riot-api-java:$riotApiJavaVersion"
         compile "org.slf4j:slf4j-api:$slf4jApi"
         compile "ch.qos.logback:logback-classic:$logbackClassicVersion"

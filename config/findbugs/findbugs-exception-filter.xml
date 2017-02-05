@@ -3,7 +3,7 @@
 
     <!-- Exception -->
     <Match>
-        <!--<Class name="com.vgalloy.server.service.manager.impl.CredentialManagerImpl"/>-->
+
     </Match>
 
 </FindBugsFilter>

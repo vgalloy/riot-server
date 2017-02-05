@@ -31,16 +31,16 @@
 
         <!-- Checkstyle -->
         <checkstyle.version>2.17</checkstyle.version>
-        <checkstyle.checkstyle.location>conf/checkstyle/checkstyle.xml</checkstyle.checkstyle.location>
-        <checkstyle.suppressions.location>conf/checkstyle/suppressions.xml</checkstyle.suppressions.location>
+        <checkstyle.checkstyle.location>config/checkstyle/checkstyle.xml</checkstyle.checkstyle.location>
+        <checkstyle.suppressions.location>config/checkstyle/suppressions.xml</checkstyle.suppressions.location>
 
         <!-- PMD -->
         <pmd.version>3.6</pmd.version>
-        <pmd.configuration.location>../conf/pmd/ruleset.xml</pmd.configuration.location>
+        <pmd.configuration.location>../config/pmd/ruleset.xml</pmd.configuration.location>
 
         <!-- Find bugs -->
         <findbugs-maven-plugin.version>3.0.4</findbugs-maven-plugin.version>
-        <findbugs.exception.location>conf/findbugs/findbugs-exception-filter.xml</findbugs.exception.location>
+        <findbugs.exception.location>config/findbugs/findbugs-exception-filter.xml</findbugs.exception.location>
 
         <!-- Jackson -->
         <jackson.version>2.8.6</jackson.version>
@@ -267,7 +267,7 @@
                 <version>${checkstyle.version}</version>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
-                    <configLocation>conf/checkstyle/checkstyle.xml</configLocation>
+                    <configLocation>config/checkstyle/checkstyle.xml</configLocation>
                     <suppressionsLocation>${checkstyle.suppressions.location}</suppressionsLocation>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>

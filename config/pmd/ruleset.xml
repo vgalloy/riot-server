@@ -24,8 +24,8 @@
         <exclude name="AbstractClassWithoutAbstractMethod"/>
         <exclude name="SimplifyBooleanReturns"/>
         <exclude name="CompareObjectsWithEquals"/>
-        <exclude name="PreserveStackTrace" />
-        <exclude name="ConfusingTernary" />
+        <exclude name="PreserveStackTrace"/>
+        <exclude name="ConfusingTernary"/>
     </rule>
     <rule ref="rulesets/java/imports.xml"/>
 </ruleset>
