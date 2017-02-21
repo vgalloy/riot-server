@@ -1,40 +1,45 @@
-group = 'vgalloy'
-version = '1.0-SNAPSHOT'
+plugins {
+    id 'org.springframework.boot' version "1.5.1.RELEASE" apply false
+    id 'com.github.ben-manes.versions' version '0.14.0'
+}
 
 ext {
+    javaVersion = '1.8'
+    findbugsVersion = '3.0.1'
+    checkstyleVersion = '7.5'
+
     junitVersion = '4.12'
     riotApiJavaVersion = '3.11.0'
-    slf4jApi = '1.7.22'
-    logbackClassicVersion = '1.1.9'
+    slf4jApi = '1.7.23'
+    logbackClassicVersion = '1.2.1'
     mongoJavaDriverVersion = '3.4.2'
     mongoJackVersion = '2.6.1'
-    flapdoodleEmbedMongoVersion = '1.50.5'
-    commonsConfiguration2Version = '2.1'
+    flapdoodleEmbedMongoVersion = '2.0.0'
+    commonsConfiguration2Version = '2.1.1'
     commonsBeanutilsVersion = '1.9.3'
     javaOverRabbitmqVersion = '1.3.0'
     springBootVersion = '1.5.1.RELEASE'
     springfoxSwaggerVersion = '2.6.1'
 }
 
-subprojects {
+allprojects {
     apply plugin: 'java'
     apply plugin: 'checkstyle'
     apply plugin: 'pmd'
     apply plugin: 'findbugs'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = "$javaVersion"
+    targetCompatibility = "$javaVersion"
+    group = 'vgalloy'
+    version = '1.0-SNAPSHOT'
 
     repositories {
         mavenLocal()
         mavenCentral()
-        jcenter()
-        maven { url 'http://repo.spring.io/snapshot' }
-        maven { url 'http://repo.spring.io/milestone' }
     }
 
     checkstyle {
-        toolVersion = '7.5'
+        toolVersion = "$checkstyleVersion"
         configFile = rootProject.file('config/checkstyle/checkstyle.xml')
         checkstyleTest.enabled = false
     }
@@ -45,7 +50,7 @@ subprojects {
     }
 
     findbugs {
-        toolVersion = "3.0.1"
+        toolVersion = "$findbugsVersion"
         excludeFilter = file("$rootProject.projectDir/config/findbugs/findbugs-exception-filter.xml")
     }
 
@@ -85,26 +90,12 @@ project(':riot-server-service') {
 }
 
 project(':riot-server-webservice') {
-
-    buildscript {
-        repositories {
-            jcenter()
-            maven { url 'http://repo.spring.io/snapshot' }
-            maven { url 'http://repo.spring.io/milestone' }
-        }
-        dependencies {
-            classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE'
-        }
-    }
-
+    apply plugin: 'org.springframework.boot'
     dependencies {
         compile project(':riot-server-service')
         compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+        compile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
         compile "io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion"
         compile "io.springfox:springfox-swagger2:$springfoxSwaggerVersion"
     }
-    apply plugin: 'java'
-    apply plugin: 'checkstyle'
-//    apply plugin: 'spring-boot'
-//    apply plugin: 'org.springframework.boot'
 }
