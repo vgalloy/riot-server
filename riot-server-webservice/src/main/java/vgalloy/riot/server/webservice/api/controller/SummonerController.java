@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -35,18 +36,28 @@ public class SummonerController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SummonerController.class);
 
+    private final SummonerService summonerService;
+    private final RankedStatsService rankedStatsService;
+
+    /**
+     * Constructor.
+     *
+     * @param summonerService    the summonerService
+     * @param rankedStatsService the rankedStatsService
+     */
     @Autowired
-    private SummonerService summonerService;
-    @Autowired
-    private RankedStatsService rankedStatsService;
+    public SummonerController(SummonerService summonerService, RankedStatsService rankedStatsService) {
+        this.summonerService = Objects.requireNonNull(summonerService);
+        this.rankedStatsService = Objects.requireNonNull(rankedStatsService);
+    }
 
     /**
      * Get the summoner with criteria.
      *
      * @param regions       the region (default ALL)
      * @param summonerNames the summoner name (default ALL)
-     * @param offset       the request offset (default 0)
-     * @param limit        the max limit (default 10)
+     * @param offset        the request offset (default 0)
+     * @param limit         the max limit (default 10)
      * @return the last games
      */
     @RequestMapping(value = "/summoners", method = RequestMethod.GET)

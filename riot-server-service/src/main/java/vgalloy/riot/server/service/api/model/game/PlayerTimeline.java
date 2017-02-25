@@ -10,7 +10,7 @@ import vgalloy.riot.server.service.api.model.summoner.SummonerId;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 08/09/16.
  */
-public class PlayerTimeline {
+public final class PlayerTimeline {
 
     private final SummonerId summonerId;
     private final List<TimedEvent<Integer>> farming = new ArrayList<>();

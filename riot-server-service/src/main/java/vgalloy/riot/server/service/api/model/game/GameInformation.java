@@ -8,7 +8,7 @@ import java.util.Objects;
  *         Created by Vincent Galloy on 07/10/16.
  *         This class represent all information for one game.
  */
-public class GameInformation {
+public final class GameInformation {
 
     private final List<PlayerTimeline> playerTimelines;
     private final List<SummonerInformation> summonerInformation;

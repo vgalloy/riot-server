@@ -9,7 +9,7 @@ import vgalloy.riot.api.api.dto.stats.ChampionStatsDto;
  * @author Vincent Galloy - 28/12/16
  *         Created by Vincent Galloy on 28/12/16.
  */
-public class RankedStats {
+public final class RankedStats {
 
     private final SummonerId summonerId;
     private final List<ChampionStatsDto> champions;

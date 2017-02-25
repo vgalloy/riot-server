@@ -1,7 +1,6 @@
 package vgalloy.riot.server.dao.api.mapper;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import vgalloy.riot.api.api.constant.Region;
@@ -17,8 +16,6 @@ import vgalloy.riot.server.dao.internal.entity.mapper.DpoIdMapper;
  *         Created by Vincent Galloy on 08/09/16.
  */
 public final class MatchDetailIdMapper {
-
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     /**
      * Constructor.

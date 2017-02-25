@@ -10,7 +10,7 @@ import vgalloy.riot.server.service.api.model.game.GameId;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 28/08/16.
  */
-public class GameSummary {
+public final class GameSummary {
 
     private final GameId gameId;
     private final int championId;

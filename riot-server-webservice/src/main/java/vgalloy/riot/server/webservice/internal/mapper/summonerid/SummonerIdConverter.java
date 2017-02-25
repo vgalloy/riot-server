@@ -15,7 +15,7 @@ import vgalloy.riot.server.service.api.model.summoner.SummonerId;
  *         Created by Vincent Galloy on 28/12/16.
  */
 @Component
-public class SummonerIdConverter extends StdSerializer<SummonerId> implements Converter<String, SummonerId> {
+public final class SummonerIdConverter extends StdSerializer<SummonerId> implements Converter<String, SummonerId> {
 
     private static final long serialVersionUID = 4299902797629912725L;
 

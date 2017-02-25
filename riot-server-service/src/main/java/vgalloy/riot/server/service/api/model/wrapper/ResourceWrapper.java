@@ -7,7 +7,7 @@ import java.util.function.Supplier;
  * @author Vincent Galloy - 29/12/16
  *         Created by Vincent Galloy on 29/12/16.
  */
-public class ResourceWrapper<T> extends AbstractResourceWrapper<T> {
+public final class ResourceWrapper<T> extends AbstractResourceWrapper<T> {
 
     private static final ResourceWrapper<?> NOT_LOADED = new ResourceWrapper<>(ResourceStatus.NOT_LOADED, null);
     private static final ResourceWrapper<?> DOES_NOT_EXIST = new ResourceWrapper<>(ResourceStatus.DOES_NOT_EXIST, null);

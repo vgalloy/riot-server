@@ -15,25 +15,39 @@ public class JacksonMarshallerImplTest {
 
     @Test
     public void testSerializationDeserialization() {
+        // GIVEN
         RabbitMessageMarshaller rabbitMessageMarshaller = new JacksonMarshallerImpl();
         Long test = 2L;
 
-        Assert.assertEquals(test, rabbitMessageMarshaller.deserialize(Long.class, rabbitMessageMarshaller.serialize(test)));
-        Assert.assertNotEquals(new Long(3), rabbitMessageMarshaller.deserialize(Long.class, rabbitMessageMarshaller.serialize(test)));
+        // WHEN
+        Long result = rabbitMessageMarshaller.deserialize(Long.class, rabbitMessageMarshaller.serialize(test));
+
+        // THEN
+        Assert.assertEquals(test, result);
     }
 
     @Test
     public void testSerializationNull() {
+        // GIVEN
         RabbitMessageMarshaller rabbitMessageMarshaller = new JacksonMarshallerImpl();
 
-        Assert.assertNull(null, rabbitMessageMarshaller.deserialize(Long.class, rabbitMessageMarshaller.serialize(null)));
+        // WHEN
+        Long result = rabbitMessageMarshaller.deserialize(Long.class, rabbitMessageMarshaller.serialize(null));
+
+        // THEN
+        Assert.assertNull(result);
     }
 
     @Test
     public void testSummonerLoadingMessage() {
+        // GIVEN
         RabbitMessageMarshaller rabbitMessageMarshaller = new JacksonMarshallerImpl();
         LoadingMessage loadingMessage = LoadingMessageBuilder.summonerId().wrap(2L);
 
-        Assert.assertEquals(loadingMessage, rabbitMessageMarshaller.deserialize(LoadingMessage.class, rabbitMessageMarshaller.serialize(loadingMessage)));
+        // WHEN
+        LoadingMessage result = rabbitMessageMarshaller.deserialize(LoadingMessage.class, rabbitMessageMarshaller.serialize(loadingMessage));
+
+        // THEN
+        Assert.assertEquals(loadingMessage, result);
     }
 }

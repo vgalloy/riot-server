@@ -7,7 +7,7 @@ import java.util.Objects;
  *         Created by Vincent Galloy on 07/10/16.
  *         This class represente a game. The {@link GameInformation} can be null if the id have been checked and doesn't correspond to a riot game.
  */
-public class Game {
+public final class Game {
 
     private final GameId gameId;
     private final GameInformation gameInformation;

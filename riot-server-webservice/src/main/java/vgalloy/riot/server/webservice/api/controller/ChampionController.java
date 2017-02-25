@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -32,8 +33,17 @@ public class ChampionController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChampionController.class);
 
+    private final ChampionService championService;
+
+    /**
+     * Constructor.
+     *
+     * @param championService the championService
+     */
     @Autowired
-    private ChampionService championService;
+    public ChampionController(ChampionService championService) {
+        this.championService = Objects.requireNonNull(championService);
+    }
 
     /**
      * Get champion information.

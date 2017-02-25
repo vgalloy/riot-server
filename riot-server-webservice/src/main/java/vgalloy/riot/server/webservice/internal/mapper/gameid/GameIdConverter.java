@@ -15,7 +15,7 @@ import vgalloy.riot.server.service.api.model.game.GameId;
  *         Created by Vincent Galloy on 28/12/16.
  */
 @Component
-public class GameIdConverter extends StdSerializer<GameId> implements Converter<String, GameId> {
+public final class GameIdConverter extends StdSerializer<GameId> implements Converter<String, GameId> {
 
     private static final long serialVersionUID = 4299902797629912725L;
 

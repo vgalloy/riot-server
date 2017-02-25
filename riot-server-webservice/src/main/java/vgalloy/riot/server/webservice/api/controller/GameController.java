@@ -1,5 +1,7 @@
 package vgalloy.riot.server.webservice.api.controller;
 
+import java.util.Objects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +25,16 @@ public class GameController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
 
+    private final MatchDetailService matchDetailService;
+
+    /**
+     * Constructor.
+     * @param matchDetailService the matchDetailService
+     */
     @Autowired
-    private MatchDetailService matchDetailService;
+    public GameController(MatchDetailService matchDetailService) {
+        this.matchDetailService = Objects.requireNonNull(matchDetailService);
+    }
 
     /**
      * Get the players information during the game.

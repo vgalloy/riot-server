@@ -6,7 +6,7 @@ package vgalloy.riot.server.service.api.service.exception;
  *         This exception should be throw when the use send wrong input.
  *         Be aware : the message will be display to the user.
  */
-public class UserException extends ServiceException {
+public final class UserException extends ServiceException {
 
     private static final long serialVersionUID = -3470523490729510231L;
 

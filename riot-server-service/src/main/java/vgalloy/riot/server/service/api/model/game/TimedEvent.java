@@ -6,7 +6,7 @@ import java.util.Objects;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 08/09/16.
  */
-public class TimedEvent<T> {
+public final class TimedEvent<T> {
 
     private final long timestamp;
     private final T value;

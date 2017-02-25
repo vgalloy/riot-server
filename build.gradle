@@ -10,7 +10,7 @@ ext {
 
     junitVersion = '4.12'
     riotApiJavaVersion = '3.11.0'
-    slf4jApi = '1.7.23'
+    slf4jApi = '1.7.24'
     logbackClassicVersion = '1.2.1'
     mongoJavaDriverVersion = '3.4.2'
     mongoJackVersion = '2.6.1'

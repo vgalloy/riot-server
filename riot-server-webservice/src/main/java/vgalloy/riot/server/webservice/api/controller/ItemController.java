@@ -1,5 +1,6 @@
 package vgalloy.riot.server.webservice.api.controller;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -27,8 +28,17 @@ public class ItemController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemController.class);
 
+    private final ItemService itemService;
+
+    /**
+     * Constructor.
+     *
+     * @param itemService the itemService
+     */
     @Autowired
-    private ItemService itemService;
+    public ItemController(ItemService itemService) {
+        this.itemService = Objects.requireNonNull(itemService);
+    }
 
     /**
      * Get the item information.

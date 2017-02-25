@@ -72,22 +72,16 @@ public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements 
     public Optional<Entity<DTO, DpoId>> get(DpoId dpoId) {
         Objects.requireNonNull(dpoId);
 
-        Optional<DPO> dataObject = genericDao.getById(DpoIdMapper.toNormalizeString(dpoId));
-        if (dataObject.isPresent()) {
-            return Optional.of(DpoMapper.mapToEntity(dataObject.get()));
-        }
-        return Optional.empty();
+        return genericDao.getById(DpoIdMapper.toNormalizeString(dpoId))
+                .map(DpoMapper::mapToEntity);
     }
 
     @Override
     public Optional<Entity<DTO, DpoId>> getRandom(Region region) {
         Objects.requireNonNull(region);
 
-        Optional<DPO> dataObject = genericDao.getRandom(region);
-        if (dataObject.isPresent()) {
-            return Optional.of(DpoMapper.mapToEntity(dataObject.get()));
-        }
-        return Optional.empty();
+        return genericDao.getRandom(region)
+                .map(DpoMapper::mapToEntity);
     }
 
     public String getDatabaseUrl() {

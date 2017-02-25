@@ -8,7 +8,7 @@ import vgalloy.riot.server.service.api.model.summoner.SummonerId;
  * @author Vincent Galloy - 09/12/16
  *         Created by Vincent Galloy on 09/12/16.
  */
-public class SummonerInformation {
+public final class SummonerInformation {
 
     private final SummonerId summonerId;
     private final String summonerName;

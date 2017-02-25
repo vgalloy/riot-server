@@ -6,7 +6,7 @@ import java.util.Objects;
  * @author Vincent Galloy
  *         Created by Vincent Galloy on 23/08/16.
  */
-public class Position {
+public final class Position {
 
     private int x;
     private int y;

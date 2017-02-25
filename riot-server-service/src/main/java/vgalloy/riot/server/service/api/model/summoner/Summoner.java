@@ -8,7 +8,7 @@ import vgalloy.riot.api.api.constant.Region;
  * @author Vincent Galloy - 28/12/16
  *         Created by Vincent Galloy on 28/12/16.
  */
-public class Summoner {
+public final class Summoner {
 
     private final SummonerId summonerId;
     private final String summonerName;
