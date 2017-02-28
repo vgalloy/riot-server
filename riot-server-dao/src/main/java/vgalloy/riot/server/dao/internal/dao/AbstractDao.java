@@ -21,8 +21,9 @@ import vgalloy.riot.server.dao.internal.entity.mapper.DpoMapper;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 
 /**
+ * Created by Vincent Galloy on 07/07/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 07/07/16.
  */
 public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements CommonDao<DTO> {
 

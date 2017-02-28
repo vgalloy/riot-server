@@ -13,8 +13,9 @@ import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
 
 /**
+ * Created by Vincent Galloy on 24/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 24/08/16.
  */
 @Import({JacksonConfiguration.class, SwaggerConfig.class})
 @ComponentScan(value = {

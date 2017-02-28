@@ -6,8 +6,9 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.internal.entity.dpo.AbstractDpo;
 
 /**
+ * Created by Vincent Galloy on 02/12/15.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 02/12/15.
  */
 public interface GenericDao<DTO, DPO extends AbstractDpo<DTO>> {
 

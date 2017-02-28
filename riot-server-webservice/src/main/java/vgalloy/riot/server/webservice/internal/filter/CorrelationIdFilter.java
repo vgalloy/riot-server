@@ -14,8 +14,9 @@ import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Vincent Galloy - 19/09/16
- *         Created by Vincent Galloy on 19/09/16.
+ * Created by Vincent Galloy on 19/09/16.
+ *
+ * @author Vincent Galloy
  */
 @Component
 public class CorrelationIdFilter implements SimpleFilter {

@@ -20,9 +20,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import vgalloy.riot.server.webservice.internal.filter.SimpleFilter;
 
 /**
- * @author Vincent Galloy - 27/12/16
- *         Created by Vincent Galloy on 27/12/16.
- *         This class must add X_EXECUTION_TIME_MILLIS header for each request
+ * Created by Vincent Galloy on 27/12/16.
+ * This class must add X_EXECUTION_TIME_MILLIS header for each request
+ *
+ * @author Vincent Galloy
  */
 @ControllerAdvice
 public class HeaderModifierAdvice implements ResponseBodyAdvice<Object>, SimpleFilter {

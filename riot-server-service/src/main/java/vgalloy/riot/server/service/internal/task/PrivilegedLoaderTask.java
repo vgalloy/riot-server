@@ -10,8 +10,9 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.loader.api.service.LoaderClient;
 
 /**
- * @author Vincent Galloy - 06/12/16
- *         Created by Vincent Galloy on 06/12/16.
+ * Created by Vincent Galloy on 06/12/16.
+ *
+ * @author Vincent Galloy
  */
 public class PrivilegedLoaderTask extends TimerTask {
 

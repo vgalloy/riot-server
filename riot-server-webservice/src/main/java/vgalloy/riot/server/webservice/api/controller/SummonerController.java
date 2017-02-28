@@ -28,8 +28,9 @@ import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistExcepti
 import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
 
 /**
+ * Created by Vincent Galloy on 20/06/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 20/06/16.
  */
 @RestController
 public class SummonerController {

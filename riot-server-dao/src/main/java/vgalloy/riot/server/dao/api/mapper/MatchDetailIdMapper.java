@@ -12,8 +12,9 @@ import vgalloy.riot.server.dao.internal.entity.dpo.MatchDetailDpo;
 import vgalloy.riot.server.dao.internal.entity.mapper.DpoIdMapper;
 
 /**
+ * Created by Vincent Galloy on 08/09/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 08/09/16.
  */
 public final class MatchDetailIdMapper {
 

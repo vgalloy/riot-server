@@ -16,8 +16,9 @@ import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistExcepti
 import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
 
 /**
+ * Created by Vincent Galloy on 24/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 24/08/16.
  */
 @ResponseBody
 @ControllerAdvice

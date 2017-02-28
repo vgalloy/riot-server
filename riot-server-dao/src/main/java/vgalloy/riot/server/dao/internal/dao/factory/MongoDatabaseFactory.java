@@ -10,8 +10,9 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
 /**
- * @author Vincent Galloy - 19/09/16
- *         Created by Vincent Galloy on 19/09/16.
+ * Created by Vincent Galloy on 19/09/16.
+ *
+ * @author Vincent Galloy
  */
 public final class MongoDatabaseFactory implements Supplier<MongoDatabase> {
 

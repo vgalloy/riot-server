@@ -8,8 +8,9 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.service.api.model.game.GameId;
 
 /**
- * @author Vincent Galloy - 28/12/16
- *         Created by Vincent Galloy on 28/12/16.
+ * Created by Vincent Galloy on 28/12/16.
+ *
+ * @author Vincent Galloy
  */
 public final class GameIdMapper {
 

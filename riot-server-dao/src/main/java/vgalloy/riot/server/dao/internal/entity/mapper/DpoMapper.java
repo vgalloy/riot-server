@@ -7,8 +7,9 @@ import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.internal.entity.dpo.AbstractDpo;
 
 /**
+ * Created by Vincent Galloy on 12/07/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 12/07/16.
  */
 public final class DpoMapper {
 

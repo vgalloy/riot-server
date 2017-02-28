@@ -5,8 +5,9 @@ import java.util.Objects;
 import vgalloy.riot.api.api.constant.Region;
 
 /**
- * @author Vincent Galloy - 28/12/16
- *         Created by Vincent Galloy on 28/12/16.
+ * Created by Vincent Galloy on 28/12/16.
+ *
+ * @author Vincent Galloy
  */
 public final class SummonerId {
 

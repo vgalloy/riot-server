@@ -11,8 +11,9 @@ import org.springframework.stereotype.Component;
 import vgalloy.riot.server.service.api.model.game.GameId;
 
 /**
+ * Created by Vincent Galloy on 28/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/12/16.
  */
 @Component
 public final class GameIdConverter extends StdSerializer<GameId> implements Converter<String, GameId> {

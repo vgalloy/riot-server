@@ -7,8 +7,9 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 
 /**
+ * Created by Vincent Galloy on 28/05/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/05/16.
  */
 public class SummonerDpo extends AbstractDpo<SummonerDto> {
 

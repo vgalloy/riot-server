@@ -9,8 +9,9 @@ import vgalloy.javaoverrabbitmq.api.marshaller.RabbitMessageMarshaller;
 import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 
 /**
- * @author Vincent Galloy - 13/10/16
- *         Created by Vincent Galloy on 13/10/16.
+ * Created by Vincent Galloy on 13/10/16.
+ *
+ * @author Vincent Galloy
  */
 public class JacksonMarshallerImpl implements RabbitMessageMarshaller {
 

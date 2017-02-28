@@ -5,8 +5,9 @@ import java.util.Objects;
 import vgalloy.riot.api.api.constant.Region;
 
 /**
+ * Created by Vincent Galloy on 08/06/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 08/06/16.
  */
 public final class Key {
 

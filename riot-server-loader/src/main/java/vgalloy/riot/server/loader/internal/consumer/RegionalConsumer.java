@@ -10,8 +10,9 @@ import vgalloy.riot.server.loader.internal.consumer.impl.JacksonMarshallerImpl;
 import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
 
 /**
- * @author Vincent Galloy - 10/10/16
- *         Created by Vincent Galloy on 10/10/16.
+ * Created by Vincent Galloy on 10/10/16.
+ *
+ * @author Vincent Galloy
  */
 public interface RegionalConsumer extends Consumer<LoadingMessage> {
 

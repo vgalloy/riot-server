@@ -10,8 +10,9 @@ import vgalloy.riot.server.loader.internal.factory.supplier.ConsumerSupplier;
 import vgalloy.riot.server.loader.internal.factory.supplier.LoaderClientSupplier;
 
 /**
- * @author Vincent Galloy - 11/10/16
- *         Created by Vincent Galloy on 11/10/16.
+ * Created by Vincent Galloy on 11/10/16.
+ *
+ * @author Vincent Galloy
  */
 public final class BrokerFactory {
 

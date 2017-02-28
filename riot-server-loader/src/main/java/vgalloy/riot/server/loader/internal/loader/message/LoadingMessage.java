@@ -7,8 +7,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * @author Vincent Galloy - 13/10/16
- *         Created by Vincent Galloy on 13/10/16.
+ * Created by Vincent Galloy on 13/10/16.
+ *
+ * @author Vincent Galloy
  */
 public class LoadingMessage implements Serializable {
 

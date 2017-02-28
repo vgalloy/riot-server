@@ -7,8 +7,9 @@ import java.util.Optional;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 
 /**
- * @author Vincent Galloy - 05/10/16
- *         Created by Vincent Galloy on 05/10/16.
+ * Created by Vincent Galloy on 05/10/16.
+ *
+ * @author Vincent Galloy
  */
 public abstract class AbstractDpoWrapper<DTO, ID extends DpoId> implements Serializable {
 

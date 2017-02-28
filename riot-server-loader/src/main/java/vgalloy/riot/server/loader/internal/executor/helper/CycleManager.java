@@ -3,8 +3,9 @@ package vgalloy.riot.server.loader.internal.executor.helper;
 import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 
 /**
- * @author Vincent Galloy - 09/12/16
- *         Created by Vincent Galloy on 09/12/16.
+ * Created by Vincent Galloy on 09/12/16.
+ *
+ * @author Vincent Galloy
  */
 public final class CycleManager {
 

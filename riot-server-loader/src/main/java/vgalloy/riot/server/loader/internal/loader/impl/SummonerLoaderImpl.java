@@ -40,8 +40,9 @@ import vgalloy.riot.server.loader.internal.loader.SummonerLoader;
 import vgalloy.riot.server.loader.internal.loader.mapper.SummonerDtoMapper;
 
 /**
- * @author Vincent Galloy - 10/10/16
- *         Created by Vincent Galloy on 10/10/16.
+ * Created by Vincent Galloy on 10/10/16.
+ *
+ * @author Vincent Galloy
  */
 public final class SummonerLoaderImpl implements SummonerLoader {
 

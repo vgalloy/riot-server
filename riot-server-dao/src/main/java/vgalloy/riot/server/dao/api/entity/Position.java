@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
+ * Created by Vincent Galloy on 07/07/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 07/07/16.
  */
 public final class Position implements Serializable {
 

@@ -8,8 +8,9 @@ import vgalloy.riot.server.loader.internal.loader.mapper.LoadingMessageBuilder;
 import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
 
 /**
+ * Created by Vincent Galloy on 30/10/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 30/10/16.
  */
 public class JacksonMarshallerImplTest {
 

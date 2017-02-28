@@ -6,8 +6,9 @@ import vgalloy.riot.server.loader.internal.loader.mapper.impl.StringMessageMappe
 import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
 
 /**
- * @author Vincent Galloy - 01/12/16
- *         Created by Vincent Galloy on 01/12/16.
+ * Created by Vincent Galloy on 01/12/16.
+ *
+ * @author Vincent Galloy
  */
 public final class LoadingMessageBuilder {
 

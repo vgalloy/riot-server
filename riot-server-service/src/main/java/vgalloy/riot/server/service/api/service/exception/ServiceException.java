@@ -1,8 +1,9 @@
 package vgalloy.riot.server.service.api.service.exception;
 
 /**
+ * Created by Vincent Galloy on 05/07/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 05/07/16.
  */
 public class ServiceException extends RuntimeException {
 

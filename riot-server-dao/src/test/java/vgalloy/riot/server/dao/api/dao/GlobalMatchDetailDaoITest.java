@@ -34,8 +34,9 @@ import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.MatchDetailDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.TimelineDaoImpl;
 
 /**
+ * Created by Vincent Galloy on 14/06/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 14/06/16.
  */
 public class GlobalMatchDetailDaoITest {
 
@@ -60,6 +61,29 @@ public class GlobalMatchDetailDaoITest {
     public static void tearDown() {
         process.stop();
         executable.stop();
+    }
+
+    private static MatchDetailWrapper createMatchDetail(Region region, Long id, LocalDateTime matchCreation, long summonerId) {
+        MatchDetailId matchDetailId = new MatchDetailId(region, id, matchCreation.toLocalDate());
+
+        Player player = new Player();
+        player.setSummonerId(summonerId);
+
+        ParticipantIdentity participantIdentity = new ParticipantIdentity();
+        participantIdentity.setParticipantId(1);
+        participantIdentity.setPlayer(player);
+
+        List<ParticipantIdentity> participantIdentityList = new ArrayList<>();
+        participantIdentityList.add(participantIdentity);
+
+        MatchDetail matchDetail = new MatchDetail();
+        matchDetail.setParticipantIdentities(participantIdentityList);
+        matchDetail.setMatchId(matchDetailId.getId());
+        matchDetail.setRegion(matchDetailId.getRegion());
+        matchDetail.setMatchCreation(matchCreation.toEpochSecond(ZoneOffset.UTC) * 1000);
+        matchDetail.setTimeline(new Timeline());
+
+        return new MatchDetailWrapper(matchDetailId, matchDetail);
     }
 
     @Test
@@ -181,28 +205,5 @@ public class GlobalMatchDetailDaoITest {
         Assert.assertEquals(0, result.size());
         Assert.assertFalse(timelineDao.get(new DpoId(Region.EUW, 10_001L)).isPresent());
         Assert.assertTrue(timelineDao.get(new DpoId(Region.EUW, 10_003L)).isPresent());
-    }
-
-    private static MatchDetailWrapper createMatchDetail(Region region, Long id, LocalDateTime matchCreation, long summonerId) {
-        MatchDetailId matchDetailId = new MatchDetailId(region, id, matchCreation.toLocalDate());
-
-        Player player = new Player();
-        player.setSummonerId(summonerId);
-
-        ParticipantIdentity participantIdentity = new ParticipantIdentity();
-        participantIdentity.setParticipantId(1);
-        participantIdentity.setPlayer(player);
-
-        List<ParticipantIdentity> participantIdentityList = new ArrayList<>();
-        participantIdentityList.add(participantIdentity);
-
-        MatchDetail matchDetail = new MatchDetail();
-        matchDetail.setParticipantIdentities(participantIdentityList);
-        matchDetail.setMatchId(matchDetailId.getId());
-        matchDetail.setRegion(matchDetailId.getRegion());
-        matchDetail.setMatchCreation(matchCreation.toEpochSecond(ZoneOffset.UTC) * 1000);
-        matchDetail.setTimeline(new Timeline());
-
-        return new MatchDetailWrapper(matchDetailId, matchDetail);
     }
 }

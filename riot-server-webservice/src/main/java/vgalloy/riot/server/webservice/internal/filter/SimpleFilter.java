@@ -10,8 +10,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
+ * Created by Vincent Galloy on 05/02/17.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 05/02/17.
  */
 public interface SimpleFilter extends Filter {
 

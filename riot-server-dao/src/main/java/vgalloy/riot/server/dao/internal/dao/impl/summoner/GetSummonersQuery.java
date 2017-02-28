@@ -9,8 +9,9 @@ import java.util.Objects;
 import vgalloy.riot.api.api.constant.Region;
 
 /**
+ * Created by Vincent Galloy on 28/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/12/16.
  */
 public final class GetSummonersQuery {
 
@@ -87,30 +88,6 @@ public final class GetSummonersQuery {
         return this;
     }
 
-    /**
-     * Set the limit for the number of values.
-     *
-     * @param limit the limit
-     * @return this
-     */
-    public GetSummonersQuery setLimit(Integer limit) {
-        Objects.requireNonNull(limit);
-        this.limit = limit;
-        return this;
-    }
-
-    /**
-     * Set the offset for the values.
-     *
-     * @param offset the offset
-     * @return this
-     */
-    public GetSummonersQuery setOffset(Integer offset) {
-        Objects.requireNonNull(offset);
-        this.offset = offset;
-        return this;
-    }
-
     public List<String> getSummonersName() {
         return summonersName;
     }
@@ -123,7 +100,31 @@ public final class GetSummonersQuery {
         return limit;
     }
 
+    /**
+     * Set the limit for the number of values.
+     *
+     * @param limit the limit
+     * @return this
+     */
+    public GetSummonersQuery setLimit(Integer limit) {
+        Objects.requireNonNull(limit);
+        this.limit = limit;
+        return this;
+    }
+
     public Integer getOffset() {
         return offset;
+    }
+
+    /**
+     * Set the offset for the values.
+     *
+     * @param offset the offset
+     * @return this
+     */
+    public GetSummonersQuery setOffset(Integer offset) {
+        Objects.requireNonNull(offset);
+        this.offset = offset;
+        return this;
     }
 }

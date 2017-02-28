@@ -4,8 +4,9 @@ import vgalloy.riot.server.loader.api.service.LoaderClient;
 import vgalloy.riot.server.loader.internal.factory.BrokerFactory;
 
 /**
+ * Created by Vincent Galloy on 30/10/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 30/10/16.
  */
 public final class LoaderFactory {
 

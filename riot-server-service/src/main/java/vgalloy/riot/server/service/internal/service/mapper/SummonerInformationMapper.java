@@ -13,8 +13,9 @@ import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 import vgalloy.riot.server.service.internal.service.helper.MatchDetailHelper;
 
 /**
- * @author Vincent Galloy - 09/12/16
- *         Created by Vincent Galloy on 09/12/16.
+ * Created by Vincent Galloy on 09/12/16.
+ *
+ * @author Vincent Galloy
  */
 public final class SummonerInformationMapper {
 

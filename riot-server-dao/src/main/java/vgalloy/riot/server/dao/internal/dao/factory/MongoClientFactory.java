@@ -9,8 +9,9 @@ import java.util.function.Supplier;
 import com.mongodb.MongoClient;
 
 /**
+ * Created by Vincent Galloy on 14/06/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 14/06/16.
  */
 public final class MongoClientFactory implements Supplier<MongoClient> {
 

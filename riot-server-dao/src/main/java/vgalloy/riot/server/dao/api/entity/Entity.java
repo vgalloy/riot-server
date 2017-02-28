@@ -6,8 +6,9 @@ import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.wrapper.AbstractDpoWrapper;
 
 /**
+ * Created by Vincent Galloy on 12/07/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 12/07/16.
  */
 public final class Entity<DTO, ID extends DpoId> extends AbstractDpoWrapper<DTO, ID> {
 

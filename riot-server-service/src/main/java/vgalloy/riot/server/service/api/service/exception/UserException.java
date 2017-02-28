@@ -1,10 +1,11 @@
 package vgalloy.riot.server.service.api.service.exception;
 
 /**
+ * Created by Vincent Galloy on 07/10/16.
+ * This exception should be throw when the use send wrong input.
+ * Be aware : the message will be display to the user.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 07/10/16.
- *         This exception should be throw when the use send wrong input.
- *         Be aware : the message will be display to the user.
  */
 public final class UserException extends ServiceException {
 

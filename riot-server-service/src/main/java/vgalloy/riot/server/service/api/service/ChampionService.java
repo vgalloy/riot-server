@@ -9,8 +9,9 @@ import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.service.api.model.wrapper.ResourceWrapper;
 
 /**
+ * Created by Vincent Galloy on 08/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 08/12/16.
  */
 public interface ChampionService {
 

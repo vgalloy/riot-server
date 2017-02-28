@@ -9,8 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Created by Vincent Galloy on 03/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 03/12/16.
  */
 public final class ConnectionFactorySupplier implements Supplier<ConnectionFactory> {
 

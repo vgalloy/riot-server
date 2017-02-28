@@ -9,8 +9,9 @@ import vgalloy.riot.server.service.api.model.wrapper.ResourceWrapper;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 
 /**
+ * Created by Vincent Galloy on 23/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 23/08/16.
  */
 public final class RankedStatsServiceImpl implements RankedStatsService {
 

@@ -8,8 +8,9 @@ import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 import vgalloy.riot.server.webservice.internal.mapper.summonerid.SummonerIdMapper;
 
 /**
+ * Created by Vincent Galloy on 28/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/12/16.
  */
 public class SummonerIdMapperTest {
 

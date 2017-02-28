@@ -7,8 +7,9 @@ import vgalloy.riot.server.loader.internal.loader.mapper.LoadingMessageMapper;
 import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
 
 /**
+ * Created by Vincent Galloy on 03/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 03/12/16.
  */
 public class IntegerMessageMapperTest {
 

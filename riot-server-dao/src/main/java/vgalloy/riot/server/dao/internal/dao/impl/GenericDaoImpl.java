@@ -13,13 +13,13 @@ import vgalloy.riot.server.dao.internal.dao.GenericDao;
 import vgalloy.riot.server.dao.internal.entity.dpo.AbstractDpo;
 
 /**
+ * Created by Vincent Galloy on 09/12/15.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 09/12/15.
  */
 public final class GenericDaoImpl<DTO, DATA_OBJECT extends AbstractDpo<DTO>> implements GenericDao<DTO, DATA_OBJECT> {
 
-    public static final String REGION_CAN_NOT_BE_NULL = "region can not be null";
-
+    private static final Random RANDOM = new SecureRandom();
     private final JacksonDBCollection<DATA_OBJECT, String> collection;
 
     /**
@@ -44,15 +44,14 @@ public final class GenericDaoImpl<DTO, DATA_OBJECT extends AbstractDpo<DTO>> imp
 
     @Override
     public Optional<DATA_OBJECT> getRandom(Region region) {
-        Objects.requireNonNull(region, REGION_CAN_NOT_BE_NULL);
+        Objects.requireNonNull(region);
         int max = collection
                 .find(DBQuery.is("region", region))
                 .count();
         if (max == 0) {
             return Optional.empty();
         }
-        Random random = new SecureRandom();
-        int rand = Math.abs(random.nextInt()) % max;
+        int rand = Math.abs(RANDOM.nextInt()) % max;
         return Optional.of(collection
                 .find(DBQuery.is("region", region))
                 .limit(-1)

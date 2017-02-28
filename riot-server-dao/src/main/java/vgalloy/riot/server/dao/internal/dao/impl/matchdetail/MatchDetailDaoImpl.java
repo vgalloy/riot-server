@@ -33,8 +33,9 @@ import vgalloy.riot.server.dao.internal.entity.mapper.DpoIdMapper;
 import vgalloy.riot.server.dao.internal.entity.mapper.MatchDetailMapper;
 
 /**
+ * Created by Vincent Galloy on 28/05/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/05/16.
  */
 public final class MatchDetailDaoImpl implements MatchDetailDao {
 
@@ -53,6 +54,18 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
     public MatchDetailDaoImpl(String databaseUrl, String databaseName) {
         this.databaseUrl = Objects.requireNonNull(databaseUrl);
         this.databaseName = Objects.requireNonNull(databaseName);
+    }
+
+    /**
+     * Create or update index.
+     *
+     * @param dbCollection the db collection
+     */
+    private static void createOrUpdateIndexes(DBCollection dbCollection) {
+        LOGGER.debug("start index creation");
+        dbCollection.createIndex(new BasicDBObject("region", 1));
+        dbCollection.createIndex(new BasicDBObject("item.participantIdentities.player.summonerId", 1));
+        LOGGER.debug("end index creation");
     }
 
     @Override
@@ -137,17 +150,5 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
 
         createOrUpdateIndexes(dbCollection);
         return JacksonDBCollection.wrap(dbCollection, MatchDetailDpo.class, String.class);
-    }
-
-    /**
-     * Create or update index.
-     *
-     * @param dbCollection the db collection
-     */
-    private static void createOrUpdateIndexes(DBCollection dbCollection) {
-        LOGGER.debug("start index creation");
-        dbCollection.createIndex(new BasicDBObject("region", 1));
-        dbCollection.createIndex(new BasicDBObject("item.participantIdentities.player.summonerId", 1));
-        LOGGER.debug("end index creation");
     }
 }

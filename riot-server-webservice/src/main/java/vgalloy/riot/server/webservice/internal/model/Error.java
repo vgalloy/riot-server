@@ -3,8 +3,9 @@ package vgalloy.riot.server.webservice.internal.model;
 import java.util.Objects;
 
 /**
- * @author Vincent Galloy - 14/09/16
- *         Created by Vincent Galloy on 14/09/16.
+ * Created by Vincent Galloy on 14/09/16.
+ *
+ * @author Vincent Galloy
  */
 public final class Error {
 

@@ -3,8 +3,9 @@ package vgalloy.riot.server.dao.api.entity.wrapper;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 
 /**
- * @author Vincent Galloy - 07/10/16
- *         Created by Vincent Galloy on 07/10/16.
+ * Created by Vincent Galloy on 07/10/16.
+ *
+ * @author Vincent Galloy
  */
 public class CommonDpoWrapper<DTO> extends AbstractDpoWrapper<DTO, DpoId> {
 

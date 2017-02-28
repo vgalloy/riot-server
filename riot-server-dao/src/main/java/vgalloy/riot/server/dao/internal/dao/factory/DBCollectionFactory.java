@@ -7,8 +7,9 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 
 /**
- * @author Vincent Galloy - 19/09/16
- *         Created by Vincent Galloy on 19/09/16.
+ * Created by Vincent Galloy on 19/09/16.
+ *
+ * @author Vincent Galloy
  */
 public final class DBCollectionFactory implements Supplier<DBCollection> {
 

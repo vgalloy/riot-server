@@ -14,8 +14,9 @@ import vgalloy.riot.server.loader.internal.executor.RegionExecutor;
 import vgalloy.riot.server.loader.internal.executor.model.Request;
 
 /**
+ * Created by Vincent Galloy on 04/07/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 04/07/16.
  */
 public final class ExecutorImpl implements Executor {
 

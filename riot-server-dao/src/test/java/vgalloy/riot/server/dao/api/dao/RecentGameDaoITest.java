@@ -24,8 +24,9 @@ import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.dao.internal.dao.impl.RecentGamesDaoImpl;
 
 /**
+ * Created by Vincent Galloy on 01/07/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 01/07/16.
  */
 public class RecentGameDaoITest {
 

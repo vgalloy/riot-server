@@ -18,8 +18,9 @@ import vgalloy.riot.server.service.internal.task.PrivilegedLoaderTask;
 import vgalloy.riot.server.service.internal.task.SummonerLoaderTask;
 
 /**
+ * Created by Vincent Galloy on 11/10/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 11/10/16.
  */
 public final class InternalServiceFactory {
 

@@ -11,8 +11,9 @@ import vgalloy.riot.server.loader.internal.executor.impl.ExecutorImpl;
 import vgalloy.riot.server.loader.internal.factory.supplier.ConfigurationSupplier;
 
 /**
- * @author Vincent Galloy - 12/10/16
- *         Created by Vincent Galloy on 12/10/16.
+ * Created by Vincent Galloy on 12/10/16.
+ *
+ * @author Vincent Galloy
  */
 public final class ExecutorFactory {
 

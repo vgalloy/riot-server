@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * Created by Vincent Galloy on 18/06/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 18/06/16.
  */
 @RestController
 @PropertySource(value = "classpath:META-INF/maven/vgalloy/riot-server-webservice/pom.properties", ignoreResourceNotFound = true)

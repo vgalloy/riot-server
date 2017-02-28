@@ -21,8 +21,9 @@ import vgalloy.riot.server.service.internal.service.mapper.GameSummaryMapper;
 import vgalloy.riot.server.service.internal.service.mapper.SummonerMapper;
 
 /**
+ * Created by Vincent Galloy on 23/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 23/08/16.
  */
 public final class SummonerServiceImpl implements SummonerService {
 

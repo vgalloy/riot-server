@@ -7,8 +7,9 @@ import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.entity.WinRate;
 
 /**
+ * Created by Vincent Galloy on 28/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/08/16.
  */
 public interface ChampionDao extends CommonDao<ChampionDto> {
 

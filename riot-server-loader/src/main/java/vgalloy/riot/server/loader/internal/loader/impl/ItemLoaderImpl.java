@@ -21,8 +21,9 @@ import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
 import vgalloy.riot.server.loader.internal.loader.ItemLoader;
 
 /**
- * @author Vincent Galloy - 01/12/16
- *         Created by Vincent Galloy on 01/12/16.
+ * Created by Vincent Galloy on 01/12/16.
+ *
+ * @author Vincent Galloy
  */
 public final class ItemLoaderImpl implements ItemLoader {
 

@@ -8,8 +8,9 @@ import vgalloy.riot.api.api.dto.mach.Timeline;
 import vgalloy.riot.server.service.internal.service.helper.ItemListBuilder;
 
 /**
+ * Created by Vincent Galloy on 30/11/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 30/11/16.
  */
 public final class ItemListMapper {
 
@@ -34,11 +35,11 @@ public final class ItemListMapper {
 
         if (timeline.getFrames() != null) {
             timeline.getFrames().stream()
-                    .filter(frame -> frame != null)
+                    .filter(Objects::nonNull)
                     .map(Frame::getEvents)
-                    .filter(events -> events != null)
+                    .filter(Objects::nonNull)
                     .forEach(events -> events.stream()
-                            .filter(event -> event != null)
+                            .filter(Objects::nonNull)
                             .filter(event -> event.getParticipantId() != null)
                             .filter(event -> event.getParticipantId() == participantId)
                             .forEach(itemListBuilder::addEvent));

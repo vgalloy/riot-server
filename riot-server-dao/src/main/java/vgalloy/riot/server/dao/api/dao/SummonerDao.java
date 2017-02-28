@@ -8,8 +8,9 @@ import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
 
 /**
+ * Created by Vincent Galloy on 28/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/08/16.
  */
 public interface SummonerDao extends CommonDao<SummonerDto> {
 

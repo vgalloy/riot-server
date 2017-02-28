@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * Created by Vincent Galloy on 07/10/16.
+ * This class represent all information for one game.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 07/10/16.
- *         This class represent all information for one game.
  */
 public final class GameInformation {
 

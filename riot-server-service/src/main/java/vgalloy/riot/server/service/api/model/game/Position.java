@@ -3,8 +3,9 @@ package vgalloy.riot.server.service.api.model.game;
 import java.util.Objects;
 
 /**
+ * Created by Vincent Galloy on 23/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 23/08/16.
  */
 public final class Position {
 

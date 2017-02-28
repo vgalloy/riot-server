@@ -8,8 +8,9 @@ import vgalloy.riot.server.dao.internal.entity.dpo.TimelineDpo;
 import vgalloy.riot.server.dao.internal.entity.mapper.DpoIdMapper;
 
 /**
+ * Created by Vincent Galloy on 28/05/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/05/16.
  */
 public final class TimelineDaoImpl extends AbstractDao<Timeline, TimelineDpo> implements TimelineDao {
 

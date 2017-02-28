@@ -23,8 +23,9 @@ import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.dao.internal.dao.impl.RankedStatsDaoImpl;
 
 /**
+ * Created by Vincent Galloy on 08/06/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 08/06/16.
  */
 public class RankedStatsDaoITest {
 

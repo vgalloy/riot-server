@@ -13,8 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import vgalloy.riot.server.webservice.api.conf.WebserviceConfig;
 
 /**
+ * Created by Vincent Galloy on 20/02/17.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 20/02/17.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = WebserviceConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

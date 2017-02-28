@@ -18,8 +18,9 @@ import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
 import vgalloy.riot.server.dao.internal.dao.TimelineDao;
 
 /**
+ * Created by Vincent Galloy on 28/05/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/05/16.
  */
 public final class GlobalMatchDetailDaoImpl implements MatchDetailDao {
 

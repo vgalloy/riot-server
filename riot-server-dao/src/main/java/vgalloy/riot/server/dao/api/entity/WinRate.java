@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
+ * Created by Vincent Galloy on 09/09/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 09/09/16.
  */
 public final class WinRate implements Serializable {
 

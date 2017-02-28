@@ -8,8 +8,9 @@ import vgalloy.riot.server.service.api.model.game.GameId;
 import vgalloy.riot.server.service.api.model.game.GameInformation;
 
 /**
- * @author Vincent Galloy - 07/10/16
- *         Created by Vincent Galloy on 07/10/16.
+ * Created by Vincent Galloy on 07/10/16.
+ *
+ * @author Vincent Galloy
  */
 public final class GameMapper {
 

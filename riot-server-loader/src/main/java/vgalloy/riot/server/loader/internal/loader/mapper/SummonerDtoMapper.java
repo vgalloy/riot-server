@@ -6,8 +6,9 @@ import vgalloy.riot.api.api.dto.mach.Player;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 
 /**
- * @author Vincent Galloy - 19/12/16
- *         Created by Vincent Galloy on 19/12/16.
+ * Created by Vincent Galloy on 19/12/16.
+ *
+ * @author Vincent Galloy
  */
 public final class SummonerDtoMapper {
 

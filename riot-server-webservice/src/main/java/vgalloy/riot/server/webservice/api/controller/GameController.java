@@ -17,8 +17,9 @@ import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistExcepti
 import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
 
 /**
+ * Created by Vincent Galloy on 09/07/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 09/07/16.
  */
 @RestController
 public class GameController {
@@ -29,6 +30,7 @@ public class GameController {
 
     /**
      * Constructor.
+     *
      * @param matchDetailService the matchDetailService
      */
     @Autowired

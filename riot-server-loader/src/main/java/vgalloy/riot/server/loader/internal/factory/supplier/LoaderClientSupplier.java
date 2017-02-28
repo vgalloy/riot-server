@@ -12,8 +12,9 @@ import vgalloy.riot.server.loader.internal.client.impl.FakeLoaderClientImpl;
 import vgalloy.riot.server.loader.internal.client.impl.LoaderClientImpl;
 
 /**
+ * Created by Vincent Galloy on 03/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 03/12/16.
  */
 public final class LoaderClientSupplier implements Supplier<LoaderClient> {
 

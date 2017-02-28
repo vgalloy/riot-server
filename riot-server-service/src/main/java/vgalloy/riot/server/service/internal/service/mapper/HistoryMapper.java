@@ -15,8 +15,9 @@ import vgalloy.riot.server.service.api.model.game.TimedEvent;
 import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 
 /**
+ * Created by Vincent Galloy on 08/09/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 08/09/16.
  */
 public final class HistoryMapper {
 

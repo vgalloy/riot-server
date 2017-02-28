@@ -9,7 +9,9 @@ import org.springframework.context.annotation.Import;
 import vgalloy.riot.server.webservice.internal.conf.InternalConfig;
 
 /**
- * @author Created by Vincent Galloy on 23/08/16.
+ * Created by Vincent Galloy on 23/08/16.
+ *
+ * @author Vincent Galloy
  */
 @SpringBootApplication(exclude = {ErrorMvcAutoConfiguration.class, MongoAutoConfiguration.class})
 @Import(InternalConfig.class)

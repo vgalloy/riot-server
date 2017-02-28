@@ -15,8 +15,9 @@ import vgalloy.riot.server.loader.internal.loader.mapper.LoadingMessageBuilder;
 import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
 
 /**
- * @author Vincent Galloy - 10/10/16
- *         Created by Vincent Galloy on 10/10/16.
+ * Created by Vincent Galloy on 10/10/16.
+ *
+ * @author Vincent Galloy
  */
 public class RegionalConsumerImpl implements RegionalConsumer {
 

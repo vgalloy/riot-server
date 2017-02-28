@@ -4,16 +4,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * @author Vincent Galloy - 29/12/16
- *         Created by Vincent Galloy on 29/12/16.
+ * Created by Vincent Galloy on 29/12/16.
+ *
+ * @author Vincent Galloy
  */
 public abstract class AbstractResourceWrapper<T> {
-
-    protected enum ResourceStatus {
-        PRESENT,
-        NOT_LOADED,
-        DOES_NOT_EXIST
-    }
 
     protected final ResourceStatus resourceStatus;
     protected final T resource;
@@ -39,5 +34,11 @@ public abstract class AbstractResourceWrapper<T> {
         if (ResourceStatus.PRESENT == resourceStatus) {
             consumer.accept(resource);
         }
+    }
+
+    protected enum ResourceStatus {
+        PRESENT,
+        NOT_LOADED,
+        DOES_NOT_EXIST
     }
 }

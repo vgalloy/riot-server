@@ -7,8 +7,9 @@ import vgalloy.riot.api.api.constant.QueueType;
 import vgalloy.riot.server.service.api.model.game.GameId;
 
 /**
+ * Created by Vincent Galloy on 28/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/08/16.
  */
 public final class GameSummary {
 

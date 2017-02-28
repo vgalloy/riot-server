@@ -11,8 +11,9 @@ import org.springframework.stereotype.Component;
 import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 
 /**
+ * Created by Vincent Galloy on 28/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/12/16.
  */
 @Component
 public final class SummonerIdConverter extends StdSerializer<SummonerId> implements Converter<String, SummonerId> {

@@ -21,8 +21,9 @@ import vgalloy.riot.server.loader.internal.executor.model.Request;
 import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
 
 /**
+ * Created by Vincent Galloy on 30/06/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 30/06/16.
  */
 public final class RegionExecutorImpl implements RegionExecutor {
 

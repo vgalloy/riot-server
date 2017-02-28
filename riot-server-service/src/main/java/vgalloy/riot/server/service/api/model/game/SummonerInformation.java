@@ -5,8 +5,9 @@ import java.util.Objects;
 import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 
 /**
- * @author Vincent Galloy - 09/12/16
- *         Created by Vincent Galloy on 09/12/16.
+ * Created by Vincent Galloy on 09/12/16.
+ *
+ * @author Vincent Galloy
  */
 public final class SummonerInformation {
 

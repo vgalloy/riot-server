@@ -7,8 +7,9 @@ import vgalloy.riot.api.api.dto.mach.Participant;
 import vgalloy.riot.api.api.dto.mach.ParticipantIdentity;
 
 /**
+ * Created by Vincent Galloy on 28/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/08/16.
  */
 public final class MatchDetailHelper {
 

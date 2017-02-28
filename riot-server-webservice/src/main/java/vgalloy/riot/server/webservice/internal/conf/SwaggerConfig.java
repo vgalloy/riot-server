@@ -19,8 +19,9 @@ import vgalloy.riot.server.service.api.model.game.GameId;
 import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 
 /**
+ * Created by Vincent Galloy on 13/06/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 13/06/16.
  */
 @Configuration
 @EnableSwagger2

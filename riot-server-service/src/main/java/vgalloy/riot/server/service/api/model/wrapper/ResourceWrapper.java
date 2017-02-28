@@ -4,8 +4,9 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
- * @author Vincent Galloy - 29/12/16
- *         Created by Vincent Galloy on 29/12/16.
+ * Created by Vincent Galloy on 29/12/16.
+ *
+ * @author Vincent Galloy
  */
 public final class ResourceWrapper<T> extends AbstractResourceWrapper<T> {
 
@@ -64,6 +65,7 @@ public final class ResourceWrapper<T> extends AbstractResourceWrapper<T> {
      */
     public PresentOrDoesNotExistResourceWrapper<T> ifNotLoadedThrow(Supplier<RuntimeException> supplier) {
         Objects.requireNonNull(supplier);
+
         if (ResourceStatus.NOT_LOADED == resourceStatus) {
             throw supplier.get();
         }

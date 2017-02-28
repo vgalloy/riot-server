@@ -3,8 +3,9 @@ package vgalloy.riot.server.loader.api.service;
 import vgalloy.riot.api.api.constant.Region;
 
 /**
- * @author Vincent Galloy - 10/10/16
- *         Created by Vincent Galloy on 10/10/16.
+ * Created by Vincent Galloy on 10/10/16.
+ *
+ * @author Vincent Galloy
  */
 public interface LoaderClient {
 

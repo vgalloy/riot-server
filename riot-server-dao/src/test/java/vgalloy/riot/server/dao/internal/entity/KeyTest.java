@@ -7,8 +7,9 @@ import vgalloy.riot.api.api.constant.Region;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Created by Vincent Galloy on 25/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 25/08/16.
  */
 public class KeyTest {
 

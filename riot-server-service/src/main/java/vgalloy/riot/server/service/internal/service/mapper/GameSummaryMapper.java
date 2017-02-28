@@ -10,8 +10,9 @@ import vgalloy.riot.server.service.api.model.summoner.GameSummary;
 import vgalloy.riot.server.service.internal.service.helper.MatchDetailHelper;
 
 /**
+ * Created by Vincent Galloy on 23/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 23/08/16.
  */
 public final class GameSummaryMapper {
 

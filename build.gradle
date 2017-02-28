@@ -58,7 +58,6 @@ allprojects {
         testLogging {
             events "passed", "skipped", "failed", "standardOut", "standardError"
         }
-        testLogging.showStandardStreams = true
     }
 }
 

@@ -32,8 +32,9 @@ import vgalloy.riot.server.dao.internal.task.impl.DatabaseCleanerTask;
 import vgalloy.riot.server.dao.internal.task.impl.UpdateWinRateTask;
 
 /**
+ * Created by Vincent Galloy on 09/06/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 09/06/16.
  */
 public final class InternalMongoDaoFactory {
 

@@ -6,8 +6,9 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 
 /**
- * @author Vincent Galloy - 07/10/16
- *         Created by Vincent Galloy on 07/10/16.
+ * Created by Vincent Galloy on 07/10/16.
+ *
+ * @author Vincent Galloy
  */
 public final class DpoIdMapper {
 

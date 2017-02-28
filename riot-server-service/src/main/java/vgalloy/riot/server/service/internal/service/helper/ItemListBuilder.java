@@ -13,8 +13,9 @@ import org.slf4j.LoggerFactory;
 import vgalloy.riot.api.api.dto.mach.Event;
 
 /**
+ * Created by Vincent Galloy on 30/11/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 30/11/16.
  */
 public class ItemListBuilder {
 

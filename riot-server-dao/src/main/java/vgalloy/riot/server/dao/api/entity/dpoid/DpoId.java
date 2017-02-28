@@ -6,8 +6,9 @@ import java.util.Objects;
 import vgalloy.riot.api.api.constant.Region;
 
 /**
- * @author Vincent Galloy - 07/10/16
- *         Created by Vincent Galloy on 07/10/16.
+ * Created by Vincent Galloy on 07/10/16.
+ *
+ * @author Vincent Galloy
  */
 public class DpoId implements Serializable {
 

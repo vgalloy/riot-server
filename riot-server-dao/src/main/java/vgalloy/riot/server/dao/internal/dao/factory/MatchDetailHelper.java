@@ -9,8 +9,9 @@ import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.MatchDetailDaoImpl;
 import vgalloy.riot.server.dao.internal.exception.MongoDaoException;
 
 /**
- * @author Vincent Galloy - 26/12/16
- *         Created by Vincent Galloy on 26/12/16.
+ * Created by Vincent Galloy on 26/12/16.
+ *
+ * @author Vincent Galloy
  */
 public final class MatchDetailHelper {
 

@@ -7,8 +7,9 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.mach.MatchDetail;
 
 /**
+ * Created by Vincent Galloy on 28/05/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/05/16.
  */
 public class MatchDetailDpo extends AbstractDpo<MatchDetail> {
 

@@ -16,8 +16,9 @@ import vgalloy.riot.server.loader.internal.helper.RegionPrinter;
 import vgalloy.riot.server.loader.internal.loader.ChampionLoader;
 
 /**
+ * Created by Vincent Galloy on 07/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 07/12/16.
  */
 public final class ChampionLoaderImpl implements ChampionLoader {
 

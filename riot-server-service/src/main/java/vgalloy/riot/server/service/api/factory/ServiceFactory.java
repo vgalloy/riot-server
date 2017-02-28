@@ -8,8 +8,9 @@ import vgalloy.riot.server.service.api.service.SummonerService;
 import vgalloy.riot.server.service.internal.factory.InternalServiceFactory;
 
 /**
+ * Created by Vincent Galloy on 11/10/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 11/10/16.
  */
 public final class ServiceFactory {
 

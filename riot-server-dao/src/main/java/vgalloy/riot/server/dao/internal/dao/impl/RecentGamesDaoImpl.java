@@ -6,8 +6,9 @@ import vgalloy.riot.server.dao.internal.dao.AbstractDao;
 import vgalloy.riot.server.dao.internal.entity.dpo.RecentGamesDpo;
 
 /**
+ * Created by Vincent Galloy on 28/05/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/05/16.
  */
 public final class RecentGamesDaoImpl extends AbstractDao<RecentGamesDto, RecentGamesDpo> implements RecentGamesDao {
 

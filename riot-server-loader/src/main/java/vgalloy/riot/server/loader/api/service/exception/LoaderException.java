@@ -1,8 +1,9 @@
 package vgalloy.riot.server.loader.api.service.exception;
 
 /**
+ * Created by Vincent Galloy on 30/10/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 30/10/16.
  */
 public class LoaderException extends RuntimeException {
 

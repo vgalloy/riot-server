@@ -1,8 +1,9 @@
 package vgalloy.riot.server.dao.api.exception;
 
 /**
+ * Created by Vincent Galloy on 05/09/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 05/09/16.
  */
 public abstract class AbstractDaoException extends RuntimeException {
 

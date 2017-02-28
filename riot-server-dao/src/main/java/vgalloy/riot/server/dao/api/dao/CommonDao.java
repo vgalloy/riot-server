@@ -8,8 +8,9 @@ import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 
 /**
+ * Created by Vincent Galloy on 07/07/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 07/07/16.
  */
 public interface CommonDao<DTO> {
 

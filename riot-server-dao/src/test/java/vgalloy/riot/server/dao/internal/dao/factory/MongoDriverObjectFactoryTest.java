@@ -7,8 +7,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Vincent Galloy - 06/10/16
- *         Created by Vincent Galloy on 06/10/16.
+ * Created by Vincent Galloy on 06/10/16.
+ *
+ * @author Vincent Galloy
  */
 public class MongoDriverObjectFactoryTest {
 

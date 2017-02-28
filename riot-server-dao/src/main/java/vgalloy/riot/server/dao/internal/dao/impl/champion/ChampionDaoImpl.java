@@ -22,8 +22,9 @@ import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
 import vgalloy.riot.server.dao.internal.entity.dpo.ChampionDpo;
 
 /**
+ * Created by Vincent Galloy on 28/05/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/05/16.
  */
 public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo> implements ChampionDao {
 

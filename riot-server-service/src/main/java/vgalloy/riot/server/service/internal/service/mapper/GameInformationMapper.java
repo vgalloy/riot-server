@@ -9,8 +9,9 @@ import vgalloy.riot.server.service.api.model.game.PlayerTimeline;
 import vgalloy.riot.server.service.api.model.game.SummonerInformation;
 
 /**
- * @author Vincent Galloy - 07/10/16
- *         Created by Vincent Galloy on 07/10/16.
+ * Created by Vincent Galloy on 07/10/16.
+ *
+ * @author Vincent Galloy
  */
 public final class GameInformationMapper {
 

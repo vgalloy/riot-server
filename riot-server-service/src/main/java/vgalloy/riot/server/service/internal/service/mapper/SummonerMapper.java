@@ -10,8 +10,9 @@ import vgalloy.riot.server.service.api.model.summoner.Summoner;
 import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 
 /**
- * @author Vincent Galloy - 28/12/16
- *         Created by Vincent Galloy on 28/12/16.
+ * Created by Vincent Galloy on 28/12/16.
+ *
+ * @author Vincent Galloy
  */
 public final class SummonerMapper {
 

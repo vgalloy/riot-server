@@ -6,8 +6,9 @@ import vgalloy.riot.server.dao.internal.task.Task;
 import vgalloy.riot.server.dao.internal.task.impl.TaskImpl;
 
 /**
+ * Created by Vincent Galloy on 27/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 27/08/16.
  */
 public final class TaskFactory {
 

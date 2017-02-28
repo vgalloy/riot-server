@@ -12,8 +12,9 @@ import vgalloy.riot.server.dao.internal.dao.factory.MongoDatabaseFactory;
 import vgalloy.riot.server.dao.internal.dao.impl.RankedStatsDaoImpl;
 
 /**
+ * Created by Vincent Galloy on 10/09/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 10/09/16.
  */
 public final class WinRateHelper {
 

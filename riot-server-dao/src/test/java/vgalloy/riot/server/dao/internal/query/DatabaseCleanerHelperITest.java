@@ -34,8 +34,9 @@ import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.MatchDetailDaoImpl;
 import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.TimelineDaoImpl;
 
 /**
+ * Created by Vincent Galloy on 10/09/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 10/09/16.
  */
 public class DatabaseCleanerHelperITest {
 
@@ -61,6 +62,40 @@ public class DatabaseCleanerHelperITest {
     public static void tearDown() {
         PROCESS.stop();
         EXECUTABLE.stop();
+    }
+
+    /**
+     * Convenient way to create simple MachDetail.
+     *
+     * @param id           the match id
+     * @param region       the match region
+     * @param creationDate the creation date
+     * @param participants the participants
+     * @return a fake MachDetail
+     */
+    private static MatchDetailWrapper createMatchDetail(long id, Region region, long creationDate, Participant... participants) {
+        MatchDetail matchDetail = new MatchDetail();
+        matchDetail.setMatchId(id);
+        matchDetail.setRegion(region);
+        matchDetail.setMatchCreation(creationDate);
+        matchDetail.setParticipants(Arrays.asList(participants));
+
+        return new MatchDetailWrapper(new MatchDetailId(region, id, LocalDate.ofEpochDay(creationDate / 1000 / 3600 / 24)), matchDetail);
+    }
+
+    /**
+     * Convenient way to create simple Participant.
+     *
+     * @param championId the champion id
+     * @param winner     the winner
+     * @return a fake Participant
+     */
+    private static Participant createParticipant(int championId, boolean winner) {
+        Participant participant = new Participant();
+        participant.setChampionId(championId);
+        participant.setStats(new ParticipantStats());
+        participant.getStats().setWinner(winner);
+        return participant;
     }
 
     @Test
@@ -147,39 +182,5 @@ public class DatabaseCleanerHelperITest {
         Assert.assertEquals(new WinRate(1, 1), result.get(8));
         Assert.assertEquals(new WinRate(0, 1), result.get(9));
         Assert.assertEquals(new WinRate(2, 0), result.get(6));
-    }
-
-    /**
-     * Convenient way to create simple MachDetail.
-     *
-     * @param id           the match id
-     * @param region       the match region
-     * @param creationDate the creation date
-     * @param participants the participants
-     * @return a fake MachDetail
-     */
-    private static MatchDetailWrapper createMatchDetail(long id, Region region, long creationDate, Participant... participants) {
-        MatchDetail matchDetail = new MatchDetail();
-        matchDetail.setMatchId(id);
-        matchDetail.setRegion(region);
-        matchDetail.setMatchCreation(creationDate);
-        matchDetail.setParticipants(Arrays.asList(participants));
-
-        return new MatchDetailWrapper(new MatchDetailId(region, id, LocalDate.ofEpochDay(creationDate / 1000 / 3600 / 24)), matchDetail);
-    }
-
-    /**
-     * Convenient way to create simple Participant.
-     *
-     * @param championId the champion id
-     * @param winner     the winner
-     * @return a fake Participant
-     */
-    private static Participant createParticipant(int championId, boolean winner) {
-        Participant participant = new Participant();
-        participant.setChampionId(championId);
-        participant.setStats(new ParticipantStats());
-        participant.getStats().setWinner(winner);
-        return participant;
     }
 }

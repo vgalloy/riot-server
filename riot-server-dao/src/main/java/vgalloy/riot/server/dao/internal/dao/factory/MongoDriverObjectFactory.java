@@ -6,8 +6,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * @author Vincent Galloy - 05/10/16
- *         Created by Vincent Galloy on 05/10/16.
+ * Created by Vincent Galloy on 05/10/16.
+ *
+ * @author Vincent Galloy
  */
 public final class MongoDriverObjectFactory {
 

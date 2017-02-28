@@ -5,8 +5,9 @@ import vgalloy.riot.server.dao.api.dao.CommonDao;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 
 /**
+ * Created by Vincent Galloy on 17/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 17/12/16.
  */
 public interface TimelineDao extends CommonDao<Timeline> {
 

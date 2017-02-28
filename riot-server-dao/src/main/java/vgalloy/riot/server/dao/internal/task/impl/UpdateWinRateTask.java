@@ -10,8 +10,9 @@ import vgalloy.riot.server.dao.internal.dao.impl.champion.WinRateHelper;
 import vgalloy.riot.server.dao.internal.task.Task;
 
 /**
+ * Created by Vincent Galloy on 27/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 27/08/16.
  */
 public final class UpdateWinRateTask implements Task {
 

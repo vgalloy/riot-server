@@ -17,8 +17,9 @@ import vgalloy.riot.server.dao.internal.entity.dpo.SummonerDpo;
 import vgalloy.riot.server.dao.internal.entity.mapper.DpoMapper;
 
 /**
+ * Created by Vincent Galloy on 28/05/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/05/16.
  */
 public final class SummonerDaoImpl extends AbstractDao<SummonerDto, SummonerDpo> implements SummonerDao {
 
@@ -44,9 +45,7 @@ public final class SummonerDaoImpl extends AbstractDao<SummonerDto, SummonerDpo>
         }
 
         DBQuery.Query dbQuery = DBQuery.empty();
-//        if (!getSummonersQuery.getRegions().isEmpty()) {
-            dbQuery.in("region", getSummonersQuery.getRegions());
-//        }
+        dbQuery.in("region", getSummonersQuery.getRegions());
         if (!getSummonersQuery.getSummonersName().isEmpty()) {
             dbQuery.in("item.name", getSummonersQuery.getSummonersName());
         }

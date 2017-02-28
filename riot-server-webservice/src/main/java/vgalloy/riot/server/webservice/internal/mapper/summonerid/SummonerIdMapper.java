@@ -9,8 +9,9 @@ import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 import vgalloy.riot.server.service.api.service.exception.ServiceException;
 
 /**
- * @author Vincent Galloy - 28/12/16
- *         Created by Vincent Galloy on 28/12/16.
+ * Created by Vincent Galloy on 28/12/16.
+ *
+ * @author Vincent Galloy
  */
 public final class SummonerIdMapper {
 

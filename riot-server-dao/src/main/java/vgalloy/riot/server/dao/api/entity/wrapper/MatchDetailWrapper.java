@@ -4,8 +4,9 @@ import vgalloy.riot.api.api.dto.mach.MatchDetail;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 
 /**
- * @author Vincent Galloy - 07/10/16
- *         Created by Vincent Galloy on 07/10/16.
+ * Created by Vincent Galloy on 07/10/16.
+ *
+ * @author Vincent Galloy
  */
 public class MatchDetailWrapper extends AbstractDpoWrapper<MatchDetail, MatchDetailId> {
 

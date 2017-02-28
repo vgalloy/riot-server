@@ -12,8 +12,9 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.dao.internal.entity.Key;
 
 /**
+ * Created by Vincent Galloy on 12/07/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 12/07/16.
  */
 @JsonAutoDetect(fieldVisibility = Visibility.NONE, getterVisibility = Visibility.ANY, setterVisibility = Visibility.NONE)
 public abstract class AbstractDpo<DTO> {

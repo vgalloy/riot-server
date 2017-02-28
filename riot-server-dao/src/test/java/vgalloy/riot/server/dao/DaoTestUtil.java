@@ -17,8 +17,9 @@ import de.flapdoodle.embed.process.runtime.Network;
 import org.slf4j.Logger;
 
 /**
+ * Created by Vincent Galloy on 09/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 09/12/16.
  */
 public final class DaoTestUtil {
 

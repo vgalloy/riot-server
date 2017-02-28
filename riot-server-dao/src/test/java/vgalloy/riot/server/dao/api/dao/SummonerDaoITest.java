@@ -23,8 +23,9 @@ import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
 import vgalloy.riot.server.dao.internal.dao.impl.summoner.SummonerDaoImpl;
 
 /**
+ * Created by Vincent Galloy on 30/06/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 30/06/16.
  */
 public class SummonerDaoITest {
 

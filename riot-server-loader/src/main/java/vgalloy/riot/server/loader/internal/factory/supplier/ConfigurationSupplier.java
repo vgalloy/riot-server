@@ -13,8 +13,9 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 
 /**
+ * Created by Vincent Galloy on 03/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 03/12/16.
  */
 public final class ConfigurationSupplier implements Supplier<Configuration> {
 

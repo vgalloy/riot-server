@@ -12,8 +12,9 @@ import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 
 /**
+ * Created by Vincent Galloy on 28/08/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 28/08/16.
  */
 public interface MatchDetailDao {
 

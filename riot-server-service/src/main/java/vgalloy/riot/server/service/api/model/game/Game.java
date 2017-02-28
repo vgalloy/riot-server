@@ -3,9 +3,10 @@ package vgalloy.riot.server.service.api.model.game;
 import java.util.Objects;
 
 /**
- * @author Vincent Galloy - 07/10/16
- *         Created by Vincent Galloy on 07/10/16.
- *         This class represente a game. The {@link GameInformation} can be null if the id have been checked and doesn't correspond to a riot game.
+ * Created by Vincent Galloy on 07/10/16.
+ * This class represent a game. The {@link GameInformation} can be null if the id have been checked and doesn't correspond to a riot game.
+ *
+ * @author Vincent Galloy
  */
 public final class Game {
 

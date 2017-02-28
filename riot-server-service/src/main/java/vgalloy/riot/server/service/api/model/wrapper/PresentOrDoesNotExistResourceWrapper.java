@@ -4,8 +4,9 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
- * @author Vincent Galloy - 29/12/16
- *         Created by Vincent Galloy on 29/12/16.
+ * Created by Vincent Galloy on 29/12/16.
+ *
+ * @author Vincent Galloy
  */
 public final class PresentOrDoesNotExistResourceWrapper<T> extends AbstractResourceWrapper<T> {
 

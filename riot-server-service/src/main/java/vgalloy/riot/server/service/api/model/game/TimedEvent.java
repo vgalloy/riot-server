@@ -3,8 +3,9 @@ package vgalloy.riot.server.service.api.model.game;
 import java.util.Objects;
 
 /**
+ * Created by Vincent Galloy on 08/09/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 08/09/16.
  */
 public final class TimedEvent<T> {
 

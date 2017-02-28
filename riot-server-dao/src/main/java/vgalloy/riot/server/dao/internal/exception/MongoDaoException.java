@@ -3,8 +3,9 @@ package vgalloy.riot.server.dao.internal.exception;
 import vgalloy.riot.server.dao.api.exception.AbstractDaoException;
 
 /**
+ * Created by Vincent Galloy on 07/07/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 07/07/16.
  */
 public class MongoDaoException extends AbstractDaoException {
 

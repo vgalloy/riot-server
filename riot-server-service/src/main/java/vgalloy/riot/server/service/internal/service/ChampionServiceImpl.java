@@ -16,8 +16,9 @@ import vgalloy.riot.server.service.api.service.ChampionService;
 import vgalloy.riot.server.service.api.service.exception.UserException;
 
 /**
+ * Created by Vincent Galloy on 08/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 08/12/16.
  */
 public final class ChampionServiceImpl implements ChampionService {
 

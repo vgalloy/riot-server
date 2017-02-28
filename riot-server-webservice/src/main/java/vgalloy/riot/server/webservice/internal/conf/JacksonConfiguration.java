@@ -14,8 +14,9 @@ import vgalloy.riot.server.webservice.internal.mapper.gameid.GameIdConverter;
 import vgalloy.riot.server.webservice.internal.mapper.summonerid.SummonerIdConverter;
 
 /**
- * @author Vincent Galloy - 14/12/16
- *         Created by Vincent Galloy on 14/12/16.
+ * Created by Vincent Galloy on 14/12/16.
+ *
+ * @author Vincent Galloy
  */
 @Configuration
 @ComponentScan("vgalloy.riot.server.webservice.internal.mapper")

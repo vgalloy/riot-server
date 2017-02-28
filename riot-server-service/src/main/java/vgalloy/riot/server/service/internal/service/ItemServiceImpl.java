@@ -11,8 +11,9 @@ import vgalloy.riot.server.service.api.model.wrapper.ResourceWrapper;
 import vgalloy.riot.server.service.api.service.ItemService;
 
 /**
+ * Created by Vincent Galloy on 03/12/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 03/12/16.
  */
 public final class ItemServiceImpl implements ItemService {
 

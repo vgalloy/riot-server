@@ -5,8 +5,9 @@ import java.util.Objects;
 import vgalloy.riot.api.api.query.Query;
 
 /**
+ * Created by Vincent Galloy on 04/07/16.
+ *
  * @author Vincent Galloy
- *         Created by Vincent Galloy on 04/07/16.
  */
 public class Request<DTO> {
 
