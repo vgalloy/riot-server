@@ -53,7 +53,7 @@
         <logback-classic.version>1.2.1</logback-classic.version>
 
         <!-- Spring -->
-        <spring-boot.version>1.5.1.RELEASE</spring-boot.version>
+        <spring-boot.version>1.5.2.RELEASE</spring-boot.version>
 
         <!-- Springfox (Swagger)-->
         <springfox.version>2.6.1</springfox.version>
@@ -136,7 +136,6 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback-classic.version}</version>
-                <scope>provided</scope>
             </dependency>
 
             <!-- Properties -->
