@@ -45,7 +45,7 @@ public class GameController {
      * @return the players information as a list
      */
     @RequestMapping(value = "/games/{gameId}", method = RequestMethod.GET)
-    public Game getGame(@PathVariable GameId gameId) {
+    Game getGame(@PathVariable GameId gameId) {
         LOGGER.info("[ GET ] : getGame, gameId : {}, ", gameId);
 
         return matchDetailService.get(gameId)

@@ -62,7 +62,7 @@ public class SummonerController {
      * @return the last games
      */
     @RequestMapping(value = "/summoners", method = RequestMethod.GET)
-    public List<Summoner> getSummoners(@RequestParam List<Region> regions,
+    List<Summoner> getSummoners(@RequestParam List<Region> regions,
                                        @RequestParam(required = false) List<String> summonerNames,
                                        @RequestParam(required = false) Integer offset,
                                        @RequestParam(required = false) Integer limit) {
@@ -83,7 +83,7 @@ public class SummonerController {
      * @return the last games
      */
     @RequestMapping(value = "/summoners/{summonerId}", method = RequestMethod.GET)
-    public Summoner getSummonerById(@PathVariable SummonerId summonerId) {
+    Summoner getSummonerById(@PathVariable SummonerId summonerId) {
         LOGGER.info("[ GET ] : getSummonerById, summonerId : {}", summonerId);
         return summonerService.get(summonerId)
                 .ifNotLoadedThrow(ResourceNotLoadedException::new)
@@ -97,7 +97,7 @@ public class SummonerController {
      * @return the ranked stats
      */
     @RequestMapping(value = "/summoners/{summonerId}/rankedStats", method = RequestMethod.GET)
-    public RankedStats getRankedStat(@PathVariable SummonerId summonerId) {
+    RankedStats getRankedStat(@PathVariable SummonerId summonerId) {
         LOGGER.info("[ GET ] : getRankedStat, region : {}, summonerId : {}", summonerId);
         return rankedStatsService.get(summonerId)
                 .ifNotLoadedThrow(ResourceNotLoadedException::new)
@@ -113,7 +113,7 @@ public class SummonerController {
      * @return the last games
      */
     @RequestMapping(value = "/summoners/{summonerId}/lastGames", method = RequestMethod.GET)
-    public List<GameSummary> getLastGames(@PathVariable SummonerId summonerId,
+    List<GameSummary> getLastGames(@PathVariable SummonerId summonerId,
                                           @RequestParam(required = false) Long fromDay,
                                           @RequestParam(required = false) Long toDay) {
         LOGGER.info("[ GET ] : getLastGames, region : {}, summonerId : {}, fromDay : {}, toDay : {}", summonerId, fromDay, toDay);

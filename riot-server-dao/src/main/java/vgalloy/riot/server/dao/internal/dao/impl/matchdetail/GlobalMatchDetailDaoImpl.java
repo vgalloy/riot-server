@@ -12,6 +12,7 @@ import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
+import vgalloy.riot.server.dao.api.entity.wrapper.AbstractDpoWrapper;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.dao.api.entity.wrapper.MatchDetailWrapper;
 import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
@@ -63,10 +64,9 @@ public final class GlobalMatchDetailDaoImpl implements MatchDetailDao {
         Objects.requireNonNull(matchDetailId);
 
         Optional<Entity<MatchDetail, MatchDetailId>> optional = matchDetailDao.get(matchDetailId);
-        if (optional.isPresent() && optional.get().getItem().isPresent()) {
-            Timeline timeline = getTimeline(matchDetailId);
-            optional.get().getItem().get().setTimeline(timeline);
-        }
+        optional.map(AbstractDpoWrapper::getItem)
+                .ifPresent(e -> e.ifPresent(i -> i.setTimeline(getTimeline(matchDetailId))));
+
         return optional;
     }
 
@@ -77,7 +77,6 @@ public final class GlobalMatchDetailDaoImpl implements MatchDetailDao {
         Objects.requireNonNull(to);
 
         List<MatchDetail> resultWithoutTimeline = matchDetailDao.findMatchDetailBySummonerId(summonerId, from, to);
-
         for (MatchDetail matchDetail : resultWithoutTimeline) {
             MatchDetailId matchDetailId = MatchDetailIdMapper.map(matchDetail);
             Timeline timeline = getTimeline(matchDetailId);
@@ -89,6 +88,7 @@ public final class GlobalMatchDetailDaoImpl implements MatchDetailDao {
     @Override
     public List<MatchDetailId> cleanAllMatchForADay(LocalDate localDate) {
         Objects.requireNonNull(localDate);
+
         List<MatchDetailId> deletedMatchDetailId = matchDetailDao.cleanAllMatchForADay(localDate);
         deletedMatchDetailId.forEach(timelineDao::remove);
         return deletedMatchDetailId;
@@ -107,10 +107,9 @@ public final class GlobalMatchDetailDaoImpl implements MatchDetailDao {
      * @return the timeline (can be null)
      */
     private Timeline getTimeline(MatchDetailId matchDetailId) {
-        Optional<Entity<Timeline, DpoId>> timelineOptional = timelineDao.get(matchDetailId);
-        if (timelineOptional.isPresent() && timelineOptional.get().getItem().isPresent()) {
-            return timelineOptional.get().getItem().get();
-        }
-        return null;
+        return timelineDao.get(matchDetailId)
+                .map(AbstractDpoWrapper::getItem)
+                .map(e -> e.orElse(null))
+                .orElse(null);
     }
 }

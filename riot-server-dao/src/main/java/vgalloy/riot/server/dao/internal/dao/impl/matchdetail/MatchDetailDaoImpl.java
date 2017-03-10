@@ -56,18 +56,6 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
         this.databaseName = Objects.requireNonNull(databaseName);
     }
 
-    /**
-     * Create or update index.
-     *
-     * @param dbCollection the db collection
-     */
-    private static void createOrUpdateIndexes(DBCollection dbCollection) {
-        LOGGER.debug("start index creation");
-        dbCollection.createIndex(new BasicDBObject("region", 1));
-        dbCollection.createIndex(new BasicDBObject("item.participantIdentities.player.summonerId", 1));
-        LOGGER.debug("end index creation");
-    }
-
     @Override
     public void save(MatchDetailWrapper matchDetailWrapper) {
         Objects.requireNonNull(matchDetailWrapper);
@@ -83,12 +71,10 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
         Objects.requireNonNull(matchDetailId);
 
         JacksonDBCollection<MatchDetailDpo, String> collection = getCollection(matchDetailId.getMatchDate());
-        Optional<MatchDetailDpo> dataObject = new GenericDaoImpl<>(collection).getById(DpoIdMapper.toNormalizeString(matchDetailId));
-        if (dataObject.isPresent()) {
-            return Optional.of(MatchDetailMapper.mapToEntity(dataObject.get()));
-        }
-
-        return Optional.empty();
+        return new GenericDaoImpl<>(collection).getById(DpoIdMapper.toNormalizeString(matchDetailId))
+                .map(MatchDetailMapper::mapToEntity)
+                .map(Optional::of)
+                .orElse(Optional.empty());
     }
 
     @Override
@@ -133,6 +119,18 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
     @Override
     public void remove(MatchDetailId matchDetailId) {
         getCollection(matchDetailId.getMatchDate()).removeById(DpoIdMapper.toNormalizeString(matchDetailId));
+    }
+
+    /**
+     * Create or update index.
+     *
+     * @param dbCollection the db collection
+     */
+    private static void createOrUpdateIndexes(DBCollection dbCollection) {
+        LOGGER.debug("start index creation");
+        dbCollection.createIndex(new BasicDBObject("region", 1));
+        dbCollection.createIndex(new BasicDBObject("item.participantIdentities.player.summonerId", 1));
+        LOGGER.debug("end index creation");
     }
 
     /**

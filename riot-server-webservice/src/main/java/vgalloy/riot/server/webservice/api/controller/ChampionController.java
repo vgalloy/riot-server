@@ -54,7 +54,7 @@ public class ChampionController {
      * @return the champion information
      */
     @RequestMapping(value = "/champions/{championId}", method = RequestMethod.GET)
-    public ChampionDto getChampion(@PathVariable Long championId, @RequestParam(required = false) Region region) {
+    ChampionDto getChampion(@PathVariable Long championId, @RequestParam(required = false) Region region) {
         LOGGER.info("[ GET ] : getChampion : {}, Region : {}", championId, region);
         Region computedRegion = Optional.ofNullable(region).orElse(Region.EUW);
         return championService.get(new DpoId(computedRegion, championId))
@@ -69,7 +69,7 @@ public class ChampionController {
      * @return the win rates as a mapToEntity
      */
     @RequestMapping(value = "/champions/{championId}/winRateByGamePlayed", method = RequestMethod.GET)
-    public Map<Integer, Double> getWinRateByGamePlayed(@PathVariable Integer championId) {
+    Map<Integer, Double> getWinRateByGamePlayed(@PathVariable Integer championId) {
         LOGGER.info("[ GET ] : getWinRateByGamePlayed : {}", championId);
         return championService.getWinRateByGamePlayed(championId);
     }
@@ -83,7 +83,7 @@ public class ChampionController {
      * @return the win rates as a mapToEntity
      */
     @RequestMapping(value = "/champions/{championId}/winRateByDate", method = RequestMethod.GET)
-    public Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId,
+    Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId,
                                                            @RequestParam(required = false) Long fromDay,
                                                            @RequestParam(required = false) Long toDay) {
         LOGGER.info("[ GET ] : getWinRateDuringPeriodOfTime, championId : {},  fromDay : {}, toDay : {}", championId, fromDay, toDay);
@@ -108,7 +108,7 @@ public class ChampionController {
      * @return a map (champion Id, win rate)
      */
     @RequestMapping(value = "/champions/winRateByDate", method = RequestMethod.GET)
-    public Map<Integer, WinRate> getWinRateForAllChampion(@RequestParam(required = false) Long day) {
+    Map<Integer, WinRate> getWinRateForAllChampion(@RequestParam(required = false) Long day) {
         LOGGER.info("[ GET ] : getWinRateForAllChampion, day : {}", day);
         LocalDate localDate = Optional.ofNullable(day)
                 .map(LocalDate::ofEpochDay)

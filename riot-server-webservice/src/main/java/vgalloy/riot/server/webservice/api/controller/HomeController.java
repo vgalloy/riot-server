@@ -31,7 +31,7 @@ public class HomeController {
      * @return Some information
      */
     @RequestMapping(value = "/home", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Version getHome() {
+    Version getHome() {
         LOGGER.info("[ GET ] : getHome");
         return new Version("running", version);
     }

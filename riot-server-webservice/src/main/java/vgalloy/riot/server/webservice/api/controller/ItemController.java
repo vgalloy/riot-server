@@ -49,7 +49,7 @@ public class ItemController {
      * @return the item information
      */
     @RequestMapping(value = "/items/{itemId}", method = RequestMethod.GET)
-    public ItemDto getItemById(@PathVariable Long itemId, @RequestParam(required = false) Region region) {
+    ItemDto getItemById(@PathVariable Long itemId, @RequestParam(required = false) Region region) {
         LOGGER.info("[ GET ] : getItemById, itemId : {}, region : {}", itemId, region);
         Region computedRegion = Optional.ofNullable(region).orElse(Region.EUW);
         return itemService.get(new DpoId(computedRegion, itemId))
