@@ -25,6 +25,7 @@
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
         <maven-surefire-version>2.19.1</maven-surefire-version>
         <maven-failsafe-version>2.19.1</maven-failsafe-version>
+        <maven.build.timestamp.format>yyyy_MM_dd_HH_mm</maven.build.timestamp.format>
 
         <!-- Mojo version checker -->
         <versions-maven-plugin.version>2.2</versions-maven-plugin.version>
@@ -337,6 +338,9 @@
                             </goals>
                         </execution>
                     </executions>
+                    <configuration>
+                        <finalName>riot-server-${maven.build.timestamp}</finalName>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

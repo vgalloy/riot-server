@@ -98,9 +98,9 @@ allprojects {
     }
 
     test {
-  //      testLogging {
-  //          events "passed", "skipped", "failed", "standardOut", "standardError"
-  //      }
+        //      testLogging {
+        //          events "passed", "skipped", "failed", "standardOut", "standardError"
+        //      }
     }
 }
 

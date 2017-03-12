@@ -106,6 +106,8 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
 
     @Override
     public List<MatchDetailId> cleanAllMatchForADay(LocalDate localDate) {
+        Objects.requireNonNull(localDate);
+
         JacksonDBCollection<MatchDetailDpo, String> collection = getCollection(localDate);
         List<MatchDetailId> result = collection.find()
                 .toArray()
@@ -120,6 +122,8 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
 
     @Override
     public void remove(MatchDetailId matchDetailId) {
+        Objects.requireNonNull(matchDetailId);
+
         getCollection(matchDetailId.getMatchDate()).removeById(DpoIdMapper.toNormalizeString(matchDetailId));
     }
 
@@ -142,7 +146,6 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
      * @return the mongoJackCollection
      */
     private JacksonDBCollection<MatchDetailDpo, String> getCollection(LocalDate localDate) {
-        Objects.requireNonNull(localDate);
         DBCollection dbCollection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
                 .getDB(databaseName)
                 .getDBCollection(MatchDetailHelper.getCollectionName(localDate))

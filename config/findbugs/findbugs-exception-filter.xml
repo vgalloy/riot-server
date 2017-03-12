@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
 <FindBugsFilter>
-
+    <Match>
+        <Class name="vgalloy.riot.server.webservice.internal.filter.CorsFilter"/>
+    </Match>
 </FindBugsFilter>
