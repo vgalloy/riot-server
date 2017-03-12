@@ -48,13 +48,9 @@ public final class GameIdMapper {
         if (split.length != 3) {
             throw new IllegalArgumentException("the String : " + gameId + " can not be convert into MatchDetailId");
         }
-        try {
-            Region region = Region.valueOf(split[0]);
-            Long matchId = new Long(split[1]);
-            LocalDate localDate = LocalDate.from(DATE_TIME_FORMATTER.parse(split[2]));
-            return new GameId(region, matchId, localDate);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("the String : " + gameId + " can not be convert into MatchDetailId");
-        }
+        Region region = Region.valueOf(split[0]);
+        Long matchId = Long.valueOf(split[1]);
+        LocalDate localDate = LocalDate.from(DATE_TIME_FORMATTER.parse(split[2]));
+        return new GameId(region, matchId, localDate);
     }
 }

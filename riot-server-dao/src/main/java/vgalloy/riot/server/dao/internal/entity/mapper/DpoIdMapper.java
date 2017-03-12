@@ -3,6 +3,7 @@ package vgalloy.riot.server.dao.internal.entity.mapper;
 import java.util.Objects;
 
 import vgalloy.riot.api.api.constant.Region;
+import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 
 /**
@@ -42,6 +43,6 @@ public final class DpoIdMapper {
         String[] divided = string.split(" ");
         Region region = Region.valueOf(divided[0]);
         Long id = Long.valueOf(divided[1]);
-        return new DpoId(region, id);
+        return new CommonDpoId(region, id);
     }
 }

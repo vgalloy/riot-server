@@ -1,6 +1,7 @@
 package vgalloy.riot.server.dao.internal.dao;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.util.Objects;
 import java.util.Optional;
@@ -43,9 +44,9 @@ public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements 
     protected AbstractDao(String databaseUrl, String databaseName, String collectionName) {
         this.databaseUrl = Objects.requireNonNull(databaseUrl);
         this.databaseName = Objects.requireNonNull(databaseName);
-        Objects.requireNonNull(collectionName);
 
-        dataObjectClass = (Class<DPO>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        Objects.requireNonNull(collectionName);
+        dataObjectClass = (Class<DPO>) ParameterizedType.class.cast(getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         Objects.requireNonNull(dataObjectClass);
         DBCollection dbCollection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
                 .getDB(databaseName)
@@ -64,7 +65,7 @@ public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements 
             DPO dataObject = constructor.newInstance(itemWrapper.getItemId().getRegion(), itemWrapper.getItemId().getId());
             itemWrapper.getItem().ifPresent(dataObject::setItem);
             genericDao.update(dataObject);
-        } catch (Exception e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             throw new MongoDaoException(MongoDaoException.UNABLE_TO_SAVE_THE_DTO, e);
         }
     }

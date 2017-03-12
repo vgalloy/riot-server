@@ -2,7 +2,7 @@ package vgalloy.riot.server.service.internal.service;
 
 import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.service.api.model.summoner.RankedStats;
 import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 import vgalloy.riot.server.service.api.model.wrapper.ResourceWrapper;
@@ -28,7 +28,7 @@ public final class RankedStatsServiceImpl implements RankedStatsService {
 
     @Override
     public ResourceWrapper<RankedStats> get(SummonerId summonerId) {
-        return rankedStatsDao.get(new DpoId(summonerId.getRegion(), summonerId.getId()))
+        return rankedStatsDao.get(new CommonDpoId(summonerId.getRegion(), summonerId.getId()))
                 .map(Entity::getItem)
                 .map(e -> e.map(i -> new RankedStats(summonerId, i.getChampions(), i.getModifyDate()))
                         .map(ResourceWrapper::of)

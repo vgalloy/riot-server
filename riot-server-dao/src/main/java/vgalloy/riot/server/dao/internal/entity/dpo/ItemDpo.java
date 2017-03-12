@@ -11,7 +11,7 @@ import vgalloy.riot.api.api.dto.lolstaticdata.ItemDto;
  *
  * @author Vincent Galloy
  */
-public class ItemDpo extends AbstractDpo<ItemDto> {
+public final class ItemDpo extends AbstractDpo<ItemDto> {
 
     /**
      * Constructor.

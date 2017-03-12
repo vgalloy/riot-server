@@ -1,7 +1,6 @@
 package vgalloy.riot.server.service.internal.service.helper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -63,7 +62,7 @@ public class ItemListBuilder {
      */
     public List<Integer> getItemAtTheEnd() {
         Set<Integer> result = new HashSet<>();
-        Collections.sort(actionList, (o1, o2) -> Math.toIntExact(o1.timestamp - o2.timestamp));
+        actionList.sort((o1, o2) -> Math.toIntExact(o1.timestamp - o2.timestamp));
         for (Action action : actionList) {
             if (ActionType.BUY == action.actionType) {
                 result.add(action.itemId);
@@ -81,7 +80,7 @@ public class ItemListBuilder {
         DESTROY
     }
 
-    private class Action {
+    private static class Action {
 
         private final long timestamp;
         private final ActionType actionType;

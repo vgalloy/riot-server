@@ -17,6 +17,7 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.DaoTestUtil;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
@@ -65,7 +66,7 @@ public class SummonerDaoITest {
         // GIVEN
         SummonerDto summoner = new SummonerDto();
         summoner.setId(2L);
-        summonerDao.save(new CommonDpoWrapper<>(new DpoId(Region.EUW, 2L), summoner));
+        summonerDao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.EUW, 2L), summoner));
 
         // WHEN
         Optional<Entity<SummonerDto, DpoId>> result = summonerDao.getRandom(Region.EUW);
@@ -83,12 +84,12 @@ public class SummonerDaoITest {
         SummonerDto summoner = new SummonerDto();
         summoner.setName("NAME");
         summoner.setId(2L);
-        summonerDao.save(new CommonDpoWrapper<>(new DpoId(Region.EUW, 2L), summoner));
+        summonerDao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.EUW, 2L), summoner));
 
         SummonerDto summoner2 = new SummonerDto();
         summoner2.setName("NAME2");
         summoner2.setId(3L);
-        summonerDao.save(new CommonDpoWrapper<>(new DpoId(Region.EUW, 3L), summoner2));
+        summonerDao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.EUW, 3L), summoner2));
 
         // THEN
         // all result (max 10)

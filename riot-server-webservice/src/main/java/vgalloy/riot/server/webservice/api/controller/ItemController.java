@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ItemDto;
-import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.service.api.service.ItemService;
 import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistException;
 import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
@@ -36,7 +35,6 @@ public class ItemController {
      *
      * @param itemService the itemService
      */
-    @Autowired
     public ItemController(ItemService itemService) {
         this.itemService = Objects.requireNonNull(itemService);
     }
@@ -52,7 +50,7 @@ public class ItemController {
     ItemDto getItemById(@PathVariable Long itemId, @RequestParam(required = false) Region region) {
         LOGGER.info("[ GET ] : getItemById, itemId : {}, region : {}", itemId, region);
         Region computedRegion = Optional.ofNullable(region).orElse(Region.EUW);
-        return itemService.get(new DpoId(computedRegion, itemId))
+        return itemService.get(new CommonDpoId(computedRegion, itemId))
                 .ifNotLoadedThrow(ResourceNotLoadedException::new)
                 .ifDoesNotExistThrow(ResourceDoesNotExistException::new);
     }

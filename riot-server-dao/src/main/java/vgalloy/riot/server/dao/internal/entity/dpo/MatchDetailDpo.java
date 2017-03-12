@@ -11,7 +11,7 @@ import vgalloy.riot.api.api.dto.mach.MatchDetail;
  *
  * @author Vincent Galloy
  */
-public class MatchDetailDpo extends AbstractDpo<MatchDetail> {
+public final class MatchDetailDpo extends AbstractDpo<MatchDetail> {
 
     private final long matchCreationDateFromEpochDay;
 

@@ -11,7 +11,7 @@ import vgalloy.riot.api.api.dto.game.RecentGamesDto;
  *
  * @author Vincent Galloy
  */
-public class RecentGamesDpo extends AbstractDpo<RecentGamesDto> {
+public final class RecentGamesDpo extends AbstractDpo<RecentGamesDto> {
 
     /**
      * Constructor.

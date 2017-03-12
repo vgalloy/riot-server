@@ -11,7 +11,7 @@ import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
  *
  * @author Vincent Galloy
  */
-public class ChampionDpo extends AbstractDpo<ChampionDto> {
+public final class ChampionDpo extends AbstractDpo<ChampionDto> {
 
     /**
      * Constructor.

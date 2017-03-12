@@ -11,7 +11,7 @@ import vgalloy.riot.api.api.dto.mach.Timeline;
  *
  * @author Vincent Galloy
  */
-public class TimelineDpo extends AbstractDpo<Timeline> {
+public final class TimelineDpo extends AbstractDpo<Timeline> {
 
     /**
      * Constructor.

@@ -1,6 +1,10 @@
 package vgalloy.riot.server.webservice.internal.filter;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -24,12 +28,26 @@ public class CorsFilter implements SimpleFilter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse res = (HttpServletResponse) servletResponse;
 
-        res.setHeader("Access-Control-Allow-Origin", req.getHeader("Origin"));
-        res.setHeader("Access-Control-Allow-Credentials", "true");
-        res.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
-        res.setHeader("Access-Control-Max-Age", "3600");
-        res.setHeader("Access-Control-Allow-Headers", "Content-Type, *");
+        setHeader(res, "Access-Control-Allow-Origin", req.getHeader("Origin"));
+        setHeader(res, "Access-Control-Allow-Credentials", "true");
+        setHeader(res, "Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+        setHeader(res, "Access-Control-Max-Age", "3600");
+        setHeader(res, "Access-Control-Allow-Headers", "Content-Type, *");
 
         chain.doFilter(servletRequest, servletResponse);
+    }
+
+    /**
+     * Set the header into the request.
+     *
+     * @param httpServletResponse the httpServletResponse
+     * @param name                the name of the header
+     * @param value               the value of the header (can be null)
+     * @throws UnsupportedEncodingException if the UTF_8 Charsets is not supported
+     */
+    private void setHeader(HttpServletResponse httpServletResponse, String name, String value) throws UnsupportedEncodingException {
+        String newValue = Optional.ofNullable(value).orElseGet(() -> "");
+        String encodedValue = URLEncoder.encode(newValue, StandardCharsets.UTF_8.displayName());
+        httpServletResponse.setHeader(name, encodedValue);
     }
 }

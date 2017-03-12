@@ -14,6 +14,7 @@ import vgalloy.riot.api.api.dto.lolstaticdata.ItemDto;
 import vgalloy.riot.api.api.model.RiotApi;
 import vgalloy.riot.server.dao.api.dao.ItemDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.loader.internal.executor.Executor;
@@ -50,7 +51,7 @@ public final class ItemLoaderImpl implements ItemLoader {
     public void loadItemById(Region region, Integer itemId) {
         Objects.requireNonNull(itemId);
         LOGGER.info("{} load item with id : {}", RegionPrinter.getRegion(region), itemId);
-        DpoId item = new DpoId(region, (long) itemId);
+        DpoId item = new CommonDpoId(region, (long) itemId);
         if (shouldIdLoadThisItem(item)) {
             ItemDto itemDto = executor.execute(riotApi.getItemById(item.getId()), item.getRegion(), 1);
             itemDao.save(new CommonDpoWrapper<>(item, itemDto));

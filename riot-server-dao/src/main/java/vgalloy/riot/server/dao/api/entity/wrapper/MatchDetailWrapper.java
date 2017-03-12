@@ -8,7 +8,7 @@ import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
  *
  * @author Vincent Galloy
  */
-public class MatchDetailWrapper extends AbstractDpoWrapper<MatchDetail, MatchDetailId> {
+public final class MatchDetailWrapper extends AbstractDpoWrapper<MatchDetail, MatchDetailId> {
 
     private static final long serialVersionUID = -3132015747453438540L;
 

@@ -1,9 +1,10 @@
 package vgalloy.riot.server.webservice.internal.conf;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +23,19 @@ import vgalloy.riot.server.webservice.internal.mapper.summonerid.SummonerIdConve
 @ComponentScan("vgalloy.riot.server.webservice.internal.mapper")
 public class JacksonConfiguration {
 
-    @Autowired
-    private SummonerIdConverter summonerIdConverter;
-    @Autowired
-    private GameIdConverter gameIdConverter;
+    private final SummonerIdConverter summonerIdConverter;
+    private final GameIdConverter gameIdConverter;
+
+    /**
+     * Constructor.
+     *
+     * @param summonerIdConverter the summoner id converter
+     * @param gameIdConverter     the game id converter
+     */
+    public JacksonConfiguration(SummonerIdConverter summonerIdConverter, GameIdConverter gameIdConverter) {
+        this.summonerIdConverter = Objects.requireNonNull(summonerIdConverter);
+        this.gameIdConverter = Objects.requireNonNull(gameIdConverter);
+    }
 
     /**
      * Create Jackson mapper bean.

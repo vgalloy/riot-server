@@ -27,6 +27,7 @@ import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.MatchDetailId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
@@ -75,7 +76,7 @@ public final class SummonerLoaderImpl implements SummonerLoader {
     public void loadSummonerById(Region region, Long summonerId) {
         Objects.requireNonNull(summonerId);
         LOGGER.info("{} load full summoner with id : {}", RegionPrinter.getRegion(region), summonerId);
-        DpoId dpoId = new DpoId(region, summonerId);
+        DpoId dpoId = new CommonDpoId(region, summonerId);
 
         if (shouldIdLoadThisSummoner(dpoId)) {
             /* Load and save the summoner */
@@ -237,11 +238,11 @@ public final class SummonerLoaderImpl implements SummonerLoader {
             return;
         }
         matchDetail.getParticipantIdentities().stream()
-                .filter(e -> e != null)
+                .filter(Objects::nonNull)
                 .map(ParticipantIdentity::getPlayer)
-                .filter(e -> e != null)
+                .filter(Objects::nonNull)
                 .map(SummonerDtoMapper::map)
-                .map(e -> new CommonDpoWrapper<>(new DpoId(matchDetail.getRegion(), e.getId()), e))
+                .map(e -> new CommonDpoWrapper<>(new CommonDpoId(matchDetail.getRegion(), e.getId()), e))
                 .filter(e -> !summonerDao.get(e.getItemId()).isPresent())
                 .forEach(summonerDao::save);
     }

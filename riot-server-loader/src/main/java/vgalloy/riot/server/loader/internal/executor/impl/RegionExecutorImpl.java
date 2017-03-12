@@ -83,8 +83,11 @@ public final class RegionExecutorImpl implements RegionExecutor {
      * Chose which request have to be executed.
      */
     private void election() {
-        long max = requestList.stream().map(Request::getPriority).mapToInt(Integer::intValue).sum();
-        long rand = Math.abs(random.nextLong()) % max;
+        long max = requestList.stream()
+                .map(Request::getPriority)
+                .mapToInt(Integer::intValue)
+                .sum();
+        long rand = Math.abs(random.nextLong() % max);
         for (Request<?> request : requestList) {
             if (rand < request.getPriority()) {
                 electedRequest = request;

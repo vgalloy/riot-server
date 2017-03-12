@@ -1,7 +1,6 @@
 package vgalloy.riot.server.dao.api.entity.dpoid;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import vgalloy.riot.api.api.constant.Region;
 
@@ -10,40 +9,19 @@ import vgalloy.riot.api.api.constant.Region;
  *
  * @author Vincent Galloy
  */
-public class DpoId implements Serializable {
-
-    private static final long serialVersionUID = 6936153576810566295L;
-
-    private final Region region;
-    private final Long id;
+public interface DpoId extends Serializable {
 
     /**
-     * Constructor.
+     * Get the region of the item.
      *
-     * @param region the region
-     * @param id     the id
+     * @return the region
      */
-    public DpoId(Region region, Long id) {
-        this.region = Objects.requireNonNull(region);
-        this.id = Objects.requireNonNull(id);
-        if (id == 0L) {
-            throw new IllegalArgumentException("id can not be equals to 0");
-        }
-    }
+    Region getRegion();
 
-    public Region getRegion() {
-        return region;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public String toString() {
-        return "DpoId{" +
-                "region=" + region +
-                ", id=" + id +
-                '}';
-    }
+    /**
+     * Get the id of the item.
+     *
+     * @return the id
+     */
+    Long getId();
 }

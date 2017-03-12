@@ -7,7 +7,7 @@ import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
  *
  * @author Vincent Galloy
  */
-public class CommonDpoWrapper<DTO> extends AbstractDpoWrapper<DTO, DpoId> {
+public final class CommonDpoWrapper<DTO> extends AbstractDpoWrapper<DTO, DpoId> {
 
     private static final long serialVersionUID = -4168382974522328793L;
 

@@ -11,7 +11,7 @@ import vgalloy.riot.api.api.dto.summoner.SummonerDto;
  *
  * @author Vincent Galloy
  */
-public class SummonerDpo extends AbstractDpo<SummonerDto> {
+public final class SummonerDpo extends AbstractDpo<SummonerDto> {
 
     /**
      * Constructor.

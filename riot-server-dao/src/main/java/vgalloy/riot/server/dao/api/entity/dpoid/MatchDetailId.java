@@ -10,7 +10,7 @@ import vgalloy.riot.api.api.constant.Region;
  *
  * @author Vincent Galloy
  */
-public class MatchDetailId extends DpoId {
+public final class MatchDetailId extends AbstractDpoId {
 
     private static final long serialVersionUID = 536360614566269643L;
 
@@ -40,13 +40,16 @@ public class MatchDetailId extends DpoId {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+        if (!super.equals(o)) {
+            return false;
+        }
         MatchDetailId that = (MatchDetailId) o;
         return Objects.equals(matchDate, that.matchDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(matchDate);
+        return Objects.hash(super.hashCode(), matchDate);
     }
 
     @Override

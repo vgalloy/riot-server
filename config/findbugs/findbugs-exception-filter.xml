@@ -1,9 +1,4 @@
 <?xml version="1.0"?>
 <FindBugsFilter>
 
-    <!-- Exception -->
-    <Match>
-
-    </Match>
-
 </FindBugsFilter>

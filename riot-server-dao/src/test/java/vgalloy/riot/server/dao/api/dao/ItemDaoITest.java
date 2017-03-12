@@ -16,6 +16,7 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ItemDto;
 import vgalloy.riot.server.dao.DaoTestUtil;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
 import vgalloy.riot.server.dao.internal.dao.impl.ItemDaoImpl;
@@ -55,8 +56,8 @@ public class ItemDaoITest {
         itemDto.setName("Trinity force");
 
         // WHEN
-        itemDao.save(new CommonDpoWrapper<>(new DpoId(Region.JP, 19L), itemDto));
-        Optional<Entity<ItemDto, DpoId>> result = itemDao.get(new DpoId(Region.JP, 19L));
+        itemDao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.JP, 19L), itemDto));
+        Optional<Entity<ItemDto, DpoId>> result = itemDao.get(new CommonDpoId(Region.JP, 19L));
 
         // THEN
         Assert.assertNotNull(result);

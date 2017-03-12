@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
 import vgalloy.riot.server.dao.api.entity.Entity;
-import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
 import vgalloy.riot.server.loader.api.service.LoaderClient;
 import vgalloy.riot.server.service.api.model.summoner.GameSummary;
@@ -46,7 +46,7 @@ public final class SummonerServiceImpl implements SummonerService {
 
     @Override
     public List<GameSummary> getLastGames(SummonerId summonerId, LocalDateTime from, LocalDateTime to) {
-        return matchDetailDao.findMatchDetailBySummonerId(new DpoId(summonerId.getRegion(), summonerId.getId()), from, to).stream()
+        return matchDetailDao.findMatchDetailBySummonerId(new CommonDpoId(summonerId.getRegion(), summonerId.getId()), from, to).stream()
                 .map(e -> GameSummaryMapper.map(e, summonerId.getId()))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -55,7 +55,7 @@ public final class SummonerServiceImpl implements SummonerService {
 
     @Override
     public ResourceWrapper<Summoner> get(SummonerId summonerId) {
-        ResourceWrapper<Summoner> result = summonerDao.get(new DpoId(summonerId.getRegion(), summonerId.getId()))
+        ResourceWrapper<Summoner> result = summonerDao.get(new CommonDpoId(summonerId.getRegion(), summonerId.getId()))
                 .map(Entity::getItem)
                 .map(e -> e.map(i -> SummonerMapper.map(summonerId.getRegion(), i))
                         .map(ResourceWrapper::of)

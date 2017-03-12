@@ -51,7 +51,7 @@ public final class GenericDaoImpl<DTO, DATA_OBJECT extends AbstractDpo<DTO>> imp
         if (max == 0) {
             return Optional.empty();
         }
-        int rand = Math.abs(RANDOM.nextInt()) % max;
+        int rand = Math.abs(RANDOM.nextInt() % max);
         return Optional.of(collection
                 .find(DBQuery.is("region", region))
                 .limit(-1)

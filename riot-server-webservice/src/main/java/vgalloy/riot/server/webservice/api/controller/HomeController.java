@@ -36,7 +36,7 @@ public class HomeController {
         return new Version("running", version);
     }
 
-    private class Version {
+    private static class Version {
 
         private final String status;
         private final String version;

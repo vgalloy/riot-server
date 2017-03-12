@@ -9,7 +9,6 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.entity.WinRate;
-import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.service.api.service.ChampionService;
 import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistException;
 import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
@@ -41,7 +40,6 @@ public class ChampionController {
      *
      * @param championService the championService
      */
-    @Autowired
     public ChampionController(ChampionService championService) {
         this.championService = Objects.requireNonNull(championService);
     }
@@ -57,7 +55,7 @@ public class ChampionController {
     ChampionDto getChampion(@PathVariable Long championId, @RequestParam(required = false) Region region) {
         LOGGER.info("[ GET ] : getChampion : {}, Region : {}", championId, region);
         Region computedRegion = Optional.ofNullable(region).orElse(Region.EUW);
-        return championService.get(new DpoId(computedRegion, championId))
+        return championService.get(new CommonDpoId(computedRegion, championId))
                 .ifNotLoadedThrow(ResourceNotLoadedException::new)
                 .ifDoesNotExistThrow(ResourceDoesNotExistException::new);
     }

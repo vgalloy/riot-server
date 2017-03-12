@@ -1,6 +1,8 @@
 package vgalloy.riot.server.loader.internal.consumer.impl;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,8 +22,8 @@ public class JacksonMarshallerImpl implements RabbitMessageMarshaller {
     @Override
     public <M> byte[] serialize(M m) {
         try {
-            return OBJECT_MAPPER.writeValueAsString(m).getBytes();
-        } catch (JsonProcessingException e) {
+            return OBJECT_MAPPER.writeValueAsString(m).getBytes("UTF-8");
+        } catch (JsonProcessingException | UnsupportedEncodingException e) {
             throw new LoaderException("Unable to serialize : " + m, e);
         }
     }
@@ -31,7 +33,7 @@ public class JacksonMarshallerImpl implements RabbitMessageMarshaller {
         try {
             return OBJECT_MAPPER.readValue(bytes, aClass);
         } catch (IOException e) {
-            throw new LoaderException("Unable to deserialize : " + bytes + " as instance of " + aClass, e);
+            throw new LoaderException("Unable to deserialize : " + Arrays.toString(bytes) + " as instance of " + aClass, e);
         }
     }
 }

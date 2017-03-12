@@ -11,7 +11,7 @@ import vgalloy.riot.api.api.dto.stats.RankedStatsDto;
  *
  * @author Vincent Galloy
  */
-public class RankedStatsDpo extends AbstractDpo<RankedStatsDto> {
+public final class RankedStatsDpo extends AbstractDpo<RankedStatsDto> {
 
     /**
      * Constructor.

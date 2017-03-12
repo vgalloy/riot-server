@@ -88,11 +88,13 @@ allprojects {
     pmd {
         consoleOutput = true
         ruleSetFiles = rootProject.files('config/pmd/ruleset.xml')
+        pmdTest.enabled = false
     }
 
     findbugs {
         toolVersion = "$findbugsVersion"
         excludeFilter = file("$rootProject.projectDir/config/findbugs/findbugs-exception-filter.xml")
+        findbugsTest.enabled = false
     }
 
     test {

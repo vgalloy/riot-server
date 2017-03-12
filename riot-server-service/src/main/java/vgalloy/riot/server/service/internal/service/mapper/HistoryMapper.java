@@ -50,7 +50,7 @@ public final class HistoryMapper {
 
         for (Frame frame : timeline.getFrames()) {
             for (Map.Entry<String, ParticipantFrame> entry : frame.getParticipantFrames().entrySet()) {
-                int participantId = Integer.valueOf(entry.getKey());
+                Integer participantId = Integer.valueOf(entry.getKey());
 
                 result.get(participantId).getFarming().add(new TimedEvent<>(frame.getTimestamp(), entry.getValue().getMinionsKilled()));
                 if (entry.getValue().getPosition() != null) { // TODO chercher pourquoi certaines positions ne marche pas

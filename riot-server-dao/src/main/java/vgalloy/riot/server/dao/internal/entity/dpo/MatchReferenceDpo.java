@@ -11,7 +11,7 @@ import vgalloy.riot.api.api.dto.matchlist.MatchReference;
  *
  * @author Vincent Galloy
  */
-public class MatchReferenceDpo extends AbstractDpo<MatchReference> {
+public final class MatchReferenceDpo extends AbstractDpo<MatchReference> {
 
     /**
      * Constructor.
