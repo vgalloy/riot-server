@@ -134,8 +134,8 @@ project(':riot-server-service') {
 project(':riot-server-webservice') {
     apply plugin: 'org.springframework.boot'
 
-    jar {
-        baseName = "3csminute-server"
+    configurations {
+        jar.archiveName = '3csminute-server.jar'
     }
 
     dependencies {
