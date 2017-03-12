@@ -12,7 +12,7 @@ import vgalloy.riot.server.webservice.internal.mapper.summonerid.SummonerIdMappe
  *
  * @author Vincent Galloy
  */
-public class SummonerIdMapperTest {
+public final class SummonerIdMapperTest {
 
     @Test
     public void simpleSerializationDeserialization() {

@@ -16,7 +16,7 @@ import vgalloy.riot.api.api.dto.mach.Event;
  *
  * @author Vincent Galloy
  */
-public class ItemListBuilder {
+public final class ItemListBuilder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemListBuilder.class);
 
@@ -30,6 +30,7 @@ public class ItemListBuilder {
      */
     public ItemListBuilder addEvent(Event event) {
         Objects.requireNonNull(event, "event can not be null");
+
         try {
             switch (event.getEventType()) {
                 case ITEM_PURCHASED:

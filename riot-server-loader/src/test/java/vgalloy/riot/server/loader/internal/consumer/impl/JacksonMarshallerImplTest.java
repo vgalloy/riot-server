@@ -12,7 +12,7 @@ import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
  *
  * @author Vincent Galloy
  */
-public class JacksonMarshallerImplTest {
+public final class JacksonMarshallerImplTest {
 
     @Test
     public void testSerializationDeserialization() {

@@ -4,6 +4,7 @@ import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
 
 /**
  * Created by Vincent Galloy on 03/12/16.
+ * Implementation of this class should be thread safe.
  *
  * @author Vincent Galloy
  */

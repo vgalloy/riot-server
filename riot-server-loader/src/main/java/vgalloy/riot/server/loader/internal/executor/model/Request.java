@@ -9,7 +9,7 @@ import vgalloy.riot.api.api.query.Query;
  *
  * @author Vincent Galloy
  */
-public class Request<DTO> {
+public final class Request<DTO> {
 
     private final Query<DTO> query;
     private final int priority;

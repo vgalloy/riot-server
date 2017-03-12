@@ -17,7 +17,7 @@ import vgalloy.riot.server.loader.internal.executor.model.Request;
  *
  * @author Vincent Galloy
  */
-public class RegionExecutorTest {
+public final class RegionExecutorTest {
 
     @Test
     @Ignore

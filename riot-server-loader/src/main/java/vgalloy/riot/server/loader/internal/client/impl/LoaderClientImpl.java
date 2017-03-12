@@ -20,7 +20,7 @@ import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
  *
  * @author Vincent Galloy
  */
-public class LoaderClientImpl implements LoaderClient {
+public final class LoaderClientImpl implements LoaderClient {
 
     private final Map<Region, RabbitClientConsumer<LoadingMessage>> map = new HashMap<>();
 

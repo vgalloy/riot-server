@@ -11,7 +11,7 @@ import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
  *
  * @author Vincent Galloy
  */
-public class StringMessageMapperTest {
+public final class StringMessageMapperTest {
 
     @Test
     public void testCorrectTransformation() {

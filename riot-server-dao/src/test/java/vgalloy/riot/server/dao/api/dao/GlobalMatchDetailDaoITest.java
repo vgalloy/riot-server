@@ -182,7 +182,6 @@ public class GlobalMatchDetailDaoITest {
         dao.save(createMatchDetail(Region.EUW, 11_001L, now.minus(5, ChronoUnit.MINUTES), correctPlayerId));
 
         // THEN
-        // Everything ok
         List<MatchDetail> result = dao.findMatchDetailBySummonerId(new CommonDpoId(Region.EUW, correctPlayerId), now.minus(1, ChronoUnit.DAYS).plus(5, ChronoUnit.MINUTES), now);
         Assert.assertEquals(1, result.size());
     }

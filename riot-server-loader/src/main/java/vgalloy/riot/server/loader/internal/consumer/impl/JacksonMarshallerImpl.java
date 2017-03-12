@@ -15,7 +15,7 @@ import vgalloy.riot.server.loader.api.service.exception.LoaderException;
  *
  * @author Vincent Galloy
  */
-public class JacksonMarshallerImpl implements RabbitMessageMarshaller {
+public final class JacksonMarshallerImpl implements RabbitMessageMarshaller {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 

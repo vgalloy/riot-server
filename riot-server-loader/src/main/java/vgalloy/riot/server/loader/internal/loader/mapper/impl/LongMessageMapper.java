@@ -10,7 +10,7 @@ import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
  *
  * @author Vincent Galloy
  */
-public class LongMessageMapper implements LoadingMessageMapper<Long> {
+public final class LongMessageMapper implements LoadingMessageMapper<Long> {
 
     private final LoadingMessage.LoaderType loaderType;
 

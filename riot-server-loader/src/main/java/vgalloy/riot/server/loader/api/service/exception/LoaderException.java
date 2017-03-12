@@ -5,7 +5,7 @@ package vgalloy.riot.server.loader.api.service.exception;
  *
  * @author Vincent Galloy
  */
-public class LoaderException extends RuntimeException {
+public final class LoaderException extends RuntimeException {
 
     private static final long serialVersionUID = -8539678131000703374L;
 

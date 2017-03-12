@@ -11,7 +11,7 @@ import vgalloy.riot.server.loader.api.service.LoaderClient;
  *
  * @author Vincent Galloy
  */
-public class FakeLoaderClientImpl implements LoaderClient {
+public final class FakeLoaderClientImpl implements LoaderClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FakeLoaderClientImpl.class);
 

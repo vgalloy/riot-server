@@ -7,10 +7,16 @@ import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
 
 /**
  * Created by Vincent Galloy on 01/12/16.
+ * Allow MessageMapper creation for each kind of {@link vgalloy.riot.server.loader.internal.loader.message.LoadingMessage.LoaderType}.
  *
  * @author Vincent Galloy
  */
 public final class LoadingMessageBuilder {
+
+    private static final LoadingMessageMapper<Long> SUMMONER_ID_MAPPER = new LongMessageMapper(LoadingMessage.LoaderType.SUMMONER_BY_ID);
+    private static final LoadingMessageMapper<String> SUMMONER_NAME_MAPPER = new StringMessageMapper(LoadingMessage.LoaderType.SUMMONER_BY_NAME);
+    private static final LoadingMessageMapper<Integer> ITEM_ID_MAPPER = new IntegerMessageMapper(LoadingMessage.LoaderType.ITEM_BY_ID);
+    private static final LoadingMessageMapper<Long> CHAMPION_ID_MAPPER = new LongMessageMapper(LoadingMessage.LoaderType.CHAMPION_BY_ID);
 
     /**
      * Constructor.
@@ -26,7 +32,7 @@ public final class LoadingMessageBuilder {
      * @return the corresponding mapper
      */
     public static LoadingMessageMapper<Long> summonerId() {
-        return new LongMessageMapper(LoadingMessage.LoaderType.SUMMONER_BY_ID);
+        return SUMMONER_ID_MAPPER;
     }
 
     /**
@@ -35,7 +41,7 @@ public final class LoadingMessageBuilder {
      * @return the corresponding mapper
      */
     public static LoadingMessageMapper<String> summonerName() {
-        return new StringMessageMapper(LoadingMessage.LoaderType.SUMMONER_BY_NAME);
+        return SUMMONER_NAME_MAPPER;
     }
 
     /**
@@ -44,7 +50,7 @@ public final class LoadingMessageBuilder {
      * @return the corresponding mapper
      */
     public static LoadingMessageMapper<Integer> itemId() {
-        return new IntegerMessageMapper(LoadingMessage.LoaderType.ITEM_BY_ID);
+        return ITEM_ID_MAPPER;
     }
 
     /**
@@ -53,6 +59,6 @@ public final class LoadingMessageBuilder {
      * @return the corresponding mapper
      */
     public static LoadingMessageMapper<Long> championId() {
-        return new LongMessageMapper(LoadingMessage.LoaderType.CHAMPION_BY_ID);
+        return CHAMPION_ID_MAPPER;
     }
 }

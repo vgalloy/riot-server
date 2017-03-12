@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * @author Vincent Galloy
  */
 @Component
-public class CorrelationIdFilter implements SimpleFilter {
+public final class CorrelationIdFilter implements SimpleFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CorrelationIdFilter.class);
 

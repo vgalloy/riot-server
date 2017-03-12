@@ -106,13 +106,15 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
 
     @Override
     public List<MatchDetailId> cleanAllMatchForADay(LocalDate localDate) {
-        List<MatchDetailId> result = getCollection(localDate).find()
+        JacksonDBCollection<MatchDetailDpo, String> collection = getCollection(localDate);
+        List<MatchDetailId> result = collection.find()
                 .toArray()
                 .stream()
                 .map(AbstractDpo::getItem)
                 .map(MatchDetailIdMapper::map)
                 .collect(Collectors.toList());
-        getCollection(localDate).remove(DBQuery.empty());
+        collection.remove(DBQuery.empty());
+        collection.drop();
         return result;
     }
 

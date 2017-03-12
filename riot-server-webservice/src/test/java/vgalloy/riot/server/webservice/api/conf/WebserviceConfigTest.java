@@ -8,7 +8,7 @@ import org.springframework.boot.SpringApplication;
  *
  * @author Vincent Galloy
  */
-public class WebserviceConfigTest {
+public final class WebserviceConfigTest {
 
     @Test
     public void testStartApplication() {

@@ -19,7 +19,7 @@ import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
  *
  * @author Vincent Galloy
  */
-public class RegionalConsumerImpl implements RegionalConsumer {
+public final class RegionalConsumerImpl implements RegionalConsumer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegionalConsumerImpl.class);
 

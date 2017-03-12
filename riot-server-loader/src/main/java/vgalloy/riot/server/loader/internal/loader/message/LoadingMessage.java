@@ -8,10 +8,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by Vincent Galloy on 13/10/16.
+ * This class represents all the information for a loading demand. This class will be push in message broker.
  *
  * @author Vincent Galloy
  */
-public class LoadingMessage implements Serializable {
+public final class LoadingMessage implements Serializable {
 
     private static final long serialVersionUID = 1138659658964486619L;
 
@@ -64,6 +65,9 @@ public class LoadingMessage implements Serializable {
                 '}';
     }
 
+    /**
+     * The types of request.
+     */
     public enum LoaderType {
         SUMMONER_BY_ID, SUMMONER_BY_NAME, ITEM_BY_ID, CHAMPION_BY_ID
     }
