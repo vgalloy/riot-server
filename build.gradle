@@ -135,7 +135,7 @@ project(':riot-server-webservice') {
     apply plugin: 'org.springframework.boot'
 
     jar {
-        baseName = "3csminute-server-" + new Date().format('yyyy_MM_dd_HH_mm_ss')
+        baseName = "3csminute-server"
     }
 
     dependencies {

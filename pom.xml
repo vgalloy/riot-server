@@ -339,7 +339,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <finalName>3csminute-server-${maven.build.timestamp}</finalName>
+                        <finalName>3csminute-server</finalName>
                     </configuration>
                 </plugin>
             </plugins>
