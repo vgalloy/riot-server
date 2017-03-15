@@ -34,4 +34,22 @@ public abstract class AbstractDpoWrapper<DTO, ID extends DpoId> implements Seria
     public Optional<DTO> getItem() {
         return Optional.ofNullable(item);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        AbstractDpoWrapper<?, ?> that = (AbstractDpoWrapper<?, ?>) o;
+        return Objects.equals(itemId, that.itemId) &&
+                Objects.equals(item, that.item);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemId, item);
+    }
 }

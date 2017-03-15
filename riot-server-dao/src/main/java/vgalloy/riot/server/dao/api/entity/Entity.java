@@ -33,6 +33,26 @@ public final class Entity<DTO, ID extends DpoId> extends AbstractDpoWrapper<DTO,
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Entity<?, ?> entity = (Entity<?, ?>) o;
+        return Objects.equals(lastUpdate, entity.lastUpdate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), lastUpdate);
+    }
+
+    @Override
     public String toString() {
         return "Entity{" +
                 ", lastUpdate=" + lastUpdate +

@@ -26,7 +26,7 @@ import vgalloy.riot.server.dao.internal.dao.impl.champion.ChampionDaoImpl;
  *
  * @author Vincent Galloy
  */
-public class ChampionDaoITest {
+public final class ChampionDaoITest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChampionDaoITest.class);
     private static final String URL = "localhost";

@@ -22,7 +22,7 @@ public final class MongoCollectionFactory implements Supplier<MongoCollection<Do
      * @param mongoDatabase  the mongo database
      * @param collectionName the collection name
      */
-    public MongoCollectionFactory(MongoDatabase mongoDatabase, String collectionName) {
+    MongoCollectionFactory(MongoDatabase mongoDatabase, String collectionName) {
         Objects.requireNonNull(mongoDatabase);
         Objects.requireNonNull(collectionName);
 

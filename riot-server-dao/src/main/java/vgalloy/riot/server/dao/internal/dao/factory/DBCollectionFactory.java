@@ -21,7 +21,7 @@ public final class DBCollectionFactory implements Supplier<DBCollection> {
      * @param db               the db
      * @param dbCollectionName the db collection name
      */
-    public DBCollectionFactory(DB db, String dbCollectionName) {
+    DBCollectionFactory(DB db, String dbCollectionName) {
         Objects.requireNonNull(db);
         Objects.requireNonNull(dbCollectionName);
 

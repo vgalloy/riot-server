@@ -11,7 +11,7 @@ import org.junit.Test;
  *
  * @author Vincent Galloy
  */
-public class MongoDriverObjectFactoryTest {
+public final class MongoDriverObjectFactoryTest {
 
     private static final int PORT = 29601;
     private static final String URL = "localhost";

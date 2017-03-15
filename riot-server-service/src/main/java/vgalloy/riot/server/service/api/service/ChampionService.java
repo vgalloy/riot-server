@@ -32,7 +32,7 @@ public interface ChampionService {
     Map<Integer, WinRate> getWinRateForAllChampion(LocalDate date);
 
     /**
-     * Get the winRate of a champion as a mapToEntity where the key is the number of game played.
+     * Get the winRate of a champion as a map where the key is the number of game played.
      *
      * @param championId the champion id
      * @return the winRate

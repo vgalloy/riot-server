@@ -25,7 +25,7 @@ public final class MongoDatabaseFactory implements Supplier<MongoDatabase> {
      * @param mongoClient  the mongo client
      * @param databaseName the database name
      */
-    public MongoDatabaseFactory(MongoClient mongoClient, String databaseName) {
+    MongoDatabaseFactory(MongoClient mongoClient, String databaseName) {
         Objects.requireNonNull(mongoClient);
         Objects.requireNonNull(databaseName);
 

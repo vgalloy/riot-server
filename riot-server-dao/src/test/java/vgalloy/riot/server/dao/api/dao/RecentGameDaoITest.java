@@ -29,7 +29,7 @@ import vgalloy.riot.server.dao.internal.dao.impl.RecentGamesDaoImpl;
  *
  * @author Vincent Galloy
  */
-public class RecentGameDaoITest {
+public final class RecentGameDaoITest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RankedStatsDaoITest.class);
     private static final String URL = "localhost";

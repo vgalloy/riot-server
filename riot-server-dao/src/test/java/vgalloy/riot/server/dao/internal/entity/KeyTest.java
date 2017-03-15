@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Vincent Galloy
  */
-public class KeyTest {
+public final class KeyTest {
 
     @Test
     public void testSerializationAndDeserialization() {

@@ -31,6 +31,16 @@ public abstract class AbstractDpoId implements DpoId {
     }
 
     @Override
+    public Region getRegion() {
+        return region;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -46,15 +56,5 @@ public abstract class AbstractDpoId implements DpoId {
     @Override
     public int hashCode() {
         return Objects.hash(region, id);
-    }
-
-    @Override
-    public Region getRegion() {
-        return region;
-    }
-
-    @Override
-    public Long getId() {
-        return id;
     }
 }

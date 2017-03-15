@@ -29,7 +29,7 @@ public final class WinRateHelper {
     }
 
     /**
-     * Get the winRate of a champion as a mapToEntity where the key is the number of game played.
+     * Get the winRate of a champion as a map where the key is the number of game played.
      *
      * @param mongoDatabaseFactory the mongo database factory
      * @param championId           the champion id

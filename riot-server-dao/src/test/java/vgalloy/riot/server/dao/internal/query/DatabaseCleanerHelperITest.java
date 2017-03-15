@@ -38,7 +38,7 @@ import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.TimelineDaoImpl;
  *
  * @author Vincent Galloy
  */
-public class DatabaseCleanerHelperITest {
+public final class DatabaseCleanerHelperITest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseCleanerHelperITest.class);
     private static final String URL = "localhost";

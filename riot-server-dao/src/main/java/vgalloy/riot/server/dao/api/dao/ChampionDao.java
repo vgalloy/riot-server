@@ -14,7 +14,7 @@ import vgalloy.riot.server.dao.api.entity.WinRate;
 public interface ChampionDao extends CommonDao<ChampionDto> {
 
     /**
-     * Get the winRate of a champion as a mapToEntity where the key is the number of game played.
+     * Get the winRate of a champion as a map where the key is the number of game played.
      *
      * @param championId the champion id
      * @return the winRate

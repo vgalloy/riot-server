@@ -28,7 +28,7 @@ import vgalloy.riot.server.dao.internal.dao.impl.RankedStatsDaoImpl;
  *
  * @author Vincent Galloy
  */
-public class RankedStatsDaoITest {
+public final class RankedStatsDaoITest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RankedStatsDaoITest.class);
     private static final String URL = "localhost";

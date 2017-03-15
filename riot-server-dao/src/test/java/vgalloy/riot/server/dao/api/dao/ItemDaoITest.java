@@ -26,7 +26,7 @@ import vgalloy.riot.server.dao.internal.dao.impl.ItemDaoImpl;
  *
  * @author Vincent Galloy
  */
-public class ItemDaoITest {
+public final class ItemDaoITest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemDaoITest.class);
     private static final String URL = "localhost";

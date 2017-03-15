@@ -38,7 +38,7 @@ import vgalloy.riot.server.dao.internal.dao.impl.matchdetail.TimelineDaoImpl;
  *
  * @author Vincent Galloy
  */
-public class GlobalMatchDetailDaoITest {
+public final class GlobalMatchDetailDaoITest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalMatchDetailDaoITest.class);
     private static final String URL = "localhost";

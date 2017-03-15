@@ -61,10 +61,10 @@ public class ChampionController {
     }
 
     /**
-     * Get the win rate of a champion as a mapToEntity. The key is the number of game played.
+     * Get the win rate of a champion as a map. The key is the number of game played.
      *
      * @param championId the champion id
-     * @return the win rates as a mapToEntity
+     * @return the win rates as a map
      */
     @RequestMapping(value = "/champions/{championId}/winRateByGamePlayed", method = RequestMethod.GET)
     Map<Integer, Double> getWinRateByGamePlayed(@PathVariable Integer championId) {
@@ -73,12 +73,12 @@ public class ChampionController {
     }
 
     /**
-     * Get the win rate of a champion as a mapToEntity. The key is the number of game played.
+     * Get the win rate of a champion as a map. The key is the number of game played.
      *
      * @param championId the champion id
      * @param fromDay    the start search date in day
      * @param toDay      the end search date in day
-     * @return the win rates as a mapToEntity
+     * @return the win rates as a map
      */
     @RequestMapping(value = "/champions/{championId}/winRateByDate", method = RequestMethod.GET)
     Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId,
