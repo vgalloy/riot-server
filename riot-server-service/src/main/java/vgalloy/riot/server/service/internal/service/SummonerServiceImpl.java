@@ -55,27 +55,24 @@ public final class SummonerServiceImpl implements SummonerService {
 
     @Override
     public ResourceWrapper<Summoner> get(SummonerId summonerId) {
-        ResourceWrapper<Summoner> result = summonerDao.get(new CommonDpoId(summonerId.getRegion(), summonerId.getId()))
+        loaderClient.loadAsyncSummonerById(summonerId.getRegion(), summonerId.getId());
+        return summonerDao.get(new CommonDpoId(summonerId.getRegion(), summonerId.getId()))
                 .map(Entity::getItem)
                 .map(e -> e.map(i -> SummonerMapper.map(summonerId.getRegion(), i))
                         .map(ResourceWrapper::of)
                         .orElseGet(ResourceWrapper::doesNotExist))
                 .orElseGet(ResourceWrapper::notLoaded);
-        loaderClient.loadAsyncSummonerById(summonerId.getRegion(), summonerId.getId());
-        return result;
     }
 
     @Override
     public List<Summoner> getSummoners(GetSummonersQuery getSummonersQuery) {
-        List<Summoner> result = summonerDao.getSummoners(getSummonersQuery)
-                .stream()
-                .map(SummonerMapper::map)
-                .collect(Collectors.toList());
-
         getSummonersQuery.getSummonersName()
                 .forEach(summonerName -> getSummonersQuery.getRegions()
                         .forEach(region -> loaderClient.loadAsyncSummonerByName(region, summonerName)));
 
-        return result;
+        return summonerDao.getSummoners(getSummonersQuery)
+                .stream()
+                .map(SummonerMapper::map)
+                .collect(Collectors.toList());
     }
 }
