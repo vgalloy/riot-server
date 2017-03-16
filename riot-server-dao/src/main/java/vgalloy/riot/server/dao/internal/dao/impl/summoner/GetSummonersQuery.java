@@ -108,6 +108,7 @@ public final class GetSummonersQuery {
      */
     public GetSummonersQuery setLimit(Integer limit) {
         Objects.requireNonNull(limit);
+
         this.limit = limit;
         return this;
     }
@@ -124,6 +125,7 @@ public final class GetSummonersQuery {
      */
     public GetSummonersQuery setOffset(Integer offset) {
         Objects.requireNonNull(offset);
+
         this.offset = offset;
         return this;
     }

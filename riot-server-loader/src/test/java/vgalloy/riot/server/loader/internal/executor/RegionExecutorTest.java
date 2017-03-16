@@ -39,7 +39,7 @@ public final class RegionExecutorTest {
 
         List<Integer> list = new ArrayList<>();
 
-        createStartThread(regionExecutor);
+        createAndStartThread(regionExecutor);
         createRequestThread(regionExecutor, list, priority1);
         createRequestThread(regionExecutor, list, priority2);
 
@@ -52,27 +52,21 @@ public final class RegionExecutorTest {
         return list.get(0) == priority1;
     }
 
-    private void createStartThread(RegionExecutor regionExecutor) {
-        new Thread(() -> regionExecutor.execute(new Request<>(new Query<Integer>() {
-            @Override
-            public Integer execute() {
-                try {
-                    Thread.sleep(20);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
+    private void createAndStartThread(RegionExecutor regionExecutor) {
+        new Thread(() -> regionExecutor.execute(new Request<>((Query<Integer>) () -> {
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            return null;
         }, 1))).start();
     }
 
     private void createRequestThread(RegionExecutor regionExecutor, List<Integer> list, int number) {
-        new Thread(() -> regionExecutor.execute(new Request<>(new Query<Integer>() {
-            @Override
-            public Integer execute() {
-                list.add(number);
-                return null;
-            }
+        new Thread(() -> regionExecutor.execute(new Request<>((Query<Integer>) () -> {
+            list.add(number);
+            return null;
         }, number))).start();
     }
 }

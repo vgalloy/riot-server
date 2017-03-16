@@ -122,8 +122,8 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
         Map<Integer, WinRate> result = new HashMap<>();
 
         for (Document o : aggregationResult) {
-            Integer championId = (Integer) ((Map<String, Object>) o.get("_id")).get("champion");
-            Boolean win = (Boolean) ((Map<String, Object>) o.get("_id")).get("winner");
+            Integer championId = Integer.class.cast(Map.class.cast(o.get("_id")).get("champion"));
+            Boolean win = Boolean.class.cast(Map.class.cast(o.get("_id")).get("winner"));
             Integer value = o.getInteger("value");
 
             WinRate currentWinRate = result.getOrDefault(championId, new WinRate(0, 0));

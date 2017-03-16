@@ -47,6 +47,7 @@ public final class LoaderClientImpl implements LoaderClient {
     public void loadAsyncSummonerById(Region region, Long summonerId) {
         Objects.requireNonNull(region);
         Objects.requireNonNull(summonerId);
+
         map.get(region).accept(LoadingMessageBuilder.summonerId().wrap(summonerId));
     }
 
@@ -54,6 +55,7 @@ public final class LoaderClientImpl implements LoaderClient {
     public void loadAsyncSummonerByName(Region region, String summonerName) {
         Objects.requireNonNull(region);
         Objects.requireNonNull(summonerName);
+
         map.get(region).accept(LoadingMessageBuilder.summonerName().wrap(summonerName));
     }
 
@@ -61,6 +63,7 @@ public final class LoaderClientImpl implements LoaderClient {
     public void loadChampionById(Region region, Long championId) {
         Objects.requireNonNull(region);
         Objects.requireNonNull(championId);
+
         map.get(region).accept(LoadingMessageBuilder.championId().wrap(championId));
     }
 
@@ -68,6 +71,7 @@ public final class LoaderClientImpl implements LoaderClient {
     public void loadAsyncItemById(Region region, Integer itemId) {
         Objects.requireNonNull(region);
         Objects.requireNonNull(itemId);
+
         map.get(region).accept(LoadingMessageBuilder.itemId().wrap(itemId));
     }
 }

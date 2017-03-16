@@ -26,10 +26,10 @@ public final class HomeControllerTest {
 
     @Test
     public void testHomePage() {
-        // GIVEN
+        // WHEN
         ResponseEntity<String> c = this.restTemplate.getForEntity("/home", String.class);
 
-        // WHEN
+        // THEN
         Assert.assertEquals(HttpStatus.OK.value(), c.getStatusCode().value());
     }
 }

@@ -1,5 +1,6 @@
 package vgalloy.riot.server.webservice.internal.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -7,7 +8,9 @@ import java.util.Objects;
  *
  * @author Vincent Galloy
  */
-public final class Error {
+public final class Error implements Serializable {
+
+    private static final long serialVersionUID = 8278940929567627860L;
 
     private final int code;
     private final String message;

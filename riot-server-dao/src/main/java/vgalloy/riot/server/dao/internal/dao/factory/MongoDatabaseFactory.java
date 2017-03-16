@@ -3,7 +3,6 @@ package vgalloy.riot.server.dao.internal.dao.factory;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import com.mongodb.MongoClient;
@@ -46,10 +45,6 @@ public final class MongoDatabaseFactory implements Supplier<MongoDatabase> {
     public MongoCollectionFactory getMongoCollection(String collectionName) {
         Objects.requireNonNull(collectionName);
 
-        MongoCollectionFactory mongoCollectionFactory = mongoCollectionFactoryMap.get(collectionName);
-        mongoCollectionFactory = Optional.ofNullable(mongoCollectionFactory).orElseGet(() -> new MongoCollectionFactory(mongoDatabase, collectionName));
-        mongoCollectionFactoryMap.put(collectionName, mongoCollectionFactory);
-
-        return mongoCollectionFactory;
+        return mongoCollectionFactoryMap.computeIfAbsent(collectionName, e -> new MongoCollectionFactory(mongoDatabase, e));
     }
 }

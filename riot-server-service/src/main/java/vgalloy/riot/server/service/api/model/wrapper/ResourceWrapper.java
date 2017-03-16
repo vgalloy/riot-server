@@ -32,6 +32,7 @@ public final class ResourceWrapper<T> extends AbstractResourceWrapper<T> {
      */
     public static <TYPE> ResourceWrapper<TYPE> of(TYPE resource) {
         Objects.requireNonNull(resource);
+
         return new ResourceWrapper<>(ResourceStatus.PRESENT, resource);
     }
 

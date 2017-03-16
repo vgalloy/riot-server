@@ -14,6 +14,8 @@ import org.springframework.core.convert.converter.Converter;
  */
 public abstract class AbstractSerializer<T> extends StdSerializer<T> implements Converter<String, T> {
 
+    private static final long serialVersionUID = 3525241913559866266L;
+
     /**
      * Constructor.
      */
