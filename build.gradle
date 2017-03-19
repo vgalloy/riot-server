@@ -11,8 +11,8 @@ ext {
 
     junitVersion = '4.12'
     riotApiJavaVersion = '3.11.0'
-    slf4jApi = '1.7.24'
-    logbackClassicVersion = '1.2.1'
+    slf4jApi = '1.7.25'
+    logbackClassicVersion = '1.2.2'
     mongoJavaDriverVersion = '3.4.2'
     mongoJackVersion = '2.6.1'
     flapdoodleEmbedMongoVersion = '2.0.0'

@@ -25,7 +25,6 @@
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
         <maven-surefire-version>2.19.1</maven-surefire-version>
         <maven-failsafe-version>2.19.1</maven-failsafe-version>
-        <maven.build.timestamp.format>yyyy_MM_dd_HH_mm_ss</maven.build.timestamp.format>
 
         <!-- Mojo version checker -->
         <versions-maven-plugin.version>2.2</versions-maven-plugin.version>
@@ -50,8 +49,8 @@
         <riot-api-java.version>3.11.0</riot-api-java.version>
 
         <!-- Log -->
-        <slf4j-api.version>1.7.24</slf4j-api.version>
-        <logback-classic.version>1.2.1</logback-classic.version>
+        <slf4j-api.version>1.7.25</slf4j-api.version>
+        <logback-classic.version>1.2.2</logback-classic.version>
 
         <!-- Spring -->
         <spring-boot.version>1.5.2.RELEASE</spring-boot.version>
