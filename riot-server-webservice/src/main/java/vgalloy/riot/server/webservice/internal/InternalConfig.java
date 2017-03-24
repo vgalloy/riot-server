@@ -1,4 +1,4 @@
-package vgalloy.riot.server.webservice.internal.conf;
+package vgalloy.riot.server.webservice.internal;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,6 +11,8 @@ import vgalloy.riot.server.service.api.service.ItemService;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
+import vgalloy.riot.server.webservice.internal.conf.JacksonConfiguration;
+import vgalloy.riot.server.webservice.internal.conf.SwaggerConfig;
 
 /**
  * Created by Vincent Galloy on 24/08/16.
@@ -18,10 +20,7 @@ import vgalloy.riot.server.service.api.service.SummonerService;
  * @author Vincent Galloy
  */
 @Import({JacksonConfiguration.class, SwaggerConfig.class})
-@ComponentScan(value = {
-        "vgalloy.riot.server.webservice.internal.filter",
-        "vgalloy.riot.server.webservice.internal.controller",
-        "vgalloy.riot.server.webservice.api.controller"})
+@ComponentScan
 @Configuration
 public class InternalConfig {
 

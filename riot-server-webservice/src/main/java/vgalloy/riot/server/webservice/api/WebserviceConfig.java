@@ -1,4 +1,4 @@
-package vgalloy.riot.server.webservice.api.conf;
+package vgalloy.riot.server.webservice.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
-import vgalloy.riot.server.webservice.internal.conf.InternalConfig;
+import vgalloy.riot.server.webservice.internal.InternalConfig;
 
 /**
  * Created by Vincent Galloy on 23/08/16.

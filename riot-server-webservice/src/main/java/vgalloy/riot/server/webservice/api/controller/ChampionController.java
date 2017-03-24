@@ -93,9 +93,8 @@ public class ChampionController {
                 .orElseGet(LocalDate::now);
 
         Map<Long, WinRate> result = new HashMap<>();
-        for (Map.Entry<LocalDate, WinRate> entry : championService.getWinRateDuringPeriodOfTime(championId, fromLocalDate, toLocalDate).entrySet()) {
-            result.put(entry.getKey().toEpochDay(), entry.getValue());
-        }
+        championService.getWinRateDuringPeriodOfTime(championId, fromLocalDate, toLocalDate)
+                .forEach((key, value) -> result.put(key.toEpochDay(), value));
         return result;
     }
 
