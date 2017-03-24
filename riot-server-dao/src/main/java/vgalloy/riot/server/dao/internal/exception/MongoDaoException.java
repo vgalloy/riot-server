@@ -17,6 +17,15 @@ public class MongoDaoException extends AbstractDaoException {
      * Constructor.
      *
      * @param message the detail message
+     */
+    public MongoDaoException(String message) {
+        super(message);
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param message the detail message
      * @param cause   the cause
      */
     public MongoDaoException(String message, Throwable cause) {
@@ -26,9 +35,9 @@ public class MongoDaoException extends AbstractDaoException {
     /**
      * Constructor.
      *
-     * @param message the detail message
+     * @param cause the cause
      */
-    public MongoDaoException(String message) {
-        super(message);
+    public MongoDaoException(Throwable cause) {
+        super(cause);
     }
 }

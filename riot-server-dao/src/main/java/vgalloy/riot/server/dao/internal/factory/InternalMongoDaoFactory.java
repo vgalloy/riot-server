@@ -1,12 +1,9 @@
 package vgalloy.riot.server.dao.internal.factory;
 
 import org.apache.commons.configuration2.Configuration;
-import org.apache.commons.configuration2.FileBasedConfiguration;
-import org.apache.commons.configuration2.PropertiesConfiguration;
-import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
-import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
+import vgalloy.riot.server.core.api.config.ConfigurationLoader;
 import vgalloy.riot.server.dao.api.dao.ChampionDao;
 import vgalloy.riot.server.dao.api.dao.ItemDao;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
@@ -49,29 +46,28 @@ public final class InternalMongoDaoFactory {
     private static final MatchDetailDao GLOBAL_MATCH_DETAIL_DAO;
 
     static {
+        Configuration configuration;
         try {
-            Configuration configuration = new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
-                    .configure(new Parameters().properties().setFileName("application.properties"))
-                    .getConfiguration();
-            String databaseUrl = configuration.getString("database.url");
-            String databaseName = configuration.getString("database.name");
-
-            CHAMPION_DAO = new ChampionDaoImpl(databaseUrl, databaseName);
-            MATCH_DETAIL_DAO = new MatchDetailDaoImpl(databaseUrl, databaseName);
-            MATCH_REFERENCE_DAO = new MatchReferenceDaoImpl(databaseUrl, databaseName);
-            RANKED_STATS_DAO = new RankedStatsDaoImpl(databaseUrl, databaseName);
-            RECENT_GAMES_DAO = new RecentGamesDaoImpl(databaseUrl, databaseName);
-            SUMMONER_DAO = new SummonerDaoImpl(databaseUrl, databaseName);
-            ITEM_DAO = new ItemDaoImpl(databaseUrl, databaseName);
-            TIMELINE_DAO = new TimelineDaoImpl(databaseUrl, databaseName);
-            GLOBAL_MATCH_DETAIL_DAO = new GlobalMatchDetailDaoImpl(TIMELINE_DAO, MATCH_DETAIL_DAO);
-
-            MongoDatabaseFactory mongoDatabaseFactory = MongoDriverObjectFactory.getMongoClient(databaseUrl).getMongoDatabase(databaseName);
-            TaskFactory.startTask(new UpdateWinRateTask(mongoDatabaseFactory), 15 * 60 * 1000);
-            TaskFactory.startTask(new DatabaseCleanerTask(GLOBAL_MATCH_DETAIL_DAO), 24 * 60 * 60 * 1000);
+            configuration = ConfigurationLoader.loadConfiguration();
         } catch (ConfigurationException e) {
-            throw new MongoDaoException("Unable to load configuration", e);
+            throw new MongoDaoException(e);
         }
+        String databaseUrl = configuration.getString("database.url");
+        String databaseName = configuration.getString("database.name");
+
+        CHAMPION_DAO = new ChampionDaoImpl(databaseUrl, databaseName);
+        MATCH_DETAIL_DAO = new MatchDetailDaoImpl(databaseUrl, databaseName);
+        MATCH_REFERENCE_DAO = new MatchReferenceDaoImpl(databaseUrl, databaseName);
+        RANKED_STATS_DAO = new RankedStatsDaoImpl(databaseUrl, databaseName);
+        RECENT_GAMES_DAO = new RecentGamesDaoImpl(databaseUrl, databaseName);
+        SUMMONER_DAO = new SummonerDaoImpl(databaseUrl, databaseName);
+        ITEM_DAO = new ItemDaoImpl(databaseUrl, databaseName);
+        TIMELINE_DAO = new TimelineDaoImpl(databaseUrl, databaseName);
+        GLOBAL_MATCH_DETAIL_DAO = new GlobalMatchDetailDaoImpl(TIMELINE_DAO, MATCH_DETAIL_DAO);
+
+        MongoDatabaseFactory mongoDatabaseFactory = MongoDriverObjectFactory.getMongoClient(databaseUrl).getMongoDatabase(databaseName);
+        TaskFactory.startTask(new UpdateWinRateTask(mongoDatabaseFactory), 15 * 60 * 1000);
+        TaskFactory.startTask(new DatabaseCleanerTask(GLOBAL_MATCH_DETAIL_DAO), 24 * 60 * 60 * 1000);
     }
 
     /**

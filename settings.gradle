@@ -1,4 +1,5 @@
 rootProject.name = 'riot-server'
+include 'riot-server-core'
 include 'riot-server-dao'
 include 'riot-server-loader'
 include 'riot-server-service'

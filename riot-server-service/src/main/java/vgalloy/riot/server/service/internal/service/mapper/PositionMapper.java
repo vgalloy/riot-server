@@ -1,6 +1,6 @@
 package vgalloy.riot.server.service.internal.service.mapper;
 
-import vgalloy.riot.server.service.api.model.game.Position;
+import vgalloy.riot.server.core.api.model.Position;
 
 /**
  * Created by Vincent Galloy on 23/08/16.
@@ -15,16 +15,6 @@ public final class PositionMapper {
      */
     private PositionMapper() {
         throw new AssertionError();
-    }
-
-    /**
-     * Convert a data object into a model.
-     *
-     * @param doPosition the position
-     * @return the model
-     */
-    public static Position map(vgalloy.riot.server.dao.api.entity.Position doPosition) {
-        return new Position(doPosition.getX(), doPosition.getY());
     }
 
     /**

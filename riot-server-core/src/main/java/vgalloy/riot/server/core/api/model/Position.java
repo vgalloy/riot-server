@@ -1,10 +1,10 @@
-package vgalloy.riot.server.dao.api.entity;
+package vgalloy.riot.server.core.api.model;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Created by Vincent Galloy on 07/07/16.
+ * Created by Vincent Galloy on 24/03/17.
  *
  * @author Vincent Galloy
  */

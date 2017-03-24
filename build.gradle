@@ -104,16 +104,22 @@ allprojects {
     }
 }
 
-project(':riot-server-dao') {
+project(':riot-server-core') {
     dependencies {
-        compile "vgalloy:riot-api-java:$riotApiJavaVersion"
         compile "org.slf4j:slf4j-api:$slf4jApi"
         compile "ch.qos.logback:logback-classic:$logbackClassicVersion"
+        compile "org.apache.commons:commons-configuration2:$commonsConfiguration2Version"
+        compile "commons-beanutils:commons-beanutils:$commonsBeanutilsVersion"
+    }
+}
+
+project(':riot-server-dao') {
+    dependencies {
+        compile project(':riot-server-core')
+        compile "vgalloy:riot-api-java:$riotApiJavaVersion"
         compile "org.mongodb:mongo-java-driver:$mongoJavaDriverVersion"
         compile "org.mongojack:mongojack:$mongoJackVersion"
         compile "de.flapdoodle.embed:de.flapdoodle.embed.mongo:$flapdoodleEmbedMongoVersion"
-        compile "org.apache.commons:commons-configuration2:$commonsConfiguration2Version"
-        compile "commons-beanutils:commons-beanutils:$commonsBeanutilsVersion"
         testCompile "junit:junit:$junitVersion"
     }
 }

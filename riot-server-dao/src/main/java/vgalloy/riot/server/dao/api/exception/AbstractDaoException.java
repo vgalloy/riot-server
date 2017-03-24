@@ -27,4 +27,13 @@ public abstract class AbstractDaoException extends RuntimeException {
     public AbstractDaoException(String message, Throwable cause) {
         super(message, cause);
     }
+
+    /**
+     * Constructor.
+     *
+     * @param cause   the cause
+     */
+    public AbstractDaoException(Throwable cause) {
+        super(cause);
+    }
 }

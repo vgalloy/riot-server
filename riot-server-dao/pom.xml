@@ -14,15 +14,11 @@
     <dependencies>
         <dependency>
             <groupId>vgalloy</groupId>
+            <artifactId>riot-server-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>vgalloy</groupId>
             <artifactId>riot-api-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mongodb</groupId>
@@ -40,14 +36,7 @@
             <groupId>de.flapdoodle.embed</groupId>
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-configuration2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-        </dependency>
+
     </dependencies>
 
 </project>
