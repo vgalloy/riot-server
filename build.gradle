@@ -119,7 +119,7 @@ project(':riot-server-dao') {
         compile "vgalloy:riot-api-java:$riotApiJavaVersion"
         compile "org.mongodb:mongo-java-driver:$mongoJavaDriverVersion"
         compile "org.mongojack:mongojack:$mongoJackVersion"
-        compile "de.flapdoodle.embed:de.flapdoodle.embed.mongo:$flapdoodleEmbedMongoVersion"
+        testCompile "de.flapdoodle.embed:de.flapdoodle.embed.mongo:$flapdoodleEmbedMongoVersion"
         testCompile "junit:junit:$junitVersion"
     }
 }
