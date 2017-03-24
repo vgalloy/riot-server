@@ -147,8 +147,8 @@ project(':riot-server-webservice') {
     dependencies {
         compile project(':riot-server-service')
         compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-        compile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
         compile "io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion"
         compile "io.springfox:springfox-swagger2:$springfoxSwaggerVersion"
+        testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     }
 }
