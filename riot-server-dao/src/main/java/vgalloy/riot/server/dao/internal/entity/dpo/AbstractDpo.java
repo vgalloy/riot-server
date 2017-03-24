@@ -6,23 +6,25 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.mongojack.Id;
 
 import vgalloy.riot.api.api.constant.Region;
-import vgalloy.riot.server.dao.internal.entity.Key;
+import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
+import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
+import vgalloy.riot.server.dao.internal.entity.mapper.DpoIdMapper;
 
 /**
  * Created by Vincent Galloy on 12/07/16.
  *
  * @author Vincent Galloy
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = Visibility.NONE, getterVisibility = Visibility.ANY, setterVisibility = Visibility.NONE)
 public abstract class AbstractDpo<DTO> {
 
     private final Long lastUpdate;
-    private final Region region;
-    private final Long itemId;
-    private final Key key;
+    private final DpoId dpoId;
     private DTO item;
 
     /**
@@ -32,14 +34,11 @@ public abstract class AbstractDpo<DTO> {
      * @param region     the region of the item
      * @param itemId     the item id
      * @param item       the item
-     * @param id         the id
      */
-    public AbstractDpo(Long lastUpdate, Region region, Long itemId, DTO item, String id) {
+    public AbstractDpo(Long lastUpdate, Region region, Long itemId, DTO item) {
         this.lastUpdate = Objects.requireNonNull(lastUpdate);
-        this.region = Objects.requireNonNull(region);
-        this.itemId = Objects.requireNonNull(itemId);
+        dpoId = new CommonDpoId(region, itemId);
         this.item = item;
-        key = Key.fromNormalizedString(id);
     }
 
     /**
@@ -50,9 +49,7 @@ public abstract class AbstractDpo<DTO> {
      */
     public AbstractDpo(Region region, Long itemId) {
         lastUpdate = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
-        this.region = Objects.requireNonNull(region);
-        this.itemId = Objects.requireNonNull(itemId);
-        key = new Key(region, itemId);
+        dpoId = new CommonDpoId(region, itemId);
     }
 
     public Long getLastUpdate() {
@@ -60,11 +57,11 @@ public abstract class AbstractDpo<DTO> {
     }
 
     public Region getRegion() {
-        return region;
+        return dpoId.getRegion();
     }
 
     public Long getItemId() {
-        return itemId;
+        return dpoId.getId();
     }
 
     public DTO getItem() {
@@ -77,7 +74,7 @@ public abstract class AbstractDpo<DTO> {
 
     @Id
     public String getId() {
-        return key.normalizeString();
+        return DpoIdMapper.toNormalizedString(dpoId);
     }
 
     @Override
@@ -85,30 +82,26 @@ public abstract class AbstractDpo<DTO> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AbstractDpo)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         AbstractDpo<?> that = (AbstractDpo<?>) o;
         return Objects.equals(lastUpdate, that.lastUpdate) &&
-                region == that.region &&
-                Objects.equals(itemId, that.itemId) &&
-                Objects.equals(item, that.item) &&
-                Objects.equals(key, that.key);
+                Objects.equals(dpoId, that.dpoId) &&
+                Objects.equals(item, that.item);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(lastUpdate, region, itemId, item, key);
+        return Objects.hash(lastUpdate, dpoId, item);
     }
 
     @Override
     public String toString() {
         return "AbstractDpo{" +
                 "lastUpdate=" + lastUpdate +
-                ", region=" + region +
-                ", DpoId=" + itemId +
+                ", dpoId=" + dpoId +
                 ", item=" + item +
-                ", key=" + key +
                 '}';
     }
 }

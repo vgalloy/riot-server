@@ -20,15 +20,13 @@ public final class RecentGamesDpo extends AbstractDpo<RecentGamesDto> {
      * @param region     the region of the item
      * @param itemId     the item id
      * @param item       the item
-     * @param id         the id
      */
     @JsonCreator
     public RecentGamesDpo(@JsonProperty("lastUpdate") Long lastUpdate,
                           @JsonProperty("region") Region region,
                           @JsonProperty("itemId") Long itemId,
-                          @JsonProperty("item") RecentGamesDto item,
-                          @JsonProperty("_id") String id) {
-        super(lastUpdate, region, itemId, item, id);
+                          @JsonProperty("item") RecentGamesDto item) {
+        super(lastUpdate, region, itemId, item);
     }
 
     /**

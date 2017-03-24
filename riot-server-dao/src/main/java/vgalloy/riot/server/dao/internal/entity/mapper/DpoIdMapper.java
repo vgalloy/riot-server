@@ -27,8 +27,9 @@ public final class DpoIdMapper {
      * @param dpoId the item id
      * @return the normalized string
      */
-    public static String toNormalizeString(DpoId dpoId) {
+    public static String toNormalizedString(DpoId dpoId) {
         Objects.requireNonNull(dpoId);
+
         return dpoId.getRegion() + " " + dpoId.getId();
     }
 
@@ -40,6 +41,7 @@ public final class DpoIdMapper {
      */
     public static DpoId fromNormalize(String string) {
         Objects.requireNonNull(string);
+
         String[] divided = string.split(" ");
         Region region = Region.valueOf(divided[0]);
         Long id = Long.valueOf(divided[1]);

@@ -20,15 +20,13 @@ public final class ChampionDpo extends AbstractDpo<ChampionDto> {
      * @param region     the region of the item
      * @param itemId     the item id
      * @param item       the item
-     * @param id         the id
      */
     @JsonCreator
     public ChampionDpo(@JsonProperty("lastUpdate") Long lastUpdate,
                        @JsonProperty("region") Region region,
                        @JsonProperty("itemId") Long itemId,
-                       @JsonProperty("item") ChampionDto item,
-                       @JsonProperty("_id") String id) {
-        super(lastUpdate, region, itemId, item, id);
+                       @JsonProperty("item") ChampionDto item) {
+        super(lastUpdate, region, itemId, item);
     }
 
     /**

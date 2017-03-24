@@ -20,15 +20,13 @@ public final class ItemDpo extends AbstractDpo<ItemDto> {
      * @param region     the region of the item
      * @param itemId     the item id
      * @param item       the item
-     * @param id         the id
      */
     @JsonCreator
     public ItemDpo(@JsonProperty("lastUpdate") Long lastUpdate,
                    @JsonProperty("region") Region region,
                    @JsonProperty("itemId") Long itemId,
-                   @JsonProperty("item") ItemDto item,
-                   @JsonProperty("_id") String id) {
-        super(lastUpdate, region, itemId, item, id);
+                   @JsonProperty("item") ItemDto item) {
+        super(lastUpdate, region, itemId, item);
     }
 
     /**

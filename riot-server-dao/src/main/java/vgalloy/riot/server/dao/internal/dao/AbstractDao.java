@@ -74,7 +74,7 @@ public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements 
     public Optional<Entity<DTO, DpoId>> get(DpoId dpoId) {
         Objects.requireNonNull(dpoId);
 
-        return genericDao.getById(DpoIdMapper.toNormalizeString(dpoId))
+        return genericDao.getById(DpoIdMapper.toNormalizedString(dpoId))
                 .map(DpoMapper::mapToEntity);
     }
 

@@ -22,7 +22,6 @@ public final class MatchDetailDpo extends AbstractDpo<MatchDetail> {
      * @param region                        the region of the item
      * @param itemId                        the item id
      * @param item                          the item
-     * @param id                            the id
      * @param matchCreationDateFromEpochDay the match creation date from epoch (in days)
      */
     @JsonCreator
@@ -30,9 +29,8 @@ public final class MatchDetailDpo extends AbstractDpo<MatchDetail> {
                           @JsonProperty("region") Region region,
                           @JsonProperty("itemId") Long itemId,
                           @JsonProperty("item") MatchDetail item,
-                          @JsonProperty("_id") String id,
                           @JsonProperty("matchCreationDateFromEpochDay") Long matchCreationDateFromEpochDay) {
-        super(lastUpdate, region, itemId, item, id);
+        super(lastUpdate, region, itemId, item);
         this.matchCreationDateFromEpochDay = matchCreationDateFromEpochDay;
     }
 

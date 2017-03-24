@@ -20,15 +20,13 @@ public final class MatchReferenceDpo extends AbstractDpo<MatchReference> {
      * @param region     the region of the item
      * @param itemId     the item id
      * @param item       the item
-     * @param id         the id
      */
     @JsonCreator
     public MatchReferenceDpo(@JsonProperty("lastUpdate") Long lastUpdate,
                              @JsonProperty("region") Region region,
                              @JsonProperty("itemId") Long itemId,
-                             @JsonProperty("item") MatchReference item,
-                             @JsonProperty("_id") String id) {
-        super(lastUpdate, region, itemId, item, id);
+                             @JsonProperty("item") MatchReference item) {
+        super(lastUpdate, region, itemId, item);
     }
 
     /**

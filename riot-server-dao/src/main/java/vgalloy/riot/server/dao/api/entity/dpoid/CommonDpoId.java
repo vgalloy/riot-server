@@ -7,7 +7,7 @@ import vgalloy.riot.api.api.constant.Region;
  *
  * @author Vincent Galloy
  */
-public class CommonDpoId extends AbstractDpoId {
+public final class CommonDpoId extends AbstractDpoId {
 
     private static final long serialVersionUID = 5822798644418867296L;
 

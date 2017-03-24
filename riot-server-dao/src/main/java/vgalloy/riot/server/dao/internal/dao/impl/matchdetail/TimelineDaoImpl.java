@@ -28,6 +28,6 @@ public final class TimelineDaoImpl extends AbstractDao<Timeline, TimelineDpo> im
 
     @Override
     public void remove(MatchDetailId matchDetailId) {
-        this.collection.removeById(DpoIdMapper.toNormalizeString(matchDetailId));
+        this.collection.removeById(DpoIdMapper.toNormalizedString(matchDetailId));
     }
 }

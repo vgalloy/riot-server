@@ -20,15 +20,13 @@ public final class TimelineDpo extends AbstractDpo<Timeline> {
      * @param region     the region of the item
      * @param itemId     the item id
      * @param item       the item
-     * @param id         the id
      */
     @JsonCreator
     public TimelineDpo(@JsonProperty("lastUpdate") Long lastUpdate,
                        @JsonProperty("region") Region region,
                        @JsonProperty("itemId") Long itemId,
-                       @JsonProperty("item") Timeline item,
-                       @JsonProperty("_id") String id) {
-        super(lastUpdate, region, itemId, item, id);
+                       @JsonProperty("item") Timeline item) {
+        super(lastUpdate, region, itemId, item);
     }
 
     /**

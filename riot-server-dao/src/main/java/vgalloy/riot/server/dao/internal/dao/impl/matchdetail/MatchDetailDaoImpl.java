@@ -71,7 +71,7 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
         Objects.requireNonNull(matchDetailId);
 
         JacksonDBCollection<MatchDetailDpo, String> collection = getCollection(matchDetailId.getMatchDate());
-        return new GenericDaoImpl<>(collection).getById(DpoIdMapper.toNormalizeString(matchDetailId))
+        return new GenericDaoImpl<>(collection).getById(DpoIdMapper.toNormalizedString(matchDetailId))
                 .map(MatchDetailMapper::mapToEntity)
                 .map(Optional::of)
                 .orElse(Optional.empty());
@@ -124,7 +124,7 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
     public void remove(MatchDetailId matchDetailId) {
         Objects.requireNonNull(matchDetailId);
 
-        getCollection(matchDetailId.getMatchDate()).removeById(DpoIdMapper.toNormalizeString(matchDetailId));
+        getCollection(matchDetailId.getMatchDate()).removeById(DpoIdMapper.toNormalizedString(matchDetailId));
     }
 
     /**
