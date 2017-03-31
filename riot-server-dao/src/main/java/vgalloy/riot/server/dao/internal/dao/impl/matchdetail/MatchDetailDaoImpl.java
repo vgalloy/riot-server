@@ -27,7 +27,6 @@ import vgalloy.riot.server.dao.api.mapper.MatchDetailIdMapper;
 import vgalloy.riot.server.dao.internal.dao.factory.MatchDetailHelper;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
 import vgalloy.riot.server.dao.internal.dao.impl.GenericDaoImpl;
-import vgalloy.riot.server.dao.internal.entity.dpo.AbstractDpo;
 import vgalloy.riot.server.dao.internal.entity.dpo.MatchDetailDpo;
 import vgalloy.riot.server.dao.internal.entity.mapper.DpoIdMapper;
 import vgalloy.riot.server.dao.internal.entity.mapper.MatchDetailMapper;
@@ -95,7 +94,7 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
                     .sort(new BasicDBObject("item.matchCreation", 1))
                     .toArray()
                     .stream()
-                    .map(AbstractDpo::getItem)
+                    .map(MatchDetailDpo::getItem)
                     .collect(Collectors.toList()));
 
             currentDate = currentDate.plus(1, ChronoUnit.DAYS);
@@ -112,7 +111,7 @@ public final class MatchDetailDaoImpl implements MatchDetailDao {
         List<MatchDetailId> result = collection.find()
                 .toArray()
                 .stream()
-                .map(AbstractDpo::getItem)
+                .map(MatchDetailDpo::getItem)
                 .map(MatchDetailIdMapper::map)
                 .collect(Collectors.toList());
         collection.remove(DBQuery.empty());

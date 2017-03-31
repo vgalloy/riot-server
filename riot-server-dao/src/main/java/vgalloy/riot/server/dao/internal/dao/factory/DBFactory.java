@@ -24,11 +24,12 @@ public final class DBFactory implements Supplier<DB> {
      * @param mongoClient the mongo client
      * @param dbName      the db name
      */
+    @SuppressWarnings("deprecation")
     DBFactory(MongoClient mongoClient, String dbName) {
         Objects.requireNonNull(mongoClient);
         Objects.requireNonNull(dbName);
 
-        db = mongoClient.getDB(dbName);
+        this.db = mongoClient.getDB(dbName);
     }
 
     @Override

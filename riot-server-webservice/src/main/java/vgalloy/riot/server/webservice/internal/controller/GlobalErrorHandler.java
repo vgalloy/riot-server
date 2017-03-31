@@ -32,7 +32,7 @@ public final class GlobalErrorHandler {
      * @return The error message for web user
      */
     @ExceptionHandler(Throwable.class)
-    public ResponseEntity handle(Throwable e) {
+    public ResponseEntity<Error> handle(Throwable e) {
         LOGGER.error("", e);
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Ups ... unexpected error occurred ! !");
     }
@@ -44,7 +44,7 @@ public final class GlobalErrorHandler {
      * @return The error message for web user
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity handle(MethodArgumentTypeMismatchException e) {
+    public ResponseEntity<Error> handle(MethodArgumentTypeMismatchException e) {
         LOGGER.error("{}", e.getMessage());
         return buildResponse(HttpStatus.BAD_REQUEST, "Value of '" + e.getName() + "' can not be convert into [" + e.getRequiredType().getSimpleName() + "]");
     }
@@ -56,7 +56,7 @@ public final class GlobalErrorHandler {
      * @return The error message for web user
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity handle(MissingServletRequestParameterException e) {
+    public ResponseEntity<Error> handle(MissingServletRequestParameterException e) {
         LOGGER.error("{}", e.getMessage());
         return buildResponse(HttpStatus.BAD_REQUEST, "The parameter : " + e.getParameterName() + " is mandatory.");
     }
@@ -68,7 +68,7 @@ public final class GlobalErrorHandler {
      * @return The error message for web user
      */
     @ExceptionHandler(UserException.class)
-    public ResponseEntity handle(UserException e) {
+    public ResponseEntity<Error> handle(UserException e) {
         LOGGER.error("{}", e.getMessage());
         return buildResponse(HttpStatus.BAD_REQUEST, e.getMessage());
     }
@@ -80,7 +80,7 @@ public final class GlobalErrorHandler {
      * @return The error message for web user
      */
     @ExceptionHandler(ResourceDoesNotExistException.class)
-    public ResponseEntity handle(ResourceDoesNotExistException e) {
+    public ResponseEntity<Error> handle(ResourceDoesNotExistException e) {
         return buildResponse(HttpStatus.NOT_FOUND, ResourceDoesNotExistException.MESSAGE);
     }
 
@@ -91,7 +91,7 @@ public final class GlobalErrorHandler {
      * @return The error message for web user
      */
     @ExceptionHandler(ResourceNotLoadedException.class)
-    public ResponseEntity handle(ResourceNotLoadedException e) {
+    public ResponseEntity<Error> handle(ResourceNotLoadedException e) {
         return buildResponse(HttpStatus.ACCEPTED, ResourceNotLoadedException.MESSAGE);
     }
 

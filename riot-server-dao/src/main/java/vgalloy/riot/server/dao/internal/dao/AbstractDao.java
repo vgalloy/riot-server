@@ -41,13 +41,13 @@ public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements 
      * @param databaseName   the database name
      * @param collectionName the collection name
      */
+    @SuppressWarnings("unchecked")
     protected AbstractDao(String databaseUrl, String databaseName, String collectionName) {
+        Objects.requireNonNull(collectionName);
         this.databaseUrl = Objects.requireNonNull(databaseUrl);
         this.databaseName = Objects.requireNonNull(databaseName);
+        this.dataObjectClass = (Class<DPO>) ParameterizedType.class.cast(getClass().getGenericSuperclass()).getActualTypeArguments()[1];
 
-        Objects.requireNonNull(collectionName);
-        dataObjectClass = (Class<DPO>) ParameterizedType.class.cast(getClass().getGenericSuperclass()).getActualTypeArguments()[1];
-        Objects.requireNonNull(dataObjectClass);
         DBCollection dbCollection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
                 .getDB(databaseName)
                 .getDBCollection(collectionName)
@@ -86,11 +86,11 @@ public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements 
                 .map(DpoMapper::mapToEntity);
     }
 
-    public String getDatabaseUrl() {
+    protected String getDatabaseUrl() {
         return databaseUrl;
     }
 
-    public String getDatabaseName() {
+    protected String getDatabaseName() {
         return databaseName;
     }
 }

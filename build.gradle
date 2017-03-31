@@ -97,6 +97,28 @@ allprojects {
         findbugsTest.enabled = false
     }
 
+    compileJava.options*.compilerArgs = [
+            '-Xlint:cast',
+            '-Xlint:classfile',
+            '-Xlint:deprecation',
+            '-Xlint:dep-ann',
+            '-Xlint:divzero',
+            '-Xlint:empty',
+            '-Xlint:fallthrough',
+            '-Xlint:finally',
+            '-Xlint:overrides',
+            '-Xlint:path',
+            '-Xlint:processing',
+            '-Xlint:rawtypes',
+            '-Xlint:serial',
+            '-Xlint:static',
+            '-Xlint:try',
+            '-Xlint:unchecked',
+            '-Xlint:varargs',
+            '-Xlint:-options',
+            '-Werror'
+    ]
+
     test {
         //      testLogging {
         //          events "passed", "skipped", "failed", "standardOut", "standardError"
