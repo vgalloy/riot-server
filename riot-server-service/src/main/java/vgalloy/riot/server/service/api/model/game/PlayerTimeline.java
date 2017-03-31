@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import vgalloy.riot.server.core.api.model.Position;
+import vgalloy.riot.server.dao.api.entity.Position;
 import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 
 /**

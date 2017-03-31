@@ -1,4 +1,4 @@
-package vgalloy.riot.server.core.api.config;
+package vgalloy.riot.server.dao.api.factory;
 
 import java.util.Optional;
 
@@ -24,7 +24,7 @@ public final class ConfigurationLoader {
 
     /**
      * Try to load the configuration at the {@code CONFIGURATION_FILE_NAME} location. If the file is not present try to find the location
-     * at {@code ./config/CONFIGURATION_FILE_NAME} location.
+     * at {@code ./OPTIONAL_CONFIGURATION_FOLDER/CONFIGURATION_FILE_NAME} location.
      *
      * @return the configuration
      * @throws ConfigurationException if both configuration can not be loaded
@@ -51,6 +51,7 @@ public final class ConfigurationLoader {
                     .configure(new Parameters().properties().setFileName(fileName))
                     .getConfiguration());
         } catch (ConfigurationException e) {
+            LOGGER.warn("Unable to load the configuration file : {}", fileName);
             return Optional.empty();
         }
     }

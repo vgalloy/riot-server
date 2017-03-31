@@ -3,7 +3,6 @@ package vgalloy.riot.server.dao.internal.factory;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
-import vgalloy.riot.server.core.api.config.ConfigurationLoader;
 import vgalloy.riot.server.dao.api.dao.ChampionDao;
 import vgalloy.riot.server.dao.api.dao.ItemDao;
 import vgalloy.riot.server.dao.api.dao.MatchDetailDao;
@@ -11,6 +10,7 @@ import vgalloy.riot.server.dao.api.dao.MatchReferenceDao;
 import vgalloy.riot.server.dao.api.dao.RankedStatsDao;
 import vgalloy.riot.server.dao.api.dao.RecentGamesDao;
 import vgalloy.riot.server.dao.api.dao.SummonerDao;
+import vgalloy.riot.server.dao.api.factory.ConfigurationLoader;
 import vgalloy.riot.server.dao.internal.dao.TimelineDao;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDatabaseFactory;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;

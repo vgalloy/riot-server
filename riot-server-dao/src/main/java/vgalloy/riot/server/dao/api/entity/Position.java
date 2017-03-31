@@ -1,4 +1,4 @@
-package vgalloy.riot.server.core.api.model;
+package vgalloy.riot.server.dao.api.entity;
 
 import java.io.Serializable;
 import java.util.Objects;

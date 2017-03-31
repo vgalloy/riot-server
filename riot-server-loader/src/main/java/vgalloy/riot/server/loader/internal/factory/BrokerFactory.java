@@ -4,7 +4,7 @@ import com.rabbitmq.client.ConnectionFactory;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
-import vgalloy.riot.server.core.api.config.ConfigurationLoader;
+import vgalloy.riot.server.dao.api.factory.ConfigurationLoader;
 import vgalloy.riot.server.loader.api.service.LoaderClient;
 import vgalloy.riot.server.loader.api.service.exception.LoaderException;
 import vgalloy.riot.server.loader.internal.factory.supplier.ConnectionFactorySupplier;

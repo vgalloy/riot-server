@@ -1,6 +1,6 @@
 package vgalloy.riot.server.service.internal.service.mapper;
 
-import vgalloy.riot.server.core.api.model.Position;
+import vgalloy.riot.server.dao.api.entity.Position;
 
 /**
  * Created by Vincent Galloy on 23/08/16.

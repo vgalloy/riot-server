@@ -2,7 +2,6 @@ FROM java:8
 
 WORKDIR server
 
-VOLUME /server/config
 VOLUME /logs
 
 EXPOSE 8080
