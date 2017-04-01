@@ -1,4 +1,4 @@
-package vgalloy.riot.server.dao.internal.dao.impl.summoner;
+package vgalloy.riot.server.dao.api.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;

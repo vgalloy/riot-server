@@ -4,8 +4,8 @@ import java.util.List;
 
 import vgalloy.riot.api.api.dto.summoner.SummonerDto;
 import vgalloy.riot.server.dao.api.entity.Entity;
+import vgalloy.riot.server.dao.api.entity.GetSummonersQuery;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
-import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
 
 /**
  * Created by Vincent Galloy on 28/08/16.

@@ -20,7 +20,7 @@ import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.dao.api.entity.wrapper.CommonDpoWrapper;
-import vgalloy.riot.server.dao.internal.dao.impl.summoner.GetSummonersQuery;
+import vgalloy.riot.server.dao.api.entity.GetSummonersQuery;
 import vgalloy.riot.server.dao.internal.dao.impl.summoner.SummonerDaoImpl;
 
 /**
