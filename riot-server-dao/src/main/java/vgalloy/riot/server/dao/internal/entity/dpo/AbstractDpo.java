@@ -87,8 +87,8 @@ public abstract class AbstractDpo<DTO> {
         }
         AbstractDpo<?> that = (AbstractDpo<?>) o;
         return Objects.equals(lastUpdate, that.lastUpdate) &&
-                Objects.equals(dpoId, that.dpoId) &&
-                Objects.equals(item, that.item);
+            Objects.equals(dpoId, that.dpoId) &&
+            Objects.equals(item, that.item);
     }
 
     @Override
@@ -99,9 +99,9 @@ public abstract class AbstractDpo<DTO> {
     @Override
     public String toString() {
         return "AbstractDpo{" +
-                "lastUpdate=" + lastUpdate +
-                ", dpoId=" + dpoId +
-                ", item=" + item +
-                '}';
+            "lastUpdate=" + lastUpdate +
+            ", dpoId=" + dpoId +
+            ", item=" + item +
+            '}';
     }
 }

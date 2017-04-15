@@ -49,7 +49,7 @@ public final class LoadingMessage implements Serializable {
         }
         LoadingMessage that = (LoadingMessage) o;
         return loaderType == that.loaderType &&
-                Objects.equals(value, that.value);
+            Objects.equals(value, that.value);
     }
 
     @Override
@@ -60,9 +60,9 @@ public final class LoadingMessage implements Serializable {
     @Override
     public String toString() {
         return "LoadingMessage{" +
-                "loaderType=" + loaderType +
-                ", value='" + value + '\'' +
-                '}';
+            "loaderType=" + loaderType +
+            ", value='" + value + '\'' +
+            '}';
     }
 
     /**

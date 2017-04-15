@@ -36,8 +36,8 @@ public final class Request<DTO> {
     @Override
     public String toString() {
         return "Request{" +
-                "query=" + query +
-                ", priority=" + priority +
-                '}';
+            "query=" + query +
+            ", priority=" + priority +
+            '}';
     }
 }

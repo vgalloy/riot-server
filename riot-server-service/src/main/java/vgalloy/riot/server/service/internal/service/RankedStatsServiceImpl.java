@@ -29,10 +29,10 @@ public final class RankedStatsServiceImpl implements RankedStatsService {
     @Override
     public ResourceWrapper<RankedStats> get(SummonerId summonerId) {
         return rankedStatsDao.get(new CommonDpoId(summonerId.getRegion(), summonerId.getId()))
-                .map(Entity::getItem)
-                .map(e -> e.map(i -> new RankedStats(summonerId, i.getChampions(), i.getModifyDate()))
-                        .map(ResourceWrapper::of)
-                        .orElseGet(ResourceWrapper::doesNotExist))
-                .orElseGet(ResourceWrapper::notLoaded);
+            .map(Entity::getItem)
+            .map(e -> e.map(i -> new RankedStats(summonerId, i.getChampions(), i.getModifyDate()))
+                .map(ResourceWrapper::of)
+                .orElseGet(ResourceWrapper::doesNotExist))
+            .orElseGet(ResourceWrapper::notLoaded);
     }
 }

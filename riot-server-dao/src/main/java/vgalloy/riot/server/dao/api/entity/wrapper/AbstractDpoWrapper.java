@@ -45,7 +45,7 @@ public abstract class AbstractDpoWrapper<DTO, ID extends DpoId> implements Seria
         }
         AbstractDpoWrapper<?, ?> that = (AbstractDpoWrapper<?, ?>) o;
         return Objects.equals(itemId, that.itemId) &&
-                Objects.equals(item, that.item);
+            Objects.equals(item, that.item);
     }
 
     @Override

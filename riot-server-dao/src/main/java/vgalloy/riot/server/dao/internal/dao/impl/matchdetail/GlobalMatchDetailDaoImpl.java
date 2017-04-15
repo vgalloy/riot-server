@@ -65,7 +65,7 @@ public final class GlobalMatchDetailDaoImpl implements MatchDetailDao {
 
         Optional<Entity<MatchDetail, MatchDetailId>> optional = matchDetailDao.get(matchDetailId);
         optional.map(AbstractDpoWrapper::getItem)
-                .ifPresent(e -> e.ifPresent(i -> i.setTimeline(getTimeline(matchDetailId))));
+            .ifPresent(e -> e.ifPresent(i -> i.setTimeline(getTimeline(matchDetailId))));
 
         return optional;
     }
@@ -108,8 +108,8 @@ public final class GlobalMatchDetailDaoImpl implements MatchDetailDao {
      */
     private Timeline getTimeline(MatchDetailId matchDetailId) {
         return timelineDao.get(matchDetailId)
-                .map(AbstractDpoWrapper::getItem)
-                .map(e -> e.orElse(null))
-                .orElse(null);
+            .map(AbstractDpoWrapper::getItem)
+            .map(e -> e.orElse(null))
+            .orElse(null);
     }
 }

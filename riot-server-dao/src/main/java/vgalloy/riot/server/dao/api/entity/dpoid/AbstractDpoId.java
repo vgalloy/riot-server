@@ -50,7 +50,7 @@ public abstract class AbstractDpoId implements DpoId {
         }
         AbstractDpoId that = (AbstractDpoId) o;
         return region == that.region &&
-                Objects.equals(id, that.id);
+            Objects.equals(id, that.id);
     }
 
     @Override

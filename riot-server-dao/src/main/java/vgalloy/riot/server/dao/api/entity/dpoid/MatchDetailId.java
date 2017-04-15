@@ -55,9 +55,9 @@ public final class MatchDetailId extends AbstractDpoId {
     @Override
     public String toString() {
         return "MatchDetailId{" +
-                "region=" + getRegion() +
-                ", id=" + getId() +
-                ", matchDate=" + matchDate +
-                "}";
+            "region=" + getRegion() +
+            ", id=" + getId() +
+            ", matchDate=" + matchDate +
+            "}";
     }
 }

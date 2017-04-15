@@ -46,16 +46,16 @@ public final class GenericDaoImpl<DTO, DATA_OBJECT extends AbstractDpo<DTO>> imp
     public Optional<DATA_OBJECT> getRandom(Region region) {
         Objects.requireNonNull(region);
         int max = collection
-                .find(DBQuery.is("region", region))
-                .count();
+            .find(DBQuery.is("region", region))
+            .count();
         if (max == 0) {
             return Optional.empty();
         }
         int rand = Math.abs(RANDOM.nextInt() % max);
         return Optional.of(collection
-                .find(DBQuery.is("region", region))
-                .limit(-1)
-                .skip(rand)
-                .next());
+            .find(DBQuery.is("region", region))
+            .limit(-1)
+            .skip(rand)
+            .next());
     }
 }

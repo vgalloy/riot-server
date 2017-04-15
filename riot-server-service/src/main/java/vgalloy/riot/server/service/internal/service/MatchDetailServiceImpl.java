@@ -38,9 +38,9 @@ public final class MatchDetailServiceImpl implements MatchDetailService {
 
         Optional<Entity<MatchDetail, MatchDetailId>> result = matchDetailDao.get(new MatchDetailId(gameId.getRegion(), gameId.getId(), gameId.getMatchDate()));
         return result.map(AbstractDpoWrapper::getItem)
-                .map(e -> e.map(GameMapper::map)
-                        .map(ResourceWrapper::of)
-                        .orElseGet(ResourceWrapper::doesNotExist))
-                .orElseGet(ResourceWrapper::notLoaded);
+            .map(e -> e.map(GameMapper::map)
+                .map(ResourceWrapper::of)
+                .orElseGet(ResourceWrapper::doesNotExist))
+            .orElseGet(ResourceWrapper::notLoaded);
     }
 }

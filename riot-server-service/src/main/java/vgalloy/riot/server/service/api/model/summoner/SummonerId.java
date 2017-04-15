@@ -43,7 +43,7 @@ public final class SummonerId {
         }
         SummonerId that = (SummonerId) o;
         return region == that.region &&
-                Objects.equals(id, that.id);
+            Objects.equals(id, that.id);
     }
 
     @Override
@@ -54,8 +54,8 @@ public final class SummonerId {
     @Override
     public String toString() {
         return "SummonerId{" +
-                "region=" + region +
-                ", id=" + id +
-                '}';
+            "region=" + region +
+            ", id=" + id +
+            '}';
     }
 }

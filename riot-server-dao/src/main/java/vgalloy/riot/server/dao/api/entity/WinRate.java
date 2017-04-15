@@ -44,7 +44,7 @@ public final class WinRate implements Serializable {
         }
         WinRate winRate = (WinRate) o;
         return win == winRate.win &&
-                lose == winRate.lose;
+            lose == winRate.lose;
     }
 
     @Override
@@ -55,8 +55,8 @@ public final class WinRate implements Serializable {
     @Override
     public String toString() {
         return "WinRate{" +
-                "win=" + win +
-                ", lose=" + lose +
-                '}';
+            "win=" + win +
+            ", lose=" + lose +
+            '}';
     }
 }

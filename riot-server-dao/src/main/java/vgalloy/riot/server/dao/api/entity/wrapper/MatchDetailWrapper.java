@@ -25,8 +25,8 @@ public final class MatchDetailWrapper extends AbstractDpoWrapper<MatchDetail, Ma
     @Override
     public String toString() {
         return "MatchDetailWrapper{" +
-                "itemId=" + getItemId() +
-                ", item=" + getItem() +
-                '}';
+            "itemId=" + getItemId() +
+            ", item=" + getItem() +
+            '}';
     }
 }

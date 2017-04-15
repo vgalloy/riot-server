@@ -24,7 +24,6 @@ import vgalloy.riot.server.dao.internal.dao.AbstractDao;
 import vgalloy.riot.server.dao.internal.dao.factory.MatchDetailHelper;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDatabaseFactory;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
-import vgalloy.riot.server.dao.internal.entity.dpo.AbstractDpo;
 import vgalloy.riot.server.dao.internal.entity.dpo.ChampionDpo;
 
 /**
@@ -155,7 +154,7 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
             .limit(5)
             .toArray()
             .stream()
-            .map(AbstractDpo::getItem)
+            .map(ChampionDpo::getItem)
             .collect(Collectors.toList());
     }
 }

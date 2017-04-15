@@ -35,14 +35,14 @@ public final class ItemListMapper {
 
         if (timeline.getFrames() != null) {
             timeline.getFrames().stream()
+                .filter(Objects::nonNull)
+                .map(Frame::getEvents)
+                .filter(Objects::nonNull)
+                .forEach(events -> events.stream()
                     .filter(Objects::nonNull)
-                    .map(Frame::getEvents)
-                    .filter(Objects::nonNull)
-                    .forEach(events -> events.stream()
-                            .filter(Objects::nonNull)
-                            .filter(event -> event.getParticipantId() != null)
-                            .filter(event -> event.getParticipantId() == participantId)
-                            .forEach(itemListBuilder::addEvent));
+                    .filter(event -> event.getParticipantId() != null)
+                    .filter(event -> event.getParticipantId() == participantId)
+                    .forEach(itemListBuilder::addEvent));
         }
 
         return itemListBuilder.getItemAtTheEnd();

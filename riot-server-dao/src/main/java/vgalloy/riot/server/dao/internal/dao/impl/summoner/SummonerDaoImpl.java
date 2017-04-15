@@ -52,12 +52,12 @@ public final class SummonerDaoImpl extends AbstractDao<SummonerDto, SummonerDpo>
         }
 
         return collection.find(dbQuery)
-                .sort(new BasicDBObject("_id", 1))
-                .skip(getSummonersQuery.getOffset())
-                .limit(getSummonersQuery.getLimit())
-                .toArray()
-                .stream()
-                .map(DpoMapper::mapToEntity)
-                .collect(Collectors.toList());
+            .sort(new BasicDBObject("_id", 1))
+            .skip(getSummonersQuery.getOffset())
+            .limit(getSummonersQuery.getLimit())
+            .toArray()
+            .stream()
+            .map(DpoMapper::mapToEntity)
+            .collect(Collectors.toList());
     }
 }

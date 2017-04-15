@@ -31,7 +31,7 @@ public abstract class AbstractDaoException extends RuntimeException {
     /**
      * Constructor.
      *
-     * @param cause   the cause
+     * @param cause the cause
      */
     public AbstractDaoException(Throwable cause) {
         super(cause);

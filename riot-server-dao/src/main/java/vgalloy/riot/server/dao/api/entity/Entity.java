@@ -55,7 +55,7 @@ public final class Entity<DTO, ID extends DpoId> extends AbstractDpoWrapper<DTO,
     @Override
     public String toString() {
         return "Entity{" +
-                ", lastUpdate=" + lastUpdate +
-                '}';
+            ", lastUpdate=" + lastUpdate +
+            '}';
     }
 }

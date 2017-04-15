@@ -34,8 +34,8 @@ public final class ConfigurationSupplier implements Supplier<Configuration> {
     public Configuration get() {
         try {
             return new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
-                    .configure(new Parameters().properties().setFileName(configurationName))
-                    .getConfiguration();
+                .configure(new Parameters().properties().setFileName(configurationName))
+                .getConfiguration();
         } catch (ConfigurationException e) {
             throw new LoaderException("Unable to load configuration", e);
         }

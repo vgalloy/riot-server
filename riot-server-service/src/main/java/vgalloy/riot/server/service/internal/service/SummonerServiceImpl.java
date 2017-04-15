@@ -47,32 +47,32 @@ public final class SummonerServiceImpl implements SummonerService {
     @Override
     public List<GameSummary> getLastGames(SummonerId summonerId, LocalDateTime from, LocalDateTime to) {
         return matchDetailDao.findMatchDetailBySummonerId(new CommonDpoId(summonerId.getRegion(), summonerId.getId()), from, to).stream()
-                .map(e -> GameSummaryMapper.map(e, summonerId.getId()))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
+            .map(e -> GameSummaryMapper.map(e, summonerId.getId()))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .collect(Collectors.toList());
     }
 
     @Override
     public ResourceWrapper<Summoner> get(SummonerId summonerId) {
         loaderClient.loadAsyncSummonerById(summonerId.getRegion(), summonerId.getId());
         return summonerDao.get(new CommonDpoId(summonerId.getRegion(), summonerId.getId()))
-                .map(Entity::getItem)
-                .map(e -> e.map(i -> SummonerMapper.map(summonerId.getRegion(), i))
-                        .map(ResourceWrapper::of)
-                        .orElseGet(ResourceWrapper::doesNotExist))
-                .orElseGet(ResourceWrapper::notLoaded);
+            .map(Entity::getItem)
+            .map(e -> e.map(i -> SummonerMapper.map(summonerId.getRegion(), i))
+                .map(ResourceWrapper::of)
+                .orElseGet(ResourceWrapper::doesNotExist))
+            .orElseGet(ResourceWrapper::notLoaded);
     }
 
     @Override
     public List<Summoner> getSummoners(GetSummonersQuery getSummonersQuery) {
         getSummonersQuery.getSummonersName()
-                .forEach(summonerName -> getSummonersQuery.getRegions()
-                        .forEach(region -> loaderClient.loadAsyncSummonerByName(region, summonerName)));
+            .forEach(summonerName -> getSummonersQuery.getRegions()
+                .forEach(region -> loaderClient.loadAsyncSummonerByName(region, summonerName)));
 
         return summonerDao.getSummoners(getSummonersQuery)
-                .stream()
-                .map(SummonerMapper::map)
-                .collect(Collectors.toList());
+            .stream()
+            .map(SummonerMapper::map)
+            .collect(Collectors.toList());
     }
 }

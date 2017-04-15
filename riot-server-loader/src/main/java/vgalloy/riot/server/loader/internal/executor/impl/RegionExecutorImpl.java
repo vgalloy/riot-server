@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Random;
 
 import javax.ws.rs.client.ResponseProcessingException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,9 +83,9 @@ public final class RegionExecutorImpl implements RegionExecutor {
      */
     private void election() {
         long max = requestList.stream()
-                .map(Request::getPriority)
-                .mapToInt(Integer::intValue)
-                .sum();
+            .map(Request::getPriority)
+            .mapToInt(Integer::intValue)
+            .sum();
         long rand = Math.abs(random.nextLong() % max);
         for (Request<?> request : requestList) {
             if (rand < request.getPriority()) {
@@ -123,6 +122,6 @@ public final class RegionExecutorImpl implements RegionExecutor {
             cycleManager.sleep();
         } while (cycleManager.tryAgain());
         throw new LoaderException("After " + cycleManager.getIteration() + " attempts and " +
-                cycleManager.totalExecutionTimeMillis() + " ms, I give up. I can not load the query : " + query.toString());
+            cycleManager.totalExecutionTimeMillis() + " ms, I give up. I can not load the query : " + query.toString());
     }
 }

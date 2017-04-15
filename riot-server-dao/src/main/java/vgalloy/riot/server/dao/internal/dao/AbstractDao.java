@@ -49,9 +49,9 @@ public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements 
         this.dataObjectClass = (Class<DPO>) ParameterizedType.class.cast(getClass().getGenericSuperclass()).getActualTypeArguments()[1];
 
         DBCollection dbCollection = MongoDriverObjectFactory.getMongoClient(databaseUrl)
-                .getDB(databaseName)
-                .getDBCollection(collectionName)
-                .get();
+            .getDB(databaseName)
+            .getDBCollection(collectionName)
+            .get();
         collection = JacksonDBCollection.wrap(dbCollection, dataObjectClass, String.class);
         genericDao = new GenericDaoImpl<>(collection);
     }
@@ -75,7 +75,7 @@ public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements 
         Objects.requireNonNull(dpoId);
 
         return genericDao.getById(DpoIdMapper.toNormalizedString(dpoId))
-                .map(DpoMapper::mapToEntity);
+            .map(DpoMapper::mapToEntity);
     }
 
     @Override
@@ -83,7 +83,7 @@ public abstract class AbstractDao<DTO, DPO extends AbstractDpo<DTO>> implements 
         Objects.requireNonNull(region);
 
         return genericDao.getRandom(region)
-                .map(DpoMapper::mapToEntity);
+            .map(DpoMapper::mapToEntity);
     }
 
     protected String getDatabaseUrl() {

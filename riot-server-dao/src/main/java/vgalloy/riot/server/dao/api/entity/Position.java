@@ -52,7 +52,7 @@ public final class Position implements Serializable {
         }
         Position position = (Position) o;
         return x == position.x &&
-                y == position.y;
+            y == position.y;
     }
 
     @Override
@@ -63,8 +63,8 @@ public final class Position implements Serializable {
     @Override
     public String toString() {
         return "Position{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+            "x=" + x +
+            ", y=" + y +
+            '}';
     }
 }

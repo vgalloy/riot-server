@@ -52,16 +52,16 @@ public final class WinRateHelper {
      */
     public static void updateWinRate(MongoDatabaseFactory mongoDatabaseFactory) {
         mongoDatabaseFactory.getMongoCollection(RankedStatsDaoImpl.COLLECTION_NAME).get().aggregate(Arrays.asList(
-                new BasicDBObject("$unwind", "$item.champions"),
-                new BasicDBObject("$group",
-                        new Document("_id", new Document("championId", "$item.champions.id").append("played", "$item.champions.stats.totalSessionsPlayed"))
-                                .append("played", new Document("$sum", "$item.champions.stats.totalSessionsPlayed"))
-                                .append("won", new Document("$sum", "$item.champions.stats.totalSessionsWon"))
-                                .append("total", new Document("$sum", 1))
-                ),
-                new BasicDBObject("$project", new Document("result", new Document("$divide", new String[]{"$won", "$played"})).append("total", 1)),
-                new BasicDBObject("$sort", new Document("_id", 1)),
-                new BasicDBObject("$out", COLLECTION_NAME)
+            new BasicDBObject("$unwind", "$item.champions"),
+            new BasicDBObject("$group",
+                new Document("_id", new Document("championId", "$item.champions.id").append("played", "$item.champions.stats.totalSessionsPlayed"))
+                    .append("played", new Document("$sum", "$item.champions.stats.totalSessionsPlayed"))
+                    .append("won", new Document("$sum", "$item.champions.stats.totalSessionsWon"))
+                    .append("total", new Document("$sum", 1))
+            ),
+            new BasicDBObject("$project", new Document("result", new Document("$divide", new String[]{"$won", "$played"})).append("total", 1)),
+            new BasicDBObject("$sort", new Document("_id", 1)),
+            new BasicDBObject("$out", COLLECTION_NAME)
         )).iterator();
     }
 }

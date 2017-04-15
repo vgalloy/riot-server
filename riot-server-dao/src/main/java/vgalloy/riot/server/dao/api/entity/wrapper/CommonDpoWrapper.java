@@ -24,8 +24,8 @@ public final class CommonDpoWrapper<DTO> extends AbstractDpoWrapper<DTO, DpoId> 
     @Override
     public String toString() {
         return "AbstractDpoWrapper{" +
-                "itemId=" + getItemId() +
-                ", item=" + getItem() +
-                '}';
+            "itemId=" + getItemId() +
+            ", item=" + getItem() +
+            '}';
     }
 }

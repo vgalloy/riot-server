@@ -196,9 +196,9 @@ public final class SummonerLoaderImpl implements SummonerLoader {
         List<Long> matchIdList = new ArrayList<>();
         if (matchList != null && matchList.getMatches() != null) {
             matchIdList = matchList.getMatches().stream()
-                    .filter(this::shouldILoadThisMatch)
-                    .map(MatchReference::getMatchId)
-                    .collect(Collectors.toList());
+                .filter(this::shouldILoadThisMatch)
+                .map(MatchReference::getMatchId)
+                .collect(Collectors.toList());
         }
         for (Long matchId : matchIdList) {
             LOGGER.info("{} load matchDetail : {}", RegionPrinter.getRegion(summonerId.getRegion()), matchId);
@@ -238,12 +238,12 @@ public final class SummonerLoaderImpl implements SummonerLoader {
             return;
         }
         matchDetail.getParticipantIdentities().stream()
-                .filter(Objects::nonNull)
-                .map(ParticipantIdentity::getPlayer)
-                .filter(Objects::nonNull)
-                .map(SummonerDtoMapper::map)
-                .map(e -> new CommonDpoWrapper<>(new CommonDpoId(matchDetail.getRegion(), e.getId()), e))
-                .filter(e -> !summonerDao.get(e.getItemId()).isPresent())
-                .forEach(summonerDao::save);
+            .filter(Objects::nonNull)
+            .map(ParticipantIdentity::getPlayer)
+            .filter(Objects::nonNull)
+            .map(SummonerDtoMapper::map)
+            .map(e -> new CommonDpoWrapper<>(new CommonDpoId(matchDetail.getRegion(), e.getId()), e))
+            .filter(e -> !summonerDao.get(e.getItemId()).isPresent())
+            .forEach(summonerDao::save);
     }
 }

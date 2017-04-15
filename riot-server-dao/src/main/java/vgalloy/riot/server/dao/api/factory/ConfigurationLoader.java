@@ -35,7 +35,7 @@ public final class ConfigurationLoader {
             return defaultConfiguration.get();
         }
         return internalLoadConfiguration(OPTIONAL_CONFIGURATION_FOLDER + "/" + CONFIGURATION_FILE_NAME)
-                .orElseThrow(() -> new ConfigurationException("Unable to load configuration"));
+            .orElseThrow(() -> new ConfigurationException("Unable to load configuration"));
     }
 
     /**
@@ -48,8 +48,8 @@ public final class ConfigurationLoader {
         LOGGER.info("Try to load the configuration file : {}", fileName);
         try {
             return Optional.ofNullable(new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
-                    .configure(new Parameters().properties().setFileName(fileName))
-                    .getConfiguration());
+                .configure(new Parameters().properties().setFileName(fileName))
+                .getConfiguration());
         } catch (ConfigurationException e) {
             LOGGER.warn("Unable to load the configuration file : {}", fileName);
             return Optional.empty();

@@ -40,10 +40,10 @@ public final class ChampionServiceImpl implements ChampionService {
     public ResourceWrapper<ChampionDto> get(DpoId dpoId) {
         loaderClient.loadChampionById(dpoId.getRegion(), dpoId.getId());
         return championDao.get(dpoId)
-                .map(Entity::getItem)
-                .map(e -> e.map(ResourceWrapper::of)
-                        .orElseGet(ResourceWrapper::doesNotExist))
-                .orElseGet(ResourceWrapper::notLoaded);
+            .map(Entity::getItem)
+            .map(e -> e.map(ResourceWrapper::of)
+                .orElseGet(ResourceWrapper::doesNotExist))
+            .orElseGet(ResourceWrapper::notLoaded);
     }
 
     @Override

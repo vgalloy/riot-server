@@ -35,9 +35,9 @@ public final class ItemServiceImpl implements ItemService {
     public ResourceWrapper<ItemDto> get(DpoId dpoId) {
         loaderClient.loadAsyncItemById(dpoId.getRegion(), Math.toIntExact(dpoId.getId()));
         return itemDao.get(dpoId)
-                .map(Entity::getItem)
-                .map(e -> e.map(ResourceWrapper::of)
-                        .orElseGet(ResourceWrapper::doesNotExist))
-                .orElseGet(ResourceWrapper::notLoaded);
+            .map(Entity::getItem)
+            .map(e -> e.map(ResourceWrapper::of)
+                .orElseGet(ResourceWrapper::doesNotExist))
+            .orElseGet(ResourceWrapper::notLoaded);
     }
 }

@@ -56,10 +56,10 @@ public final class ConsumerSupplier implements Supplier<Map<Region, RabbitElemen
             for (Region region : Region.values()) {
                 ConsumerQueueDefinition<LoadingMessage> queueDefinition = RegionalConsumer.getQueueDefinition(region);
                 SummonerLoader summonerLoader = new SummonerLoaderImpl(ExecutorFactory.getRiotApi(),
-                        ExecutorFactory.getExecutor(),
-                        DaoFactory.getSummonerDao(),
-                        DaoFactory.getMatchDetailDao(),
-                        DaoFactory.getRankedStatsDao());
+                    ExecutorFactory.getExecutor(),
+                    DaoFactory.getSummonerDao(),
+                    DaoFactory.getMatchDetailDao(),
+                    DaoFactory.getRankedStatsDao());
 
                 Consumer<LoadingMessage> consumer = new RegionalConsumerImpl(region, summonerLoader, itemLoader, championLoader);
                 RabbitElement rabbitElement = Factory.createConsumer(connectionFactory, queueDefinition, consumer);
