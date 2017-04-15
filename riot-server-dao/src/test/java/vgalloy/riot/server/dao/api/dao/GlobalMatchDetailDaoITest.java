@@ -42,7 +42,7 @@ public final class GlobalMatchDetailDaoITest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalMatchDetailDaoITest.class);
     private static final String URL = "localhost";
-    private static final int PORT = 29503;
+    private static final int PORT = 29502;
 
     private static MongodProcess process;
     private static MongodExecutable executable;

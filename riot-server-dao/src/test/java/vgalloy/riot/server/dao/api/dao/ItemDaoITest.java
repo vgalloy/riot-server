@@ -30,7 +30,7 @@ public final class ItemDaoITest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemDaoITest.class);
     private static final String URL = "localhost";
-    private static final int PORT = 29502;
+    private static final int PORT = 29503;
 
     private static MongodProcess process;
     private static MongodExecutable executable;
