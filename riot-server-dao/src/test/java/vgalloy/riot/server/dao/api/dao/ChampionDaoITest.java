@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.DaoTestUtil;
+import vgalloy.riot.server.dao.api.entity.ChampionName;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
@@ -76,13 +77,15 @@ public final class ChampionDaoITest {
         ChampionDto dto2 = new ChampionDto();
         dto2.setName("Lee Sin2");
         dao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.KR, 20L), dto2));
+        dto2.setName("Le blanc");
+        dao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.KR, 21L), dto2));
 
         // WHEN
-        List<ChampionDto> result = dao.findChampionByName(Region.KR, "Lee");
+        List<ChampionName> result = dao.autoCompleteChampionName(Region.KR, "Lee", 10);
 
         // THEN
         Assert.assertNotNull(result);
         Assert.assertEquals(2, result.size());
-        Assert.assertEquals(dto, result.get(0));
+        Assert.assertEquals("Lee Sin", result.get(0).getChampionName());
     }
 }

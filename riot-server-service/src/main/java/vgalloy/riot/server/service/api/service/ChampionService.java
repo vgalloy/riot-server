@@ -1,9 +1,12 @@
 package vgalloy.riot.server.service.api.service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
+import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
+import vgalloy.riot.server.dao.api.entity.ChampionName;
 import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
 import vgalloy.riot.server.service.api.model.wrapper.ResourceWrapper;
@@ -48,4 +51,13 @@ public interface ChampionService {
      * @return the win rate of the champion. Each entry is given with a timestamp.
      */
     Map<LocalDate, WinRate> getWinRateDuringPeriodOfTime(int championId, LocalDate startDate, LocalDate endDate);
+
+    /**
+     * Get all {@link ChampionName} where name start with the given name.
+     *
+     * @param region       the region
+     * @param championName the champion name
+     * @return a list of champion name
+     */
+    List<ChampionName> autoCompleteChampionName(Region region, String championName);
 }

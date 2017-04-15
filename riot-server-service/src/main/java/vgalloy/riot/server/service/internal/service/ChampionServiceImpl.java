@@ -2,11 +2,14 @@ package vgalloy.riot.server.service.internal.service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.dao.ChampionDao;
+import vgalloy.riot.server.dao.api.entity.ChampionName;
 import vgalloy.riot.server.dao.api.entity.Entity;
 import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.api.entity.dpoid.DpoId;
@@ -72,5 +75,10 @@ public final class ChampionServiceImpl implements ChampionService {
         }
 
         return championDao.getWinRateDuringPeriodOfTime(championId, startDate, endDate);
+    }
+
+    @Override
+    public List<ChampionName> autoCompleteChampionName(Region region, String championName) {
+        return championDao.autoCompleteChampionName(region, championName, 10);
     }
 }

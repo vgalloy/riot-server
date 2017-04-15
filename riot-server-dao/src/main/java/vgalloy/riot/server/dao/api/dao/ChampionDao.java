@@ -6,6 +6,7 @@ import java.util.Map;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
+import vgalloy.riot.server.dao.api.entity.ChampionName;
 import vgalloy.riot.server.dao.api.entity.WinRate;
 
 /**
@@ -55,7 +56,8 @@ public interface ChampionDao extends CommonDao<ChampionDto> {
      *
      * @param region       the region
      * @param championName the champion name
+     * @param limit        the max number of champion fetched
      * @return a list of champion
      */
-    List<ChampionDto> findChampionByName(Region region, String championName);
+    List<ChampionName> autoCompleteChampionName(Region region, String championName, int limit);
 }

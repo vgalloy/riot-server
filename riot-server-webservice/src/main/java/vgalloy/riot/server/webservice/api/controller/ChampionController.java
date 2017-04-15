@@ -1,10 +1,13 @@
 package vgalloy.riot.server.webservice.api.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
+import vgalloy.riot.server.dao.api.entity.ChampionName;
 import vgalloy.riot.server.dao.api.entity.WinRate;
+import vgalloy.riot.server.webservice.api.dto.AutoCompleteChampionName;
 
 /**
  * Created by Vincent Galloy on 13/06/16.
@@ -47,4 +50,12 @@ public interface ChampionController {
      * @return a map (champion Id, win rate)
      */
     Map<Integer, WinRate> getWinRateForAllChampion(Long day);
+
+    /**
+     * Get all {@link ChampionName} where name start with the given name.
+     *
+     * @param autoCompleteChampionName the autoCompleteChampionName
+     * @return a list of champion
+     */
+    List<ChampionName> autoCompleteChampionName(AutoCompleteChampionName autoCompleteChampionName);
 }

@@ -19,12 +19,14 @@ import org.mongojack.DBQuery;
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.dao.ChampionDao;
+import vgalloy.riot.server.dao.api.entity.ChampionName;
 import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.internal.dao.AbstractDao;
 import vgalloy.riot.server.dao.internal.dao.factory.MatchDetailHelper;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDatabaseFactory;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
 import vgalloy.riot.server.dao.internal.entity.dpo.ChampionDpo;
+import vgalloy.riot.server.dao.internal.mapper.ChampionNameMapper;
 
 /**
  * Created by Vincent Galloy on 28/05/16.
@@ -143,18 +145,19 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
     }
 
     @Override
-    public List<ChampionDto> findChampionByName(Region region, String championName) {
+    public List<ChampionName> autoCompleteChampionName(Region region, String championName, int limit) {
         Objects.requireNonNull(region);
         Objects.requireNonNull(championName);
 
-        DBQuery.Query dbQuery = DBQuery.in("region", region)
-            .and(DBQuery.regex("item.name", Pattern.compile(championName + "*")));
+        DBQuery.Query dbQuery = DBQuery.empty()
+            .is("region", region)
+            .regex("item.name", Pattern.compile(championName));
 
         return collection.find(dbQuery)
-            .limit(5)
+            .limit(limit)
             .toArray()
             .stream()
-            .map(ChampionDpo::getItem)
+            .map(ChampionNameMapper::map)
             .collect(Collectors.toList());
     }
 }
