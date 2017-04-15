@@ -1,8 +1,10 @@
 package vgalloy.riot.server.dao.api.dao;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
+import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.entity.WinRate;
 
@@ -47,4 +49,13 @@ public interface ChampionDao extends CommonDao<ChampionDto> {
      * @return a map (champion Id, win rate)
      */
     Map<Integer, WinRate> getWinRateForAllChampion(LocalDate date);
+
+    /**
+     * Get all {@link ChampionDto} where name start with the given name.
+     *
+     * @param region       the region
+     * @param championName the champion name
+     * @return a list of champion
+     */
+    List<ChampionDto> findChampionByName(Region region, String championName);
 }

@@ -4,14 +4,19 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
+import org.mongojack.DBQuery;
 
+import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.dao.ChampionDao;
 import vgalloy.riot.server.dao.api.entity.WinRate;
@@ -19,6 +24,7 @@ import vgalloy.riot.server.dao.internal.dao.AbstractDao;
 import vgalloy.riot.server.dao.internal.dao.factory.MatchDetailHelper;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDatabaseFactory;
 import vgalloy.riot.server.dao.internal.dao.factory.MongoDriverObjectFactory;
+import vgalloy.riot.server.dao.internal.entity.dpo.AbstractDpo;
 import vgalloy.riot.server.dao.internal.entity.dpo.ChampionDpo;
 
 /**
@@ -65,9 +71,9 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
     @Override
     public WinRate getWinRate(int championId, LocalDate localDate) {
         MongoCollection<Document> collection = MongoDriverObjectFactory.getMongoClient(getDatabaseUrl())
-                .getMongoDatabase(getDatabaseName())
-                .getMongoCollection(MatchDetailHelper.getCollectionName(localDate))
-                .get();
+            .getMongoDatabase(getDatabaseName())
+            .getMongoCollection(MatchDetailHelper.getCollectionName(localDate))
+            .get();
 
         BasicDBObject projectObject = new BasicDBObject("item.participants.championId", 1);
         projectObject.put("item.participants.stats.winner", 1);
@@ -76,11 +82,11 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
         groupObject.put("value", new BasicDBObject("$sum", 1));
 
         AggregateIterable<Document> aggregationResult = collection.aggregate(Arrays.asList(
-                new BasicDBObject("$match", new BasicDBObject("item.participants.championId", championId)),
-                new BasicDBObject("$project", projectObject),
-                new BasicDBObject("$unwind", "$item.participants"),
-                new BasicDBObject("$match", new BasicDBObject("item.participants.championId", championId)),
-                new BasicDBObject("$group", groupObject)
+            new BasicDBObject("$match", new BasicDBObject("item.participants.championId", championId)),
+            new BasicDBObject("$project", projectObject),
+            new BasicDBObject("$unwind", "$item.participants"),
+            new BasicDBObject("$match", new BasicDBObject("item.participants.championId", championId)),
+            new BasicDBObject("$group", groupObject)
         ));
 
         Integer win = 0;
@@ -100,9 +106,9 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
     @Override
     public Map<Integer, WinRate> getWinRateForAllChampion(LocalDate date) {
         MongoCollection<Document> collection = MongoDriverObjectFactory.getMongoClient(getDatabaseUrl())
-                .getMongoDatabase(getDatabaseName())
-                .getMongoCollection(MatchDetailHelper.getCollectionName(date))
-                .get();
+            .getMongoDatabase(getDatabaseName())
+            .getMongoCollection(MatchDetailHelper.getCollectionName(date))
+            .get();
 
         BasicDBObject projectObject = new BasicDBObject("item.participants.championId", 1);
         projectObject.put("item.participants.stats.winner", 1);
@@ -114,9 +120,9 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
         groupObject.put("value", new BasicDBObject("$sum", 1));
 
         AggregateIterable<Document> aggregationResult = collection.aggregate(Arrays.asList(
-                new BasicDBObject("$project", projectObject),
-                new BasicDBObject("$unwind", "$item.participants"),
-                new BasicDBObject("$group", groupObject)
+            new BasicDBObject("$project", projectObject),
+            new BasicDBObject("$unwind", "$item.participants"),
+            new BasicDBObject("$group", groupObject)
         ));
 
         Map<Integer, WinRate> result = new HashMap<>();
@@ -135,5 +141,21 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
             }
         }
         return result;
+    }
+
+    @Override
+    public List<ChampionDto> findChampionByName(Region region, String championName) {
+        Objects.requireNonNull(region);
+        Objects.requireNonNull(championName);
+
+        DBQuery.Query dbQuery = DBQuery.in("region", region)
+            .and(DBQuery.regex("item.name", Pattern.compile(championName + "*")));
+
+        return collection.find(dbQuery)
+            .limit(5)
+            .toArray()
+            .stream()
+            .map(AbstractDpo::getItem)
+            .collect(Collectors.toList());
     }
 }

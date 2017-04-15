@@ -1,6 +1,7 @@
 package vgalloy.riot.server.dao.api.dao;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import de.flapdoodle.embed.mongo.MongodExecutable;
@@ -64,5 +65,24 @@ public final class ChampionDaoITest {
         Assert.assertTrue(result.isPresent());
         Assert.assertTrue(result.get().getItem().isPresent());
         Assert.assertEquals(dto, result.get().getItem().get());
+    }
+
+    @Test
+    public void findChampionByName() {
+        // GIVEN
+        ChampionDto dto = new ChampionDto();
+        dto.setName("Lee Sin");
+        dao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.KR, 19L), dto));
+        ChampionDto dto2 = new ChampionDto();
+        dto2.setName("Lee Sin2");
+        dao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.KR, 20L), dto2));
+
+        // WHEN
+        List<ChampionDto> result = dao.findChampionByName(Region.KR, "Lee");
+
+        // THEN
+        Assert.assertNotNull(result);
+        Assert.assertEquals(2, result.size());
+        Assert.assertEquals(dto, result.get(0));
     }
 }
