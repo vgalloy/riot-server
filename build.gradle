@@ -10,7 +10,7 @@ ext {
     checkstyleVersion = '7.5'
 
     junitVersion = '4.12'
-    riotApiJavaVersion = '3.11.0'
+    riotApiJavaVersion = '3.12.0'
     slf4jApi = '1.7.25'
     logbackClassicVersion = '1.2.3'
     mongoJavaDriverVersion = '3.4.2'
@@ -19,7 +19,7 @@ ext {
     commonsConfiguration2Version = '2.1.1'
     commonsBeanutilsVersion = '1.9.3'
     javaOverRabbitmqVersion = '1.4.0'
-    springBootVersion = '1.5.2.RELEASE'
+    springBootVersion = '1.5.3.RELEASE'
     springfoxSwaggerVersion = '2.6.1'
 }
 
