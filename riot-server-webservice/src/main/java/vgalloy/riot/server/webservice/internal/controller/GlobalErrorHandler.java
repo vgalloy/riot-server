@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,8 +46,20 @@ public final class GlobalErrorHandler {
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Error> handle(MethodArgumentTypeMismatchException e) {
-        LOGGER.error("{}", e.getMessage());
+        LOGGER.warn("{}", e.getMessage());
         return buildResponse(HttpStatus.BAD_REQUEST, "Value of '" + e.getName() + "' can not be convert into [" + e.getRequiredType().getSimpleName() + "]");
+    }
+
+    /**
+     * Handle error and set the correct response status.
+     *
+     * @param e The handle exception
+     * @return The error message for web user
+     */
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Error> handle(HttpMessageNotReadableException e) {
+        LOGGER.warn("{}", e.getMessage());
+        return buildResponse(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
     /**
@@ -57,7 +70,7 @@ public final class GlobalErrorHandler {
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<Error> handle(MissingServletRequestParameterException e) {
-        LOGGER.error("{}", e.getMessage());
+        LOGGER.warn("{}", e.getMessage());
         return buildResponse(HttpStatus.BAD_REQUEST, "The parameter : " + e.getParameterName() + " is mandatory.");
     }
 
@@ -69,7 +82,7 @@ public final class GlobalErrorHandler {
      */
     @ExceptionHandler(UserException.class)
     public ResponseEntity<Error> handle(UserException e) {
-        LOGGER.error("{}", e.getMessage());
+        LOGGER.warn("{}", e.getMessage());
         return buildResponse(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
