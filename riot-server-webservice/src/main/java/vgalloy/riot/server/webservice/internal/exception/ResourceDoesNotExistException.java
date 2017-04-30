@@ -1,4 +1,4 @@
-package vgalloy.riot.server.webservice.internal.model;
+package vgalloy.riot.server.webservice.internal.exception;
 
 /**
  * Created by Vincent Galloy on 29/12/16.

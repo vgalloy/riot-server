@@ -46,7 +46,7 @@
         <jackson.version>2.8.7</jackson.version>
 
         <!-- Riot project -->
-        <riot-api-java.version>3.12.0</riot-api-java.version>
+        <riot-api-java.version>3.13.0</riot-api-java.version>
 
         <!-- Log -->
         <slf4j-api.version>1.7.25</slf4j-api.version>

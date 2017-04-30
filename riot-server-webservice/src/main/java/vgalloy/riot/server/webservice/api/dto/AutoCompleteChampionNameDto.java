@@ -10,7 +10,7 @@ import vgalloy.riot.api.api.constant.Region;
  *
  * @author Vincent Galloy
  */
-public final class AutoCompleteChampionName implements Serializable {
+public final class AutoCompleteChampionNameDto implements Serializable {
 
     private static final long serialVersionUID = -6821651886728543403L;
 
@@ -41,7 +41,7 @@ public final class AutoCompleteChampionName implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AutoCompleteChampionName that = (AutoCompleteChampionName) o;
+        AutoCompleteChampionNameDto that = (AutoCompleteChampionNameDto) o;
         return region == that.region &&
             Objects.equals(name, that.name);
     }

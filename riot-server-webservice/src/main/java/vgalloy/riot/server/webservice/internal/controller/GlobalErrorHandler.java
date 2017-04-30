@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import vgalloy.riot.server.service.api.service.exception.UserException;
-import vgalloy.riot.server.webservice.internal.model.Error;
-import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistException;
-import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
+import vgalloy.riot.server.webservice.internal.dto.ErrorDto;
+import vgalloy.riot.server.webservice.internal.exception.ResourceDoesNotExistException;
+import vgalloy.riot.server.webservice.internal.exception.ResourceNotLoadedException;
 
 /**
  * Created by Vincent Galloy on 24/08/16.
@@ -33,7 +33,7 @@ public final class GlobalErrorHandler {
      * @return The error message for web user
      */
     @ExceptionHandler(Throwable.class)
-    public ResponseEntity<Error> handle(Throwable e) {
+    public ResponseEntity<ErrorDto> handle(Throwable e) {
         LOGGER.error("", e);
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Ups ... unexpected error occurred ! !");
     }
@@ -45,7 +45,7 @@ public final class GlobalErrorHandler {
      * @return The error message for web user
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<Error> handle(MethodArgumentTypeMismatchException e) {
+    public ResponseEntity<ErrorDto> handle(MethodArgumentTypeMismatchException e) {
         LOGGER.warn("{}", e.getMessage());
         return buildResponse(HttpStatus.BAD_REQUEST, "Value of '" + e.getName() + "' can not be convert into [" + e.getRequiredType().getSimpleName() + "]");
     }
@@ -57,7 +57,7 @@ public final class GlobalErrorHandler {
      * @return The error message for web user
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Error> handle(HttpMessageNotReadableException e) {
+    public ResponseEntity<ErrorDto> handle(HttpMessageNotReadableException e) {
         LOGGER.warn("{}", e.getMessage());
         return buildResponse(HttpStatus.BAD_REQUEST, e.getMessage());
     }
@@ -69,7 +69,7 @@ public final class GlobalErrorHandler {
      * @return The error message for web user
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<Error> handle(MissingServletRequestParameterException e) {
+    public ResponseEntity<ErrorDto> handle(MissingServletRequestParameterException e) {
         LOGGER.warn("{}", e.getMessage());
         return buildResponse(HttpStatus.BAD_REQUEST, "The parameter : " + e.getParameterName() + " is mandatory.");
     }
@@ -81,7 +81,7 @@ public final class GlobalErrorHandler {
      * @return The error message for web user
      */
     @ExceptionHandler(UserException.class)
-    public ResponseEntity<Error> handle(UserException e) {
+    public ResponseEntity<ErrorDto> handle(UserException e) {
         LOGGER.warn("{}", e.getMessage());
         return buildResponse(HttpStatus.BAD_REQUEST, e.getMessage());
     }
@@ -93,7 +93,7 @@ public final class GlobalErrorHandler {
      * @return The error message for web user
      */
     @ExceptionHandler(ResourceDoesNotExistException.class)
-    public ResponseEntity<Error> handle(ResourceDoesNotExistException e) {
+    public ResponseEntity<ErrorDto> handle(ResourceDoesNotExistException e) {
         return buildResponse(HttpStatus.NOT_FOUND, ResourceDoesNotExistException.MESSAGE);
     }
 
@@ -104,7 +104,7 @@ public final class GlobalErrorHandler {
      * @return The error message for web user
      */
     @ExceptionHandler(ResourceNotLoadedException.class)
-    public ResponseEntity<Error> handle(ResourceNotLoadedException e) {
+    public ResponseEntity<ErrorDto> handle(ResourceNotLoadedException e) {
         return buildResponse(HttpStatus.ACCEPTED, ResourceNotLoadedException.MESSAGE);
     }
 
@@ -115,9 +115,9 @@ public final class GlobalErrorHandler {
      * @param message    the message
      * @return the response entity
      */
-    private ResponseEntity<Error> buildResponse(HttpStatus httpStatus, String message) {
+    private ResponseEntity<ErrorDto> buildResponse(HttpStatus httpStatus, String message) {
         HttpHeaders headers = new HttpHeaders();
-        Error error = new Error(httpStatus.value(), message);
-        return new ResponseEntity<>(error, headers, httpStatus);
+        ErrorDto errorDto = new ErrorDto(httpStatus.value(), message);
+        return new ResponseEntity<>(errorDto, headers, httpStatus);
     }
 }

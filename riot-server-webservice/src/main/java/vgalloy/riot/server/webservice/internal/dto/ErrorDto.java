@@ -1,4 +1,4 @@
-package vgalloy.riot.server.webservice.internal.model;
+package vgalloy.riot.server.webservice.internal.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,7 +8,7 @@ import java.util.Objects;
  *
  * @author Vincent Galloy
  */
-public final class Error implements Serializable {
+public final class ErrorDto implements Serializable {
 
     private static final long serialVersionUID = 8278940929567627860L;
 
@@ -21,7 +21,7 @@ public final class Error implements Serializable {
      * @param code    the error code
      * @param message the message
      */
-    public Error(int code, String message) {
+    public ErrorDto(int code, String message) {
         this.code = Objects.requireNonNull(code);
         this.message = Objects.requireNonNull(message);
     }

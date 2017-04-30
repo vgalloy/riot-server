@@ -19,4 +19,22 @@ public final class UserException extends ServiceException {
     public UserException(String message) {
         super(message);
     }
+
+    /**
+     * Checks that the specified object reference is not {@code null} and
+     * throws a customized {@link UserException} if it is.
+     *
+     * @param obj     the object reference to check for nullity
+     * @param message detail message to be used in the event that a {@code
+     *                NullPointerException} is thrown
+     * @param <T>     the type of the reference
+     * @return {@code obj} if not {@code null}
+     * @throws UserException if {@code obj} is {@code null}
+     */
+    public static <T> T requireNonNull(T obj, String message) {
+        if (obj == null) {
+            throw new UserException(message);
+        }
+        return obj;
+    }
 }

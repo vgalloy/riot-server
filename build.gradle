@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version "1.5.2.RELEASE" apply false
+    id 'org.springframework.boot' version "1.5.3.RELEASE" apply false
     // dependencyUpdates
     id 'com.github.ben-manes.versions' version '0.14.0'
 }
@@ -10,7 +10,7 @@ ext {
     checkstyleVersion = '7.5'
 
     junitVersion = '4.12'
-    riotApiJavaVersion = '3.12.0'
+    riotApiJavaVersion = '3.13.0'
     slf4jApi = '1.7.25'
     logbackClassicVersion = '1.2.3'
     mongoJavaDriverVersion = '3.4.2'

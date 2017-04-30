@@ -12,8 +12,8 @@ import vgalloy.riot.server.service.api.model.game.Game;
 import vgalloy.riot.server.service.api.model.game.GameId;
 import vgalloy.riot.server.service.api.service.MatchDetailService;
 import vgalloy.riot.server.webservice.api.controller.GameController;
-import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistException;
-import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
+import vgalloy.riot.server.webservice.internal.exception.ResourceDoesNotExistException;
+import vgalloy.riot.server.webservice.internal.exception.ResourceNotLoadedException;
 
 /**
  * Created by Vincent Galloy on 09/07/16.

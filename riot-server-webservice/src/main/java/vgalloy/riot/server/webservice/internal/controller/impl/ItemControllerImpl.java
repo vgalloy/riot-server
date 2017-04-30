@@ -15,8 +15,8 @@ import vgalloy.riot.api.api.dto.lolstaticdata.ItemDto;
 import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.service.api.service.ItemService;
 import vgalloy.riot.server.webservice.api.controller.ItemController;
-import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistException;
-import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
+import vgalloy.riot.server.webservice.internal.exception.ResourceDoesNotExistException;
+import vgalloy.riot.server.webservice.internal.exception.ResourceNotLoadedException;
 
 /**
  * Created by Vincent Galloy on 13/06/16.

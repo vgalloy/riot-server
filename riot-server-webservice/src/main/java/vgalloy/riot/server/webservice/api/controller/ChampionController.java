@@ -7,7 +7,7 @@ import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
 import vgalloy.riot.server.dao.api.entity.ChampionName;
 import vgalloy.riot.server.dao.api.entity.WinRate;
-import vgalloy.riot.server.webservice.api.dto.AutoCompleteChampionName;
+import vgalloy.riot.server.webservice.api.dto.AutoCompleteChampionNameDto;
 
 /**
  * Created by Vincent Galloy on 13/06/16.
@@ -54,8 +54,8 @@ public interface ChampionController {
     /**
      * Get all {@link ChampionName} where name start with the given name.
      *
-     * @param autoCompleteChampionName the autoCompleteChampionName
+     * @param autoCompleteChampionNameDto the autoCompleteChampionNameDto
      * @return a list of champion
      */
-    List<ChampionName> autoCompleteChampionName(AutoCompleteChampionName autoCompleteChampionName);
+    List<ChampionName> autoCompleteChampionName(AutoCompleteChampionNameDto autoCompleteChampionNameDto);
 }

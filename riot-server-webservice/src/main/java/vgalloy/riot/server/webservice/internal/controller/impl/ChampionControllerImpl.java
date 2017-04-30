@@ -24,10 +24,11 @@ import vgalloy.riot.server.dao.api.entity.ChampionName;
 import vgalloy.riot.server.dao.api.entity.WinRate;
 import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.service.api.service.ChampionService;
+import vgalloy.riot.server.service.api.service.exception.UserException;
 import vgalloy.riot.server.webservice.api.controller.ChampionController;
-import vgalloy.riot.server.webservice.api.dto.AutoCompleteChampionName;
-import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistException;
-import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
+import vgalloy.riot.server.webservice.api.dto.AutoCompleteChampionNameDto;
+import vgalloy.riot.server.webservice.internal.exception.ResourceDoesNotExistException;
+import vgalloy.riot.server.webservice.internal.exception.ResourceNotLoadedException;
 
 /**
  * Created by Vincent Galloy on 13/06/16.
@@ -99,7 +100,11 @@ public final class ChampionControllerImpl implements ChampionController {
 
     @Override
     @PostMapping("/autoCompleteChampionName")
-    public List<ChampionName> autoCompleteChampionName(@RequestBody AutoCompleteChampionName autoCompleteChampionName) {
-        return championService.autoCompleteChampionName(autoCompleteChampionName.getRegion(), autoCompleteChampionName.getName());
+    public List<ChampionName> autoCompleteChampionName(@RequestBody AutoCompleteChampionNameDto autoCompleteChampionNameDto) {
+        UserException.requireNonNull(autoCompleteChampionNameDto, "Body can not be null");
+        UserException.requireNonNull(autoCompleteChampionNameDto.getRegion(), "Region can not be null");
+        UserException.requireNonNull(autoCompleteChampionNameDto.getName(), "Name can not be null");
+
+        return championService.autoCompleteChampionName(autoCompleteChampionNameDto.getRegion(), autoCompleteChampionNameDto.getName());
     }
 }

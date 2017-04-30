@@ -23,8 +23,8 @@ import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 import vgalloy.riot.server.service.api.service.RankedStatsService;
 import vgalloy.riot.server.service.api.service.SummonerService;
 import vgalloy.riot.server.webservice.api.controller.SummonerController;
-import vgalloy.riot.server.webservice.internal.model.ResourceDoesNotExistException;
-import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
+import vgalloy.riot.server.webservice.internal.exception.ResourceDoesNotExistException;
+import vgalloy.riot.server.webservice.internal.exception.ResourceNotLoadedException;
 
 /**
  * Created by Vincent Galloy on 20/06/16.
