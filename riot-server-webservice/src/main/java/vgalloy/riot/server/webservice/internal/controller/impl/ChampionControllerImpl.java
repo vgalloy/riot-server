@@ -10,10 +10,11 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +36,7 @@ import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
  */
 @RestController
 @RequestMapping(value = "/champions")
-public class ChampionControllerImpl implements ChampionController {
+public final class ChampionControllerImpl implements ChampionController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChampionControllerImpl.class);
 
@@ -51,7 +52,7 @@ public class ChampionControllerImpl implements ChampionController {
     }
 
     @Override
-    @RequestMapping(value = "/{championId}", method = RequestMethod.GET)
+    @GetMapping("/{championId}")
     public ChampionDto getChampion(@PathVariable Long championId, @RequestParam(required = false) Region region) {
         LOGGER.info("[ GET ] : getChampion : {}, Region : {}", championId, region);
         Region computedRegion = Optional.ofNullable(region).orElse(Region.EUW);
@@ -61,14 +62,14 @@ public class ChampionControllerImpl implements ChampionController {
     }
 
     @Override
-    @RequestMapping(value = "/{championId}/winRateByGamePlayed", method = RequestMethod.GET)
+    @GetMapping("/{championId}/winRateByGamePlayed")
     public Map<Integer, Double> getWinRateByGamePlayed(@PathVariable Integer championId) {
         LOGGER.info("[ GET ] : getWinRateByGamePlayed : {}", championId);
         return championService.getWinRateByGamePlayed(championId);
     }
 
     @Override
-    @RequestMapping(value = "/{championId}/winRateByDate", method = RequestMethod.GET)
+    @GetMapping("/{championId}/winRateByDate")
     public Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId,
                                                            @RequestParam(required = false) Long fromDay,
                                                            @RequestParam(required = false) Long toDay) {
@@ -87,7 +88,7 @@ public class ChampionControllerImpl implements ChampionController {
     }
 
     @Override
-    @RequestMapping(value = "/winRateByDate", method = RequestMethod.GET)
+    @GetMapping("/winRateByDate")
     public Map<Integer, WinRate> getWinRateForAllChampion(@RequestParam(required = false) Long day) {
         LOGGER.info("[ GET ] : getWinRateForAllChampion, day : {}", day);
         LocalDate localDate = Optional.ofNullable(day)
@@ -97,7 +98,7 @@ public class ChampionControllerImpl implements ChampionController {
     }
 
     @Override
-    @RequestMapping(value = "/autoCompleteChampionName", method = RequestMethod.POST)
+    @PostMapping("/autoCompleteChampionName")
     public List<ChampionName> autoCompleteChampionName(@RequestBody AutoCompleteChampionName autoCompleteChampionName) {
         return championService.autoCompleteChampionName(autoCompleteChampionName.getRegion(), autoCompleteChampionName.getName());
     }

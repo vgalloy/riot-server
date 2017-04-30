@@ -9,9 +9,8 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +32,7 @@ import vgalloy.riot.server.webservice.internal.model.ResourceNotLoadedException;
  * @author Vincent Galloy
  */
 @RestController
-public class SummonerControllerImpl implements SummonerController {
+public final class SummonerControllerImpl implements SummonerController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SummonerControllerImpl.class);
 
@@ -52,7 +51,7 @@ public class SummonerControllerImpl implements SummonerController {
     }
 
     @Override
-    @RequestMapping(value = "/summoners", method = RequestMethod.GET)
+    @GetMapping("/summoners")
     public List<Summoner> getSummoners(@RequestParam List<Region> regions,
                                        @RequestParam(required = false) List<String> summonerNames,
                                        @RequestParam(required = false) Integer offset,
@@ -68,7 +67,7 @@ public class SummonerControllerImpl implements SummonerController {
     }
 
     @Override
-    @RequestMapping(value = "/summoners/{summonerId}", method = RequestMethod.GET)
+    @GetMapping("/summoners/{summonerId}")
     public Summoner getSummonerById(@PathVariable SummonerId summonerId) {
         LOGGER.info("[ GET ] : getSummonerById, summonerId : {}", summonerId);
         return summonerService.get(summonerId)
@@ -77,7 +76,7 @@ public class SummonerControllerImpl implements SummonerController {
     }
 
     @Override
-    @RequestMapping(value = "/summoners/{summonerId}/rankedStats", method = RequestMethod.GET)
+    @GetMapping("/summoners/{summonerId}/rankedStats")
     public RankedStats getRankedStat(@PathVariable SummonerId summonerId) {
         LOGGER.info("[ GET ] : getRankedStat, region : {}, summonerId : {}", summonerId);
         return rankedStatsService.get(summonerId)
@@ -86,7 +85,7 @@ public class SummonerControllerImpl implements SummonerController {
     }
 
     @Override
-    @RequestMapping(value = "/summoners/{summonerId}/lastGames", method = RequestMethod.GET)
+    @GetMapping("/summoners/{summonerId}/lastGames")
     public List<GameSummary> getLastGames(@PathVariable SummonerId summonerId,
                                           @RequestParam(required = false) Long fromDay,
                                           @RequestParam(required = false) Long toDay) {
