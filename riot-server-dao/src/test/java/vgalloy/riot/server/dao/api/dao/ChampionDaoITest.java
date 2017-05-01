@@ -74,11 +74,10 @@ public final class ChampionDaoITest {
         ChampionDto dto = new ChampionDto();
         dto.setName("Lee Sin");
         dao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.KR, 19L), dto));
-        ChampionDto dto2 = new ChampionDto();
-        dto2.setName("Lee Sin2");
-        dao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.KR, 20L), dto2));
-        dto2.setName("Le blanc");
-        dao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.KR, 21L), dto2));
+        dto.setName("Lee Sin2");
+        dao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.KR, 20L), dto));
+        dto.setName("Le blanc");
+        dao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.KR, 21L), dto));
 
         // WHEN
         List<ChampionName> result = dao.autoCompleteChampionName(Region.KR, "Lee", 10);
@@ -87,5 +86,42 @@ public final class ChampionDaoITest {
         Assert.assertNotNull(result);
         Assert.assertEquals(2, result.size());
         Assert.assertEquals("Lee Sin", result.get(0).getChampionName());
+    }
+
+    @Test
+    public void findChampionByName2() {
+        // GIVEN
+        ChampionDto dto = new ChampionDto();
+        dto.setName("Olaf");
+        dao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.LAN, 19L), dto));
+        dto.setName("Xin Zhao");
+        dao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.LAN, 20L), dto));
+        dto.setName("Galio");
+        dao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.LAN, 21L), dto));
+
+        // WHEN
+        List<ChampionName> result = dao.autoCompleteChampionName(Region.LAN, "a", 10);
+
+        // THEN
+        Assert.assertNotNull(result);
+        Assert.assertEquals(0, result.size());
+    }
+
+    @Test
+    public void checkPatternEscape() {
+        // GIVEN
+        ChampionDto dto = new ChampionDto();
+        dto.setName("*");
+        dao.save(new CommonDpoWrapper<>(new CommonDpoId(Region.OCE, 19L), dto));
+
+        // WHEN
+        List<ChampionName> result1 = dao.autoCompleteChampionName(Region.OCE, ".", 10);
+        List<ChampionName> result2 = dao.autoCompleteChampionName(Region.OCE, "*", 10);
+
+        // THEN
+        Assert.assertNotNull(result1);
+        Assert.assertEquals(0, result1.size());
+        Assert.assertNotNull(result2);
+        Assert.assertEquals(1, result2.size());
     }
 }

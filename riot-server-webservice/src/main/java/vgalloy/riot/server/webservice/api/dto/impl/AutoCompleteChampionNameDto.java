@@ -30,4 +30,12 @@ public final class AutoCompleteChampionNameDto implements Dto {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "AutoCompleteChampionNameDto{" +
+            "region=" + region +
+            ", name='" + name + '\'' +
+            '}';
+    }
 }

@@ -53,6 +53,8 @@ public final class SummonerDaoITest {
 
     @Test
     public void testRandomFalse() {
+        // GIVEN
+
         // WHEN
         Optional<Entity<SummonerDto, DpoId>> result = summonerDao.getRandom(Region.BR);
 
@@ -80,7 +82,6 @@ public final class SummonerDaoITest {
 
     @Test
     public void testSummonerByName() {
-        // GIVEN
         SummonerDto summoner = new SummonerDto();
         summoner.setName("NAME");
         summoner.setId(2L);

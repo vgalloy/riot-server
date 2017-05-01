@@ -65,6 +65,7 @@ public final class ChampionControllerImpl implements ChampionController {
     @GetMapping("/{championId}")
     public ChampionDto getChampion(@PathVariable Long championId, @RequestParam(required = false) Region region) {
         LOGGER.info("[ GET ] : getChampion : {}, Region : {}", championId, region);
+
         Region computedRegion = Optional.ofNullable(region).orElse(Region.EUW);
         return championService.get(new CommonDpoId(computedRegion, championId))
             .ifNotLoadedThrow(ResourceNotLoadedException::new)
@@ -75,6 +76,7 @@ public final class ChampionControllerImpl implements ChampionController {
     @GetMapping("/{championId}/winRateByGamePlayed")
     public Map<Integer, Double> getWinRateByGamePlayed(@PathVariable Integer championId) {
         LOGGER.info("[ GET ] : getWinRateByGamePlayed : {}", championId);
+
         return championService.getWinRateByGamePlayed(championId);
     }
 
@@ -84,6 +86,7 @@ public final class ChampionControllerImpl implements ChampionController {
                                                               @RequestParam(required = false) Long fromDay,
                                                               @RequestParam(required = false) Long toDay) {
         LOGGER.info("[ GET ] : getWinRateDuringPeriodOfTime, championId : {},  fromDay : {}, toDay : {}", championId, fromDay, toDay);
+
         LocalDate fromLocalDate = Optional.ofNullable(fromDay)
             .map(LocalDate::ofEpochDay)
             .orElseGet(() -> LocalDate.now().minus(1, ChronoUnit.WEEKS));
@@ -101,6 +104,7 @@ public final class ChampionControllerImpl implements ChampionController {
     @GetMapping("/winRateByDate")
     public Map<Integer, WinRateDto> getWinRateForAllChampion(@RequestParam(required = false) Long day) {
         LOGGER.info("[ GET ] : getWinRateForAllChampion, day : {}", day);
+
         LocalDate localDate = Optional.ofNullable(day)
             .map(LocalDate::ofEpochDay)
             .orElseGet(LocalDate::now);
@@ -111,6 +115,7 @@ public final class ChampionControllerImpl implements ChampionController {
     @Override
     @PostMapping("/autoCompleteChampionName")
     public List<ChampionNameDto> autoCompleteChampionName(@RequestBody AutoCompleteChampionNameDto autoCompleteChampionNameDto) {
+        LOGGER.info("[ GET ] : autoCompleteChampionName, autoCompleteChampionNameDto : {}", autoCompleteChampionNameDto);
         UserException.requireNonNull(autoCompleteChampionNameDto, "Body can not be null");
         UserException.requireNonNull(autoCompleteChampionNameDto.getRegion(), "Region can not be null");
         UserException.requireNonNull(autoCompleteChampionNameDto.getName(), "Name can not be null");

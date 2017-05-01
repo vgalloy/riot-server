@@ -151,7 +151,7 @@ public final class ChampionDaoImpl extends AbstractDao<ChampionDto, ChampionDpo>
 
         DBQuery.Query dbQuery = DBQuery.empty()
             .is("region", region)
-            .regex("item.name", Pattern.compile(championName));
+            .regex("item.name", Pattern.compile("^" + Pattern.quote(championName) + ".*"));
 
         return collection.find(dbQuery)
             .limit(limit)
