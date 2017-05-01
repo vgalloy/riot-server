@@ -3,6 +3,9 @@ package vgalloy.riot.server.webservice.internal.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Created by Vincent Galloy on 14/09/16.
  *
@@ -21,7 +24,8 @@ public final class ErrorDto implements Serializable {
      * @param code    the error code
      * @param message the message
      */
-    public ErrorDto(int code, String message) {
+    @JsonCreator
+    public ErrorDto(@JsonProperty("code") int code, @JsonProperty("message") String message) {
         this.code = Objects.requireNonNull(code);
         this.message = Objects.requireNonNull(message);
     }

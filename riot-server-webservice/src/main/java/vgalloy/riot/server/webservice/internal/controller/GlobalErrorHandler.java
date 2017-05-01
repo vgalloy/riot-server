@@ -59,7 +59,7 @@ public final class GlobalErrorHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorDto> handle(HttpMessageNotReadableException e) {
         LOGGER.warn("{}", e.getMessage());
-        return buildResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+        return buildResponse(HttpStatus.BAD_REQUEST, "Invalid json");
     }
 
     /**

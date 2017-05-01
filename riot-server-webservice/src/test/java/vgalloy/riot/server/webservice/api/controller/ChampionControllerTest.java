@@ -6,12 +6,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import vgalloy.riot.server.webservice.api.WebserviceConfig;
 import vgalloy.riot.server.webservice.api.dto.AutoCompleteChampionNameDto;
+import vgalloy.riot.server.webservice.internal.dto.ErrorDto;
 
 /**
  * Created by Vincent Galloy on 30/04/17.
@@ -32,9 +36,28 @@ public final class ChampionControllerTest {
         autoCompleteChampionNameDto.setName("Lee");
 
         // WHEN
-        ResponseEntity<?> c = this.restTemplate.postForEntity("/champions/autoCompleteChampionName", autoCompleteChampionNameDto, Object.class);
+        ResponseEntity<ErrorDto> c = this.restTemplate.postForEntity("/champions/autoCompleteChampionName", autoCompleteChampionNameDto, ErrorDto.class);
 
         // THEN
         Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), c.getStatusCode().value());
+        Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), c.getBody().getCode());
+        Assert.assertEquals("Region can not be null", c.getBody().getMessage());
+    }
+
+    @Test
+    public void championAutoCompleteWithInvalidJson() {
+        // GIVEN
+        String invalidJson = "{ytqzer";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> entity = new HttpEntity<>(invalidJson, headers);
+
+        // WHEN
+        ResponseEntity<ErrorDto> c = this.restTemplate.postForEntity("/champions/autoCompleteChampionName", entity, ErrorDto.class);
+
+        // THEN
+        Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), c.getStatusCode().value());
+        Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), c.getBody().getCode());
+        Assert.assertEquals("Invalid json", c.getBody().getMessage());
     }
 }
