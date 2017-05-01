@@ -5,9 +5,9 @@ import java.util.Map;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.api.api.dto.lolstaticdata.ChampionDto;
-import vgalloy.riot.server.dao.api.entity.ChampionName;
-import vgalloy.riot.server.dao.api.entity.WinRate;
-import vgalloy.riot.server.webservice.api.dto.AutoCompleteChampionNameDto;
+import vgalloy.riot.server.webservice.api.dto.impl.AutoCompleteChampionNameDto;
+import vgalloy.riot.server.webservice.api.dto.impl.ChampionNameDto;
+import vgalloy.riot.server.webservice.api.dto.impl.WinRateDto;
 
 /**
  * Created by Vincent Galloy on 13/06/16.
@@ -41,7 +41,7 @@ public interface ChampionController {
      * @param toDay      the end search date in day
      * @return the win rates as a map
      */
-    Map<Long, WinRate> getWinRateDuringPeriodOfTime(Integer championId, Long fromDay, Long toDay);
+    Map<Long, WinRateDto> getWinRateDuringPeriodOfTime(Integer championId, Long fromDay, Long toDay);
 
     /**
      * Get the win rate for all champion for the given day.
@@ -49,13 +49,13 @@ public interface ChampionController {
      * @param day the day to analyse
      * @return a map (champion Id, win rate)
      */
-    Map<Integer, WinRate> getWinRateForAllChampion(Long day);
+    Map<Integer, WinRateDto> getWinRateForAllChampion(Long day);
 
     /**
-     * Get all {@link ChampionName} where name start with the given name.
+     * Get all {@link ChampionNameDto} where name start with the given name.
      *
      * @param autoCompleteChampionNameDto the autoCompleteChampionNameDto
      * @return a list of champion
      */
-    List<ChampionName> autoCompleteChampionName(AutoCompleteChampionNameDto autoCompleteChampionNameDto);
+    List<ChampionNameDto> autoCompleteChampionName(AutoCompleteChampionNameDto autoCompleteChampionNameDto);
 }

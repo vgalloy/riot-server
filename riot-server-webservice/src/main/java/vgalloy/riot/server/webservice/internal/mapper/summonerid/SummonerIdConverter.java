@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import vgalloy.riot.server.service.api.model.summoner.SummonerId;
 import vgalloy.riot.server.webservice.internal.mapper.AbstractSerializer;
+import vgalloy.riot.server.webservice.internal.mapper.Mapper;
 
 /**
  * Created by Vincent Galloy on 28/12/16.
@@ -15,13 +16,12 @@ public final class SummonerIdConverter extends AbstractSerializer<SummonerId> {
 
     private static final long serialVersionUID = 4299902797629912725L;
 
-    @Override
-    protected SummonerId map(String string) {
-        return SummonerIdMapper.map(string);
-    }
-
-    @Override
-    protected String unmap(SummonerId summonerId) {
-        return SummonerIdMapper.map(summonerId);
+    /**
+     * Constructor.
+     *
+     * @param mapper the corresponding mapper
+     */
+    protected SummonerIdConverter(Mapper<SummonerId, String> mapper) {
+        super(mapper);
     }
 }

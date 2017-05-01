@@ -4,44 +4,30 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+import org.springframework.stereotype.Component;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.service.api.model.game.GameId;
+import vgalloy.riot.server.webservice.internal.mapper.Mapper;
 
 /**
  * Created by Vincent Galloy on 28/12/16.
  *
  * @author Vincent Galloy
  */
-public final class GameIdMapper {
+@Component
+public class GameIdMapper implements Mapper<GameId, String> {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-    /**
-     * Constructor.
-     * To prevent instantiation
-     */
-    private GameIdMapper() {
-        throw new AssertionError();
-    }
-
-    /**
-     * Convert a {@link GameId} into a String.
-     *
-     * @param gameId the game id
-     * @return the normalized string of the match detail
-     */
-    public static String map(GameId gameId) {
+    @Override
+    public String map(GameId gameId) {
         Objects.requireNonNull(gameId);
         return gameId.getRegion() + "_" + gameId.getId() + "_" + gameId.getMatchDate().format(DATE_TIME_FORMATTER);
     }
 
-    /**
-     * Convert a String into a MatchDetailId.
-     *
-     * @param gameId the game id as string.
-     * @return the normalized string of the match detail
-     */
-    public static GameId map(String gameId) {
+    @Override
+    public GameId unmap(String gameId) {
         Objects.requireNonNull(gameId);
 
         String[] split = gameId.split("_");

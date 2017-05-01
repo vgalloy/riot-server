@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import vgalloy.riot.server.webservice.api.WebserviceConfig;
-import vgalloy.riot.server.webservice.api.dto.AutoCompleteChampionNameDto;
+import vgalloy.riot.server.webservice.api.dto.impl.AutoCompleteChampionNameDto;
 import vgalloy.riot.server.webservice.internal.dto.ErrorDto;
 
 /**

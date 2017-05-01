@@ -26,9 +26,12 @@ import vgalloy.riot.server.dao.api.entity.dpoid.CommonDpoId;
 import vgalloy.riot.server.service.api.service.ChampionService;
 import vgalloy.riot.server.service.api.service.exception.UserException;
 import vgalloy.riot.server.webservice.api.controller.ChampionController;
-import vgalloy.riot.server.webservice.api.dto.AutoCompleteChampionNameDto;
+import vgalloy.riot.server.webservice.api.dto.impl.AutoCompleteChampionNameDto;
+import vgalloy.riot.server.webservice.api.dto.impl.ChampionNameDto;
+import vgalloy.riot.server.webservice.api.dto.impl.WinRateDto;
 import vgalloy.riot.server.webservice.internal.exception.ResourceDoesNotExistException;
 import vgalloy.riot.server.webservice.internal.exception.ResourceNotLoadedException;
+import vgalloy.riot.server.webservice.internal.mapper.Mapper;
 
 /**
  * Created by Vincent Galloy on 13/06/16.
@@ -42,14 +45,20 @@ public final class ChampionControllerImpl implements ChampionController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChampionControllerImpl.class);
 
     private final ChampionService championService;
+    private final Mapper<ChampionName, ChampionNameDto> championNameMapper;
+    private final Mapper<WinRate, WinRateDto> winRateMapper;
 
     /**
      * Constructor.
      *
-     * @param championService the championService
+     * @param championService    the championService
+     * @param championNameMapper the championNameMapper
+     * @param winRateMapper      the winRateMapper
      */
-    public ChampionControllerImpl(ChampionService championService) {
+    public ChampionControllerImpl(ChampionService championService, Mapper<ChampionName, ChampionNameDto> championNameMapper, Mapper<WinRate, WinRateDto> winRateMapper) {
         this.championService = Objects.requireNonNull(championService);
+        this.championNameMapper = Objects.requireNonNull(championNameMapper);
+        this.winRateMapper = Objects.requireNonNull(winRateMapper);
     }
 
     @Override
@@ -71,9 +80,9 @@ public final class ChampionControllerImpl implements ChampionController {
 
     @Override
     @GetMapping("/{championId}/winRateByDate")
-    public Map<Long, WinRate> getWinRateDuringPeriodOfTime(@PathVariable Integer championId,
-                                                           @RequestParam(required = false) Long fromDay,
-                                                           @RequestParam(required = false) Long toDay) {
+    public Map<Long, WinRateDto> getWinRateDuringPeriodOfTime(@PathVariable Integer championId,
+                                                              @RequestParam(required = false) Long fromDay,
+                                                              @RequestParam(required = false) Long toDay) {
         LOGGER.info("[ GET ] : getWinRateDuringPeriodOfTime, championId : {},  fromDay : {}, toDay : {}", championId, fromDay, toDay);
         LocalDate fromLocalDate = Optional.ofNullable(fromDay)
             .map(LocalDate::ofEpochDay)
@@ -82,29 +91,32 @@ public final class ChampionControllerImpl implements ChampionController {
             .map(LocalDate::ofEpochDay)
             .orElseGet(LocalDate::now);
 
-        Map<Long, WinRate> result = new HashMap<>();
+        Map<Long, WinRateDto> result = new HashMap<>();
         championService.getWinRateDuringPeriodOfTime(championId, fromLocalDate, toLocalDate)
-            .forEach((key, value) -> result.put(key.toEpochDay(), value));
+            .forEach((key, value) -> result.put(key.toEpochDay(), winRateMapper.map(value)));
         return result;
     }
 
     @Override
     @GetMapping("/winRateByDate")
-    public Map<Integer, WinRate> getWinRateForAllChampion(@RequestParam(required = false) Long day) {
+    public Map<Integer, WinRateDto> getWinRateForAllChampion(@RequestParam(required = false) Long day) {
         LOGGER.info("[ GET ] : getWinRateForAllChampion, day : {}", day);
         LocalDate localDate = Optional.ofNullable(day)
             .map(LocalDate::ofEpochDay)
             .orElseGet(LocalDate::now);
-        return championService.getWinRateForAllChampion(localDate);
+        Map<Integer, WinRate> result = championService.getWinRateForAllChampion(localDate);
+        return winRateMapper.mapAsMap(result);
     }
 
     @Override
     @PostMapping("/autoCompleteChampionName")
-    public List<ChampionName> autoCompleteChampionName(@RequestBody AutoCompleteChampionNameDto autoCompleteChampionNameDto) {
+    public List<ChampionNameDto> autoCompleteChampionName(@RequestBody AutoCompleteChampionNameDto autoCompleteChampionNameDto) {
         UserException.requireNonNull(autoCompleteChampionNameDto, "Body can not be null");
         UserException.requireNonNull(autoCompleteChampionNameDto.getRegion(), "Region can not be null");
         UserException.requireNonNull(autoCompleteChampionNameDto.getName(), "Name can not be null");
 
-        return championService.autoCompleteChampionName(autoCompleteChampionNameDto.getRegion(), autoCompleteChampionNameDto.getName());
+        List<ChampionName> result = championService.autoCompleteChampionName(autoCompleteChampionNameDto.getRegion(), autoCompleteChampionNameDto.getName());
+
+        return championNameMapper.mapList(result);
     }
 }

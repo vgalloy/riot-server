@@ -1,6 +1,7 @@
 package vgalloy.riot.server.webservice.internal.mapper;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -16,45 +17,26 @@ public abstract class AbstractSerializer<T> extends StdSerializer<T> implements 
 
     private static final long serialVersionUID = 3525241913559866266L;
 
-    /**
-     * Constructor.
-     */
-    protected AbstractSerializer() {
-        this(null);
-    }
+    private final Mapper<T, String> mapper;
 
     /**
-     * The constructor.
+     * Constructor.
      *
-     * @param t the class
+     * @param mapper the corresponding mapper
      */
-    private AbstractSerializer(Class<T> t) {
-        super(t);
+    protected AbstractSerializer(Mapper<T, String> mapper) {
+        super((Class<T>) null);
+        this.mapper = Objects.requireNonNull(mapper);
     }
 
     @Override
     public void serialize(T t, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeString(unmap(t));
+        String objectAsString = mapper.map(t);
+        jsonGenerator.writeString(objectAsString);
     }
 
     @Override
     public T convert(String s) {
-        return map(s);
+        return mapper.unmap(s);
     }
-
-    /**
-     * Convert a String into an Object of type T.
-     *
-     * @param string the string
-     * @return the object
-     */
-    protected abstract T map(String string);
-
-    /**
-     * Convert an object into String.
-     *
-     * @param t the object
-     * @return the object as a String
-     */
-    protected abstract String unmap(T t);
 }

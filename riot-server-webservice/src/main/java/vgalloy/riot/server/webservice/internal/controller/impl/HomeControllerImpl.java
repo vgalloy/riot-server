@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import vgalloy.riot.server.webservice.api.controller.HomeController;
-import vgalloy.riot.server.webservice.api.dto.VersionDto;
+import vgalloy.riot.server.webservice.api.dto.impl.VersionDto;
 
 /**
  * Created by Vincent Galloy on 18/06/16.
@@ -29,6 +29,9 @@ public final class HomeControllerImpl implements HomeController {
     @GetMapping(value = "/home", produces = MediaType.APPLICATION_JSON_VALUE)
     public VersionDto getHome() {
         LOGGER.info("[ GET ] : getHome");
-        return new VersionDto("running", version);
+        VersionDto versionDto = new VersionDto();
+        versionDto.setStatus("running");
+        versionDto.setVersion(version);
+        return versionDto;
     }
 }
