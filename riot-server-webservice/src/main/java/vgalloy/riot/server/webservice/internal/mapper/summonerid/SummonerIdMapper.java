@@ -17,7 +17,7 @@ import vgalloy.riot.server.webservice.internal.mapper.Mapper;
  * @author Vincent Galloy
  */
 @Component
-public final class SummonerIdMapper implements Mapper<SummonerId, String> {
+final class SummonerIdMapper implements Mapper<SummonerId, String> {
 
     @Override
     public String map(SummonerId summonerId) {

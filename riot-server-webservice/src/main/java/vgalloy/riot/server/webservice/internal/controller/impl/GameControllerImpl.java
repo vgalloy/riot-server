@@ -21,7 +21,7 @@ import vgalloy.riot.server.webservice.internal.exception.ResourceNotLoadedExcept
  * @author Vincent Galloy
  */
 @RestController
-public final class GameControllerImpl implements GameController {
+final class GameControllerImpl implements GameController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GameControllerImpl.class);
 
@@ -32,7 +32,7 @@ public final class GameControllerImpl implements GameController {
      *
      * @param matchDetailService the matchDetailService
      */
-    public GameControllerImpl(MatchDetailService matchDetailService) {
+    GameControllerImpl(MatchDetailService matchDetailService) {
         this.matchDetailService = Objects.requireNonNull(matchDetailService);
     }
 

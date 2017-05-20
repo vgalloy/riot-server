@@ -1,11 +1,10 @@
-package vgalloy.riot.server.webservice.internal.mapper;
+package vgalloy.riot.server.webservice.internal.mapper.summonerid;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.service.api.model.summoner.SummonerId;
-import vgalloy.riot.server.webservice.internal.mapper.summonerid.SummonerIdMapper;
 
 /**
  * Created by Vincent Galloy on 28/12/16.

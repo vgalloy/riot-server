@@ -25,7 +25,7 @@ import vgalloy.riot.server.webservice.internal.filter.SimpleFilter;
  * @author Vincent Galloy
  */
 @ControllerAdvice
-public final class HeaderModifierAdvice implements ResponseBodyAdvice<Object>, SimpleFilter {
+final class HeaderModifierAdvice implements ResponseBodyAdvice<Object>, SimpleFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HeaderModifierAdvice.class);
     private static final String X_EXECUTION_TIME_MILLIS = "X-execution-time-millis";

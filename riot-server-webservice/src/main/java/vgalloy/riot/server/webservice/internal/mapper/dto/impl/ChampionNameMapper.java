@@ -12,7 +12,7 @@ import vgalloy.riot.server.webservice.internal.mapper.dto.DtoMapper;
  * @author Vincent Galloy
  */
 @Component
-public final class ChampionNameMapper implements DtoMapper<ChampionName, ChampionNameDto> {
+final class ChampionNameMapper implements DtoMapper<ChampionName, ChampionNameDto> {
 
     @Override
     public ChampionNameDto map(ChampionName championName) {

@@ -12,7 +12,7 @@ import vgalloy.riot.server.webservice.internal.mapper.Mapper;
  * @author Vincent Galloy
  */
 @Component
-public final class SummonerIdConverter extends AbstractSerializer<SummonerId> {
+final class SummonerIdConverter extends AbstractSerializer<SummonerId> {
 
     private static final long serialVersionUID = 4299902797629912725L;
 
@@ -21,7 +21,7 @@ public final class SummonerIdConverter extends AbstractSerializer<SummonerId> {
      *
      * @param mapper the corresponding mapper
      */
-    protected SummonerIdConverter(Mapper<SummonerId, String> mapper) {
+    SummonerIdConverter(Mapper<SummonerId, String> mapper) {
         super(mapper);
     }
 }

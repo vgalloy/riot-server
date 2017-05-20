@@ -16,7 +16,7 @@ import vgalloy.riot.server.webservice.internal.mapper.Mapper;
  * @author Vincent Galloy
  */
 @Component
-public class GameIdMapper implements Mapper<GameId, String> {
+final class GameIdMapper implements Mapper<GameId, String> {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
 

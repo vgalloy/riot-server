@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  * @author Vincent Galloy
  */
 @Component
-public final class IpLogFilter implements SimpleFilter {
+final class IpLogFilter implements SimpleFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IpLogFilter.class);
 

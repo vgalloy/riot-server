@@ -12,7 +12,7 @@ import vgalloy.riot.server.webservice.internal.mapper.Mapper;
  * @author Vincent Galloy
  */
 @Component
-public final class GameIdConverter extends AbstractSerializer<GameId> {
+final class GameIdConverter extends AbstractSerializer<GameId> {
 
     private static final long serialVersionUID = 4299902797629912725L;
 

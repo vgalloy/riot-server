@@ -40,7 +40,7 @@ import vgalloy.riot.server.webservice.internal.mapper.Mapper;
  */
 @RestController
 @RequestMapping(value = "/champions")
-public final class ChampionControllerImpl implements ChampionController {
+final class ChampionControllerImpl implements ChampionController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChampionControllerImpl.class);
 
@@ -55,7 +55,7 @@ public final class ChampionControllerImpl implements ChampionController {
      * @param championNameMapper the championNameMapper
      * @param winRateMapper      the winRateMapper
      */
-    public ChampionControllerImpl(ChampionService championService, Mapper<ChampionName, ChampionNameDto> championNameMapper, Mapper<WinRate, WinRateDto> winRateMapper) {
+    ChampionControllerImpl(ChampionService championService, Mapper<ChampionName, ChampionNameDto> championNameMapper, Mapper<WinRate, WinRateDto> winRateMapper) {
         this.championService = Objects.requireNonNull(championService);
         this.championNameMapper = Objects.requireNonNull(championNameMapper);
         this.winRateMapper = Objects.requireNonNull(winRateMapper);

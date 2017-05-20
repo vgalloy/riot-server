@@ -24,7 +24,7 @@ import vgalloy.riot.server.webservice.internal.exception.ResourceNotLoadedExcept
  * @author Vincent Galloy
  */
 @RestController
-public final class ItemControllerImpl implements ItemController {
+final class ItemControllerImpl implements ItemController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemControllerImpl.class);
 
@@ -35,7 +35,7 @@ public final class ItemControllerImpl implements ItemController {
      *
      * @param itemService the itemService
      */
-    public ItemControllerImpl(ItemService itemService) {
+    ItemControllerImpl(ItemService itemService) {
         this.itemService = Objects.requireNonNull(itemService);
     }
 

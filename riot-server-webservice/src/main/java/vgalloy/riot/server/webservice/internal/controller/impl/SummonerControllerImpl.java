@@ -32,7 +32,7 @@ import vgalloy.riot.server.webservice.internal.exception.ResourceNotLoadedExcept
  * @author Vincent Galloy
  */
 @RestController
-public final class SummonerControllerImpl implements SummonerController {
+final class SummonerControllerImpl implements SummonerController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SummonerControllerImpl.class);
 
@@ -45,7 +45,7 @@ public final class SummonerControllerImpl implements SummonerController {
      * @param summonerService    the summonerService
      * @param rankedStatsService the rankedStatsService
      */
-    public SummonerControllerImpl(SummonerService summonerService, RankedStatsService rankedStatsService) {
+    SummonerControllerImpl(SummonerService summonerService, RankedStatsService rankedStatsService) {
         this.summonerService = Objects.requireNonNull(summonerService);
         this.rankedStatsService = Objects.requireNonNull(rankedStatsService);
     }

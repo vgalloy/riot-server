@@ -12,7 +12,7 @@ import vgalloy.riot.server.webservice.internal.mapper.dto.DtoMapper;
  * @author Vincent Galloy
  */
 @Component
-public final class WinRateMapper implements DtoMapper<WinRate, WinRateDto> {
+final class WinRateMapper implements DtoMapper<WinRate, WinRateDto> {
 
     @Override
     public WinRateDto map(WinRate winRate) {

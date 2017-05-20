@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @author Vincent Galloy
  */
 @Component
-public final class CorsFilter implements SimpleFilter {
+final class CorsFilter implements SimpleFilter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {

@@ -22,7 +22,7 @@ import vgalloy.riot.server.webservice.internal.exception.ResourceNotLoadedExcept
  * @author Vincent Galloy
  */
 @ControllerAdvice
-public final class GlobalErrorHandler {
+final class GlobalErrorHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalErrorHandler.class);
 

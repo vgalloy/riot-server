@@ -18,7 +18,7 @@ import vgalloy.riot.server.webservice.api.dto.impl.VersionDto;
  */
 @RestController
 @PropertySource(value = "classpath:META-INF/maven/vgalloy/riot-server-webservice/pom.properties", ignoreResourceNotFound = true)
-public final class HomeControllerImpl implements HomeController {
+final class HomeControllerImpl implements HomeController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeControllerImpl.class);
 
