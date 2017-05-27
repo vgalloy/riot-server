@@ -2,11 +2,11 @@ package vgalloy.riot.server.webservice.internal.controller.impl;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,10 +94,12 @@ final class ChampionControllerImpl implements ChampionController {
             .map(LocalDate::ofEpochDay)
             .orElseGet(LocalDate::now);
 
-        Map<Long, WinRateDto> result = new HashMap<>();
-        championService.getWinRateDuringPeriodOfTime(championId, fromLocalDate, toLocalDate)
-            .forEach((key, value) -> result.put(key.toEpochDay(), winRateMapper.map(value)));
-        return result;
+        return championService.getWinRateDuringPeriodOfTime(championId, fromLocalDate, toLocalDate)
+            .entrySet().stream()
+            .collect(Collectors.toMap(
+                entry -> entry.getKey().toEpochDay(),
+                entry -> winRateMapper.map(entry.getValue())
+            ));
     }
 
     @Override
@@ -108,8 +110,12 @@ final class ChampionControllerImpl implements ChampionController {
         LocalDate localDate = Optional.ofNullable(day)
             .map(LocalDate::ofEpochDay)
             .orElseGet(LocalDate::now);
-        Map<Integer, WinRate> result = championService.getWinRateForAllChampion(localDate);
-        return winRateMapper.mapAsMap(result);
+        return championService.getWinRateForAllChampion(localDate)
+            .entrySet().stream()
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                entry -> winRateMapper.map(entry.getValue())
+            ));
     }
 
     @Override

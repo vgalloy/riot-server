@@ -10,7 +10,7 @@ import vgalloy.riot.server.webservice.api.WebserviceConfig;
  *
  * @author Vincent Galloy
  */
-public final class WebserviceConfigTest {
+public final class WebserviceConfigIT {
 
     @Test
     public void testStartApplication() {

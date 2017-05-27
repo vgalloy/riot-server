@@ -24,7 +24,7 @@
         <!-- Maven -->
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
         <maven-surefire-version>2.20</maven-surefire-version>
-        <maven-failsafe-version>2.20</maven-failsafe-version>
+        <maven-failsafe-version>2.18</maven-failsafe-version>
 
         <!-- Mojo version checker -->
         <versions-maven-plugin.version>2.2</versions-maven-plugin.version>
@@ -56,7 +56,7 @@
         <spring-boot.version>1.5.3.RELEASE</spring-boot.version>
 
         <!-- Springfox (Swagger)-->
-        <springfox.version>2.6.1</springfox.version>
+        <springfox.version>2.7.0</springfox.version>
 
         <!-- Mongo -->
         <mongo-java-driver.version>3.4.2</mongo-java-driver.version>
@@ -225,11 +225,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/*ITest</exclude>
-                    </excludes>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -237,9 +232,6 @@
                 <version>${maven-failsafe-version}</version>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
-                    <includes>
-                        <include>**/*ITest</include>
-                    </includes>
                 </configuration>
                 <executions>
                     <execution>

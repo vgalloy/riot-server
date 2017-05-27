@@ -19,7 +19,7 @@ import vgalloy.riot.server.webservice.api.WebserviceConfig;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = WebserviceConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public final class HomeControllerTest {
+public final class HomeControllerIT {
 
     @Autowired
     private TestRestTemplate restTemplate;

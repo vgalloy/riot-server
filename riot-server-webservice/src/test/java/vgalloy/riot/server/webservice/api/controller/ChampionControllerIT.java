@@ -24,7 +24,7 @@ import vgalloy.riot.server.webservice.internal.dto.ErrorDto;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = WebserviceConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public final class ChampionControllerTest {
+public final class ChampionControllerIT {
 
     @Autowired
     private TestRestTemplate restTemplate;

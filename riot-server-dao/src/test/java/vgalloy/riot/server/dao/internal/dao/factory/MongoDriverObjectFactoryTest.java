@@ -19,10 +19,11 @@ public final class MongoDriverObjectFactoryTest {
     @Test
     public void testMongoClientCreation() {
         // GIVEN
+        String fullUrl = URL + ":" + PORT;
 
         // WHEN
-        MongoClient result1 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).get();
-        MongoClient result2 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).get();
+        MongoClient result1 = MongoDriverObjectFactory.getMongoClient(fullUrl).get();
+        MongoClient result2 = MongoDriverObjectFactory.getMongoClient(fullUrl).get();
 
         // THEN
         Assert.assertEquals(result1, result2);
@@ -31,11 +32,12 @@ public final class MongoDriverObjectFactoryTest {
     @Test
     public void testMongoDatabaseCreation() {
         // GIVEN
+        String fullUrl = URL + ":" + PORT;
 
         // WHEN
-        MongoDatabase result1 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest").get();
-        MongoDatabase result2 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest2").get();
-        MongoDatabase result3 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest").get();
+        MongoDatabase result1 = MongoDriverObjectFactory.getMongoClient(fullUrl).getMongoDatabase("riotTest").get();
+        MongoDatabase result2 = MongoDriverObjectFactory.getMongoClient(fullUrl).getMongoDatabase("riotTest2").get();
+        MongoDatabase result3 = MongoDriverObjectFactory.getMongoClient(fullUrl).getMongoDatabase("riotTest").get();
 
         // THEN
         Assert.assertNotEquals(result1, result2);
@@ -45,12 +47,13 @@ public final class MongoDriverObjectFactoryTest {
     @Test
     public void testMongoCollectionCreation() {
         // GIVEN
+        String fullUrl = URL + ":" + PORT;
 
         // WHEN
-        MongoCollection<?> result1 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest").getMongoCollection("collection").get();
-        MongoCollection<?> result2 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest2").getMongoCollection("collection2").get();
-        MongoCollection<?> result3 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest").getMongoCollection("collection").get();
-        MongoCollection<?> result4 = MongoDriverObjectFactory.getMongoClient(URL + ":" + PORT).getMongoDatabase("riotTest2").getMongoCollection("collection").get();
+        MongoCollection<?> result1 = MongoDriverObjectFactory.getMongoClient(fullUrl).getMongoDatabase("riotTest").getMongoCollection("collection").get();
+        MongoCollection<?> result2 = MongoDriverObjectFactory.getMongoClient(fullUrl).getMongoDatabase("riotTest2").getMongoCollection("collection2").get();
+        MongoCollection<?> result3 = MongoDriverObjectFactory.getMongoClient(fullUrl).getMongoDatabase("riotTest").getMongoCollection("collection").get();
+        MongoCollection<?> result4 = MongoDriverObjectFactory.getMongoClient(fullUrl).getMongoDatabase("riotTest2").getMongoCollection("collection").get();
 
         // THEN
         Assert.assertNotEquals(result1, result2);

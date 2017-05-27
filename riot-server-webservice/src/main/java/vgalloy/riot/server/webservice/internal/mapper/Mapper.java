@@ -1,8 +1,6 @@
 package vgalloy.riot.server.webservice.internal.mapper;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -51,20 +49,5 @@ public interface Mapper<BUSINESS, DTO> {
         return businessList.stream()
             .map(this::unmap)
             .collect(Collectors.toList());
-    }
-
-    /**
-     * Map the map where the value is typed by BUSINESS into a map where value is typed by DTO.
-     *
-     * @param map the map
-     * @param <T> the type of the key
-     * @return the mapped map
-     */
-    default <T> Map<T, DTO> mapAsMap(Map<T, BUSINESS> map) {
-        Map<T, DTO> result = new HashMap<>();
-        for (Map.Entry<T, BUSINESS> entry : map.entrySet()) {
-            result.put(entry.getKey(), map(entry.getValue()));
-        }
-        return result;
     }
 }

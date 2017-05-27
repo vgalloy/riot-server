@@ -20,7 +20,7 @@ ext {
     commonsBeanutilsVersion = '1.9.3'
     javaOverRabbitmqVersion = '1.4.0'
     springBootVersion = '1.5.3.RELEASE'
-    springfoxSwaggerVersion = '2.6.1'
+    springfoxSwaggerVersion = '2.7.0'
 }
 
 class TimingsListener implements TaskExecutionListener, BuildListener {

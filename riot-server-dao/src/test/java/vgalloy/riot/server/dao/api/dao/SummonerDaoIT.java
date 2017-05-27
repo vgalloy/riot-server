@@ -28,9 +28,9 @@ import vgalloy.riot.server.dao.internal.dao.impl.summoner.SummonerDaoImpl;
  *
  * @author Vincent Galloy
  */
-public final class SummonerDaoITest {
+public final class SummonerDaoIT {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SummonerDaoITest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SummonerDaoIT.class);
     private static final String URL = "localhost";
     private static final int PORT = 29506;
 
