@@ -1,5 +1,7 @@
 package vgalloy.riot.server.webservice.api.dto.impl;
 
+import java.util.Objects;
+
 import vgalloy.riot.server.webservice.api.dto.Dto;
 
 /**
@@ -28,5 +30,23 @@ public final class VersionDto implements Dto {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        VersionDto that = (VersionDto) o;
+        return Objects.equals(status, that.status) &&
+            Objects.equals(version, that.version);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(status, version);
     }
 }

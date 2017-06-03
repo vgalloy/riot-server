@@ -1,17 +1,18 @@
 package vgalloy.riot.server.webservice.internal.dto;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import vgalloy.riot.server.webservice.api.dto.Dto;
 
 /**
  * Created by Vincent Galloy on 14/09/16.
  *
  * @author Vincent Galloy
  */
-public final class ErrorDto implements Serializable {
+public final class ErrorDto implements Dto {
 
     private static final long serialVersionUID = 8278940929567627860L;
 

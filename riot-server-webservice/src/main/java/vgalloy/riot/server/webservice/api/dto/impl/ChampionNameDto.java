@@ -1,5 +1,7 @@
 package vgalloy.riot.server.webservice.api.dto.impl;
 
+import java.util.Objects;
+
 import vgalloy.riot.api.api.constant.Region;
 import vgalloy.riot.server.webservice.api.dto.Dto;
 
@@ -38,5 +40,24 @@ public final class ChampionNameDto implements Dto {
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChampionNameDto that = (ChampionNameDto) o;
+        return Objects.equals(championName, that.championName) &&
+            Objects.equals(championId, that.championId) &&
+            region == that.region;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(championName, championId, region);
     }
 }

@@ -1,5 +1,7 @@
 package vgalloy.riot.server.webservice.api.dto.impl;
 
+import java.util.Objects;
+
 import vgalloy.riot.server.webservice.api.dto.Dto;
 
 /**
@@ -28,5 +30,23 @@ public class WinRateDto implements Dto {
 
     public void setLose(Integer lose) {
         this.lose = lose;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        WinRateDto that = (WinRateDto) o;
+        return Objects.equals(win, that.win) &&
+            Objects.equals(lose, that.lose);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(win, lose);
     }
 }
