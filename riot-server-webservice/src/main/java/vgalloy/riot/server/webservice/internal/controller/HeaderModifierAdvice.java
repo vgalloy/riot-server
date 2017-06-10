@@ -28,7 +28,7 @@ import vgalloy.riot.server.webservice.internal.filter.SimpleFilter;
 final class HeaderModifierAdvice implements ResponseBodyAdvice<Object>, SimpleFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HeaderModifierAdvice.class);
-    private static final String X_EXECUTION_TIME_MILLIS = "X-execution-time-millis";
+    private static final String X_EXECUTION_TIME_MILLIS = "x-execution-time-millis";
 
     private final ThreadLocal<Long> requestStartTimeMillis = new ThreadLocal<>();
 

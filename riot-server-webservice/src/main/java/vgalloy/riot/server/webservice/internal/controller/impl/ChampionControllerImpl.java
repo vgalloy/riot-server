@@ -93,7 +93,6 @@ final class ChampionControllerImpl implements ChampionController {
         LocalDate toLocalDate = Optional.ofNullable(toDay)
             .map(LocalDate::ofEpochDay)
             .orElseGet(LocalDate::now);
-
         return championService.getWinRateDuringPeriodOfTime(championId, fromLocalDate, toLocalDate)
             .entrySet().stream()
             .collect(Collectors.toMap(
@@ -122,10 +121,10 @@ final class ChampionControllerImpl implements ChampionController {
     @PostMapping("/autoCompleteChampionName")
     public List<ChampionNameDto> autoCompleteChampionName(@RequestBody AutoCompleteChampionNameDto autoCompleteChampionNameDto) {
         LOGGER.info("[ GET ] : autoCompleteChampionName, autoCompleteChampionNameDto : {}", autoCompleteChampionNameDto);
+
         UserException.requireNonNull(autoCompleteChampionNameDto, "Body can not be null");
         UserException.requireNonNull(autoCompleteChampionNameDto.getRegion(), "Region can not be null");
         UserException.requireNonNull(autoCompleteChampionNameDto.getName(), "Name can not be null");
-
         List<ChampionName> result = championService.autoCompleteChampionName(autoCompleteChampionNameDto.getRegion(), autoCompleteChampionNameDto.getName());
 
         return championNameMapper.mapList(result);

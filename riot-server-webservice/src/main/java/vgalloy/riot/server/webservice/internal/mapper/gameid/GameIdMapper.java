@@ -23,6 +23,7 @@ final class GameIdMapper implements Mapper<GameId, String> {
     @Override
     public String map(GameId gameId) {
         Objects.requireNonNull(gameId);
+
         return gameId.getRegion() + "_" + gameId.getId() + "_" + gameId.getMatchDate().format(DATE_TIME_FORMATTER);
     }
 
