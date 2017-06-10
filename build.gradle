@@ -1,7 +1,7 @@
 plugins {
-    id 'org.springframework.boot' version "1.5.3.RELEASE" apply false
+    id 'org.springframework.boot' version "1.5.4.RELEASE" apply false
     // dependencyUpdates
-    id 'com.github.ben-manes.versions' version '0.14.0'
+    id 'com.github.ben-manes.versions' version '0.15.0'
 }
 
 ext {
@@ -19,7 +19,7 @@ ext {
     commonsConfiguration2Version = '2.1.1'
     commonsBeanutilsVersion = '1.9.3'
     javaOverRabbitmqVersion = '1.4.0'
-    springBootVersion = '1.5.3.RELEASE'
+    springBootVersion = '1.5.4.RELEASE'
     springfoxSwaggerVersion = '2.7.0'
 }
 

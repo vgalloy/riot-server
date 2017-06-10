@@ -54,7 +54,7 @@
         <logback-classic.version>1.2.3</logback-classic.version>
 
         <!-- Spring -->
-        <spring-boot.version>1.5.3.RELEASE</spring-boot.version>
+        <spring-boot.version>1.5.4.RELEASE</spring-boot.version>
 
         <!-- Springfox (Swagger)-->
         <springfox.version>2.7.0</springfox.version>
@@ -336,6 +336,7 @@
                 <version>${versions-maven-plugin.version}</version>
                 <inherited>false</inherited>
                 <configuration>
+                    <outputEncoding>${project.build.sourceEncoding}</outputEncoding>
                     <outputFile>target/outdated-dependencies.txt</outputFile>
                 </configuration>
             </plugin>
