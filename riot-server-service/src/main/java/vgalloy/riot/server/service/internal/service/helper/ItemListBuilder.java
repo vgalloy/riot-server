@@ -34,16 +34,16 @@ public final class ItemListBuilder {
         try {
             switch (event.getEventType()) {
                 case ITEM_PURCHASED:
-                    actionList.add(new Action(event.getTimestamp(), ActionType.BUY, event.getItemId()));
+                    actionList.add(new Action(event.getTimestamp(), Action.ActionType.BUY, event.getItemId()));
                     break;
                 case ITEM_SOLD:
-                    actionList.add(new Action(event.getTimestamp(), ActionType.SOLD, event.getItemId()));
+                    actionList.add(new Action(event.getTimestamp(), Action.ActionType.SOLD, event.getItemId()));
                     break;
                 case ITEM_UNDO:
-                    actionList.add(new Action(event.getTimestamp(), ActionType.UNDO, event.getItemBefore()));
+                    actionList.add(new Action(event.getTimestamp(), Action.ActionType.UNDO, event.getItemBefore()));
                     break;
                 case ITEM_DESTROYED:
-                    actionList.add(new Action(event.getTimestamp(), ActionType.DESTROY, event.getItemId()));
+                    actionList.add(new Action(event.getTimestamp(), Action.ActionType.DESTROY, event.getItemId()));
                     break;
                 default:
                     LOGGER.trace("Can not convert the event : {}", event);
@@ -63,41 +63,14 @@ public final class ItemListBuilder {
      */
     public List<Integer> getItemAtTheEnd() {
         Set<Integer> result = new HashSet<>();
-        actionList.sort((o1, o2) -> Math.toIntExact(o1.timestamp - o2.timestamp));
+        actionList.sort((o1, o2) -> Math.toIntExact(o1.getTimestamp() - o2.getTimestamp()));
         for (Action action : actionList) {
-            if (ActionType.BUY == action.actionType) {
-                result.add(action.itemId);
+            if (Action.ActionType.BUY == action.getActionType()) {
+                result.add(action.getItemId());
             } else {
-                result.remove(action.itemId);
+                result.remove(action.getItemId());
             }
         }
         return new ArrayList<>(result);
-    }
-
-    private enum ActionType {
-        BUY,
-        SOLD,
-        UNDO,
-        DESTROY
-    }
-
-    private static class Action {
-
-        private final long timestamp;
-        private final ActionType actionType;
-        private final Integer itemId;
-
-        /**
-         * Constructor.
-         *
-         * @param timestamp  the timestamp of the action
-         * @param actionType the action type
-         * @param itemId     the item id
-         */
-        Action(long timestamp, ActionType actionType, Integer itemId) {
-            this.timestamp = timestamp;
-            this.actionType = Objects.requireNonNull(actionType);
-            this.itemId = Objects.requireNonNull(itemId);
-        }
     }
 }
