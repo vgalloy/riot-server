@@ -63,7 +63,7 @@ class TimingsListener implements TaskExecutionListener, BuildListener {
 
 gradle.addListener new TimingsListener()
 
-allprojects {
+subprojects {
     apply plugin: 'java-library'
     apply plugin: 'checkstyle'
     apply plugin: 'pmd'
@@ -128,8 +128,8 @@ allprojects {
 
 project(':riot-server-dao') {
     dependencies {
-        compile "org.slf4j:slf4j-api:$slf4jApi"
-        compile "ch.qos.logback:logback-classic:$logbackClassicVersion"
+        api "org.slf4j:slf4j-api:$slf4jApi"
+        implementation "ch.qos.logback:logback-classic:$logbackClassicVersion"
         compile "org.apache.commons:commons-configuration2:$commonsConfiguration2Version"
         compile "commons-beanutils:commons-beanutils:$commonsBeanutilsVersion"
         compile "vgalloy:riot-api-java:$riotApiJavaVersion"

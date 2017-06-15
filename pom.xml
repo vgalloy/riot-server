@@ -22,6 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Maven -->
+        <maven.version>3.5.0</maven.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
         <maven-surefire-version>2.20</maven-surefire-version>
         <maven-failsafe-version>2.18</maven-failsafe-version>
@@ -142,6 +143,7 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback-classic.version}</version>
+                <scope>runtime</scope>
             </dependency>
 
             <!-- Properties -->
@@ -257,7 +259,7 @@
                        <configuration>
                            <rules>
                                <requireMavenVersion>
-                                   <version>3.5.0</version>
+                                   <version>${maven.version}</version>
                                </requireMavenVersion>
                            </rules>
                        </configuration>
@@ -293,6 +295,7 @@
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>${pmd.version}</version>
                 <configuration>
+                    <linkXRef>false</linkXRef>
                     <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
                     <printFailingErrors>true</printFailingErrors>
                     <rulesets>
