@@ -18,7 +18,7 @@
 
     <properties>
         <!-- Project -->
-        <java.version>1.8</java.version>
+        <java.version>1.9</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Maven -->
@@ -313,24 +313,24 @@
             </plugin>
 
             <!-- Findbugs -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <version>${findbugs-maven-plugin.version}</version>
-                <configuration>
-                    <effort>Max</effort>
-                    <threshold>Low</threshold>
-                    <excludeFilterFile>${findbugs.exception.location}</excludeFilterFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.codehaus.mojo</groupId>-->
+                <!--<artifactId>findbugs-maven-plugin</artifactId>-->
+                <!--<version>${findbugs-maven-plugin.version}</version>-->
+                <!--<configuration>-->
+                    <!--<effort>Max</effort>-->
+                    <!--<threshold>Low</threshold>-->
+                    <!--<excludeFilterFile>${findbugs.exception.location}</excludeFilterFile>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>compile</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>check</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
 
             <!-- Mojo Version Checker : mvn versions:display-dependency-updates -->
             <plugin>
