@@ -64,11 +64,4 @@ public final class LoadingMessage implements Serializable {
             ", value='" + value + '\'' +
             '}';
     }
-
-    /**
-     * The types of request.
-     */
-    public enum LoaderType {
-        SUMMONER_BY_ID, SUMMONER_BY_NAME, ITEM_BY_ID, CHAMPION_BY_ID
-    }
 }

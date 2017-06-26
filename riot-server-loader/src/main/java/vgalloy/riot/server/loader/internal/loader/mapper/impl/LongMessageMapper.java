@@ -3,6 +3,7 @@ package vgalloy.riot.server.loader.internal.loader.mapper.impl;
 import java.util.Objects;
 
 import vgalloy.riot.server.loader.internal.loader.mapper.LoadingMessageMapper;
+import vgalloy.riot.server.loader.internal.loader.message.LoaderType;
 import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
 
 /**
@@ -12,14 +13,14 @@ import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
  */
 public final class LongMessageMapper implements LoadingMessageMapper<Long> {
 
-    private final LoadingMessage.LoaderType loaderType;
+    private final LoaderType loaderType;
 
     /**
      * Constructor.
      *
      * @param loaderType the loader type
      */
-    public LongMessageMapper(LoadingMessage.LoaderType loaderType) {
+    public LongMessageMapper(LoaderType loaderType) {
         this.loaderType = Objects.requireNonNull(loaderType);
     }
 

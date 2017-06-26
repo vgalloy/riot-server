@@ -3,20 +3,20 @@ package vgalloy.riot.server.loader.internal.loader.mapper;
 import vgalloy.riot.server.loader.internal.loader.mapper.impl.IntegerMessageMapper;
 import vgalloy.riot.server.loader.internal.loader.mapper.impl.LongMessageMapper;
 import vgalloy.riot.server.loader.internal.loader.mapper.impl.StringMessageMapper;
-import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
+import vgalloy.riot.server.loader.internal.loader.message.LoaderType;
 
 /**
  * Created by Vincent Galloy on 01/12/16.
- * Allow MessageMapper creation for each kind of {@link vgalloy.riot.server.loader.internal.loader.message.LoadingMessage.LoaderType}.
+ * Allow MessageMapper creation for each kind of {@link vgalloy.riot.server.loader.internal.loader.message.LoaderType}.
  *
  * @author Vincent Galloy
  */
 public final class LoadingMessageBuilder {
 
-    private static final LoadingMessageMapper<Long> SUMMONER_ID_MAPPER = new LongMessageMapper(LoadingMessage.LoaderType.SUMMONER_BY_ID);
-    private static final LoadingMessageMapper<String> SUMMONER_NAME_MAPPER = new StringMessageMapper(LoadingMessage.LoaderType.SUMMONER_BY_NAME);
-    private static final LoadingMessageMapper<Integer> ITEM_ID_MAPPER = new IntegerMessageMapper(LoadingMessage.LoaderType.ITEM_BY_ID);
-    private static final LoadingMessageMapper<Long> CHAMPION_ID_MAPPER = new LongMessageMapper(LoadingMessage.LoaderType.CHAMPION_BY_ID);
+    private static final LoadingMessageMapper<Long> SUMMONER_ID_MAPPER = new LongMessageMapper(LoaderType.SUMMONER_BY_ID);
+    private static final LoadingMessageMapper<String> SUMMONER_NAME_MAPPER = new StringMessageMapper(LoaderType.SUMMONER_BY_NAME);
+    private static final LoadingMessageMapper<Integer> ITEM_ID_MAPPER = new IntegerMessageMapper(LoaderType.ITEM_BY_ID);
+    private static final LoadingMessageMapper<Long> CHAMPION_ID_MAPPER = new LongMessageMapper(LoaderType.CHAMPION_BY_ID);
 
     /**
      * Constructor.

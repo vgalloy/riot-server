@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import vgalloy.riot.server.loader.internal.loader.mapper.LoadingMessageMapper;
+import vgalloy.riot.server.loader.internal.loader.message.LoaderType;
 import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
 
 /**
@@ -16,9 +17,9 @@ public final class LongMessageMapperTest {
     @Test
     public void testCorrectTransformation() {
         // GIVEN
-        LoadingMessageMapper<Long> mapper = new LongMessageMapper(LoadingMessage.LoaderType.ITEM_BY_ID);
+        LoadingMessageMapper<Long> mapper = new LongMessageMapper(LoaderType.ITEM_BY_ID);
         Long value = 123L;
-        LoadingMessage loadingMessage = new LoadingMessage(LoadingMessage.LoaderType.ITEM_BY_ID, "123");
+        LoadingMessage loadingMessage = new LoadingMessage(LoaderType.ITEM_BY_ID, "123");
 
         // WHEN
         LoadingMessage result = mapper.wrap(value);
@@ -30,7 +31,7 @@ public final class LongMessageMapperTest {
     @Test
     public void testDoubleTransformation() {
         // GIVEN
-        LoadingMessageMapper<Long> mapper = new LongMessageMapper(LoadingMessage.LoaderType.ITEM_BY_ID);
+        LoadingMessageMapper<Long> mapper = new LongMessageMapper(LoaderType.ITEM_BY_ID);
         Long value = 12345L;
 
         // WHEN

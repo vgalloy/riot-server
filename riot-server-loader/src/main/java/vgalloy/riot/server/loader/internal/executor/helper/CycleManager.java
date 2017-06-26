@@ -29,8 +29,8 @@ public final class CycleManager {
     public void sleep() {
         try {
             Thread.sleep(sleepingTimeMillis);
-        } catch (InterruptedException e1) {
-            throw new LoaderException(e1);
+        } catch (InterruptedException e) {
+            throw new LoaderException(e);
         }
     }
 

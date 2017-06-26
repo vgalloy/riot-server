@@ -164,8 +164,8 @@ public final class GlobalMatchDetailDaoIT {
         // Everything ok
         result = dao.findMatchDetailBySummonerId(new CommonDpoId(Region.EUW, correctPlayerId), now.minus(1, ChronoUnit.DAYS), now.plus(1, ChronoUnit.DAYS));
         Assert.assertEquals(3, result.size());
-        Assert.assertEquals(new Long(10_003), result.get(0).getMatchId());
-        Assert.assertEquals(new Long(10_002), result.get(2).getMatchId());
+        Assert.assertEquals(Long.valueOf(10_003), result.get(0).getMatchId());
+        Assert.assertEquals(Long.valueOf(10_002), result.get(2).getMatchId());
 
         // Wrong data time
         result = dao.findMatchDetailBySummonerId(new CommonDpoId(Region.EUW, correctPlayerId), now.minus(2, ChronoUnit.DAYS), now.minus(1, ChronoUnit.DAYS));

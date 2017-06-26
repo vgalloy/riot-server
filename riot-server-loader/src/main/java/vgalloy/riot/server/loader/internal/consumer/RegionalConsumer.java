@@ -23,7 +23,9 @@ public interface RegionalConsumer extends Consumer<LoadingMessage> {
      * @return the queue name
      */
     static ConsumerQueueDefinition<LoadingMessage> getQueueDefinition(Region region) {
-        ConsumerQueueDefinition<LoadingMessage> queueDefinition = Factory.createQueue("LOADER_" + Objects.requireNonNull(region), LoadingMessage.class);
+        Objects.requireNonNull(region);
+
+        ConsumerQueueDefinition<LoadingMessage> queueDefinition = Factory.createQueue("LOADER_" + region, LoadingMessage.class);
         queueDefinition.setMarshaller(new JacksonMarshallerImpl());
         return queueDefinition;
     }

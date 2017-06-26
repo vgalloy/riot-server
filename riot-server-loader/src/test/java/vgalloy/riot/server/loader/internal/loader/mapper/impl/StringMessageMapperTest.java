@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import vgalloy.riot.server.loader.internal.loader.mapper.LoadingMessageMapper;
+import vgalloy.riot.server.loader.internal.loader.message.LoaderType;
 import vgalloy.riot.server.loader.internal.loader.message.LoadingMessage;
 
 /**
@@ -16,8 +17,8 @@ public final class StringMessageMapperTest {
     @Test
     public void testCorrectTransformation() {
         // GIVEN
-        LoadingMessageMapper<String> mapper = new StringMessageMapper(LoadingMessage.LoaderType.ITEM_BY_ID);
-        LoadingMessage loadingMessage = new LoadingMessage(LoadingMessage.LoaderType.ITEM_BY_ID, "TESt##12\\");
+        LoadingMessageMapper<String> mapper = new StringMessageMapper(LoaderType.ITEM_BY_ID);
+        LoadingMessage loadingMessage = new LoadingMessage(LoaderType.ITEM_BY_ID, "TESt##12\\");
 
         // WHEN
         LoadingMessage result = mapper.wrap(loadingMessage.getValue());
@@ -29,7 +30,7 @@ public final class StringMessageMapperTest {
     @Test
     public void testDoubleTransformation() {
         // GIVEN
-        LoadingMessageMapper<String> mapper = new StringMessageMapper(LoadingMessage.LoaderType.ITEM_BY_ID);
+        LoadingMessageMapper<String> mapper = new StringMessageMapper(LoaderType.ITEM_BY_ID);
         String value = "TESt##12\\";
 
         // WHEN

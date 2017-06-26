@@ -14,29 +14,31 @@ import vgalloy.riot.server.loader.api.service.LoaderClient;
 public final class FakeLoaderClientImpl implements LoaderClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FakeLoaderClientImpl.class);
+    private static final String DEFAULT_WARNING_MESSAGE = "Enable to connect to the broker. You are using a fake Loader";
 
     @Override
     public int getItemInQueue(Region region) {
+        LOGGER.warn(DEFAULT_WARNING_MESSAGE);
         return 0;
     }
 
     @Override
     public void loadAsyncItemById(Region region, Integer itemId) {
-        LOGGER.warn("Enable to connect to the broker. You are using a fake Loader");
+        LOGGER.warn(DEFAULT_WARNING_MESSAGE);
     }
 
     @Override
     public void loadAsyncSummonerById(Region region, Long summonerId) {
-        LOGGER.warn("Enable to connect to the broker. You are using a fake Loader");
+        LOGGER.warn(DEFAULT_WARNING_MESSAGE);
     }
 
     @Override
     public void loadAsyncSummonerByName(Region region, String summonerName) {
-        LOGGER.warn("Enable to connect to the broker. You are using a fake Loader");
+        LOGGER.warn(DEFAULT_WARNING_MESSAGE);
     }
 
     @Override
     public void loadChampionById(Region region, Long championId) {
-        LOGGER.warn("Enable to connect to the broker. You are using a fake Loader");
+        LOGGER.warn(DEFAULT_WARNING_MESSAGE);
     }
 }

@@ -31,6 +31,7 @@ public final class LoaderClientImpl implements LoaderClient {
      */
     public LoaderClientImpl(ConnectionFactory connectionFactory) {
         Objects.requireNonNull(connectionFactory);
+
         for (Region region : Region.values()) {
             ConsumerQueueDefinition<LoadingMessage> queueDefinition = RegionalConsumer.getQueueDefinition(region);
             map.put(region, Factory.createClient(connectionFactory, queueDefinition));
@@ -40,6 +41,7 @@ public final class LoaderClientImpl implements LoaderClient {
     @Override
     public int getItemInQueue(Region region) {
         Objects.requireNonNull(region);
+
         return map.get(region).getMessageCount();
     }
 
