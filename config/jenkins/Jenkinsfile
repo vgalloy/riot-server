@@ -1,0 +1,21 @@
+node {
+    stage 'Fetch'
+        git([url: 'https://github.com/vgalloy/riot-server.git', branch: 'java9'])
+    sh 'rm -rf build'
+
+    stage 'Clear maven'
+    sh '''
+        if [ ! -e $(docker ps -aq -f "name=3csminute-server-maven-builder-java9") ]
+        then
+        	docker rm -vf 3csminute-server-maven-builder-java9
+        fi
+    '''
+
+    stage 'Build with maven'
+    sh '''
+        docker pull maven:3.5.0-jdk-9
+        docker create --rm --name=3csminute-server-maven-builder-java9 -v /m2:/root/.m2 -w /usr/maven maven:3.5.0-jdk-9 mvn clean install
+        docker cp . 3csminute-server-maven-builder-java9:/usr/maven
+        docker start -a 3csminute-server-maven-builder-java9
+    '''
+}
