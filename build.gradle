@@ -70,7 +70,7 @@ subprojects {
 
     sourceCompatibility = "$javaVersion"
     targetCompatibility = "$javaVersion"
-    group = 'vgalloy'
+    group = 'com.vgalloy'
     version = '1.0-SNAPSHOT'
 
     repositories {

@@ -3,8 +3,8 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
+        <groupId>com.vgalloy</groupId>
         <artifactId>riot-server</artifactId>
-        <groupId>vgalloy</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -13,7 +13,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>vgalloy</groupId>
+            <groupId>com.vgalloy</groupId>
             <artifactId>riot-server-dao</artifactId>
         </dependency>
         <dependency>
@@ -25,6 +25,5 @@
             <artifactId>junit</artifactId>
         </dependency>
     </dependencies>
-
 
 </project>
